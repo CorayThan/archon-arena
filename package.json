@@ -14,11 +14,13 @@
     "loglevel": "^1.6.3",
     "mobx": "^5.10.1",
     "mobx-react": "^6.1.1",
+    "phaser": "^3.18.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "typescript": "3.5.2",
+    "uuid": "^3.3.2",
     "webfontloader": "^1.6.28"
   },
   "scripts": {
