@@ -1,6 +1,6 @@
 import * as firebase from "firebase/app"
 import "firebase/firestore"
-import {log} from "../index"
+import { log } from "../Utils"
 
 document.addEventListener('DOMContentLoaded', function () {
     log.debug("init firebase")
