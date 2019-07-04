@@ -1,0 +1,169 @@
+{
+  "id": "00000-00000-00000-00000",
+  "date": "2019-01-01",
+  "turn": 1,
+  "startingPlayer": "stronglink",
+  "activePlayer": "jacketattack",
+  "players": [
+    {
+      "name": "stronglink",
+      "aember": 0,
+      "chains": 0,
+      "keys": 0,
+      "deck": {
+        "name": "Overson the Pretentious",
+        "id": "",
+        "cards": []
+      },
+      "drawPile": [],
+      "discardPile": [],
+      "purgePile": [],
+      "archivePile": [],
+      "hand": [
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        },
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        }
+      ],
+      "creatures": [
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon",
+          "ready": true,
+          "faceup": true,
+          "position": 0,
+          "taunt": false,
+          "upgrades": [],
+          "cardsUnderneath": [],
+          "tokens": {
+            "armor": 0,
+            "power": 0,
+            "damage": 0,
+            "aember": 0,
+            "stun": 1
+          }
+        },
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon",
+          "ready": true,
+          "faceup": true,
+          "position": 1,
+          "taunt": false,
+          "upgrades": [
+            {
+              "name": "Mantle Of The Zealot",
+              "id": "mantle-of-the-zealot"
+            },
+            {
+              "name": "Mantle Of The Zealot",
+              "id": "mantle-of-the-zealot"
+            }
+          ],
+          "tokens": {
+            "armor": 2,
+            "power": 0,
+            "damage": 0,
+            "aember": 1,
+            "stun": 0
+          }
+        },
+        {
+          "name": "Jargogle",
+          "id": "jargogle",
+          "ready": false,
+          "faceup": true,
+          "position": 2,
+          "taunt": false,
+          "upgrades": [],
+          "cardsUnderneath": [
+            {
+              "name": "Foo",
+              "id": "",
+              "facedown": true
+            }
+          ],
+          "tokens": {
+            "armor": 0,
+            "power": 0,
+            "damage": 3,
+            "aember": 0,
+            "stun": 0
+          }
+        }
+      ],
+      "artifacts": [
+        {
+          "name": "Safe Place",
+          "id": "safe-place",
+          "faceup": true,
+          "ready": true,
+          "position": 0,
+          "tokens": {
+            "aember": 2
+          },
+          "cardsUnderneath": []
+        }
+      ]
+    },
+    {
+      "name": "jacketattack",
+      "aember": 0,
+      "chains": 0,
+      "keys": 1,
+      "deck": {
+        "name": "Ze who Stomps on Goblins",
+        "id": "",
+        "cards": []
+      },
+      "drawPile": [],
+      "discardPile": [],
+      "purgePile": [],
+      "archivePile": [],
+      "hand": [],
+      "creatures": [],
+      "artifacts": []
+    }
+  ],
+  "log": [
+    {
+      "action": "...",
+      "player": "jacketattack",
+      "date": ""
+    },
+    {
+      "action": "FORGE_KEY",
+      "player": "jacketattack",
+      "cost": 7,
+      "date": ""
+    },
+    {
+      "action": "PLAY_UPRADE",
+      "player": "jacketattack",
+      "upgrade": "Mantle of the Zealot",
+      "creature": "Mother#000",
+      "date": ""
+    },
+    {
+      "action": "...",
+      "player": "stronglink",
+      "date": ""
+    }
+  ]
+}
