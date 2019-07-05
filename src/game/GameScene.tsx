@@ -16,6 +16,8 @@ import power from "../images/power.png"
 import safePlace from "../images/safe-place.png"
 import stun from "../images/stun.png"
 
+const { KeyCodes } = Phaser.Input.Keyboard
+
 class GameScene extends Phaser.Scene {
     // @ts-ignore
     root: Phaser.GameObjects.Container
@@ -213,23 +215,6 @@ class GameScene extends Phaser.Scene {
         const dispatch = this.data.get("dispatch")
         const cardID = card.data.get("id")
 
-        let creature = state.players[0].creatures.find((c: { position: number, id: string }) => {
-            return `${state.players[0].name}-creature-${c.position}` === cardID
-        })
-        creature = creature || state.players[1].creatures.find((c: { position: number, id: string }) => {
-            return `${state.players[1].name}-creature-${c.position}` === cardID
-        })
-
-        if (e.which === 3) {
-            dispatch({
-                action: Event.AlterCreatureDamage,
-                creature: cardID,
-                amount: e.shiftKey ? -1 : 1
-            })
-            this.render()
-            return
-        }
-
         dispatch({
             action: Event.UseCreature,
             creature: cardID
@@ -254,12 +239,15 @@ class GameScene extends Phaser.Scene {
         this.input.keyboard.on("keyup", (e: any) => {
             // @ts-ignore
             this.keysDown[e.which] = true
-            const { KeyCodes } = Phaser.Input.Keyboard
+
+            let cardID
+            if (this.cardMousingOver)
+                cardID = this.cardMousingOver.data.get("id")
 
             if (this.cardMousingOver instanceof Card && e.which === KeyCodes.C) {
                 dispatch({
                     action: Event.CaptureAmber,
-                    creature: this.cardMousingOver.data.get("id"),
+                    creature: cardID,
                     amount: e.shiftKey ? -1 : 1
                 })
                 this.render()
@@ -268,7 +256,7 @@ class GameScene extends Phaser.Scene {
             if (this.cardMousingOver instanceof Card && e.which === KeyCodes.S) {
                 dispatch({
                     action: Event.ToggleStun,
-                    creature: this.cardMousingOver.data.get("id"),
+                    creature: cardID,
                 })
                 this.render()
             }
@@ -276,7 +264,16 @@ class GameScene extends Phaser.Scene {
             if (this.cardMousingOver instanceof Card && e.which === KeyCodes.P) {
                 dispatch({
                     action: Event.AlterCreaturePower,
-                    creature: this.cardMousingOver.data.get("id"),
+                    creature: cardID,
+                    amount: e.shiftKey ? -1 : 1
+                })
+                this.render()
+            }
+
+            if (this.cardMousingOver instanceof Card && e.which === KeyCodes.D) {
+                dispatch({
+                    action: Event.AlterCreatureDamage,
+                    creature: cardID,
                     amount: e.shiftKey ? -1 : 1
                 })
                 this.render()
