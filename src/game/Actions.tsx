@@ -34,14 +34,7 @@ export const exec = (event: any, state: any) => {
             const opponent = state.players[0] === owner ? state.players[1] : state.players[0]
             const creature = getCreatureByID(event.creature, state)
 
-            // Return captured amber. This could be a separate event.
-            if (event.amount < 0 && creature.tokens.amber > 0) {
-                creature.tokens.amber += event.amount
-                opponent.amber -= event.amount
-                return
-            }
-
-            if (event.amount > 0 && opponent.amber > 0) {
+            if ((event.amount > 0 && opponent.amber > 0) || (event.amount < 0 && creature.tokens.amber > 0)) {
                 creature.tokens.amber += event.amount
                 opponent.amber -= event.amount
             }
