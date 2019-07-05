@@ -15,7 +15,7 @@ import stun from "../images/stun.png"
 import { log } from "../Utils"
 import Card from "./Card"
 
-const CARD_WIDTH = 70 
+const CARD_WIDTH = 80
 const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class GameScene extends Phaser.Scene {
@@ -58,7 +58,7 @@ class GameScene extends Phaser.Scene {
     renderPlayerBoard(player: any, originX: number, originY: number, orientation: string) {
         const state = this.data.get("state")
 
-        const playerNameText = new Phaser.GameObjects.Text(this, originX, originY, player.name, {
+        const playerNameText = new Phaser.GameObjects.Text(this, originX + 455, originY, player.name, {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
@@ -67,12 +67,12 @@ class GameScene extends Phaser.Scene {
         this.root.add(playerNameText)
         const nameWidth = playerNameText.displayWidth
 
-        const amberImage = new Phaser.GameObjects.Image(this, originX + nameWidth + 5, originY, "amber-token")
+        const amberImage = new Phaser.GameObjects.Image(this, originX + 455 + nameWidth + 5, originY, "amber-token")
         amberImage.setDisplaySize(20, 20)
         amberImage.setOrigin(0)
         this.root.add(amberImage)
 
-        const amberText = new Phaser.GameObjects.Text(this, originX + nameWidth + 15, originY + 11, player.amber, {
+        const amberText = new Phaser.GameObjects.Text(this, originX + 455 + nameWidth + 15, originY + 11, player.amber, {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 3,
@@ -81,12 +81,12 @@ class GameScene extends Phaser.Scene {
         amberText.setOrigin(0.5)
         this.root.add(amberText)
 
-        const chainsImage = new Phaser.GameObjects.Image(this, originX + nameWidth + 30, originY, "amber-token")
+        const chainsImage = new Phaser.GameObjects.Image(this, originX + 455 + nameWidth + 30, originY, "amber-token")
         chainsImage.setDisplaySize(20, 20)
         chainsImage.setOrigin(0)
         this.root.add(chainsImage)
 
-        const chainsText = new Phaser.GameObjects.Text(this, originX + nameWidth + 40, originY + 11, player.chains, {
+        const chainsText = new Phaser.GameObjects.Text(this, originX + 455 + nameWidth + 40, originY + 11, player.chains, {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 3,
@@ -98,35 +98,27 @@ class GameScene extends Phaser.Scene {
         for (let i = 0; i < 3; i++) {
             const textureID = player.keys >= i + 1 ? "forged-key" : "unforged-key"
             const keySize = 30
-            const keyImage = new Phaser.GameObjects.Image(this, originX, originY + (keySize + 4) * i + keySize, textureID)
+            const keyImage = new Phaser.GameObjects.Image(this, originX + 655, originY + (keySize + 4) * i + 10, textureID)
             keyImage.setDisplaySize(keySize, keySize)
             keyImage.setOrigin(0)
             this.root.add(keyImage)
         }
 
-        const playerHouses = ["borbnar", "sanctum", "shadows"]
-        playerHouses.forEach((house, i) => {
-            const houseImage = new Phaser.GameObjects.Image(this, originX + 25 * i + nameWidth + 55, originY, "armor-token")
-            houseImage.setDisplaySize(20, 20)
-            houseImage.setOrigin(0)
-            this.root.add(houseImage)
-        })
-
         for (let i = 0; i < 7; i++) {
-            const cardback = new Phaser.GameObjects.Image(this, originX + 70 + i * 50, originY + 80, "cardback")
+            const cardback = new Phaser.GameObjects.Image(this, originX + CARD_WIDTH / 2 + i * CARD_WIDTH * .75, originY + CARD_HEIGHT / 2, "cardback")
             cardback.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
             this.root.add(cardback)
         }
 
-        const piles = ["Archive", "Archon", "Draw", "Discard"]
+        const piles = ["Archon", "Draw", "Discard"]
         piles.forEach((pileTitle, i) => {
-            const archivePileOutline = new Phaser.GameObjects.Rectangle(this, originX + nameWidth + 380 + i * (CARD_WIDTH + 10), originY + 32)
-            archivePileOutline.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
+            const archivePileOutline = new Phaser.GameObjects.Rectangle(this, originX + CARD_WIDTH * 5.7 + i * (CARD_WIDTH * 0.7 + 10), originY + 25)
+            archivePileOutline.setDisplaySize(CARD_WIDTH * 0.7, CARD_HEIGHT * 0.7)
             archivePileOutline.setStrokeStyle(1, 0)
             archivePileOutline.setOrigin(0)
             this.root.add(archivePileOutline)
 
-            const archivePileText = new Phaser.GameObjects.Text(this, originX + nameWidth + 382 + i * (CARD_WIDTH + 10), originY + 34, pileTitle, {
+            const archivePileText = new Phaser.GameObjects.Text(this, originX + CARD_WIDTH * 5.7 + 4 + i * (CARD_WIDTH * 0.7 + 10), originY + 29, pileTitle, {
                 color: "#000",
                 fontSize: "10px"
             })
@@ -134,7 +126,6 @@ class GameScene extends Phaser.Scene {
         })
 
         const height = this.data.get("height")
-
         const creatureOffsetY = orientation === "top" ? height / 2 - 50 : -height / 2 + 250
         const artifactOffsetY = orientation === "top" ? 200 : -70
 
@@ -201,27 +192,8 @@ class GameScene extends Phaser.Scene {
     render() {
         const state = this.data.get("state")
         this.root.removeAll()
-
         this.renderPlayerBoard(state.players[0], 5, 5, "top")
-        this.renderPlayerBoard(state.players[1], 5, this.data.get("height") - 140, "bottom")
-
-        //for (let i = 0; i < state.players[0].hand.length; i++) {
-            //const hand = state.players[0].hand[i]
-            //const card = new Card({
-                //scene: this,
-                //x: 160 + 90 * i,
-                //y: 950,
-                //id: "p0-hand-" + i,
-                //front: hand.id,
-                //back: "cardback",
-                //onClick: (e: any) => {
-                    //log.error(e)
-                //},
-                //onMouseOver: this.onMouseOverCard.bind(this),
-                //onMouseOut: this.onMouseOutCard.bind(this),
-            //})
-            //this.root.add(card)
-        //}
+        this.renderPlayerBoard(state.players[1], 5, this.data.get("height") - CARD_HEIGHT - 5, "bottom")
     }
 
     onMouseOverCard(texture: string) {
@@ -238,6 +210,7 @@ class GameScene extends Phaser.Scene {
     }
 
     onClickCreature(card: Card, e: any) {
+        return // TODO
         const state = this.data.get("state")
         const creature = state.players[0].creatures.find((c: { position: number }) => "p0-creature-" + c.position === card.data.get("id"))
 
