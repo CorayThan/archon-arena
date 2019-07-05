@@ -36,12 +36,12 @@ class Card extends Phaser.GameObjects.Container {
         this.cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
         this.add(this.cardImage)
 
-        this.cardsUnderneath = cardsUnderneath.map((card: object, i: number) => {
+        this.cardsUnderneath = cardsUnderneath.map(() => {
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
             return cardImage
         })
 
-        this.upgrades = upgrades.map((card: object, i: number) => {
+        this.upgrades = upgrades.map((card: { id: string }) => {
             // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setInteractive()
@@ -56,7 +56,7 @@ class Card extends Phaser.GameObjects.Container {
             return cardImage
         })
 
-        this.cardImage.addListener("pointerup", (e: any) => {
+        this.cardImage.addListener("pointerup", (e: MouseEvent) => {
             onClick(this, e)
         })
 

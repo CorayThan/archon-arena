@@ -3,6 +3,7 @@ import React from "react"
 import "./Game.css"
 import GameScene from "./GameScene"
 import { GameState } from "../gamestate/types/GameState"
+import { log } from "../Utils"
 
 interface Props {
     state: object//GameState
@@ -35,8 +36,8 @@ class Game extends React.Component<Props> {
     }
 
     componentDidMount() {
-        const {state} = this.props
-        console.log(state);
+        const { state } = this.props
+        log.debug(state)
         const game = new Phaser.Game(config)
 
         game.events.once("ready", () => {

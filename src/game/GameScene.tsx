@@ -12,7 +12,6 @@ import mantleOfTheZealot from "../images/mantle-of-the-zealot.png"
 import power from "../images/power.png"
 import safePlace from "../images/safe-place.png"
 import stun from "../images/stun.png"
-import { log } from "../Utils"
 import Card from "./Card"
 
 const CARD_WIDTH = 80
@@ -56,8 +55,6 @@ class GameScene extends Phaser.Scene {
     }
 
     renderPlayerBoard(player: any, originX: number, originY: number, orientation: string) {
-        const state = this.data.get("state")
-
         const playerNameText = new Phaser.GameObjects.Text(this, originX + 455, originY, player.name, {
             color: "#fff",
             stroke: "#000",
@@ -205,11 +202,11 @@ class GameScene extends Phaser.Scene {
         this.cardHoverImage = image
     }
 
-    onMouseOutCard(texture: string) {
+    onMouseOutCard() {
         this.cardHoverImage.destroy()
     }
 
-    onClickCreature(card: Card, e: any) {
+    onClickCreature(card: Card, e: { event: MouseEvent }) {
         return // TODO
         const state = this.data.get("state")
         const creature = state.players[0].creatures.find((c: { position: number }) => "p0-creature-" + c.position === card.data.get("id"))
