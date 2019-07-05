@@ -168,6 +168,12 @@ class Card extends Phaser.GameObjects.Container {
         this.data.get("tokens")[data.type] += data.amount
         this.render()
     }
+
+    destroy() {
+        this.cardImage.destroy()
+        this.cardsUnderneath.forEach((image: Phaser.GameObjects.Image) => image.destroy())
+        this.upgrades.forEach((image: Phaser.GameObjects.Image) => image.destroy())
+    }
 }
 
 export default Card

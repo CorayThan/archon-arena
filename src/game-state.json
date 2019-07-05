@@ -47,7 +47,6 @@
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 0,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [],
@@ -64,7 +63,6 @@
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 1,
           "taunt": false,
           "upgrades": [],
           "tokens": {
@@ -80,7 +78,6 @@
           "id": "jargogle",
           "ready": true,
           "faceup": true,
-          "position": 2,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [
@@ -105,7 +102,6 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 0,
           "tokens": {
             "amber": 0
           },
@@ -115,7 +111,6 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 1,
           "tokens": {
             "amber": 0
           },
@@ -137,14 +132,38 @@
       "discardPile": [],
       "purgePile": [],
       "archivePile": [],
-      "hand": [],
+      "hand": [
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        }
+      ],
       "creatures": [
         {
           "name": "Kelifi Dragon",
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 0,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [],
@@ -161,7 +180,6 @@
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 1,
           "taunt": false,
           "upgrades": [
             {
@@ -186,7 +204,6 @@
           "id": "jargogle",
           "ready": true,
           "faceup": true,
-          "position": 2,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [
@@ -211,7 +228,6 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 0,
           "tokens": {
             "amber": 0
           },
@@ -221,7 +237,6 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 1,
           "tokens": {
             "amber": 2
           },
