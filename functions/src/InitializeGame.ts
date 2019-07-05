@@ -1,10 +1,10 @@
-import { requestDeck } from "../apis/mastervault/RequestDeck"
-import { Deck } from "../keyforge/deck/Deck"
-import { Player } from "../players/types/Player"
-import { GameState } from "./types/GameState"
-import { v4 as uuid} from "uuid"
-import { Phase } from "./types/Phase"
-import {shuffle, random} from "lodash"
+import { random, shuffle } from "lodash"
+import { v4 as uuid } from "uuid"
+import { requestDeck } from "./apis/mastervault/RequestDeck"
+import { GameState } from "./shared/gamestate/GameState"
+import { Phase } from "./shared/gamestate/Phase"
+import { Deck } from "./shared/keyforge/deck/Deck"
+import { Player } from "./shared/Player"
 
 export class InitializeGame {
 
@@ -47,7 +47,9 @@ export class InitializeGame {
             discard: [],
             archives: [],
             purged: [],
-            creatures: []
+            creatures: [],
+            artifacts: [],
+            upgrades: []
         }
     }
 }

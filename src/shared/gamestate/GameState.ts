@@ -1,7 +1,9 @@
-import { CardInDeck, KCard } from "../../keyforge/card/KCard"
-import { Player } from "../../players/types/Player"
+import { CardInDeck } from "../keyforge/card/KCard"
+import { Player } from "../Player"
+import { Artifact } from "./Artifact"
 import { Creature } from "./Creature"
 import { Phase } from "./Phase"
+import { Upgrade } from "./Upgrade"
 
 export interface GameState {
     id: string
@@ -22,4 +24,6 @@ export interface PlayerState {
     archives: CardInDeck[]
     purged: CardInDeck[]
     creatures: Creature[]
+    artifacts: Artifact[]
+    upgrades: Upgrade[]
 }
