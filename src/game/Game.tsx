@@ -2,17 +2,22 @@ import Phaser from "phaser"
 import React from "react"
 import "./Game.css"
 import GameScene from "./GameScene"
+import { GameState } from "../gamestate/types/GameState"
+import { log } from "../Utils"
 
 interface Props {
-    state: object,
+    state: object//GameState
 }
+
+const width = 1024
+const height = window.innerHeight
 
 const config: Phaser.Types.Core.GameConfig = {
     parent: "phaser",
     backgroundColor: "#eee",
     scene: [GameScene],
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width,
+    height,
     input: {
         mouse: true,
     },
@@ -31,11 +36,23 @@ class Game extends React.Component<Props> {
     }
 
     componentDidMount() {
-        const {state} = this.props
+        const { state } = this.props
+        log.debug(state)
         const game = new Phaser.Game(config)
+
         game.events.once("ready", () => {
             const scene = game.scene.getScene("GameScene")
-            scene.data.set("state", state)
+
+            // @ts-ignore
+            scene.data.set({
+                state,
+                width,
+                height,
+                endTurn: () => {
+                    // @ts-ignore
+                    state.players[0].creatures.forEach((c: { ready: boolean }) => c.ready = true)
+                },
+            })
         })
     }
 }

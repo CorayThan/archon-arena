@@ -1,6 +1,6 @@
 import Phaser from "phaser"
 
-const CARD_WIDTH = 100
+const CARD_WIDTH = 80
 const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class Card extends Phaser.GameObjects.Container {
@@ -25,7 +25,7 @@ class Card extends Phaser.GameObjects.Container {
             ready,
             faceup,
             tokens: {
-                aember: 0,
+                amber: 0,
                 damage: 0,
                 armor: 0,
                 power: 0,
@@ -36,12 +36,12 @@ class Card extends Phaser.GameObjects.Container {
         this.cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
         this.add(this.cardImage)
 
-        this.cardsUnderneath = cardsUnderneath.map((card: object, i: number) => {
+        this.cardsUnderneath = cardsUnderneath.map(() => {
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
             return cardImage
         })
 
-        this.upgrades = upgrades.map((card: object, i: number) => {
+        this.upgrades = upgrades.map((card: { id: string }) => {
             // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setInteractive()
@@ -56,7 +56,7 @@ class Card extends Phaser.GameObjects.Container {
             return cardImage
         })
 
-        this.cardImage.addListener("pointerup", (e: any) => {
+        this.cardImage.addListener("pointerup", (e: MouseEvent) => {
             onClick(this, e)
         })
 
@@ -156,7 +156,7 @@ class Card extends Phaser.GameObjects.Container {
                         color: "#fff",
                         stroke: "#000",
                         strokeThickness: 4,
-                        fontSize: "22px"
+                        fontSize: "16px"
                     })
                     text.setOrigin(0.5)
                     this.add(text)
