@@ -3,6 +3,7 @@ import React from "react"
 import "./Game.css"
 import GameScene from "./GameScene"
 import { GameState } from "../gamestate/types/GameState"
+import { exec } from "./Actions"
 import { log } from "../Utils"
 
 interface Props {
@@ -24,6 +25,12 @@ const config: Phaser.Types.Core.GameConfig = {
 }
 
 class Game extends React.Component<Props> {
+
+    dispatch = (action: any) => {
+        const { state } = this.props
+        exec(action, state)
+    }
+
     render() {
         return (
             <div id='phaser' className='Game-container'>
@@ -46,12 +53,9 @@ class Game extends React.Component<Props> {
             // @ts-ignore
             scene.data.set({
                 state,
+                dispatch: this.dispatch,
                 width,
                 height,
-                endTurn: () => {
-                    // @ts-ignore
-                    state.players[0].creatures.forEach((c: { ready: boolean }) => c.ready = true)
-                },
             })
         })
     }

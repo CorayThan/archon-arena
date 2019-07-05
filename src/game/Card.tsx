@@ -1,7 +1,7 @@
 import Phaser from "phaser"
 
-const CARD_WIDTH = 80
-const CARD_HEIGHT = CARD_WIDTH / .716612378
+export const CARD_WIDTH = 80
+export const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class Card extends Phaser.GameObjects.Container {
 
@@ -45,23 +45,23 @@ class Card extends Phaser.GameObjects.Container {
             // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setInteractive()
-            cardImage.addListener("pointerover", function () {
+            cardImage.addListener("pointerover", (e: MouseEvent) => {
                 // @ts-ignore
-                onMouseOver(this.frame.texture.key)
+                onMouseOver(e, this)
             })
-            cardImage.addListener("pointerout", function () {
+            cardImage.addListener("pointerout", function() {
                 // @ts-ignore
                 onMouseOut(this.frame.texture.key)
             })
             return cardImage
         })
 
-        this.cardImage.addListener("pointerup", (e: MouseEvent) => {
-            onClick(this, e)
+        this.cardImage.addListener("pointerup", (e: any) => {
+            onClick(this, e.event)
         })
 
-        this.cardImage.addListener("pointerover", () => {
-            onMouseOver(this.data.get("front"))
+        this.cardImage.addListener("pointerover", (e: MouseEvent) => {
+            onMouseOver(e, this)
         })
 
         this.cardImage.addListener("pointerout", () => {

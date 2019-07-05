@@ -1,7 +1,10 @@
 import Phaser from "phaser"
+import Card, { CARD_WIDTH, CARD_HEIGHT } from "./Card"
+import { Event } from "./Event"
+import { log } from "../Utils"
+
 import amber from "../images/amber.png"
 import armor from "../images/armor.png"
-
 import cardback from "../images/cardback.jpg" // TODO load via HTTP request
 import damage from "../images/damage.png"
 import forgedKey from "../images/forgedkey.png"
@@ -12,19 +15,19 @@ import mantleOfTheZealot from "../images/mantle-of-the-zealot.png"
 import power from "../images/power.png"
 import safePlace from "../images/safe-place.png"
 import stun from "../images/stun.png"
-import Card from "./Card"
-
-const CARD_WIDTH = 80
-const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class GameScene extends Phaser.Scene {
     // @ts-ignore
     root: Phaser.GameObjects.Container
     // @ts-ignore
-    cardHoverImage: Phaser.GameObjects.Image
+    cardHoverImage: Phaser.GameObjects.Image | undefined
+    // @ts-ignore
+    cardMousingOver: Phaser.GameObjects.GameObject | undefined
+    keysDown: object
 
     constructor() {
         super("GameScene")
+        this.keysDown = {}
     }
 
     preload() {
@@ -47,11 +50,7 @@ class GameScene extends Phaser.Scene {
         this.render()
 
         this.input.mouse.disableContextMenu()
-        const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-        spaceBar.on("up", () => {
-            this.data.get("endTurn")()
-            this.render()
-        })
+        this.setupKeyboardListeners()
     }
 
     renderPlayerBoard(player: any, originX: number, originY: number, orientation: string) {
@@ -107,7 +106,7 @@ class GameScene extends Phaser.Scene {
             this.root.add(cardback)
         }
 
-        const piles = ["Archon", "Draw", "Discard"]
+        const piles = ["Discard", "Draw", "Archon"]
         piles.forEach((pileTitle, i) => {
             const archivePileOutline = new Phaser.GameObjects.Rectangle(this, originX + CARD_WIDTH * 5.7 + i * (CARD_WIDTH * 0.7 + 10), originY + 25)
             archivePileOutline.setDisplaySize(CARD_WIDTH * 0.7, CARD_HEIGHT * 0.7)
@@ -182,8 +181,6 @@ class GameScene extends Phaser.Scene {
                 })
             this.root.add(card)
         }
-
-
     }
 
     render() {
@@ -193,51 +190,98 @@ class GameScene extends Phaser.Scene {
         this.renderPlayerBoard(state.players[1], 5, this.data.get("height") - CARD_HEIGHT - 5, "bottom")
     }
 
-    onMouseOverCard(texture: string) {
-        const width = 260
+    onMouseOverCard(e: MouseEvent, target: any) {
+        const width = 220
         const height = width / .716612378
-        const image = new Phaser.GameObjects.Image(this, width / 2 + 20, height / 2 + 20, texture)
+        const texture = target.data.get("front")
+        const image = new Phaser.GameObjects.Image(this, this.data.get("width") - width / 2 - 10, height / 2 + 10, texture)
         image.setDisplaySize(width, height)
         this.root.add(image)
         this.cardHoverImage = image
+        this.cardMousingOver = target
     }
 
     onMouseOutCard() {
-        this.cardHoverImage.destroy()
+        this.cardMousingOver = undefined
+
+        if (this.cardHoverImage) 
+            this.cardHoverImage.destroy()
     }
 
-    onClickCreature(card: Card, e: { event: MouseEvent }) {
-        return // TODO
+    onClickCreature(card: Card, e: MouseEvent) {
         const state = this.data.get("state")
-        const creature = state.players[0].creatures.find((c: { position: number }) => "p0-creature-" + c.position === card.data.get("id"))
+        const dispatch = this.data.get("dispatch")
+        const cardID = card.data.get("id")
 
-        if (e.event.which === 3 && e.event.shiftKey) {
-            creature.tokens.damage -= 1
+        let creature = state.players[0].creatures.find((c: { position: number, id: string }) => {
+            return `${state.players[0].name}-creature-${c.position}` === cardID
+        })
+        creature = creature || state.players[1].creatures.find((c: { position: number, id: string }) => {
+            return `${state.players[1].name}-creature-${c.position}` === cardID
+        })
+
+        if (e.which === 3) {
+            dispatch({
+                action: Event.AlterCreatureDamage,
+                creature: cardID,
+                amount: e.shiftKey ? -1 : 1
+            })
             this.render()
             return
         }
 
-        if (e.event.which === 3) {
-            creature.tokens.damage += 1
-            this.render()
-            return
-        }
+        dispatch({
+            action: Event.UseCreature,
+            creature: cardID
+        })
+        this.render()
+    }
 
-        if (!creature.ready) {
-            return
-        }
+    setupKeyboardListeners() {
+        const dispatch = this.data.get("dispatch")
 
-        if (creature.tokens.stun) {
-            creature.tokens.stun = 0
-            creature.ready = false
+        const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
+        spaceBar.on("up", () => {
+            dispatch({ action: Event.EndTurn, })
             this.render()
-            return
-        } else {
-            state.players[0].amber += 1
-            creature.ready = false
-            this.render()
-            return
-        }
+        })
+
+        this.input.keyboard.on("keydown", (e: any) => {
+            // @ts-ignore
+            this.keysDown[e.which] = false
+        })
+
+        this.input.keyboard.on("keyup", (e: any) => {
+            // @ts-ignore
+            this.keysDown[e.which] = true
+            const { KeyCodes } = Phaser.Input.Keyboard
+
+            if (this.cardMousingOver instanceof Card && e.which === KeyCodes.C) {
+                dispatch({
+                    action: Event.CaptureAmber,
+                    creature: this.cardMousingOver.data.get("id"),
+                    amount: e.shiftKey ? -1 : 1
+                })
+                this.render()
+            }
+
+            if (this.cardMousingOver instanceof Card && e.which === KeyCodes.S) {
+                dispatch({
+                    action: Event.ToggleStun,
+                    creature: this.cardMousingOver.data.get("id"),
+                })
+                this.render()
+            }
+
+            if (this.cardMousingOver instanceof Card && e.which === KeyCodes.P) {
+                dispatch({
+                    action: Event.AlterCreaturePower,
+                    creature: this.cardMousingOver.data.get("id"),
+                    amount: e.shiftKey ? -1 : 1
+                })
+                this.render()
+            }
+        })
     }
 }
 
