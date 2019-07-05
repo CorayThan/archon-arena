@@ -46,18 +46,16 @@ class Card extends Phaser.GameObjects.Container {
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setInteractive()
             cardImage.addListener("pointerover", (e: MouseEvent) => {
-                // @ts-ignore
                 onMouseOver(e, this)
             })
-            cardImage.addListener("pointerout", function() {
-                // @ts-ignore
-                onMouseOut(this.frame.texture.key)
+            cardImage.addListener("pointerout", () => {
+                onMouseOut()
             })
             return cardImage
         })
 
         this.cardImage.addListener("pointerup", (e: any) => {
-            onClick(this, e.event)
+            onClick(e.event, this)
         })
 
         this.cardImage.addListener("pointerover", (e: MouseEvent) => {

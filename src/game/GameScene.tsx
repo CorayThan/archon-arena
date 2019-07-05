@@ -210,7 +210,7 @@ class GameScene extends Phaser.Scene {
             this.cardHoverImage.destroy()
     }
 
-    onClickCreature(card: Card, e: MouseEvent) {
+    onClickCreature(e: MouseEvent, card: Card) {
         const state = this.data.get("state")
         const dispatch = this.data.get("dispatch")
         const cardID = card.data.get("id")
