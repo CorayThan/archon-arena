@@ -1,8 +1,12 @@
-import { AppBar, Toolbar } from "@material-ui/core"
+import { AppBar, Button, Toolbar, Typography } from "@material-ui/core"
+import { observer } from "mobx-react"
 import * as React from "react"
+import { theme } from "../index"
 import { Routes } from "../routing/Routes"
+import { authStore } from "../stores/AuthStore"
 import { LinkButton } from "./LinkButton"
 
+@observer
 export class TopBar extends React.Component {
     render() {
         return (
@@ -10,7 +14,14 @@ export class TopBar extends React.Component {
                 <Toolbar>
 
                     <div style={{flexGrow: 1}}/>
-                    <LinkButton color="inherit" to={Routes.login}>Login or Signup</LinkButton>
+                    {authStore.authUser ? (
+                        <>
+                            <Typography style={{marginRight: theme.spacing(2)}}>{authStore.authUser.displayName}</Typography>
+                            <Button color={"inherit"} onClick={authStore.logout}>Logout</Button>
+                        </>
+                    ) : (
+                        <LinkButton color="inherit" to={Routes.login}>Login or Signup</LinkButton>
+                    )}
                 </Toolbar>
             </AppBar>
         )

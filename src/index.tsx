@@ -6,6 +6,7 @@ import ReactDOM from "react-dom"
 import * as WebFont from "webfontloader"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
+import { authStore } from "./stores/AuthStore"
 import { log } from "./Utils"
 
 export const theme = createMuiTheme({
@@ -36,5 +37,7 @@ ReactDOM.render(<App/>, document.getElementById("root"))
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
+
+authStore.listenForAuthUser()
 
 log.info("Loaded app.")
