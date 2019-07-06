@@ -16,6 +16,7 @@ export enum Event {
     PlayUpgrade = "PlayUpgrade",
 
     DrawCard = "DrawCard",
+    ArchiveCard = "ArchiveCard",
     DiscardCard = "DiscardCard",
 
     AlterPlayerAmber = "AlterPlayerAmber",
