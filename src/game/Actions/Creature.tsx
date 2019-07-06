@@ -1,13 +1,14 @@
 import { Event } from "../Event"
 import { log } from "../../Utils"
 import {
-  getCardOwner,
-  getCreatureByID,
-  getArtifactByID,
-  getCardInHandByID,
-  removeCreature,
-  removeArtifact,
-  removeCardFromHand
+    getCardOwner,
+    getPlayerByName,
+    getCreatureByID,
+    getArtifactByID,
+    getCardInHandByID,
+    removeCreature,
+    removeArtifact,
+    removeCardFromHand
 } from "../StateUtils"
 import Creature from "../types/Creature"
 import Artifact from "../types/Artifact"
@@ -37,10 +38,11 @@ export default {
             }
         }
 
+        const player = getPlayerByName(action.playerName, state)
         if (action.side === "left") {
-            owner.creatures.unshift(creature)
+            player.creatures.unshift(creature)
         } else {
-            owner.creatures.push(creature)
+            player.creatures.push(creature)
         }
 
         removeCardFromHand(owner, action.cardID)
@@ -94,6 +96,13 @@ export default {
         if (!creature)
             throw new Error(`Card ${action.cardID} not found in hand`)
         creature.tokens.stun = creature.tokens.stun === 0 ? 1 : 0
+    },
+    [Event.ToggleTaunt]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const creature = getCreatureByID(owner, action.cardID)
+        if (!creature)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        creature.taunt = !creature.taunt
     },
     [Event.UseCreature]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardID, state)

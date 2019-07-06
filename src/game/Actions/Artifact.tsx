@@ -1,13 +1,14 @@
 import { Event } from "../Event"
 import { log } from "../../Utils"
 import {
-  getCardOwner,
-  getCreatureByID,
-  getArtifactByID,
-  getCardInHandByID,
-  removeCreature,
-  removeArtifact,
-  removeCardFromHand
+    getCardOwner,
+    getPlayerByName,
+    getCreatureByID,
+    getArtifactByID,
+    getCardInHandByID,
+    removeCreature,
+    removeArtifact,
+    removeCardFromHand
 } from "../StateUtils"
 import Creature from "../types/Creature"
 import Artifact from "../types/Artifact"
@@ -31,7 +32,8 @@ export default {
             }
         }
 
-        owner.artifacts.push(artifact)
+        const player = getPlayerByName(action.playerName, state)
+        player.artifacts.push(artifact)
         removeCardFromHand(owner, action.cardID)
     },
     [Event.UseArtifact]: (action: any, state: any) => {},
