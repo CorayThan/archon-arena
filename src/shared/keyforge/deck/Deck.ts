@@ -1,4 +1,4 @@
-import { CardInDeck, KCard } from "../card/KCard"
+import { KCard } from "../card/KCard"
 import { Expansion } from "../expansion/Expansion"
 import { House } from "../house/House"
 

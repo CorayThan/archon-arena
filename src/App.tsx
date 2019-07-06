@@ -1,11 +1,10 @@
 import React from "react"
-import Game from "./game"
-import gameState from "./game-state.json"
+import { ArchonRouter } from "./routing/ArchonRouter"
 
 const App: React.FC = () => {
     return (
         <div className="App">
-            <Game state={gameState}/>
+            <ArchonRouter/>
         </div>
     )
 }
