@@ -17,7 +17,6 @@ export const buildLogForAction = (action: any, state: object) => {
     const events: { [key: string]: Function } = {
         [Event.PlayCreature]: () => {
             const owner = getCardOwner(action.cardID, state)
-            action.player = owner.name
             const creature = getCardInHandByID(owner, action.cardID)
             if (!creature) throw new Error("creature not found")
             action.message = `${owner.name} plays ${creature.name} on ${action.side} flank`
