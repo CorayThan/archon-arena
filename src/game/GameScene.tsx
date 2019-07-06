@@ -230,7 +230,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
-                action: Event.DiscardCreature,
+                type: Event.DiscardCreature,
                 cardID,
             })
             card.destroy()
@@ -240,7 +240,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.M]) {
             dispatch({
-                action: Event.MoveCreatureToHand,
+                type: Event.MoveCreatureToHand,
                 cardID,
             })
             card.destroy()
@@ -249,7 +249,7 @@ class GameScene extends Phaser.Scene {
         }
 
         dispatch({
-            action: Event.UseCreature,
+            type: Event.UseCreature,
             cardID,
         })
         this.render()
@@ -279,7 +279,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
-                action: Event.DiscardArtifact,
+                type: Event.DiscardArtifact,
                 cardID,
             })
             card.destroy()
@@ -289,7 +289,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.M]) {
             dispatch({
-                action: Event.MoveArtifactToHand,
+                type: Event.MoveArtifactToHand,
                 cardID,
             })
             card.destroy()
@@ -298,7 +298,7 @@ class GameScene extends Phaser.Scene {
         }
 
         dispatch({
-            action: Event.UseArtifact,
+            type: Event.UseArtifact,
             cardID,
         })
         this.render()
@@ -310,7 +310,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.D]) {
             dispatch({
-                action: Event.DiscardCard,
+                type: Event.DiscardCard,
                 cardID,
             })
             card.destroy()
@@ -320,7 +320,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.A]) {
             dispatch({
-                action: Event.PlayArtifact,
+                type: Event.PlayArtifact,
                 cardID,
             })
             card.destroy()
@@ -329,7 +329,7 @@ class GameScene extends Phaser.Scene {
         }
 
         dispatch({
-            action: Event.PlayCreature,
+            type: Event.PlayCreature,
             cardID,
             side: e.which === 3 ? "right" : "left"
         })
@@ -359,7 +359,7 @@ class GameScene extends Phaser.Scene {
 
         const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         spaceBar.on("up", () => {
-            dispatch({ action: Event.EndTurn, })
+            dispatch({ type: Event.EndTurn, })
             this.render()
         })
 
@@ -376,7 +376,7 @@ class GameScene extends Phaser.Scene {
 
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.C) {
                 dispatch({
-                    action: Event.CaptureAmber,
+                    type: Event.CaptureAmber,
                     cardID,
                     amount: e.shiftKey ? -1 : 1
                 })
@@ -385,7 +385,7 @@ class GameScene extends Phaser.Scene {
 
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.S) {
                 dispatch({
-                    action: Event.ToggleStun,
+                    type: Event.ToggleStun,
                     cardID,
                 })
                 this.render()
@@ -393,7 +393,7 @@ class GameScene extends Phaser.Scene {
 
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.P) {
                 dispatch({
-                    action: Event.AlterCreaturePower,
+                    type: Event.AlterCreaturePower,
                     cardID,
                     amount: e.shiftKey ? -1 : 1
                 })
@@ -402,7 +402,7 @@ class GameScene extends Phaser.Scene {
 
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.D) {
                 dispatch({
-                    action: Event.AlterCreatureDamage,
+                    type: Event.AlterCreatureDamage,
                     cardID,
                     amount: e.shiftKey ? -1 : 1
                 })

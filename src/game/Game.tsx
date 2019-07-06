@@ -5,6 +5,7 @@ import GameScene from "./GameScene"
 import { GameState } from "../gamestate/types/GameState"
 import { exec } from "./Actions"
 import { log } from "../Utils"
+import { buildLogForAction } from "./ActionLogger"
 
 interface Props {
     state: object//GameState
@@ -25,15 +26,28 @@ const config: Phaser.Types.Core.GameConfig = {
 }
 
 class Game extends React.Component<Props> {
+    log: object[] = []
 
     dispatch = (action: any) => {
         const { state } = this.props
+        this.log.push(buildLogForAction(action, state))
         exec(action, state)
+
+        // temporary
+        const div = document.createElement("div")
+        // @ts-ignore
+        div.innerHTML = (this.log[this.log.length - 1] || { message: `${action.type} log not implemented` }).message
+        // @ts-ignore
+        document.querySelector(".Game-chat").appendChild(div)
     }
 
     render() {
         return (
-            <div id='phaser' className='Game-container'>
+            <div>
+                <div className='Game-chat'>
+                </div>
+                <div id='phaser' className='Game-phaser-container'>
+                </div>
             </div>
         )
     }
@@ -45,8 +59,12 @@ class Game extends React.Component<Props> {
     componentDidMount() {
         const { state } = this.props
         log.debug(state)
-        const game = new Phaser.Game(config)
 
+        this.log = []
+        // @ts-ignore
+        window.game = this
+
+        const game = new Phaser.Game(config)
         game.events.once("ready", () => {
             const scene = game.scene.getScene("GameScene")
 
