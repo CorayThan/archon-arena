@@ -94,7 +94,6 @@ class Card extends Phaser.GameObjects.Container {
             this.cardImage.setTexture(this.data.get("front"))
         }
 
-        this.setSize(CARD_WIDTH, CARD_HEIGHT)
         this.cardImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
         this.add(this.cardImage)
 

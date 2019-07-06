@@ -137,29 +137,6 @@ class GameScene extends Phaser.Scene {
         const creatureOffsetY = orientation === "top" ? height / 2 - 50 : -height / 2 + 250
         const artifactOffsetY = orientation === "top" ? 200 : -70
 
-        this.createCardDropZone(originX + CARD_WIDTH / 2, originY + creatureOffsetY, (card: Card) => {
-            dispatch({
-                type: Event.PlayCreature,
-                cardID: card.data.get("id"),
-                playerName: player.name,
-                side: "left",
-            })
-            card.destroy()
-            this.render()
-        })
-
-        const rightCreatureDropZoneX = originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (player.creatures.length + 1)
-        this.createCardDropZone(rightCreatureDropZoneX, originY + creatureOffsetY, (card: Card) => {
-            dispatch({
-                type: Event.PlayCreature,
-                cardID: card.data.get("id"),
-                playerName: player.name,
-                side: "right",
-            })
-            card.destroy()
-            this.render()
-        })
-
         const artifactDropZoneX = originX + CARD_WIDTH / 2
         this.createCardDropZone(artifactDropZoneX, originY + artifactOffsetY, (card: Card) => {
             dispatch({
@@ -170,18 +147,6 @@ class GameScene extends Phaser.Scene {
             card.destroy()
             this.render()
         })
-
-        for (let i = 0; i < player.creatures.length; i++) {
-            const dropZoneX = originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1)
-            this.createCardDropZone(dropZoneX, originY + creatureOffsetY, (card: Card) => {
-                dispatch({
-                    type: Event.PlayUpgrade,
-                    cardID: card.data.get("id"),
-                })
-                card.destroy()
-                this.render()
-            }, false)
-        }
 
         const discardPileX = originX + CARD_WIDTH * 6
         this.createCardDropZone(discardPileX, originY + CARD_HEIGHT / 2, (card: Card) => {
@@ -262,16 +227,34 @@ class GameScene extends Phaser.Scene {
             this.root.add(card)
         }
 
-
+        let lastCreatureX = 0
+        let creatureOffsetX = 0
         for (let i = 0; i < player.creatures.length; i++) {
+
             const creature = player.creatures[i]
             let creatureY = originY + creatureOffsetY
             if (creature.taunt) {
                 creatureY += orientation === "top" ? 15 : -15
             }
+
+            if (i > 0) {
+                const previousCreature = player.creatures[i - 1]
+                if (!player.creatures[i - 1].ready) {
+                    creatureOffsetX += CARD_WIDTH * 0.2
+                    creatureOffsetX += (CARD_WIDTH * 0.2) * previousCreature.upgrades.length
+                } else {
+                    creatureOffsetX += (CARD_WIDTH * 0.1) * previousCreature.cardsUnderneath.length
+                }
+            }
+
+            if (!creature.ready) {
+                creatureOffsetX += CARD_WIDTH * 0.2
+                creatureOffsetX += (CARD_WIDTH * 0.1) * (creature.cardsUnderneath.length)
+            }
+
             const card = new Card({
                 scene: this,
-                x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1),
+                x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1) + creatureOffsetX,
                 y: creatureY,
                 id: `${player.name}-creature-${i}`,
                 front: creature.id,
@@ -292,7 +275,19 @@ class GameScene extends Phaser.Scene {
                         amount: tokenAmount,
                     })
                 })
+            lastCreatureX = card.x
             this.root.add(card)
+
+            const dropZoneX = card.x
+            const dropZone = this.createCardDropZone(dropZoneX, originY + creatureOffsetY, (card: Card) => {
+                dispatch({
+                    type: Event.PlayUpgrade,
+                    cardID: card.data.get("id"),
+                })
+                card.destroy()
+                this.render()
+            }, false)
+            this.root.sendToBack(dropZone)
         }
 
         const handWidth = CARD_WIDTH * 4
@@ -312,6 +307,35 @@ class GameScene extends Phaser.Scene {
             })
             this.root.add(card)
         }
+
+        this.createCardDropZone(originX + CARD_WIDTH / 2, originY + creatureOffsetY, (card: Card) => {
+            dispatch({
+                type: Event.PlayCreature,
+                cardID: card.data.get("id"),
+                playerName: player.name,
+                side: "left",
+            })
+            card.destroy()
+            this.render()
+        })
+
+        let rightCreatureDropZoneX = lastCreatureX + (CARD_WIDTH + CARD_WIDTH * 0.2)
+        if (player.creatures.length) {
+            const lastCreature = player.creatures[player.creatures.length - 1]
+            if (!lastCreature.ready) {
+                rightCreatureDropZoneX += CARD_WIDTH * 0.1
+            }
+        }
+        this.createCardDropZone(rightCreatureDropZoneX, originY + creatureOffsetY, (card: Card) => {
+            dispatch({
+                type: Event.PlayCreature,
+                cardID: card.data.get("id"),
+                playerName: player.name,
+                side: "right",
+            })
+            card.destroy()
+            this.render()
+        })
     }
 
     render() {
@@ -344,6 +368,7 @@ class GameScene extends Phaser.Scene {
         this.root.add(zone)
         if (visible)
             this.root.add(image)
+        return zone
     }
 
     onMouseOverCreature(e: MouseEvent, target: any) {
