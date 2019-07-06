@@ -24,8 +24,9 @@ class GameScene extends Phaser.Scene {
     root: Phaser.GameObjects.Container
     // @ts-ignore
     cardHoverImage: Phaser.GameObjects.Image | undefined
-    // @ts-ignore
     creatureMousingOver: Phaser.GameObjects.GameObject | undefined
+    artifactMousingOver: Phaser.GameObjects.GameObject | undefined
+    cardInHandMousingOver: Phaser.GameObjects.GameObject | undefined
     keysDown: {
         [key: string]: boolean
     }
@@ -211,7 +212,6 @@ class GameScene extends Phaser.Scene {
                 faceup: artifact.faceup,
                 ready: artifact.ready,
                 cardsUnderneath: artifact.cardsUnderneath,
-                upgrades: artifact.upgrades,
                 onClick: this.onClickArtifact.bind(this),
                 onMouseOver: this.onMouseOverArtifact.bind(this),
                 onMouseOut: this.onMouseOutArtifact.bind(this),
@@ -266,6 +266,8 @@ class GameScene extends Phaser.Scene {
                 onClick: this.onClickCreature.bind(this),
                 onMouseOver: this.onMouseOverCreature.bind(this),
                 onMouseOut: this.onMouseOutCreature.bind(this),
+                onMouseOverUpgrade: this.onMouseOverUpgrade.bind(this),
+                onMouseOutUpgrade: this.onMouseOutUpgrade.bind(this),
             })
             Object.keys(creature.tokens)
                 .forEach(token => {
@@ -372,13 +374,8 @@ class GameScene extends Phaser.Scene {
     }
 
     onMouseOverCreature(e: MouseEvent, target: any) {
-        const width = 220
-        const height = width / .716612378
         const texture = target.data.get("front")
-        const image = new Phaser.GameObjects.Image(this, this.data.get("width") - width / 2 - 10, height / 2 + 10, texture)
-        image.setDisplaySize(width, height)
-        this.root.add(image)
-        this.cardHoverImage = image
+        this.showEnlargedCard(texture)
         this.creatureMousingOver = target
     }
 
@@ -422,17 +419,13 @@ class GameScene extends Phaser.Scene {
     }
 
     onMouseOverArtifact(e: MouseEvent, target: any) {
-        const width = 220
-        const height = width / .716612378
         const texture = target.data.get("front")
-        const image = new Phaser.GameObjects.Image(this, this.data.get("width") - width / 2 - 10, height / 2 + 10, texture)
-        image.setDisplaySize(width, height)
-        this.root.add(image)
-        this.cardHoverImage = image
+        this.showEnlargedCard(texture)
+        this.artifactMousingOver = target
     }
 
     onMouseOutArtifact() {
-        this.creatureMousingOver = undefined
+        this.artifactMousingOver = undefined
 
         if (this.cardHoverImage)
             this.cardHoverImage.destroy()
@@ -499,20 +492,38 @@ class GameScene extends Phaser.Scene {
     }
 
     onMouseOverCardInHand(e: MouseEvent, target: any) {
-        const width = 220
-        const height = width / .716612378
         const texture = target.data.get("front")
-        const image = new Phaser.GameObjects.Image(this, this.data.get("width") - width / 2 - 10, height / 2 + 10, texture)
-        image.setDisplaySize(width, height)
-        this.root.add(image)
-        this.cardHoverImage = image
+        this.showEnlargedCard(texture)
+        this.cardInHandMousingOver = target
     }
 
     onMouseOutCardInHand() {
+        this.cardInHandMousingOver = undefined
+
+        if (this.cardHoverImage)
+            this.cardHoverImage.destroy()
+    }
+
+    onMouseOverUpgrade(e: MouseEvent, target: any) {
+        const texture = target.data.get("front")
+        this.showEnlargedCard(texture)
+        this.creatureMousingOver = target
+    }
+
+    onMouseOutUpgrade() {
         this.creatureMousingOver = undefined
 
         if (this.cardHoverImage)
             this.cardHoverImage.destroy()
+    }
+
+    showEnlargedCard(texture: string) {
+        const width = 220
+        const height = width / .716612378
+        const image = new Phaser.GameObjects.Image(this, this.data.get("width") - width / 2 - 10, height / 2 + 10, texture)
+        image.setDisplaySize(width, height)
+        this.root.add(image)
+        this.cardHoverImage = image
     }
 
     setupKeyboardListeners() {

@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import CardInHand from "./types/CardInHand"
 
 export const CARD_WIDTH = 80
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
@@ -10,7 +11,24 @@ class Card extends Phaser.GameObjects.Container {
     upgrades: Phaser.GameObjects.Image[]
     cardsUnderneath: Phaser.GameObjects.Image[]
 
-    constructor({ scene, x, y, id, front, back, faceup = true, ready = true, cardsUnderneath = [], upgrades = [], onClick, onMouseOver, onMouseOut, draggable=false}: any) {
+    constructor({
+        scene,
+        x,
+        y,
+        id,
+        front,
+        back,
+        faceup = true,
+        ready = true,
+        draggable = false,
+        cardsUnderneath = [],
+        upgrades = [],
+        onClick,
+        onMouseOver,
+        onMouseOut,
+        onMouseOverUpgrade,
+        onMouseOutUpgrade,
+    }: any) {
         super(scene)
         this.scene = scene
 
@@ -41,15 +59,15 @@ class Card extends Phaser.GameObjects.Container {
             return cardImage
         })
 
-        this.upgrades = upgrades.map((card: { id: string }) => {
+        this.upgrades = upgrades.map((card: CardInHand) => {
             // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setInteractive()
             cardImage.addListener("pointerover", (e: MouseEvent) => {
-                onMouseOver(e, this)
+                onMouseOverUpgrade(e, { data: { get: () => card.id }})
             })
             cardImage.addListener("pointerout", () => {
-                onMouseOut()
+                onMouseOutUpgrade()
             })
             return cardImage
         })
