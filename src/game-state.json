@@ -65,6 +65,7 @@
           "faceup": true,
           "taunt": false,
           "upgrades": [],
+          "cardsUnderneath": [],
           "tokens": {
             "armor": 0,
             "power": 0,
@@ -191,6 +192,7 @@
               "id": "mantle-of-the-zealot"
             }
           ],
+          "cardsUnderneath": [],
           "tokens": {
             "armor": 0,
             "power": 0,
