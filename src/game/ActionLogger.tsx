@@ -13,7 +13,7 @@ import {
 } from "./StateUtils"
 
 export const buildLogForAction = (action: any, state: object) => {
-    
+
     const events: { [key: string]: Function } = {
         [Event.PlayCreature]: () => {
             const owner = getCardOwner(action.cardID, state)
@@ -22,21 +22,14 @@ export const buildLogForAction = (action: any, state: object) => {
             action.message = `${owner.name} plays ${creature.name} on ${action.side} flank`
             return action
         },
-        [Event.DiscardCreature]: () => {},
-        [Event.MoveCreatureToHand]: () => {},
-        [Event.AlterCreatureDamage]: () => {},
-        [Event.CaptureAmber]: () => {},
-        [Event.AlterCreaturePower]: () => {},
-        [Event.ToggleStun]: () => {},
-        [Event.UseCreature]: () => {},
-        [Event.PlayArtifact]: () => {},
-        [Event.UseArtifact]: () => {},
-        [Event.DiscardArtifact]: () => {},
-        [Event.MoveArtifactToHand]: () => {},
-        [Event.DiscardCard]: () => {},
-        [Event.DrawCard]: () => {},
-        [Event.EndTurn]: () => {},
     }
+
+    // Add placeholder function for unimplemented events
+    Object.keys(Event)
+        .forEach(event => {
+            if (!events[event])
+                events[event] = () => {}
+        })
 
     return events[action.type]()
 }

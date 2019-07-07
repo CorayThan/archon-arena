@@ -10,7 +10,7 @@ class Card extends Phaser.GameObjects.Container {
     upgrades: Phaser.GameObjects.Image[]
     cardsUnderneath: Phaser.GameObjects.Image[]
 
-    constructor({scene, x, y, id, front, back, faceup = true, ready = true, cardsUnderneath = [], upgrades = [], onClick, onMouseOver, onMouseOut}: any) {
+    constructor({ scene, x, y, id, front, back, faceup = true, ready = true, cardsUnderneath = [], upgrades = [], onClick, onMouseOver, onMouseOut, draggable=false}: any) {
         super(scene)
         this.scene = scene
 
@@ -66,6 +66,24 @@ class Card extends Phaser.GameObjects.Container {
             onMouseOut()
         })
 
+        if (draggable) {
+            this.cardImage.addListener("drag", (pointer: any, x: number, y: number) => {
+                this.cardImage.setPosition(x, y)
+            })
+
+            this.cardImage.addListener("dragenter", (pointer: any, zone: any) => {
+                zone.data.get("onEnter")()
+            })
+
+            this.cardImage.addListener("dragleave", (pointer: any, zone: any) => {
+                zone.data.get("onLeave")()
+            })
+
+            this.cardImage.addListener("drop", (pointer: any, zone: any) => {
+                zone.data.get("onDrop")(this)
+            })
+        }
+
         this.render()
     }
 
@@ -98,7 +116,7 @@ class Card extends Phaser.GameObjects.Container {
             this.setAngle(90)
         }
         this.setPosition(this.data.get("x"), this.data.get("y"))
-        this.cardImage.setInteractive({cursor: "pointer"})
+        this.cardImage.setInteractive({ cursor: "pointer" })
         this.scene.input.setDraggable(this.cardImage)
 
         const tokenPositions = [
