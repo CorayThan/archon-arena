@@ -13,153 +13,22 @@ import Creature from "./types/Creature"
 import Artifact from "./types/Artifact"
 import CardInHand from "./types/CardInHand"
 
+import CreatureActions from "./Actions/Creature"
+import ArtifactActions from "./Actions/Artifact"
+
 export const exec = (action: any, state: any) => {
 
-    const events: { [key: string]: Function } = {
-        [Event.PlayCreature]: () => {
+    const actionHandlers: { [key: string]: Function } = {
+
+        [Event.PlayUpgrade]: () => {
             const owner = getCardOwner(action.cardID, state)
-            const card = getCardInHandByID(owner, action.cardID)
-            if (!card)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-
-            const creature: Creature = {
-                name: card.name,
-                id: card.id,
-                ready: false,
-                faceup: true,
-                taunt: false,
-                upgrades: [],
-                cardsUnderneath: [],
-                tokens: {
-                    armor: 0,
-                    power: 0,
-                    damage: 0,
-                    amber: 0,
-                    stun: 0
-                }
-            }
-
-            if (action.side === "left") {
-                owner.creatures.unshift(creature)
-            } else {
-                owner.creatures.push(creature)
-            }
-
             removeCardFromHand(owner, action.cardID)
         },
-        [Event.DiscardCreature]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            removeCreature(owner, action.cardID)
-        },
-        [Event.MoveCreatureToHand]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const creature = getCreatureByID(owner, action.cardID)
-            if (!creature)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-
-            const card: CardInHand = {
-                id: creature.id,
-                name: creature.name,
-            }
-            owner.hand.push(card)
-            removeCreature(owner, action.cardID)
-        },
-        [Event.AlterCreatureDamage]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const creature = getCreatureByID(owner, action.cardID)
-            if (!creature)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-            creature.tokens.damage += action.amount
-        },
-        [Event.CaptureAmber]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const opponent = state.players[0] === owner ? state.players[1] : state.players[0]
-            const creature = getCreatureByID(owner, action.cardID)
-            if (!creature)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-
-            if ((action.amount > 0 && opponent.amber > 0) || (action.amount < 0 && creature.tokens.amber > 0)) {
-                creature.tokens.amber += action.amount
-                opponent.amber -= action.amount
-            }
-        },
-        [Event.AlterCreaturePower]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const creature = getCreatureByID(owner, action.cardID)
-            if (!creature)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-            creature.tokens.power += action.amount
-        },
-        [Event.ToggleStun]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const creature = getCreatureByID(owner, action.cardID)
-            if (!creature)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-            creature.tokens.stun = creature.tokens.stun === 0 ? 1 : 0
-        },
-        [Event.UseCreature]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const creature = getCreatureByID(owner, action.cardID)
-            if (!creature)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-
-            if (!creature.ready) {
-                creature.ready = true
-                return
-            }
-
-            if (creature.tokens.stun) {
-                creature.tokens.stun = 0
-                creature.ready = false
-            } else {
-                const owner = getCardOwner(action.cardID, state)
-                owner.amber += 1
-                creature.ready = false
-            }
-        },
-
-
-        [Event.PlayArtifact]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const card = getCardInHandByID(owner, action.cardID)
-            if (!card)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-
-            const artifact: Artifact = {
-                name: card.name,
-                id: card.id,
-                ready: false,
-                faceup: true,
-                cardsUnderneath: [],
-                tokens: {
-                    amber: 0,
-                }
-            }
-
-            owner.artifacts.push(artifact)
-            removeCardFromHand(owner, action.cardID)
-        },
-        [Event.UseArtifact]: () => {},
-        [Event.DiscardArtifact]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            removeArtifact(owner, action.cardID)
-        },
-        [Event.MoveArtifactToHand]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const artifact = getArtifactByID(owner, action.cardID)
-            if (!artifact)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-
-            const card: CardInHand = {
-                id: artifact.id,
-                name: artifact.name,
-            }
-            owner.hand.push(card)
-            removeArtifact(owner, action.cardID)
-        },
-
-
         [Event.DiscardCard]: () => {
+            const owner = getCardOwner(action.cardID, state)
+            removeCardFromHand(owner, action.cardID)
+        },
+        [Event.ArchiveCard]: () => {
             const owner = getCardOwner(action.cardID, state)
             removeCardFromHand(owner, action.cardID)
         },
@@ -174,5 +43,15 @@ export const exec = (action: any, state: any) => {
         },
     }
 
-    events[action.type]()
+    Object.assign(actionHandlers, CreatureActions)
+    Object.assign(actionHandlers, ArtifactActions)
+
+    // Add placeholder function for unimplemented events
+    Object.keys(Event)
+        .forEach(event => {
+            if (!actionHandlers[event])
+                actionHandlers[event] = () => {}
+        })
+
+    actionHandlers[action.type](action, state)
 }
