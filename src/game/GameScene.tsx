@@ -281,7 +281,7 @@ class GameScene extends Phaser.Scene {
             this.root.add(card)
 
             const dropZoneX = card.x
-            const dropZone = this.createCardDropZone(dropZoneX, originY + creatureOffsetY, (card: Card) => {
+            this.createCardDropZone(dropZoneX, originY + creatureOffsetY, (card: Card) => {
                 dispatch({
                     type: Event.PlayUpgrade,
                     cardID: card.data.get("id"),
@@ -289,7 +289,6 @@ class GameScene extends Phaser.Scene {
                 card.destroy()
                 this.render()
             }, false)
-            this.root.sendToBack(dropZone)
         }
 
         const handWidth = CARD_WIDTH * 4
@@ -368,9 +367,11 @@ class GameScene extends Phaser.Scene {
         zone.data.get("onLeave")()
         image.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
         this.root.add(zone)
-        if (visible)
-            this.root.add(image)
-        return zone
+        if (visible) {
+          this.root.add(image)
+          this.root.sendToBack(image)
+        }
+        this.root.sendToBack(zone)
     }
 
     onMouseOverCreature(e: MouseEvent, target: any) {
