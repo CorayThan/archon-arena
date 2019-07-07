@@ -83,8 +83,8 @@
           "upgrades": [],
           "cardsUnderneath": [
             {
-              "name": "Foo",
-              "id": "",
+              "name": "Jargogle",
+              "id": "jargogle",
               "facedown": true
             }
           ],
@@ -210,8 +210,8 @@
           "upgrades": [],
           "cardsUnderneath": [
             {
-              "name": "Foo",
-              "id": "",
+              "name": "Jargogle",
+              "id": "jargogle",
               "facedown": true
             }
           ],
