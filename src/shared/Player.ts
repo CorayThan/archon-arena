@@ -1,4 +1,8 @@
+import { Deck } from "./keyforge/deck/Deck"
+
 export interface Player {
-    id: string
-    name: string
+    displayName: string
+    decks: Deck[]
+    activeDeck?: Deck
+    currentMatchId?: string | null
 }

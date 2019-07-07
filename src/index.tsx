@@ -6,9 +6,24 @@ import ReactDOM from "react-dom"
 import * as WebFont from "webfontloader"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
+import { authStore } from "./stores/AuthStore"
 import { log } from "./Utils"
 
 export const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: '#f05545',
+            main: '#b71c1c',
+            dark: '#7f0000',
+            contrastText: '#fff',
+        },
+        secondary: {
+            light: '#fff350',
+            main: '#ffc107',
+            dark: '#c79100',
+            contrastText: '#000',
+        },
+    },
 })
 
 log.debug("init firebase")
@@ -36,5 +51,7 @@ ReactDOM.render(<App/>, document.getElementById("root"))
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
+
+authStore.listenForAuthUser()
 
 log.info("Loaded app.")
