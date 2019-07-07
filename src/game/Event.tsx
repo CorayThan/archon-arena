@@ -7,6 +7,7 @@ export enum Event {
     AlterCreaturePower = "AlterCreaturePower",
     CaptureAmber = "CaptureAmber",
     ToggleStun = "ToggleStun",
+    ToggleTaunt = "ToggleTaunt",
 
     PlayArtifact = "PlayArtifact",
     UseArtifact = "UseArtifact",
@@ -18,7 +19,10 @@ export enum Event {
     DrawCard = "DrawCard",
     ArchiveCard = "ArchiveCard",
     DiscardCard = "DiscardCard",
-
+    ShuffleDeck = "ShuffleDeck",
     AlterPlayerAmber = "AlterPlayerAmber",
+    AlterPlayerChains = "AlterPlayerChains",
+    ForgeKey = "ForgeKey",
+    UnForgeKey = "UnForgeKey",
     EndTurn = "EndTurn",
 }

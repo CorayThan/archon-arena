@@ -13,6 +13,7 @@ import jargogle from "../images/jargogle.png"
 import kelifiDragon from "../images/kelifi-dragon.jpg" // TODO
 import mantleOfTheZealot from "../images/mantle-of-the-zealot.png"
 import power from "../images/power.png"
+import chains from "../images/chains.png"
 import safePlace from "../images/safe-place.png"
 import stun from "../images/stun.png"
 
@@ -47,6 +48,7 @@ class GameScene extends Phaser.Scene {
         this.load.image("stun-token", stun)
         this.load.image("armor-token", armor)
         this.load.image("power-token", power)
+        this.load.image("chains", chains)
     }
 
     create() {
@@ -58,42 +60,60 @@ class GameScene extends Phaser.Scene {
     }
 
     renderPlayerBoard(player: any, originX: number, originY: number, orientation: string) {
-        const playerNameText = new Phaser.GameObjects.Text(this, originX + 455, originY, player.name, {
+        const playerNameText = new Phaser.GameObjects.Text(this, originX + 750, originY, player.name, {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
-            fontSize: "14px"
+            fontSize: "18px"
         })
-        //this.root.add(playerNameText)
+        this.root.add(playerNameText)
         const nameWidth = playerNameText.displayWidth
 
-        const amberImage = new Phaser.GameObjects.Image(this, originX + 455 + nameWidth + 5, originY, "amber-token")
-        amberImage.setDisplaySize(20, 20)
+        const amberImage = new Phaser.GameObjects.Image(this, originX + 750, originY + 30, "amber-token")
+        amberImage.setDisplaySize(30, 30)
         amberImage.setOrigin(0)
-        //this.root.add(amberImage)
+        amberImage.setInteractive({ cursor: "pointer" })
+        amberImage.addListener("pointerup", (e: any) => {
+            dispatch({
+                type: Event.AlterPlayerAmber,
+                amount: e.event.shiftKey ? -1 : 1,
+                playerName: player.name
+            })
+            this.render()
+        })
+        this.root.add(amberImage)
 
-        const amberText = new Phaser.GameObjects.Text(this, originX + 455 + nameWidth + 15, originY + 11, player.amber, {
+        const amberText = new Phaser.GameObjects.Text(this, originX + 750 + 15, originY + 45, player.amber, {
             color: "#fff",
             stroke: "#000",
-            strokeThickness: 3,
-            fontSize: "14px"
+            strokeThickness: 4,
+            fontSize: "18px"
         })
         amberText.setOrigin(0.5)
-        //this.root.add(amberText)
+        this.root.add(amberText)
 
-        const chainsImage = new Phaser.GameObjects.Image(this, originX + 455 + nameWidth + 30, originY, "amber-token")
-        chainsImage.setDisplaySize(20, 20)
+        const chainsImage = new Phaser.GameObjects.Image(this, originX + 750, originY + 70, "chains")
+        chainsImage.setDisplaySize(30, 30)
         chainsImage.setOrigin(0)
-        //this.root.add(chainsImage)
+        chainsImage.setInteractive({ cursor: "pointer" })
+        chainsImage.addListener("pointerup", (e: any) => {
+            dispatch({
+                type: Event.AlterPlayerChains,
+                amount: e.event.shiftKey ? -1 : 1,
+                playerName: player.name
+            })
+            this.render()
+        })
+        this.root.add(chainsImage)
 
-        const chainsText = new Phaser.GameObjects.Text(this, originX + 455 + nameWidth + 40, originY + 11, player.chains, {
+        const chainsText = new Phaser.GameObjects.Text(this, originX + 750 + 15, originY + 85, player.chains, {
             color: "#fff",
             stroke: "#000",
-            strokeThickness: 3,
-            fontSize: "14px"
+            strokeThickness: 4,
+            fontSize: "18px"
         })
         chainsText.setOrigin(0.5)
-        //this.root.add(chainsText)
+        this.root.add(chainsText)
 
         for (let i = 0; i < 3; i++) {
             const textureID = player.keys >= i + 1 ? "forged-key" : "unforged-key"
@@ -101,6 +121,14 @@ class GameScene extends Phaser.Scene {
             const keyImage = new Phaser.GameObjects.Image(this, originX + 710, originY + (keySize + 4) * i + 10, textureID)
             keyImage.setDisplaySize(keySize, keySize)
             keyImage.setOrigin(0)
+            keyImage.setInteractive({ cursor: "pointer" })
+            keyImage.addListener("pointerup", (e: any) => {
+                dispatch({
+                    type: e.event.shiftKey ? Event.UnForgeKey : Event.ForgeKey,
+                    playerName: player.name
+                })
+                this.render()
+            })
             this.root.add(keyImage)
         }
 
@@ -113,6 +141,7 @@ class GameScene extends Phaser.Scene {
             dispatch({
                 type: Event.PlayCreature,
                 cardID: card.data.get("id"),
+                playerName: player.name,
                 side: "left",
             })
             card.destroy()
@@ -124,6 +153,7 @@ class GameScene extends Phaser.Scene {
             dispatch({
                 type: Event.PlayCreature,
                 cardID: card.data.get("id"),
+                playerName: player.name,
                 side: "right",
             })
             card.destroy()
@@ -135,6 +165,7 @@ class GameScene extends Phaser.Scene {
             dispatch({
                 type: Event.PlayArtifact,
                 cardID: card.data.get("id"),
+                playerName: player.name,
             })
             card.destroy()
             this.render()
@@ -143,14 +174,13 @@ class GameScene extends Phaser.Scene {
         for (let i = 0; i < player.creatures.length; i++) {
             const dropZoneX = originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1)
             this.createCardDropZone(dropZoneX, originY + creatureOffsetY, (card: Card) => {
-                console.log(card)
                 dispatch({
                     type: Event.PlayUpgrade,
                     cardID: card.data.get("id"),
                 })
                 card.destroy()
                 this.render()
-            })
+            }, false)
         }
 
         const discardPileX = originX + CARD_WIDTH * 6
@@ -162,7 +192,7 @@ class GameScene extends Phaser.Scene {
             card.destroy()
             this.render()
         })
-        const discardPileText = new Phaser.GameObjects.Text(this, discardPileX - CARD_WIDTH * 0.5 + 5, originY + 5, "Discard", {
+        const discardPileText = new Phaser.GameObjects.Text(this, discardPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Discard (${player.discardPile.length})`, {
             color: "#000",
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 0.5)"
@@ -178,7 +208,7 @@ class GameScene extends Phaser.Scene {
             card.destroy()
             this.render()
         })
-        const archivePileText = new Phaser.GameObjects.Text(this, archivePileX - CARD_WIDTH * 0.5 + 5, originY + 5, "Archive", {
+        const archivePileText = new Phaser.GameObjects.Text(this, archivePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Archive (${player.archivePile.length})`, {
             color: "#000",
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 0.5)"
@@ -188,8 +218,16 @@ class GameScene extends Phaser.Scene {
         const drawPileX = originX + CARD_WIDTH * 6 + 1 * (CARD_WIDTH + CARD_WIDTH * 0.1)
         const drawPileImage = new Phaser.GameObjects.Image(this, drawPileX, originY + CARD_HEIGHT / 2, "cardback")
         drawPileImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
+        drawPileImage.setInteractive({ cursor: "pointer" })
+        drawPileImage.addListener("pointerup", (e: any) => {
+            dispatch({
+                type: e.event.shiftKey ? Event.ShuffleDeck : Event.DrawCard,
+                playerName: player.name,
+            })
+            this.render()
+        })
         this.root.add(drawPileImage)
-        const drawPileText = new Phaser.GameObjects.Text(this, drawPileX - CARD_WIDTH * 0.5 + 5, originY + 5, "Draw", {
+        const drawPileText = new Phaser.GameObjects.Text(this, drawPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Draw (${player.drawPile.length})`, {
             color: "#000",
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 0.5)"
@@ -227,10 +265,14 @@ class GameScene extends Phaser.Scene {
 
         for (let i = 0; i < player.creatures.length; i++) {
             const creature = player.creatures[i]
+            let creatureY = originY + creatureOffsetY
+            if (creature.taunt) {
+                creatureY += orientation === "top" ? 15 : -15
+            }
             const card = new Card({
                 scene: this,
                 x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1),
-                y: originY + creatureOffsetY,
+                y: creatureY,
                 id: `${player.name}-creature-${i}`,
                 front: creature.id,
                 back: "cardback",
@@ -253,10 +295,11 @@ class GameScene extends Phaser.Scene {
             this.root.add(card)
         }
 
+        const handWidth = CARD_WIDTH * 4
         for (let i = 0; i < player.hand.length; i++) {
             const card = new Card({
                 scene: this,
-                x: originX + CARD_WIDTH / 2 + i * CARD_WIDTH * .75,
+                x: originX + CARD_WIDTH / 2 + i * Math.min((handWidth / player.hand.length), CARD_WIDTH * 0.8),
                 y: originY + CARD_HEIGHT / 2,
                 id: `${player.name}-card-in-hand-${i}`,
                 front: orientation === "top" ? "cardback" : player.hand[i].id,
@@ -279,7 +322,7 @@ class GameScene extends Phaser.Scene {
         this.renderPlayerBoard(state.players[1], 5, this.data.get("height") - CARD_HEIGHT - 5, "bottom")
     }
 
-    createCardDropZone(x: number, y: number, onDrop: Function) {
+    createCardDropZone(x: number, y: number, onDrop: Function, visible=true) {
         const zone = new Phaser.GameObjects.Zone(this, x, y, CARD_WIDTH, CARD_HEIGHT)
         const image = new Phaser.GameObjects.Image(this, zone.x, zone.y, "cardback")
 
@@ -299,7 +342,8 @@ class GameScene extends Phaser.Scene {
         zone.data.get("onLeave")()
         image.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
         this.root.add(zone)
-        this.root.add(image)
+        if (visible)
+            this.root.add(image)
     }
 
     onMouseOverCreature(e: MouseEvent, target: any) {
@@ -478,6 +522,14 @@ class GameScene extends Phaser.Scene {
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.S) {
                 dispatch({
                     type: Event.ToggleStun,
+                    cardID,
+                })
+                this.render()
+            }
+
+            if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.T) {
+                dispatch({
+                    type: Event.ToggleTaunt,
                     cardID,
                 })
                 this.render()
