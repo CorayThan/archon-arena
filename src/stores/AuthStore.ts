@@ -2,11 +2,15 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import { observable } from "mobx"
 import { AuthUser } from "../auth/AuthUser"
+import { playerStore } from "./PlayerStore"
 
 export class AuthStore {
 
     @observable
     authUser?: AuthUser
+
+    @observable
+    authUserLoaded = false
 
     listenForAuthUser = () => {
         firebase.auth().onAuthStateChanged((user) => {
@@ -24,14 +28,26 @@ export class AuthStore {
                         photoURL,
                         uid
                     }
+                    if (!playerStore.listeningForPlayer) {
+                        playerStore.listenForPlayerChanges(this.authUser.uid)
+                        playerStore.listeningForPlayer = true
+                    }
                 })
             } else {
                 this.authUser = undefined
+                this.authUserLoaded = true
             }
         })
     }
 
     logout = () => firebase.auth().signOut()
+
+    get authUserId(): string | undefined {
+        if (this.authUser == null) {
+            return undefined
+        }
+        return this.authUser.uid
+    }
 }
 
 export const authStore = new AuthStore()
