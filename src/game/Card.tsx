@@ -1,7 +1,7 @@
 import Phaser from "phaser"
 
-const CARD_WIDTH = 80
-const CARD_HEIGHT = CARD_WIDTH / .716612378
+export const CARD_WIDTH = 80
+export const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class Card extends Phaser.GameObjects.Container {
 
@@ -45,23 +45,21 @@ class Card extends Phaser.GameObjects.Container {
             // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setInteractive()
-            cardImage.addListener("pointerover", function () {
-                // @ts-ignore
-                onMouseOver(this.frame.texture.key)
+            cardImage.addListener("pointerover", (e: MouseEvent) => {
+                onMouseOver(e, this)
             })
-            cardImage.addListener("pointerout", function () {
-                // @ts-ignore
-                onMouseOut(this.frame.texture.key)
+            cardImage.addListener("pointerout", () => {
+                onMouseOut()
             })
             return cardImage
         })
 
-        this.cardImage.addListener("pointerup", (e: MouseEvent) => {
-            onClick(this, e)
+        this.cardImage.addListener("pointerup", (e: any) => {
+            onClick(e.event, this)
         })
 
-        this.cardImage.addListener("pointerover", () => {
-            onMouseOver(this.data.get("front"))
+        this.cardImage.addListener("pointerover", (e: MouseEvent) => {
+            onMouseOver(e, this)
         })
 
         this.cardImage.addListener("pointerout", () => {
@@ -169,6 +167,12 @@ class Card extends Phaser.GameObjects.Container {
         // @ts-ignore // TODO figure out how to make typescript happy
         this.data.get("tokens")[data.type] += data.amount
         this.render()
+    }
+
+    destroy() {
+        this.cardImage.destroy()
+        this.cardsUnderneath.forEach((image: Phaser.GameObjects.Image) => image.destroy())
+        this.upgrades.forEach((image: Phaser.GameObjects.Image) => image.destroy())
     }
 }
 

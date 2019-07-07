@@ -3,12 +3,12 @@
   "date": "2019-01-01",
   "turn": 1,
   "startingPlayer": "stronglink",
-  "activePlayer": "jacketattack",
+  "activePlayer": "stronglink",
   "players": [
     {
       "name": "stronglink",
-      "amber": 8,
-      "chains": 1,
+      "amber": 0,
+      "chains": 0,
       "keys": 0,
       "deck": {
         "name": "Overson the Pretentious",
@@ -47,7 +47,6 @@
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 0,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [],
@@ -56,7 +55,7 @@
             "power": 0,
             "damage": 0,
             "amber": 0,
-            "stun": 1
+            "stun": 0
           }
         },
         {
@@ -64,23 +63,21 @@
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 1,
           "taunt": false,
           "upgrades": [],
           "tokens": {
-            "armor": 2,
+            "armor": 0,
             "power": 0,
             "damage": 0,
-            "amber": 1,
+            "amber": 0,
             "stun": 0
           }
         },
         {
           "name": "Jargogle",
           "id": "jargogle",
-          "ready": false,
+          "ready": true,
           "faceup": true,
-          "position": 2,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [
@@ -93,7 +90,7 @@
           "tokens": {
             "armor": 0,
             "power": 0,
-            "damage": 3,
+            "damage": 0,
             "amber": 0,
             "stun": 0
           }
@@ -105,7 +102,6 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 0,
           "tokens": {
             "amber": 0
           },
@@ -115,9 +111,8 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 1,
           "tokens": {
-            "amber": 2
+            "amber": 0
           },
           "cardsUnderneath": []
         }
@@ -137,14 +132,38 @@
       "discardPile": [],
       "purgePile": [],
       "archivePile": [],
-      "hand": [],
+      "hand": [
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Kelifi Dragon",
+          "id": "kelifi-dragon"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        },
+        {
+          "name": "Mantle Of The Zealot",
+          "id": "mantle-of-the-zealot"
+        }
+      ],
       "creatures": [
         {
           "name": "Kelifi Dragon",
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 0,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [],
@@ -153,7 +172,7 @@
             "power": 0,
             "damage": 0,
             "amber": 0,
-            "stun": 1
+            "stun": 0
           }
         },
         {
@@ -161,7 +180,6 @@
           "id": "kelifi-dragon",
           "ready": true,
           "faceup": true,
-          "position": 1,
           "taunt": false,
           "upgrades": [
             {
@@ -174,10 +192,10 @@
             }
           ],
           "tokens": {
-            "armor": 2,
+            "armor": 0,
             "power": 0,
             "damage": 0,
-            "amber": 1,
+            "amber": 0,
             "stun": 0
           }
         },
@@ -186,7 +204,6 @@
           "id": "jargogle",
           "ready": true,
           "faceup": true,
-          "position": 2,
           "taunt": false,
           "upgrades": [],
           "cardsUnderneath": [
@@ -199,7 +216,7 @@
           "tokens": {
             "armor": 0,
             "power": 0,
-            "damage": 3,
+            "damage": 0,
             "amber": 0,
             "stun": 0
           }
@@ -211,7 +228,6 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 0,
           "tokens": {
             "amber": 0
           },
@@ -221,7 +237,6 @@
           "id": "safe-place",
           "faceup": true,
           "ready": true,
-          "position": 1,
           "tokens": {
             "amber": 2
           },
