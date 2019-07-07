@@ -1,10 +1,11 @@
-import { AppBar, Button, Toolbar, Typography } from "@material-ui/core"
-import { observer } from "mobx-react"
+import {AppBar, Button, Toolbar, Typography} from "@material-ui/core"
+import {observer} from "mobx-react"
 import * as React from "react"
-import { theme } from "../index"
-import { Routes } from "../routing/Routes"
-import { authStore } from "../stores/AuthStore"
-import { LinkButton } from "./LinkButton"
+import {theme} from "../index"
+import {Routes} from "../routing/Routes"
+import {authStore} from "../stores/AuthStore"
+import {playerStore} from "../stores/PlayerStore"
+import {LinkButton} from "./LinkButton"
 
 @observer
 export class TopBar extends React.Component {
@@ -16,6 +17,9 @@ export class TopBar extends React.Component {
                     <div style={{flexGrow: 1}}/>
                     {authStore.authUser ? (
                         <>
+                            <Typography style={{marginRight: theme.spacing(2)}}>
+                                {playerStore.player ? playerStore.player.displayName : "No Player Profile"}
+                            </Typography>
                             <Typography style={{marginRight: theme.spacing(2)}}>{authStore.authUser.displayName}</Typography>
                             <Button color={"inherit"} onClick={authStore.logout}>Logout</Button>
                         </>

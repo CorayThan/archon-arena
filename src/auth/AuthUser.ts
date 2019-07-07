@@ -3,5 +3,5 @@ export interface AuthUser {
     email?: string
     emailVerified: boolean
     photoURL?: string
-    uid?: string
+    uid: string
 }
