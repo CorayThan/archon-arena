@@ -10,6 +10,20 @@ import { authStore } from "./stores/AuthStore"
 import { log } from "./Utils"
 
 export const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: '#f05545',
+            main: '#b71c1c',
+            dark: '#7f0000',
+            contrastText: '#fff',
+        },
+        secondary: {
+            light: '#fff350',
+            main: '#ffc107',
+            dark: '#c79100',
+            contrastText: '#000',
+        },
+    },
 })
 
 log.debug("init firebase")
