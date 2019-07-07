@@ -1,10 +1,10 @@
-import { random, shuffle } from "lodash"
-import { v4 as uuid } from "uuid"
-import { requestDeck } from "./apis/mastervault/RequestDeck"
-import { GameState } from "./shared/gamestate/GameState"
-import { Phase } from "./shared/gamestate/Phase"
-import { Deck } from "./shared/keyforge/deck/Deck"
-import { Player } from "./shared/Player"
+import {random, shuffle} from "lodash"
+import {v4 as uuid} from "uuid"
+import {requestDeck} from "./apis/mastervault/RequestDeck"
+import {GameState} from "./shared/gamestate/GameState"
+import {Phase} from "./shared/gamestate/Phase"
+import {Deck} from "./shared/keyforge/deck/Deck"
+import {Player} from "./shared/Player"
 
 export class InitializeGame {
 
@@ -13,10 +13,14 @@ export class InitializeGame {
         const deckTwo = await requestDeck.findDeck("4f34017e-646e-4380-8ff6-16b47ab72971")
         return this.startGame({
             id: "123",
-            name: "CorayThan",
+            displayName: "CorayThan",
+            authId: "",
+            decks: []
         }, deckOne, {
             id: "456",
-            name: "StrongLink",
+            displayName: "StrongLink",
+            authId: "",
+            decks: []
         }, deckTwo)
     }
 
