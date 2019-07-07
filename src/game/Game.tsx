@@ -2,13 +2,12 @@ import Phaser from "phaser"
 import React from "react"
 import "./Game.css"
 import GameScene from "./GameScene"
-import { GameState } from "../gamestate/types/GameState"
 import { exec } from "./Actions"
 import { log } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
 
 interface Props {
-    state: object//GameState
+    state: object
 }
 
 const width = 1024
