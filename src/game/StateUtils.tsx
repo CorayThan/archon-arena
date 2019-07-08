@@ -4,6 +4,10 @@ import Artifact from "./types/Artifact"
 import CardInHand from "./types/CardInHand"
 import Player from "./types/Player"
 
+export const getCardType = (cardID: string) => {
+    return cardID.slice(cardID.indexOf("-") + 1, cardID.lastIndexOf("-"))
+}
+
 export const shuffleDeck = (player: Player) => {
     player.discardPile.forEach((card: CardInHand) => player.drawPile.push(card))
     player.discardPile = []
@@ -51,15 +55,19 @@ export const getCardInHandByID = (player: Player, cardID: string) => {
 }
 
 export const removeCreature = (player: Player, cardID: string) => {
-    player.creatures = player.creatures.filter((card: Creature, i: number) => {
-        return `${player.name}-creature-${i}` !== cardID
+    const card = player.creatures.find((card: CardInHand, i: number) => {
+        return `${player.name}-creature-${i}` === cardID
     })
+    player.creatures = player.creatures.filter((c: CardInHand) => c !== card)
+    return card
 }
 
 export const removeArtifact = (player: Player, cardID: string) => {
-    player.artifacts = player.artifacts.filter((card: Artifact, i: number) => {
-        return `${player.name}-artifact-${i}` !== cardID
+    const card = player.artifacts.find((card: CardInHand, i: number) => {
+        return `${player.name}-artifact-${i}` === cardID
     })
+    player.artifacts = player.artifacts.filter((c: CardInHand) => c !== card)
+    return card
 }
 
 export const removeCardFromHand = (player: Player, cardID: string) => {

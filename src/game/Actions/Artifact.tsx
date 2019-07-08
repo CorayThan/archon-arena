@@ -36,7 +36,13 @@ export default {
         player.artifacts.push(artifact)
         removeCardFromHand(owner, action.cardID)
     },
-    [Event.UseArtifact]: (action: any, state: any) => {},
+    [Event.UseArtifact]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const artifact = getArtifactByID(owner, action.cardID)
+        if (!artifact)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        artifact.ready = !artifact.ready
+    },
     [Event.DiscardArtifact]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardID, state)
         removeArtifact(owner, action.cardID)

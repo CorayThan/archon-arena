@@ -6,6 +6,7 @@ export const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class Card extends Phaser.GameObjects.Container {
 
+    ignoreNextPointerUp: boolean
     scene: Phaser.Scene
     cardImage: Phaser.GameObjects.Image
     upgrades: Phaser.GameObjects.Image[]
@@ -31,6 +32,7 @@ class Card extends Phaser.GameObjects.Container {
     }: any) {
         super(scene)
         this.scene = scene
+        this.ignoreNextPointerUp = false
 
         this.setDataEnabled()
         // @ts-ignore // this method accepts 1 argument. TS is wrong.
@@ -73,7 +75,11 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         this.cardImage.addListener("pointerup", (e: any) => {
-            onClick(e.event, this)
+            if (this.ignoreNextPointerUp) {
+                this.ignoreNextPointerUp = false
+            } else {
+                onClick(e.event, this)
+            }
         })
 
         this.cardImage.addListener("pointerover", (e: MouseEvent) => {
@@ -86,15 +92,21 @@ class Card extends Phaser.GameObjects.Container {
 
         if (draggable) {
             this.cardImage.addListener("drag", (pointer: any, x: number, y: number) => {
-                this.cardImage.setPosition(x, y)
+                this.setAngle(0)
+                this.setPosition(this.data.get("x") + x, this.data.get("y") + y)
+                this.ignoreNextPointerUp = true
+            })
+
+            this.cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
+                this.render()
             })
 
             this.cardImage.addListener("dragenter", (pointer: any, zone: any) => {
-                zone.data.get("onEnter")()
+                zone.data.get("onEnter")(this)
             })
 
             this.cardImage.addListener("dragleave", (pointer: any, zone: any) => {
-                zone.data.get("onLeave")()
+                zone.data.get("onLeave")(this)
             })
 
             this.cardImage.addListener("drop", (pointer: any, zone: any) => {

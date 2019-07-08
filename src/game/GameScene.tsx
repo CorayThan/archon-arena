@@ -2,6 +2,7 @@ import Phaser from "phaser"
 import Card, { CARD_WIDTH, CARD_HEIGHT } from "./Card"
 import { Event } from "./Event"
 import { log } from "../Utils"
+import { getCardType } from "./StateUtils"
 
 import amber from "../images/amber.png"
 import armor from "../images/armor.png"
@@ -139,50 +140,73 @@ class GameScene extends Phaser.Scene {
         const artifactOffsetY = orientation === "top" ? 200 : -70
 
         const artifactDropZoneX = originX + CARD_WIDTH / 2
-        this.createCardDropZone(artifactDropZoneX, originY + artifactOffsetY, (card: Card) => {
-            dispatch({
-                type: Event.PlayArtifact,
-                cardID: card.data.get("id"),
-                playerName: player.name,
-            })
-            card.destroy()
-            this.render()
+        this.createCardDropZone({
+            x: artifactDropZoneX,
+            y: originY + artifactOffsetY,
+            onDrop: (card: Card) => {
+                const cardID = card.data.get("id")
+                if (getCardType(cardID) !== "card-in-hand")
+                    return
+
+                dispatch({
+                    type: Event.PlayArtifact,
+                    playerName: player.name,
+                    cardID,
+                })
+                card.destroy()
+                this.render()
+            }
         })
 
         const discardPileX = originX + CARD_WIDTH * 6
-        this.createCardDropZone(discardPileX, originY + CARD_HEIGHT / 2, (card: Card) => {
-            dispatch({
-                type: Event.DiscardCard,
-                cardID: card.data.get("id"),
-            })
-            card.destroy()
-            this.render()
+        this.createCardDropZone({
+            x: discardPileX,
+            y: originY + CARD_HEIGHT / 2,
+            allowCardTypes: ["card-in-hand", "creature", "artifact"],
+            getCardImage: () => player.discardPile.length === 0 ? "cardback" : player.discardPile[player.discardPile.length - 1].id,
+            getMinimumAlpha: () => player.discardPile.length === 0 ? 0.1 : 1,
+            onDrop: (card: Card) => {
+                dispatch({
+                    type: Event.DiscardCard,
+                    cardID: card.data.get("id"),
+                })
+                card.destroy()
+                this.render()
+            }
         })
         const discardPileText = new Phaser.GameObjects.Text(this, discardPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Discard (${player.discardPile.length})`, {
             color: "#000",
+            backgroundColor: "rgba(255, 255, 255, 1)",
             fontSize: "10px",
-            backgroundColor: "rgba(255, 255, 255, 0.5)"
         })
         this.root.add(discardPileText)
 
         const archivePileX = originX + CARD_WIDTH * 6 + 2 * (CARD_WIDTH + CARD_WIDTH * 0.1)
-        this.createCardDropZone(archivePileX, originY + CARD_HEIGHT / 2, (card: Card) => {
-            dispatch({
-                type: Event.ArchiveCard,
-                cardID: card.data.get("id"),
-            })
-            card.destroy()
-            this.render()
+        this.createCardDropZone({
+            x: archivePileX,
+            y: originY + CARD_HEIGHT / 2,
+            getMinimumAlpha: () => player.archivePile.length === 0 ? 0.1 : 1,
+            allowCardTypes: ["card-in-hand", "creature", "artifact"],
+            onDrop: (card: Card) => {
+                dispatch({
+                    type: Event.ArchiveCard,
+                    cardID: card.data.get("id"),
+                })
+                card.destroy()
+                this.render()
+            },
         })
         const archivePileText = new Phaser.GameObjects.Text(this, archivePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Archive (${player.archivePile.length})`, {
             color: "#000",
             fontSize: "10px",
-            backgroundColor: "rgba(255, 255, 255, 0.5)"
+            backgroundColor: "rgba(255, 255, 255, 1)"
         })
         this.root.add(archivePileText)
 
         const drawPileX = originX + CARD_WIDTH * 6 + 1 * (CARD_WIDTH + CARD_WIDTH * 0.1)
         const drawPileImage = new Phaser.GameObjects.Image(this, drawPileX, originY + CARD_HEIGHT / 2, "cardback")
+        if (player.drawPile.length === 0)
+            drawPileImage.setAlpha(0.1)
         drawPileImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
         drawPileImage.setInteractive({ cursor: "pointer" })
         drawPileImage.addListener("pointerup", (e: any) => {
@@ -196,7 +220,7 @@ class GameScene extends Phaser.Scene {
         const drawPileText = new Phaser.GameObjects.Text(this, drawPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Draw (${player.drawPile.length})`, {
             color: "#000",
             fontSize: "10px",
-            backgroundColor: "rgba(255, 255, 255, 0.5)"
+            backgroundColor: "rgba(255, 255, 255, 1)"
         })
         this.root.add(drawPileText)
 
@@ -212,6 +236,7 @@ class GameScene extends Phaser.Scene {
                 faceup: artifact.faceup,
                 ready: artifact.ready,
                 cardsUnderneath: artifact.cardsUnderneath,
+                draggable: true,
                 onClick: this.onClickArtifact.bind(this),
                 onMouseOver: this.onMouseOverArtifact.bind(this),
                 onMouseOut: this.onMouseOutArtifact.bind(this),
@@ -263,6 +288,7 @@ class GameScene extends Phaser.Scene {
                 ready: creature.ready,
                 cardsUnderneath: creature.cardsUnderneath,
                 upgrades: creature.upgrades,
+                draggable: true,
                 onClick: this.onClickCreature.bind(this),
                 onMouseOver: this.onMouseOverCreature.bind(this),
                 onMouseOut: this.onMouseOutCreature.bind(this),
@@ -281,14 +307,23 @@ class GameScene extends Phaser.Scene {
             this.root.add(card)
 
             const dropZoneX = card.x
-            this.createCardDropZone(dropZoneX, originY + creatureOffsetY, (card: Card) => {
-                dispatch({
-                    type: Event.PlayUpgrade,
-                    cardID: card.data.get("id"),
-                })
-                card.destroy()
-                this.render()
-            }, false)
+            this.createCardDropZone({
+                x: dropZoneX,
+                y: originY + creatureOffsetY,
+                visible: false,
+                onDrop: (card: Card) => {
+                    const cardID = card.data.get("id")
+                    if (getCardType(cardID) !== "card-in-hand")
+                        return
+
+                    dispatch({
+                        type: Event.PlayUpgrade,
+                        cardID: card.data.get("id"),
+                    })
+                    card.destroy()
+                    this.render()
+                }
+            })
         }
 
         const handWidth = CARD_WIDTH * 4
@@ -309,15 +344,23 @@ class GameScene extends Phaser.Scene {
             this.root.add(card)
         }
 
-        this.createCardDropZone(originX + CARD_WIDTH / 2, originY + creatureOffsetY, (card: Card) => {
-            dispatch({
-                type: Event.PlayCreature,
-                cardID: card.data.get("id"),
-                playerName: player.name,
-                side: "left",
-            })
-            card.destroy()
-            this.render()
+        this.createCardDropZone({
+            x: originX + CARD_WIDTH / 2,
+            y: originY + creatureOffsetY,
+            onDrop: (card: Card) => {
+                const cardID = card.data.get("id")
+                if (getCardType(cardID) !== "card-in-hand")
+                    return
+
+                dispatch({
+                    type: Event.PlayCreature,
+                    cardID: card.data.get("id"),
+                    playerName: player.name,
+                    side: "left",
+                })
+                card.destroy()
+                this.render()
+            }
         })
 
         let rightCreatureDropZoneX = lastCreatureX + (CARD_WIDTH + CARD_WIDTH * 0.2)
@@ -327,15 +370,23 @@ class GameScene extends Phaser.Scene {
                 rightCreatureDropZoneX += CARD_WIDTH * 0.1
             }
         }
-        this.createCardDropZone(rightCreatureDropZoneX, originY + creatureOffsetY, (card: Card) => {
-            dispatch({
-                type: Event.PlayCreature,
-                cardID: card.data.get("id"),
-                playerName: player.name,
-                side: "right",
-            })
-            card.destroy()
-            this.render()
+        this.createCardDropZone({
+            x: rightCreatureDropZoneX,
+            y: originY + creatureOffsetY,
+            onDrop: (card: Card) => {
+                const cardID = card.data.get("id")
+                if (getCardType(cardID) !== "card-in-hand")
+                    return
+
+                dispatch({
+                    type: Event.PlayCreature,
+                    cardID: card.data.get("id"),
+                    playerName: player.name,
+                    side: "right",
+                })
+                card.destroy()
+                this.render()
+            }
         })
     }
 
@@ -347,19 +398,39 @@ class GameScene extends Phaser.Scene {
         this.renderPlayerBoard(state.players[1], 5, this.data.get("height") - CARD_HEIGHT - 5, "bottom")
     }
 
-    createCardDropZone(x: number, y: number, onDrop: Function, visible=true) {
+    createCardDropZone({
+        x,
+        y,
+        onDrop,
+        getCardImage = () => "cardback",
+        getMinimumAlpha = () => 0.1,
+        visible=true,
+        allowCardTypes=["card-in-hand"]
+    }: {
+        x: number,
+        y: number,
+        onDrop: Function,
+        getCardImage?: Function,
+        getMinimumAlpha?: Function,
+        visible?: boolean,
+        allowCardTypes?: string[],
+    }) {
         const zone = new Phaser.GameObjects.Zone(this, x, y, CARD_WIDTH, CARD_HEIGHT)
-        const image = new Phaser.GameObjects.Image(this, zone.x, zone.y, "cardback")
+        const image = new Phaser.GameObjects.Image(this, zone.x, zone.y, getCardImage())
 
         zone.setRectangleDropZone(CARD_WIDTH, CARD_HEIGHT)
         zone.setDataEnabled()
         // @ts-ignore
         zone.data.set({
-            onEnter: () => {
-                image.setAlpha(1)
+            onEnter: (card: Card) => {
+                const cardID = card.data.get("id")
+                const cardType = getCardType(cardID)
+                if (allowCardTypes.includes(cardType)) {
+                    image.setAlpha(1)
+                }
             },
             onLeave: () => {
-                image.setAlpha(0.1)
+                image.setAlpha(getMinimumAlpha())
             },
             onDrop,
         })
