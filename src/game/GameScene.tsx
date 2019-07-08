@@ -232,11 +232,27 @@ class GameScene extends Phaser.Scene {
         })
         this.root.add(drawPileText)
 
+        let artifactOffsetX = 0
         for (let i = 0; i < player.artifacts.length; i++) {
             const artifact = player.artifacts[i]
+
+            if (i > 0) {
+                const previousArtifact = player.artifacts[i - 1]
+                if (!player.artifacts[i - 1].ready) {
+                    artifactOffsetX += CARD_WIDTH * 0.2
+                } else {
+                    artifactOffsetX += (CARD_WIDTH * 0.1) * previousArtifact.cardsUnderneath.length
+                }
+            }
+
+            if (!artifact.ready) {
+                artifactOffsetX += CARD_WIDTH * 0.2
+                artifactOffsetX += (CARD_WIDTH * 0.1) * (artifact.cardsUnderneath.length)
+            }
+
             const card = new Card({
                 scene: this,
-                x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1),
+                x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1) + artifactOffsetX,
                 y: originY + artifactOffsetY,
                 id: `${player.name}-artifact-${i}`,
                 front: artifact.id,
