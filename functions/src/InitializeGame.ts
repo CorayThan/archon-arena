@@ -1,51 +1,48 @@
-import {random, shuffle} from "lodash"
-import {v4 as uuid} from "uuid"
-import {requestDeck} from "./apis/mastervault/RequestDeck"
-import {GameState} from "./shared/gamestate/GameState"
-import {Phase} from "./shared/gamestate/Phase"
-import {Deck} from "./shared/keyforge/deck/Deck"
-import {Player} from "./shared/Player"
+import { random, shuffle } from "lodash"
+import { v4 as uuid } from "uuid"
+import { Match } from "../../src/shared/Match"
+import { firestore, log, matchCollection } from "./index"
+import { GameState } from "./shared/gamestate/GameState"
+import { Phase } from "./shared/gamestate/Phase"
+import { Deck } from "./shared/keyforge/deck/Deck"
 
 export class InitializeGame {
 
-    fakeGame = async () => {
-        const deckOne = await requestDeck.findDeck("7b38b1f3-66e5-410a-86d5-85e74fac24e9")
-        const deckTwo = await requestDeck.findDeck("4f34017e-646e-4380-8ff6-16b47ab72971")
-        return this.startGame({
-            id: "123",
-            displayName: "CorayThan",
-            authId: "",
-            decks: []
-        }, deckOne, {
-            id: "456",
-            displayName: "StrongLink",
-            authId: "",
-            decks: []
-        }, deckTwo)
-    }
+    startGame = async (matchId: string): Promise<GameState> => {
 
-    startGame = (playerOne: Player, deckOne: Deck, playerTwo: Player, deckTwo: Deck): GameState => {
-        const firstPlayer = random(0, 1) === 0 ? playerOne : playerTwo
-        return {
-            id: uuid(),
-            turn: 1,
-            startingPlayer: firstPlayer.id,
-            activePlayer: firstPlayer.id,
-            phase: Phase.CHOOSE_HAND,
-            playerOneState: this.createPlayerState(playerOne, deckOne, firstPlayer === playerOne),
-            playerTwoState: this.createPlayerState(playerTwo, deckTwo, firstPlayer === playerTwo)
+        log.debug("Starting game")
+        console.log("Starting game console log")
+        const matchDoc = await matchCollection().doc(matchId).get()
+        if (matchDoc.exists) {
+            const {firstPlayerId, secondPlayerId, firstPlayerActiveDeck, secondPlayerActiveDeck} = matchDoc.data() as Match
+            const firstPlayer = random(0, 1) === 0 ? firstPlayerId : secondPlayerId!
+            const gameState: GameState = {
+                id: uuid(),
+                turn: 1,
+                startingPlayer: firstPlayer,
+                activePlayer: firstPlayer,
+                phase: Phase.CHOOSE_HAND,
+                playerOneState: this.createPlayerState(firstPlayerId, firstPlayerActiveDeck, firstPlayer === firstPlayerId),
+                playerTwoState: this.createPlayerState(secondPlayerId!, secondPlayerActiveDeck!, firstPlayer === secondPlayerId)
+            }
+
+            await firestore.collection("gameState").add(gameState)
+
+            return gameState
+        } else {
+            throw new Error(`No match doc for matchId: ${matchId}`)
         }
     }
 
-    private createPlayerState = (player: Player, deck: Deck, firstPlayer: boolean) => {
+    private createPlayerState = (playerId: string, deck: Deck, firstPlayer: boolean) => {
         const cards = shuffle(deck.cards.map((card, idx) => ({
             card,
             num: idx,
-            ownerId: player.id
+            ownerId: playerId
         })))
 
         return {
-            player,
+            playerId,
             hand: cards.slice(0, firstPlayer ? 7 : 6),
             library: cards.slice(firstPlayer ? 7 : 6),
             discard: [],

@@ -25,7 +25,7 @@ export class Lobby extends React.Component {
                     variant={"contained"}
                     color={"primary"}
                     onClick={matchStore.createMatch}
-                    disabled={createGameDisabled}
+                    // disabled={createGameDisabled}
                 >
                     Create game
                 </Button>
@@ -36,9 +36,9 @@ export class Lobby extends React.Component {
                                 <Card>
                                     <CardContent>
                                         <Typography>First Player: {match.firstPlayerDisplayName}</Typography>
-                                        <Typography>Deck: {match.firstPlayerDeckName}</Typography>
+                                        <Typography>Deck: {match.firstPlayerActiveDeck.name}</Typography>
                                         <Typography>Second Player: {match.secondPlayerDisplayName}</Typography>
-                                        <Typography>Deck: {match.secondPlayerDeckName}</Typography>
+                                        <Typography>Deck: {match.secondPlayerActiveDeck ? match.secondPlayerActiveDeck.name : ""}</Typography>
                                     </CardContent>
                                     <CardActions>
                                         {match.secondPlayerId == null && match.firstPlayerId !== authStore.authUserId ? (

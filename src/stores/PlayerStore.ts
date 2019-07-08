@@ -4,6 +4,7 @@ import { computed, observable } from "mobx"
 import { Player } from "../shared/Player"
 import { log, prettyJson } from "../Utils"
 import { authStore } from "./AuthStore"
+import { gameStateStore } from "./GameStateStore"
 
 export const playerCollection = () => firebase.firestore().collection("player")
 
@@ -41,6 +42,9 @@ export class PlayerStore {
                     const {activeDeck, decks, ...rest} = player
                     log.debug("Got new player info " + prettyJson(rest))
                     this.player = player
+                    if (player.currentMatchId) {
+                        gameStateStore.listenForGameStateChanges()
+                    }
                 } else {
                     this.player = {
                         decks: [],
@@ -67,6 +71,17 @@ export class PlayerStore {
             return this.player.activeDeck.id
         }
         return undefined
+    }
+
+    /**
+     * Throws exception if there is no current match id.
+     */
+    @computed
+    get currentMatchId(): string {
+        if (this.player.currentMatchId == null) {
+            throw new Error(`Requested current match id but it was null or undefined.`)
+        }
+        return this.player.currentMatchId
     }
 }
 

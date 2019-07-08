@@ -2,8 +2,9 @@ import * as firebase from "firebase/app"
 import "firebase/firestore"
 import { observable } from "mobx"
 import { Match } from "../shared/Match"
-import { log, prettyJson } from "../Utils"
+import { log } from "../Utils"
 import { authStore } from "./AuthStore"
+import { gameStateStore } from "./GameStateStore"
 import { playerStore } from "./PlayerStore"
 
 export const matchCollection = () => firebase.firestore().collection("match")
@@ -22,37 +23,36 @@ export class MatchStore {
         this.creatingMatch = true
         const firstPlayerId = authStore.authUser!.uid
         const firstPlayerDisplayName = playerStore.player.displayName
-        const firstPlayerActiveDeckId = playerStore.player.activeDeck!.id
-        const firstPlayerDeckName = playerStore.player.activeDeck!.name
+        const firstPlayerActiveDeck = playerStore.player.activeDeck!
 
         const savedMatch = await matchCollection().add({
             firstPlayerId,
             firstPlayerDisplayName,
-            firstPlayerActiveDeckId,
-            firstPlayerDeckName
-        })
+            firstPlayerActiveDeck,
+        } as Partial<Match>)
         await playerStore.upsertPlayer({
             currentMatchId: savedMatch.id
         })
+        gameStateStore.listenForGameStateChanges()
         this.creatingMatch = false
     }
 
     joinMatch = async (id: string) => {
         const secondPlayerId = authStore.authUser!.uid
         const secondPlayerDisplayName = playerStore.player.displayName
-        const secondPlayerActiveDeckId = playerStore.player.activeDeck!.id
-        const secondPlayerDeckName = playerStore.player.activeDeck!.name
+        const secondPlayerActiveDeck = playerStore.player.activeDeck!
 
         await matchCollection().doc(id).set({
             secondPlayerId,
             secondPlayerDisplayName,
-            secondPlayerActiveDeckId,
-            secondPlayerDeckName
-        }, {merge: true})
+            secondPlayerActiveDeck,
+        } as Partial<Match>, {merge: true})
         log.debug("Upserting player with match id: " + id)
         await playerStore.upsertPlayer({
             currentMatchId: id
         })
+        await gameStateStore.startGame()
+        gameStateStore.listenForGameStateChanges()
     }
 
     cancelMatch = async (id: string) => {
@@ -69,7 +69,7 @@ export class MatchStore {
                 match.matchId = doc.id
                 return match
             })
-            log.debug(`Matches info: ${prettyJson(this.allMatches)}`)
+            // log.debug(`Matches info: ${prettyJson(this.allMatches)}`)
         })
     }
 
