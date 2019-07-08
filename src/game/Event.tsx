@@ -19,6 +19,7 @@ export enum Event {
     DrawCard = "DrawCard",
     ArchiveCard = "ArchiveCard",
     DiscardCard = "DiscardCard",
+    PutCardOnDrawPile = "PutCardOnDrawPile",
     ShuffleDeck = "ShuffleDeck",
     AlterPlayerAmber = "AlterPlayerAmber",
     AlterPlayerChains = "AlterPlayerChains",

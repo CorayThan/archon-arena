@@ -16,6 +16,7 @@ import {
 } from "../StateUtils"
 import Creature from "../types/Creature"
 import Artifact from "../types/Artifact"
+import Player from "../types/Player"
 import CardInHand from "../types/CardInHand"
 
 import CreatureActions from "./Creature"
@@ -25,7 +26,7 @@ export const exec = (action: any, state: any) => {
 
     const actionHandlers: { [key: string]: Function } = {
         [Event.PlayUpgrade]: () => {
-            const owner = getCardOwner(action.upgrade, state)
+            const owner: Player = getCardOwner(action.upgrade, state)
             const upgrade = getCardInHandByID(owner, action.upgradeID)
             if (!upgrade)
                 throw new Error(`Card ${action.upgradeID} not found in hand`)
@@ -35,8 +36,12 @@ export const exec = (action: any, state: any) => {
             creature.upgrades.push(upgrade)
             removeCardFromHand(owner, action.upgrade)
         },
+        [Event.ShuffleDeck]: () => {
+            const player = getPlayerByName(action.playerName, state)
+            shuffleDeck(player)
+        },
         [Event.DiscardCard]: () => {
-            const owner = getCardOwner(action.cardID, state)
+            const owner: Player = getCardOwner(action.cardID, state)
             const card = removeCardByID(owner, action.cardID)
             if (card.cardsUnderneath) {
                 card.cardsUnderneath.forEach((cardUnderneath: Creature | Artifact | CardInHand) => {
@@ -52,12 +57,25 @@ export const exec = (action: any, state: any) => {
             }
             owner.discardPile.push(card)
         },
-        [Event.ShuffleDeck]: () => {
-            const player = getPlayerByName(action.playerName, state)
-            shuffleDeck(player)
+        [Event.PutCardOnDrawPile]: () => {
+            const owner: Player = getCardOwner(action.cardID, state)
+            const card = removeCardByID(owner, action.cardID)
+            if (card.cardsUnderneath) {
+                card.cardsUnderneath.forEach((cardUnderneath: Creature | Artifact | CardInHand) => {
+                    owner.discardPile.push(cardUnderneath)
+                })
+                card.cardsUnderneath = []
+            }
+            if (card.upgrades) {
+                card.upgrades.forEach((upgrade: Creature | Artifact | CardInHand) => {
+                    owner.discardPile.push(upgrade)
+                })
+                card.upgrades = []
+            }
+            owner.drawPile.unshift(card)
         },
         [Event.ArchiveCard]: () => {
-            const owner = getCardOwner(action.cardID, state)
+            const owner: Player = getCardOwner(action.cardID, state)
             const card = removeCardByID(owner, action.cardID)
             if (card.cardsUnderneath) {
                 card.cardsUnderneath.forEach((cardUnderneath: Creature | Artifact | CardInHand) => {

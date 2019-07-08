@@ -204,19 +204,27 @@ class GameScene extends Phaser.Scene {
         this.root.add(archivePileText)
 
         const drawPileX = originX + CARD_WIDTH * 6 + 1 * (CARD_WIDTH + CARD_WIDTH * 0.1)
-        const drawPileImage = new Phaser.GameObjects.Image(this, drawPileX, originY + CARD_HEIGHT / 2, "cardback")
-        if (player.drawPile.length === 0)
-            drawPileImage.setAlpha(0.1)
-        drawPileImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
-        drawPileImage.setInteractive({ cursor: "pointer" })
-        drawPileImage.addListener("pointerup", (e: any) => {
+        const drawPileZone = this.createCardDropZone({
+            x: drawPileX,
+            y: originY + CARD_HEIGHT / 2,
+            getMinimumAlpha: () => player.drawPile.length === 0 ? 0.1 : 1,
+            allowCardTypes: ["card-in-hand", "creature", "artifact", "upgrade"],
+            onDrop: (card: Card) => {
+                dispatch({
+                    type: Event.PutCardOnDrawPile,
+                    cardID: card.data.get("id"),
+                })
+                card.destroy()
+                this.render()
+            },
+        })
+        drawPileZone.addListener("pointerup", (e: any) => {
             dispatch({
                 type: e.event.shiftKey ? Event.ShuffleDeck : Event.DrawCard,
                 playerName: player.name,
             })
             this.render()
         })
-        this.root.add(drawPileImage)
         const drawPileText = new Phaser.GameObjects.Text(this, drawPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Draw (${player.drawPile.length})`, {
             color: "#000",
             fontSize: "10px",
@@ -443,6 +451,7 @@ class GameScene extends Phaser.Scene {
           this.root.sendToBack(image)
         }
         this.root.sendToBack(zone)
+        return zone
     }
 
     onMouseOverCreature(e: MouseEvent, target: any) {
