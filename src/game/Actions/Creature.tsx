@@ -47,10 +47,6 @@ export default {
 
         removeCardFromHand(owner, action.cardID)
     },
-    [Event.DiscardCreature]: (action: any, state: any) => {
-        const owner = getCardOwner(action.cardID, state)
-        removeCreature(owner, action.cardID)
-    },
     [Event.MoveCreatureToHand]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardID, state)
         const creature = getCreatureByID(owner, action.cardID)
@@ -109,19 +105,9 @@ export default {
         const creature = getCreatureByID(owner, action.cardID)
         if (!creature)
             throw new Error(`Card ${action.cardID} not found in hand`)
-
-        if (!creature.ready) {
-            creature.ready = true
-            return
-        }
-
-        if (creature.tokens.stun) {
+        if (creature.ready && creature.tokens.stun) {
             creature.tokens.stun = 0
-            creature.ready = false
-        } else {
-            const owner = getCardOwner(action.cardID, state)
-            owner.amber += 1
-            creature.ready = false
         }
+        creature.ready = !creature.ready
     },
 }

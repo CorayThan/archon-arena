@@ -2,9 +2,12 @@ import { shuffle } from "lodash"
 import Creature from "./types/Creature"
 import Artifact from "./types/Artifact"
 import CardInHand from "./types/CardInHand"
+import Upgrade from "./types/Upgrade"
 import Player from "./types/Player"
 
 export const getCardType = (cardID: string) => {
+    if (cardID.indexOf("upgrade") !== -1)
+        return "upgrade"
     return cardID.slice(cardID.indexOf("-") + 1, cardID.lastIndexOf("-"))
 }
 
@@ -54,12 +57,39 @@ export const getCardInHandByID = (player: Player, cardID: string) => {
     })
 }
 
+export const removeCardByID = (player: Player, cardID: string) => {
+    const cardType = getCardType(cardID)
+    const removalFunctions: { [key: string ] : Function } = {
+        creature: removeCreature,
+        artifact: removeArtifact,
+        upgrade: removeUpgrade,
+        "card-in-hand": removeCardFromHand,
+    }
+    const card = removalFunctions[cardType](player, cardID)
+    return card
+}
+
 export const removeCreature = (player: Player, cardID: string) => {
-    const card = player.creatures.find((card: CardInHand, i: number) => {
+    const card = player.creatures.find((card: Creature, i: number) => {
         return `${player.name}-creature-${i}` === cardID
     })
-    player.creatures = player.creatures.filter((c: CardInHand) => c !== card)
+    player.creatures = player.creatures.filter((c: Creature) => c !== card)
     return card
+}
+
+export const removeUpgrade = (player: Player, cardID: string) => {
+    for (let i = 0; i < player.creatures.length; i++) {
+        const creature: Creature = player.creatures[i]
+        const upgrade = creature.upgrades.find((c: Upgrade, j: number) => {
+            return `${player.name}-creature-${i}-upgrade-${j}` === cardID
+        })
+
+        if (upgrade) {
+            creature.upgrades = creature.upgrades.filter((u: Upgrade) => u !== upgrade)
+            return upgrade
+        }
+    }
+    throw new Error(`Could not remove upgrade ${cardID}`)
 }
 
 export const removeArtifact = (player: Player, cardID: string) => {

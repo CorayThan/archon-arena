@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import CardInHand from "./types/CardInHand"
+import Upgrade from "./types/Upgrade"
 
 export const CARD_WIDTH = 80
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
@@ -61,15 +61,34 @@ class Card extends Phaser.GameObjects.Container {
             return cardImage
         })
 
-        this.upgrades = upgrades.map((card: CardInHand) => {
+        this.upgrades = upgrades.map((card: Upgrade, i: number) => {
             // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
-            cardImage.setInteractive()
+            cardImage.setDataEnabled()
+            const owner = id.split("-")[0]
+            cardImage.data.set("id", `${id}-upgrade-${i}`)
+            cardImage.setInteractive({ cursor: "pointer" })
+            this.scene.input.setDraggable(cardImage)
             cardImage.addListener("pointerover", (e: MouseEvent) => {
                 onMouseOverUpgrade(e, { data: { get: () => card.id }})
             })
             cardImage.addListener("pointerout", () => {
                 onMouseOutUpgrade()
+            })
+            cardImage.addListener("drag", (pointer: any, x: number, y: number) => {
+                cardImage.setPosition(x, y)
+            })
+            cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
+                this.render()
+            })
+            cardImage.addListener("dragenter", (pointer: any, zone: any) => {
+                zone.data.get("onEnter")(cardImage)
+            })
+            cardImage.addListener("dragleave", (pointer: any, zone: any) => {
+                zone.data.get("onLeave")(cardImage)
+            })
+            cardImage.addListener("drop", (pointer: any, zone: any) => {
+                zone.data.get("onDrop")(cardImage)
             })
             return cardImage
         })
