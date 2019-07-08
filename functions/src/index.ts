@@ -14,12 +14,14 @@ export const firestore = admin.firestore()
 export const matchCollection = () => firestore.collection("match")
 export const gameStateCollection = () => firestore.collection("gameState")
 
+exports.findDeck = functions.https.onCall((data: { deckId: string }) => {
+    // These were for testing. They should work but do not.
+    // admin.firestore().collection("messages").add({original: "for me"})
+    // matchCollection().add({original: "for me"})
+    return requestDeck.findDeck(data.deckId)
+})
+
 exports.initializeGame = functions.https.onCall((data: { matchId: string }, context: CallableContext) => {
     console.log("Init game called")
     return initializeGame.startGame(data.matchId)
-})
-
-exports.findDeck = functions.https.onCall((data: { deckId: string }) => {
-    admin.firestore().collection("messages").add({original: "for me"})
-    return requestDeck.findDeck(data.deckId)
 })

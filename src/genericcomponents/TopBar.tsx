@@ -1,4 +1,4 @@
-import { AppBar, Button, Toolbar } from "@material-ui/core"
+import { AppBar, Button, Toolbar, Typography } from "@material-ui/core"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { theme } from "../index"
@@ -17,6 +17,7 @@ export class TopBar extends React.Component {
             <AppBar position={"static"}>
                 <Toolbar>
                     <ArchonsArenaIcon/>
+                    <Typography variant={"h4"} style={{marginLeft: theme.spacing(2)}}>Archon Arena</Typography>
                     <div style={{flexGrow: 1}}/>
                     {playerStore.userLoaded && (!playerStore.player.displayName || !playerStore.player.activeDeck) ? (
                         <LinkButton

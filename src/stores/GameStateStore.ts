@@ -1,7 +1,7 @@
 import * as firebase from "firebase"
 import { observable } from "mobx"
 import { GameState } from "../shared/gamestate/GameState"
-import { log, prettyJson } from "../Utils"
+import { log } from "../Utils"
 import { playerCollection, playerStore } from "./PlayerStore"
 
 export const gameStateCollection = () => firebase.firestore().collection("gameState")
@@ -17,17 +17,20 @@ export class GameStateStore {
     private gameStateUnlistener?: () => void
 
     startGame = async () => {
-        const gameState = await firebase.functions().httpsCallable("initializeGame")({matchId: playerStore.currentMatchId})
-        log.info(`Got GameState: ${prettyJson(gameState)}`)
+        const matchId = playerStore.currentMatchId
+        const gameState = await firebase.functions().httpsCallable("initializeGame")({matchId})
+        // log.info(`Got GameState: ${prettyJson(gameState)}`)
+        await gameStateCollection().doc(matchId).set(gameState)
+        // log.info(`Saved gamestate with id ${matchId}`)
     }
 
     listenForGameStateChanges = () => {
         const matchId = playerStore.currentMatchId
         log.debug("Listen for game state changes with match id " + matchId)
-        this.gameStateUnlistener = gameStateCollection().doc(matchId + "gamestate")
+        this.gameStateUnlistener = gameStateCollection().doc(matchId)
             .onSnapshot((gameStateDoc) => {
                 const gameState = gameStateDoc.data() as GameState
-                log.debug(`Got gamestate change for gameState with id ${gameStateDoc.id} exists ${gameStateDoc.exists} as ${prettyJson(gameState)}`)
+                log.debug(`Got gamestate change for gameState with id ${gameStateDoc.id} exists ${gameStateDoc.exists}`)
                 if (gameState) {
                     this.activeGameState = gameState
                 } else {
