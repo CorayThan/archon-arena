@@ -626,6 +626,8 @@ class GameScene extends Phaser.Scene {
             let cardID
             if (this.creatureMousingOver)
                 cardID = this.creatureMousingOver.data.get("id")
+            if (this.artifactMousingOver)
+                cardID = this.artifactMousingOver.data.get("id")
 
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.C) {
                 dispatch({
@@ -664,6 +666,15 @@ class GameScene extends Phaser.Scene {
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.D) {
                 dispatch({
                     type: Event.AlterCreatureDamage,
+                    cardID,
+                    amount: e.shiftKey ? -1 : 1
+                })
+                this.render()
+            }
+
+            if ((this.creatureMousingOver instanceof Card || this.artifactMousingOver instanceof Card) && e.which === KeyCodes.A) {
+                dispatch({
+                    type: Event.AddAmberToCard,
                     cardID,
                     amount: e.shiftKey ? -1 : 1
                 })
