@@ -83,6 +83,23 @@ export const exec = (action: any, state: any) => {
             }
             owner.drawPile.unshift(card)
         },
+        [Event.PurgeCard]: () => {
+            const owner: Player = getCardOwner(action.cardID, state)
+            const card = removeCardByID(owner, action.cardID)
+            if (card.cardsUnderneath) {
+                card.cardsUnderneath.forEach((cardUnderneath: Creature | Artifact | CardInHand) => {
+                    owner.discardPile.push(cardUnderneath)
+                })
+                card.cardsUnderneath = []
+            }
+            if (card.upgrades) {
+                card.upgrades.forEach((upgrade: Creature | Artifact | CardInHand) => {
+                    owner.discardPile.push(upgrade)
+                })
+                card.upgrades = []
+            }
+            owner.purgePile.push(card)
+        },
         [Event.ArchiveCard]: () => {
             const owner: Player = getCardOwner(action.cardID, state)
             const card = removeCardByID(owner, action.cardID)
@@ -98,6 +115,13 @@ export const exec = (action: any, state: any) => {
             }
             owner.archivePile.push(card)
         },
+        [Event.TakeArchive]: () => {
+            const owner: Player = getCardOwner(action.cardID, state)
+            owner.archivePile.forEach((card: CardInHand) => {
+                owner.hand.push(card)
+            })
+            owner.archivePile = []
+        },
         [Event.DrawCard]: () => {
             const player = getPlayerByName(action.playerName, state)
 
@@ -108,6 +132,14 @@ export const exec = (action: any, state: any) => {
                 return
 
             player.hand.push(player.drawPile.shift())
+        },
+        [Event.DrawFromDiscard]: () => {
+            const player = getPlayerByName(action.playerName, state)
+
+            if (player.discardPile.length === 0)
+                return
+
+            player.hand.push(player.discardPile.pop())
         },
         [Event.AddAmberToCard]: () => {
             const owner: Player = getCardOwner(action.cardID, state)

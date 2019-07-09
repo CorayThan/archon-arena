@@ -29,6 +29,7 @@ class Card extends Phaser.GameObjects.Container {
         onMouseOver,
         onMouseOut,
         onDragEnd,
+        onDragStart = () => {},
         onMouseOverUpgrade = () => {},
         onMouseOutUpgrade = () => {},
     }: {
@@ -47,6 +48,7 @@ class Card extends Phaser.GameObjects.Container {
         onMouseOver: Function,
         onMouseOut: Function,
         onDragEnd?: Function,
+        onDragStart?: Function,
         onMouseOverUpgrade?: Function,
         onMouseOutUpgrade?: Function,
     }) {
@@ -70,6 +72,7 @@ class Card extends Phaser.GameObjects.Container {
                 armor: 0,
                 power: 0,
                 stun: 0,
+                doom: 0,
             },
         })
 
@@ -97,6 +100,9 @@ class Card extends Phaser.GameObjects.Container {
             })
             cardImage.addListener("drag", (pointer: any, x: number, y: number) => {
                 cardImage.setPosition(x, y)
+            })
+            cardImage.addListener("dragstart", (pointer: any, x: number, y: number) => {
+                onDragStart()
             })
             cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
                 this.render()
@@ -134,6 +140,10 @@ class Card extends Phaser.GameObjects.Container {
                 this.setAngle(0)
                 this.setPosition(this.data.get("x") + x, this.data.get("y") + y)
                 this.ignoreNextPointerUp = true
+            })
+
+            this.cardImage.addListener("dragstart", (pointer: any, x: number, y: number) => {
+                onDragStart()
             })
 
             this.cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
@@ -226,12 +236,25 @@ class Card extends Phaser.GameObjects.Container {
                 this.cardImage.x - (CARD_WIDTH * 0.2),
                 this.cardImage.y + (CARD_WIDTH * 0.4),
             ],
+            [
+                this.cardImage.x - (CARD_WIDTH * 0.2),
+                this.cardImage.y - (CARD_WIDTH * 0.4),
+                this.cardImage.x + (CARD_WIDTH * 0.2),
+                this.cardImage.y - (CARD_WIDTH * 0.4),
+                this.cardImage.x - (CARD_WIDTH * 0.2),
+                this.cardImage.y,
+                this.cardImage.x + (CARD_WIDTH * 0.2),
+                this.cardImage.y,
+                this.cardImage.x - (CARD_WIDTH * 0.2),
+                this.cardImage.y + (CARD_WIDTH * 0.4),
+                this.cardImage.x + (CARD_WIDTH * 0.2),
+                this.cardImage.y + (CARD_WIDTH * 0.4),
+            ]
         ]
 
         const tokenData = this.data.get("tokens")
         const tokens = Object.keys(tokenData).filter(key => tokenData[key] > 0)
         tokens.forEach((type, i) => {
-            // @ts-ignore // TODO
             if (tokenData[type] > 0) {
                 const position = tokenPositions[tokens.length - 1].slice(i * 2)
 
@@ -239,7 +262,7 @@ class Card extends Phaser.GameObjects.Container {
                 token.setDisplaySize(CARD_WIDTH * 0.3, CARD_WIDTH * 0.3)
                 this.add(token)
 
-                if (type !== "stun") {
+                if (type !== "stun" && type !== "doom") {
                     const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], tokenData[type], {
                         color: "#fff",
                         stroke: "#000",
