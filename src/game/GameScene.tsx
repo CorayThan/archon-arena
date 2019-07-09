@@ -614,6 +614,7 @@ class GameScene extends Phaser.Scene {
             card.destroy()
             this.render()
         }
+        this.render()
     }
 
     onMouseOverUpgrade(e: MouseEvent, target: any) {
