@@ -1,18 +1,8 @@
 import { Event } from "./Event"
-import Creature from "./types/Creature"
-import Artifact from "./types/Artifact"
-import CardInHand from "./types/CardInHand"
-import {
-  getCardOwner,
-  getCreatureByID,
-  getArtifactByID,
-  getCardInHandByID,
-  removeCreature,
-  removeArtifact,
-  removeCardFromHand
-} from "./StateUtils"
+import { getCardInHandByID, getCardOwner } from "./StateUtils"
+import Action from "./types/Action"
 
-export const buildLogForAction = (action: any, state: object) => {
+export const buildLogForAction = (action: Action, state: object): Action | undefined => {
 
     const events: { [key: string]: Function } = {
         [Event.PlayCreature]: () => {
@@ -28,9 +18,13 @@ export const buildLogForAction = (action: any, state: object) => {
     Object.keys(Event)
         .forEach(event => {
             if (!events[event])
-                events[event] = () => {}
+                events[event] = () => {
+                    action.message = `${action.type} has no message`
+                    return action
+                }
         })
 
+    // @ts-ignore
     return events[action.type]()
 }
 

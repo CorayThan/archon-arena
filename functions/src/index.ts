@@ -1,15 +1,27 @@
 import * as admin from "firebase-admin"
 import * as functions from "firebase-functions"
 import { CallableContext } from "firebase-functions/lib/providers/https"
+import * as loglevel from "loglevel"
 import { requestDeck } from "./apis/mastervault/RequestDeck"
 import { initializeGame } from "./InitializeGame"
 
+export const log = loglevel
+log.setDefaultLevel("debug")
+
 admin.initializeApp()
 
-exports.initializeGame = functions.https.onCall((data: any, context: CallableContext) => {
-    return initializeGame.fakeGame()
+export const firestore = admin.firestore()
+export const matchCollection = () => firestore.collection("match")
+export const gameStateCollection = () => firestore.collection("gameState")
+
+exports.findDeck = functions.https.onCall((data: { deckId: string }) => {
+    // These were for testing. They should work but do not.
+    // admin.firestore().collection("messages").add({original: "for me"})
+    // matchCollection().add({original: "for me"})
+    return requestDeck.findDeck(data.deckId)
 })
 
-exports.findDeck = functions.https.onCall((data: {deckId: string}) => {
-    return requestDeck.findDeck(data.deckId)
+exports.initializeGame = functions.https.onCall((data: { matchId: string }, context: CallableContext) => {
+    console.log("Init game called")
+    return initializeGame.startGame(data.matchId)
 })

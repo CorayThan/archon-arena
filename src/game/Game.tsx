@@ -1,17 +1,19 @@
 import Phaser from "phaser"
 import React from "react"
-import "./Game.css"
-import GameScene from "./GameScene"
-import { exec } from "./Actions/Actions"
-import { log } from "../Utils"
+import { actionStore } from "../stores/ActionStore"
+import { chatStore } from "../stores/ChatStore"
+import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
+import { exec } from "./Actions/Actions"
+import Action from "./types/Action"
+import GameScene from "./GameScene"
 
 interface Props {
     state: object
 }
 
-const width = 1024
-const height = window.innerHeight
+const width = window.innerWidth - chatStore.chatWidth
+const height = window.innerHeight - 150
 
 const config: Phaser.Types.Core.GameConfig = {
     parent: "phaser",
@@ -27,39 +29,33 @@ const config: Phaser.Types.Core.GameConfig = {
 class Game extends React.Component<Props> {
     log: object[] = []
 
-    dispatch = (action: any) => {
-        const { state } = this.props
-        this.log.push(buildLogForAction(action, state))
+    dispatch = (action: Action) => {
+        const {state} = this.props
+        const logObj = buildLogForAction(action, state)
+        log.info("Log is " + prettyJson(logObj))
+        if (logObj != null) {
+            actionStore.addAction(logObj)
+        }
         exec(action, state)
-
-        // temporary
-        const div = document.createElement("div")
-        // @ts-ignore
-        div.innerHTML = (this.log[this.log.length - 1] || { message: `${action.type} log not implemented` }).message
-        // @ts-ignore
-        document.querySelector(".Game-chat").appendChild(div)
     }
 
     render() {
         return (
-            <div>
-                <div className='Game-chat'>
-                </div>
-                <div id='phaser' className='Game-phaser-container'>
-                </div>
-            </div>
+            <div
+                id="phaser"
+                style={{height: "100%"}}
+            />
         )
     }
 
+    // TODO we need to delete this and remove the props from this class
     shouldComponentUpdate() {
         return false
     }
 
     componentDidMount() {
-        const { state } = this.props
+        const {state} = this.props
         log.debug(state)
-
-        this.log = []
 
         const game = new Phaser.Game(config)
         game.events.once("ready", () => {
@@ -69,7 +65,6 @@ class Game extends React.Component<Props> {
             });
 
             const scene = game.scene.getScene("GameScene")
-
             // @ts-ignore
             scene.data.set({
                 state,

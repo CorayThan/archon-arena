@@ -20,10 +20,12 @@ import {
     discardCreatureUpgrades,
     discardCardsUnderneath,
 } from "../StateUtils"
+
 import Creature from "../types/Creature"
 import Artifact from "../types/Artifact"
 import Player from "../types/Player"
 import CardInHand from "../types/CardInHand"
+import Action from "../types/Action"
 
 import CreatureActions from "./Creature"
 import ArtifactActions from "./Artifact"

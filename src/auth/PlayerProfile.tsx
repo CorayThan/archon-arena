@@ -4,6 +4,7 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import { EventValue } from "../genericcomponents/EventValue"
 import { Loader } from "../genericcomponents/Loader"
+import { TopBar } from "../genericcomponents/TopBar"
 import { theme } from "../index"
 import { Deck } from "../shared/keyforge/deck/Deck"
 import { deckStore } from "../stores/DeckStore"
@@ -66,87 +67,90 @@ export class PlayerProfile extends React.Component {
     render() {
         return (
             <div>
-                <Grid
-                    container={true}
-                    spacing={2}
-                >
-                    <Grid item={true} xs={12} sm={3}>
-                        <Paper>
-                            <Typography
-                                variant={"h3"}
-                                style={{padding: theme.spacing(2)}}
-                            >
-                                My Profile
-                            </Typography>
-                            <Divider/>
-                            <div>
-                                <TextField
-                                    style={{margin: theme.spacing(2)}}
-                                    label={"display name"}
-                                    value={this.displayName}
-                                    variant={"outlined"}
-                                    onChange={(event: EventValue) => this.displayName = event.target.value}
-                                />
-                            </div>
-                            <Button
-                                onClick={this.savePlayer}
-                                variant={"contained"}
-                                color={"primary"}
-                                style={{margin: theme.spacing(2)}}
-                            >
-                                Save Profile
-                            </Button>
-                        </Paper>
-                    </Grid>
-                    <Grid item={true} xs={12} sm={9}>
-                        <Paper>
-                            <Typography
-                                variant={"h3"}
-                                style={{padding: theme.spacing(2)}}
-                            >
-                                My Decks
-                            </Typography>
-                            <Divider/>
-
-                            <Typography
-                                style={{margin: theme.spacing(2)}}
-                            >
-                                Active deck: {playerStore.player.activeDeck ? playerStore.player.activeDeck.name : ""}
-                            </Typography>
-                            <div style={{display: "flex", alignItems: "center"}}>
-                                <TextField
-                                    style={{margin: theme.spacing(2)}}
-                                    label={"deck id or url"}
-                                    value={this.deckId}
-                                    variant={"outlined"}
-                                    onChange={(event: EventValue) => this.deckId = event.target.value}
-                                />
+                <TopBar/>
+                <div style={{margin: theme.spacing(2)}}>
+                    <Grid
+                        container={true}
+                        spacing={2}
+                    >
+                        <Grid item={true} xs={12} sm={3}>
+                            <Paper>
+                                <Typography
+                                    variant={"h3"}
+                                    style={{padding: theme.spacing(2)}}
+                                >
+                                    My Profile
+                                </Typography>
+                                <Divider/>
                                 <div>
-                                    <Button onClick={this.addDeck}>Add Deck</Button>
+                                    <TextField
+                                        style={{margin: theme.spacing(2)}}
+                                        label={"display name"}
+                                        value={this.displayName}
+                                        variant={"outlined"}
+                                        onChange={(event: EventValue) => this.displayName = event.target.value}
+                                    />
                                 </div>
-                            </div>
-                            <Button
-                                onClick={deckStore.clearDecks}
-                                style={{margin: theme.spacing(2)}}
-                            >
-                                Remove all decks
-                            </Button>
-                            <List
-                                style={{margin: theme.spacing(2)}}
-                            >
-                                {playerStore.player.decks.map(deck => (
-                                    <ListItem key={deck.id}>
-                                        <Typography>{deck.name}</Typography>
-                                        <div style={{flexGrow: 1}}/>
-                                        {playerStore.activeDeckId !== deck.id ? (
-                                            <Button color={"primary"} onClick={() => this.setActiveDeck(deck)}>Make Active</Button>
-                                        ) : null}
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Paper>
+                                <Button
+                                    onClick={this.savePlayer}
+                                    variant={"contained"}
+                                    color={"primary"}
+                                    style={{margin: theme.spacing(2)}}
+                                >
+                                    Save Profile
+                                </Button>
+                            </Paper>
+                        </Grid>
+                        <Grid item={true} xs={12} sm={9}>
+                            <Paper>
+                                <Typography
+                                    variant={"h3"}
+                                    style={{padding: theme.spacing(2)}}
+                                >
+                                    My Decks
+                                </Typography>
+                                <Divider/>
+
+                                <Typography
+                                    style={{margin: theme.spacing(2)}}
+                                >
+                                    Active deck: {playerStore.player.activeDeck ? playerStore.player.activeDeck.name : ""}
+                                </Typography>
+                                <div style={{display: "flex", alignItems: "center"}}>
+                                    <TextField
+                                        style={{margin: theme.spacing(2)}}
+                                        label={"deck id or url"}
+                                        value={this.deckId}
+                                        variant={"outlined"}
+                                        onChange={(event: EventValue) => this.deckId = event.target.value}
+                                    />
+                                    <div>
+                                        <Button onClick={this.addDeck}>Add Deck</Button>
+                                    </div>
+                                </div>
+                                <Button
+                                    onClick={deckStore.clearDecks}
+                                    style={{margin: theme.spacing(2)}}
+                                >
+                                    Remove all decks
+                                </Button>
+                                <List
+                                    style={{margin: theme.spacing(2)}}
+                                >
+                                    {playerStore.player.decks.map(deck => (
+                                        <ListItem key={deck.id}>
+                                            <Typography>{deck.name}</Typography>
+                                            <div style={{flexGrow: 1}}/>
+                                            {playerStore.activeDeckId !== deck.id ? (
+                                                <Button color={"primary"} onClick={() => this.setActiveDeck(deck)}>Make Active</Button>
+                                            ) : null}
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Paper>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </div>
             </div>
         )
     }

@@ -1,13 +1,14 @@
+import { Deck } from "./keyforge/deck/Deck"
+
 export interface Match {
     matchId: string
 
     firstPlayerId: string
     firstPlayerDisplayName: string
-    firstPlayerActiveDeckId: string
-    firstPlayerDeckName: string
+    firstPlayerActiveDeck: Deck
     secondPlayerId?: string
     secondPlayerDisplayName?: string
-    secondPlayerActiveDeckId?: string
+    secondPlayerActiveDeck?: Deck
     secondPlayerDeckName?: string
 
     gameStateId?: string
