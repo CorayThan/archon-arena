@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import CardInHand from "./types/CardInHand"
 import Upgrade from "./types/Upgrade"
 
 export const CARD_WIDTH = 80
@@ -27,9 +28,28 @@ class Card extends Phaser.GameObjects.Container {
         onClick,
         onMouseOver,
         onMouseOut,
-        onMouseOverUpgrade,
-        onMouseOutUpgrade,
-    }: any) {
+        onDragEnd,
+        onMouseOverUpgrade = () => {},
+        onMouseOutUpgrade = () => {},
+    }: {
+        scene: Phaser.Scene,
+        x: number,
+        y: number,
+        id: string,
+        front: string,
+        back: string,
+        faceup?: boolean,
+        ready?: boolean,
+        draggable?: boolean,
+        cardsUnderneath?: CardInHand[],
+        upgrades?: Upgrade[],
+        onClick: Function,
+        onMouseOver: Function,
+        onMouseOut: Function,
+        onDragEnd?: Function,
+        onMouseOverUpgrade?: Function,
+        onMouseOutUpgrade?: Function,
+    }) {
         super(scene)
         this.scene = scene
         this.ignoreNextPointerUp = false
@@ -117,7 +137,11 @@ class Card extends Phaser.GameObjects.Container {
             })
 
             this.cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
-                this.render()
+                if (onDragEnd) {
+                    onDragEnd(this)
+                } else {
+                    this.render()
+                }
             })
 
             this.cardImage.addListener("dragenter", (pointer: any, zone: any) => {

@@ -15,6 +15,7 @@ export enum Event {
     MoveArtifactToHand = "MoveArtifactToHand",
 
     PlayUpgrade = "PlayUpgrade",
+    PlayAction = "PlayAction",
 
     DrawCard = "DrawCard",
     ArchiveCard = "ArchiveCard",

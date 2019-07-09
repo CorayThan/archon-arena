@@ -35,7 +35,15 @@ export const exec = (action: any, state: any) => {
             if (!creature)
                 throw new Error(`Card ${action.creatureID} not found in field`)
             creature.upgrades.push(upgrade)
-            removeCardFromHand(owner, action.upgrade)
+            removeCardFromHand(owner, action.upgradeID)
+        },
+        [Event.PlayAction]: () => {
+            const owner: Player = getCardOwner(action.upgradeID, state)
+            const card = getCardInHandByID(owner, action.cardID)
+            if (!card)
+                throw new Error(`Card ${action.cardID} not found in hand`)
+            removeCardFromHand(owner, action.cardID)
+            owner.discardPile.push(card)
         },
         [Event.ShuffleDeck]: () => {
             const player = getPlayerByName(action.playerName, state)

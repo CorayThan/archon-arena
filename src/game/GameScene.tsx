@@ -364,6 +364,7 @@ class GameScene extends Phaser.Scene {
                 onClick: this.onClickCardInHand.bind(this),
                 onMouseOver: this.onMouseOverCardInHand.bind(this),
                 onMouseOut: this.onMouseOutCardInHand.bind(this),
+                onDragEnd: this.onDragEndCardInHand.bind(this),
             })
             this.root.add(card)
         }
@@ -599,6 +600,20 @@ class GameScene extends Phaser.Scene {
 
         if (this.cardHoverImage)
             this.cardHoverImage.destroy()
+    }
+
+    onDragEndCardInHand(card: Card) {
+        const distY = card.data.get("y") - card.y
+        if (distY > CARD_HEIGHT) {
+            const dispatch = this.data.get("dispatch")
+            const cardID = card.data.get("id")
+            dispatch({
+                type: Event.PlayAction,
+                cardID,
+            })
+            card.destroy()
+            this.render()
+        }
     }
 
     onMouseOverUpgrade(e: MouseEvent, target: any) {
