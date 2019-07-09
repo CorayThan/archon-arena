@@ -8,6 +8,7 @@ export enum Event {
     CaptureAmber = "CaptureAmber",
     ToggleStun = "ToggleStun",
     ToggleTaunt = "ToggleTaunt",
+    ToggleDoomToken = "ToggleDoomToken",
 
     PlayArtifact = "PlayArtifact",
     UseArtifact = "UseArtifact",
@@ -15,10 +16,14 @@ export enum Event {
     MoveArtifactToHand = "MoveArtifactToHand",
 
     PlayUpgrade = "PlayUpgrade",
+    PlayAction = "PlayAction",
 
     DrawCard = "DrawCard",
+    DrawFromDiscard = "DrawFromDiscard",
     ArchiveCard = "ArchiveCard",
+    TakeArchive = "TakeArchive",
     DiscardCard = "DiscardCard",
+    PurgeCard = "PurgeCard",
     PutCardOnDrawPile = "PutCardOnDrawPile",
     ShuffleDeck = "ShuffleDeck",
     AddAmberToCard = "AddAmberToCard",
