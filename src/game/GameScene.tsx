@@ -57,7 +57,7 @@ class GameScene extends Phaser.Scene {
         this.root = this.add.container(0, 0)
         this.render()
 
-        this.input.mouse.disableContextMenu()
+        //this.input.mouse.disableContextMenu()
         this.setupKeyboardListeners()
     }
 
@@ -162,7 +162,7 @@ class GameScene extends Phaser.Scene {
         this.createCardDropZone({
             x: discardPileX,
             y: originY + CARD_HEIGHT / 2,
-            allowCardTypes: ["card-in-hand", "creature", "artifact"],
+            allowCardTypes: ["card-in-hand", "creature", "artifact", "upgrade"],
             getCardImage: () => player.discardPile.length === 0 ? "cardback" : player.discardPile[player.discardPile.length - 1].id,
             getMinimumAlpha: () => player.discardPile.length === 0 ? 0.1 : 1,
             onDrop: (card: Card) => {
@@ -255,7 +255,6 @@ class GameScene extends Phaser.Scene {
         let lastCreatureX = 0
         let creatureOffsetX = 0
         for (let i = 0; i < player.creatures.length; i++) {
-
             const creature = player.creatures[i]
             let creatureY = originY + creatureOffsetY
             if (creature.taunt) {
@@ -277,7 +276,7 @@ class GameScene extends Phaser.Scene {
                 creatureOffsetX += (CARD_WIDTH * 0.1) * (creature.cardsUnderneath.length)
             }
 
-            const card = new Card({
+            const creatureCard = new Card({
                 scene: this,
                 x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1) + creatureOffsetX,
                 y: creatureY,
@@ -298,29 +297,30 @@ class GameScene extends Phaser.Scene {
             Object.keys(creature.tokens)
                 .forEach(token => {
                     const tokenAmount = creature.tokens[token]
-                    card.addToken({
+                    creatureCard.addToken({
                         type: token,
                         amount: tokenAmount,
                     })
                 })
-            lastCreatureX = card.x
-            this.root.add(card)
+            lastCreatureX = creatureCard.x
+            this.root.add(creatureCard)
 
-            const dropZoneX = card.x
+            const dropZoneX = creatureCard.x
             this.createCardDropZone({
                 x: dropZoneX,
                 y: originY + creatureOffsetY,
                 visible: false,
-                onDrop: (card: Card) => {
-                    const cardID = card.data.get("id")
-                    if (getCardType(cardID) !== "card-in-hand")
+                onDrop: (droppedCard: Card) => {
+                    const droppedCardID = droppedCard.data.get("id")
+                    if (getCardType(droppedCardID) !== "card-in-hand")
                         return
 
                     dispatch({
                         type: Event.PlayUpgrade,
-                        cardID: card.data.get("id"),
+                        upgradeID: droppedCard.data.get("id"),
+                        creatureID: creatureCard.data.get("id"),
                     })
-                    card.destroy()
+                    droppedCard.destroy()
                     this.render()
                 }
             })
@@ -465,7 +465,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
-                type: Event.DiscardCreature,
+                type: Event.DiscardCard,
                 cardID,
             })
             card.destroy()
@@ -510,7 +510,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
-                type: Event.DiscardArtifact,
+                type: Event.DiscardCard,
                 cardID,
             })
             card.destroy()

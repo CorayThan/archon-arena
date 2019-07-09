@@ -2,7 +2,7 @@ import Phaser from "phaser"
 import React from "react"
 import "./Game.css"
 import GameScene from "./GameScene"
-import { exec } from "./Actions"
+import { exec } from "./Actions/Actions"
 import { log } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
 
