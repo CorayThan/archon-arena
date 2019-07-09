@@ -1,20 +1,35 @@
-import { shuffle } from "lodash"
 import Creature from "./types/Creature"
 import Artifact from "./types/Artifact"
 import CardInHand from "./types/CardInHand"
 import Upgrade from "./types/Upgrade"
 import Player from "./types/Player"
 
+export const discardCreatureUpgrades = (player: Player, cardID: string) => {
+    const creature = getCreatureByID(player, cardID)
+    if (creature && creature.upgrades) {
+          creature.upgrades.forEach((upgrade: Upgrade) => {
+              player.discardPile.push(upgrade)
+          })
+          creature.upgrades = []
+    }
+}
+
+export const discardCardsUnderneath = (player: Player, cardID: string) => {
+    const creature = getCreatureByID(player, cardID)
+    const artifact = getArtifactByID(player, cardID)
+    const card = creature || artifact
+    if (card && card.cardsUnderneath) {
+          card.cardsUnderneath.forEach((cardUnderneath: Creature | Artifact | Upgrade | CardInHand) => {
+              player.discardPile.push(cardUnderneath)
+          })
+          card.cardsUnderneath = []
+    }
+}
+
 export const getCardType = (cardID: string) => {
     if (cardID.indexOf("upgrade") !== -1)
         return "upgrade"
     return cardID.slice(cardID.indexOf("-") + 1, cardID.lastIndexOf("-"))
-}
-
-export const shuffleDeck = (player: Player) => {
-    player.discardPile.forEach((card: CardInHand) => player.drawPile.push(card))
-    player.discardPile = []
-    player.drawPile = shuffle(player.drawPile)
 }
 
 export const getPlayerByName = (name: string, state: any) => {
@@ -81,6 +96,24 @@ export const getUpgradeByID = (player: Player, cardID: string) => {
             return upgrade
         }
     }
+}
+
+export const getCardInDiscardByID = (player: Player, cardID: string) => {
+    return player.discardPile.find((c: CardInHand, i: number) => {
+        return `${player.name}-card-in-discard-${i}` === cardID
+    })
+}
+
+export const getCardInDrawPileByID = (player: Player, cardID: string) => {
+    return player.drawPile.find((c: CardInHand, i: number) => {
+        return `${player.name}-card-in-draw-${i}` === cardID
+    })
+}
+
+export const getCardInArchiveByID = (player: Player, cardID: string) => {
+    return player.archivePile.find((c: CardInHand, i: number) => {
+        return `${player.name}-card-in-archive-${i}` === cardID
+    })
 }
 
 export const removeCardByID = (player: Player, cardID: string) => {

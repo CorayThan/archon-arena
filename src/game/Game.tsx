@@ -60,11 +60,14 @@ class Game extends React.Component<Props> {
         log.debug(state)
 
         this.log = []
-        // @ts-ignore
-        window.game = this
 
         const game = new Phaser.Game(config)
         game.events.once("ready", () => {
+            game.canvas.addEventListener("contextmenu", (e: MouseEvent) => {
+                e.preventDefault()
+                return false
+            });
+
             const scene = game.scene.getScene("GameScene")
 
             // @ts-ignore

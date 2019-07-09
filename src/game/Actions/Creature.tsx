@@ -61,6 +61,32 @@ export default {
         owner.hand.push(card)
         removeCreature(owner, action.cardID)
     },
+    [Event.MoveCreatureRight]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const creature = getCreatureByID(owner, action.cardID)
+        if (!creature)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        const indexOfCreature = owner.creatures.indexOf(creature)
+        if (indexOfCreature === owner.creatures.length - 1)
+            return
+
+        const creatureOnRight = owner.creatures[indexOfCreature + 1]
+        owner.creatures[indexOfCreature] = creatureOnRight
+        owner.creatures[indexOfCreature + 1] = creature
+    },
+    [Event.MoveCreatureLeft]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const creature = getCreatureByID(owner, action.cardID)
+        if (!creature)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        const indexOfCreature = owner.creatures.indexOf(creature)
+        if (indexOfCreature === 0)
+            return
+
+        const creatureOnLeft = owner.creatures[indexOfCreature - 1]
+        owner.creatures[indexOfCreature] = creatureOnLeft
+        owner.creatures[indexOfCreature - 1] = creature
+    },
     [Event.AlterCreatureDamage]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardID, state)
         const creature = getCreatureByID(owner, action.cardID)
