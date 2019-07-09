@@ -10,4 +10,5 @@ export default interface Player {
     drawPile: CardInHand[],
     discardPile: CardInHand[],
     archivePile: CardInHand[],
+    purgePile: CardInHand[],
 }

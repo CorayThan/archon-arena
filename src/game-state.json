@@ -52,6 +52,7 @@
           "cardsUnderneath": [],
           "tokens": {
             "armor": 0,
+            "doom": 0,
             "power": 0,
             "damage": 0,
             "amber": 0,
@@ -68,6 +69,7 @@
           "cardsUnderneath": [],
           "tokens": {
             "armor": 0,
+            "doom": 0,
             "power": 0,
             "damage": 0,
             "amber": 0,
@@ -90,6 +92,7 @@
           ],
           "tokens": {
             "armor": 0,
+            "doom": 0,
             "power": 0,
             "damage": 0,
             "amber": 0,
@@ -170,6 +173,7 @@
           "cardsUnderneath": [],
           "tokens": {
             "armor": 0,
+            "doom": 0,
             "power": 0,
             "damage": 0,
             "amber": 0,
@@ -195,6 +199,7 @@
           "cardsUnderneath": [],
           "tokens": {
             "armor": 0,
+            "doom": 0,
             "power": 0,
             "damage": 0,
             "amber": 0,
@@ -217,6 +222,7 @@
           ],
           "tokens": {
             "armor": 0,
+            "doom": 0,
             "power": 0,
             "damage": 0,
             "amber": 0,
