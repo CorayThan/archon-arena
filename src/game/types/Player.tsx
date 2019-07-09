@@ -9,5 +9,6 @@ export default interface Player {
     hand: CardInHand[],
     drawPile: CardInHand[],
     discardPile: CardInHand[],
-    archive: CardInHand[],
+    archivePile: CardInHand[],
+    purgePile: CardInHand[],
 }

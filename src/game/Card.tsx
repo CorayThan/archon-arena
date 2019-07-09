@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import CardInHand from "./types/CardInHand"
 import Upgrade from "./types/Upgrade"
 
 export const CARD_WIDTH = 80
@@ -27,9 +28,30 @@ class Card extends Phaser.GameObjects.Container {
         onClick,
         onMouseOver,
         onMouseOut,
-        onMouseOverUpgrade,
-        onMouseOutUpgrade,
-    }: any) {
+        onDragEnd,
+        onDragStart = () => {},
+        onMouseOverUpgrade = () => {},
+        onMouseOutUpgrade = () => {},
+    }: {
+        scene: Phaser.Scene,
+        x: number,
+        y: number,
+        id: string,
+        front: string,
+        back: string,
+        faceup?: boolean,
+        ready?: boolean,
+        draggable?: boolean,
+        cardsUnderneath?: CardInHand[],
+        upgrades?: Upgrade[],
+        onClick: Function,
+        onMouseOver: Function,
+        onMouseOut: Function,
+        onDragEnd?: Function,
+        onDragStart?: Function,
+        onMouseOverUpgrade?: Function,
+        onMouseOutUpgrade?: Function,
+    }) {
         super(scene)
         this.scene = scene
         this.ignoreNextPointerUp = false
@@ -50,6 +72,7 @@ class Card extends Phaser.GameObjects.Container {
                 armor: 0,
                 power: 0,
                 stun: 0,
+                doom: 0,
             },
         })
 
@@ -77,6 +100,9 @@ class Card extends Phaser.GameObjects.Container {
             })
             cardImage.addListener("drag", (pointer: any, x: number, y: number) => {
                 cardImage.setPosition(x, y)
+            })
+            cardImage.addListener("dragstart", (pointer: any, x: number, y: number) => {
+                onDragStart()
             })
             cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
                 this.render()
@@ -116,8 +142,16 @@ class Card extends Phaser.GameObjects.Container {
                 this.ignoreNextPointerUp = true
             })
 
+            this.cardImage.addListener("dragstart", (pointer: any, x: number, y: number) => {
+                onDragStart()
+            })
+
             this.cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
-                this.render()
+                if (onDragEnd) {
+                    onDragEnd(this)
+                } else {
+                    this.render()
+                }
             })
 
             this.cardImage.addListener("dragenter", (pointer: any, zone: any) => {
@@ -202,12 +236,25 @@ class Card extends Phaser.GameObjects.Container {
                 this.cardImage.x - (CARD_WIDTH * 0.2),
                 this.cardImage.y + (CARD_WIDTH * 0.4),
             ],
+            [
+                this.cardImage.x - (CARD_WIDTH * 0.2),
+                this.cardImage.y - (CARD_WIDTH * 0.4),
+                this.cardImage.x + (CARD_WIDTH * 0.2),
+                this.cardImage.y - (CARD_WIDTH * 0.4),
+                this.cardImage.x - (CARD_WIDTH * 0.2),
+                this.cardImage.y,
+                this.cardImage.x + (CARD_WIDTH * 0.2),
+                this.cardImage.y,
+                this.cardImage.x - (CARD_WIDTH * 0.2),
+                this.cardImage.y + (CARD_WIDTH * 0.4),
+                this.cardImage.x + (CARD_WIDTH * 0.2),
+                this.cardImage.y + (CARD_WIDTH * 0.4),
+            ]
         ]
 
         const tokenData = this.data.get("tokens")
         const tokens = Object.keys(tokenData).filter(key => tokenData[key] > 0)
         tokens.forEach((type, i) => {
-            // @ts-ignore // TODO
             if (tokenData[type] > 0) {
                 const position = tokenPositions[tokens.length - 1].slice(i * 2)
 
@@ -215,7 +262,7 @@ class Card extends Phaser.GameObjects.Container {
                 token.setDisplaySize(CARD_WIDTH * 0.3, CARD_WIDTH * 0.3)
                 this.add(token)
 
-                if (type !== "stun") {
+                if (type !== "stun" && type !== "doom") {
                     const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], tokenData[type], {
                         color: "#fff",
                         stroke: "#000",

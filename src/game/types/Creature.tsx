@@ -1,4 +1,6 @@
 import Upgrade from "./Upgrade"
+import Artifact from "./Artifact"
+import CardInHand from "./CardInHand"
 
 export default interface Creature {
     name: string,
@@ -7,7 +9,7 @@ export default interface Creature {
     faceup: boolean,
     taunt: boolean,
     upgrades: Upgrade[],
-    cardsUnderneath: { id: string, name: string }[],
+    cardsUnderneath: (Creature | Artifact | Upgrade | CardInHand)[],
     tokens: {
         [key: string]: number
     }

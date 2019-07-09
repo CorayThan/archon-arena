@@ -34,7 +34,8 @@ export default {
                 power: 0,
                 damage: 0,
                 amber: 0,
-                stun: 0
+                stun: 0,
+                doom: 0
             }
         }
 
@@ -59,6 +60,32 @@ export default {
         }
         owner.hand.push(card)
         removeCreature(owner, action.cardID)
+    },
+    [Event.MoveCreatureRight]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const creature = getCreatureByID(owner, action.cardID)
+        if (!creature)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        const indexOfCreature = owner.creatures.indexOf(creature)
+        if (indexOfCreature === owner.creatures.length - 1)
+            return
+
+        const creatureOnRight = owner.creatures[indexOfCreature + 1]
+        owner.creatures[indexOfCreature] = creatureOnRight
+        owner.creatures[indexOfCreature + 1] = creature
+    },
+    [Event.MoveCreatureLeft]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const creature = getCreatureByID(owner, action.cardID)
+        if (!creature)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        const indexOfCreature = owner.creatures.indexOf(creature)
+        if (indexOfCreature === 0)
+            return
+
+        const creatureOnLeft = owner.creatures[indexOfCreature - 1]
+        owner.creatures[indexOfCreature] = creatureOnLeft
+        owner.creatures[indexOfCreature - 1] = creature
     },
     [Event.AlterCreatureDamage]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardID, state)
@@ -92,6 +119,13 @@ export default {
         if (!creature)
             throw new Error(`Card ${action.cardID} not found in hand`)
         creature.tokens.stun = creature.tokens.stun === 0 ? 1 : 0
+    },
+    [Event.ToggleDoomToken]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const creature = getCreatureByID(owner, action.cardID)
+        if (!creature)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        creature.tokens.doom = creature.tokens.doom === 0 ? 1 : 0
     },
     [Event.ToggleTaunt]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardID, state)
