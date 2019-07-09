@@ -51,6 +51,7 @@ export class GameStateStore {
             this.gameStateUnlistener()
             this.gameStateUnlistener = undefined
         }
+        playerStore.upsertPlayer({currentMatchId: null})
     }
 }
 
