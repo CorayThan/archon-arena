@@ -34,7 +34,8 @@ export default {
                 power: 0,
                 damage: 0,
                 amber: 0,
-                stun: 0
+                stun: 0,
+                doom: 0
             }
         }
 
@@ -92,6 +93,13 @@ export default {
         if (!creature)
             throw new Error(`Card ${action.cardID} not found in hand`)
         creature.tokens.stun = creature.tokens.stun === 0 ? 1 : 0
+    },
+    [Event.ToggleDoomToken]: (action: any, state: any) => {
+        const owner = getCardOwner(action.cardID, state)
+        const creature = getCreatureByID(owner, action.cardID)
+        if (!creature)
+            throw new Error(`Card ${action.cardID} not found in hand`)
+        creature.tokens.doom = creature.tokens.doom === 0 ? 1 : 0
     },
     [Event.ToggleTaunt]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardID, state)
