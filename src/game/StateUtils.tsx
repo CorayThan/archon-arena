@@ -39,6 +39,19 @@ export const getCardOwner = (id: string, state: any) => {
     }
 }
 
+export const getCardByID = (owner: Player, cardID: string) => {
+    const creature = getCreatureByID(owner, cardID)
+    if (creature) return creature
+
+    const artifact = getArtifactByID(owner, cardID)
+    if (artifact) return artifact
+
+    const cardInHand = getCardInHandByID(owner, cardID)
+    if (cardInHand) return cardInHand
+
+    return getUpgradeByID(owner, cardID)
+}
+
 export const getCreatureByID = (player: Player, cardID: string) => {
     return player.creatures.find((card: Creature, i: number) => {
         return `${player.name}-creature-${i}` === cardID
@@ -55,6 +68,19 @@ export const getCardInHandByID = (player: Player, cardID: string) => {
     return player.hand.find((card: CardInHand, i: number) => {
         return `${player.name}-card-in-hand-${i}` === cardID
     })
+}
+
+export const getUpgradeByID = (player: Player, cardID: string) => {
+    for (let i = 0; i < player.creatures.length; i++) {
+        const creature: Creature = player.creatures[i]
+        const upgrade = creature.upgrades.find((c: Upgrade, j: number) => {
+            return `${player.name}-creature-${i}-upgrade-${j}` === cardID
+        })
+
+        if (upgrade) {
+            return upgrade
+        }
+    }
 }
 
 export const removeCardByID = (player: Player, cardID: string) => {

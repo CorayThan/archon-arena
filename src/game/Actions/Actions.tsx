@@ -2,6 +2,7 @@ import { Event } from "../Event"
 import { log } from "../../Utils"
 import {
     getCardOwner,
+    getCardByID,
     getCardType,
     getCreatureByID,
     getArtifactByID,
@@ -26,7 +27,7 @@ export const exec = (action: any, state: any) => {
 
     const actionHandlers: { [key: string]: Function } = {
         [Event.PlayUpgrade]: () => {
-            const owner: Player = getCardOwner(action.upgrade, state)
+            const owner: Player = getCardOwner(action.upgradeID, state)
             const upgrade = getCardInHandByID(owner, action.upgradeID)
             if (!upgrade)
                 throw new Error(`Card ${action.upgradeID} not found in hand`)
@@ -99,6 +100,23 @@ export const exec = (action: any, state: any) => {
                 return
 
             player.hand.push(player.drawPile.shift())
+        },
+        [Event.AddAmberToCard]: () => {
+            const owner: Player = getCardOwner(action.cardID, state)
+            const cardType = getCardType(action.cardID)
+            if (cardType === "creature") {
+                const creature = getCreatureByID(owner, action.cardID)
+                if (!creature)
+                    throw new Error(`Card ${action.cardID} not found`)
+                creature.tokens.amber += action.amount
+                creature.tokens.amber = Math.max(creature.tokens.amber, 0)
+            } else if (cardType === "artifact") {
+                const artifact = getArtifactByID(owner, action.cardID)
+                if (!artifact)
+                    throw new Error(`Card ${action.cardID} not found`)
+                artifact.tokens.amber += action.amount
+                artifact.tokens.amber = Math.max(artifact.tokens.amber, 0)
+            }
         },
         [Event.AlterPlayerChains]: () => {
             const player = getPlayerByName(action.playerName, state)
