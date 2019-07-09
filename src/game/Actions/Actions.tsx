@@ -83,6 +83,23 @@ export const exec = (action: any, state: any) => {
             }
             owner.drawPile.unshift(card)
         },
+        [Event.PurgeCard]: () => {
+            const owner: Player = getCardOwner(action.cardID, state)
+            const card = removeCardByID(owner, action.cardID)
+            if (card.cardsUnderneath) {
+                card.cardsUnderneath.forEach((cardUnderneath: Creature | Artifact | CardInHand) => {
+                    owner.discardPile.push(cardUnderneath)
+                })
+                card.cardsUnderneath = []
+            }
+            if (card.upgrades) {
+                card.upgrades.forEach((upgrade: Creature | Artifact | CardInHand) => {
+                    owner.discardPile.push(upgrade)
+                })
+                card.upgrades = []
+            }
+            owner.purgePile.push(card)
+        },
         [Event.ArchiveCard]: () => {
             const owner: Player = getCardOwner(action.cardID, state)
             const card = removeCardByID(owner, action.cardID)

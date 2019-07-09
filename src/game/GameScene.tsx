@@ -181,28 +181,6 @@ class GameScene extends Phaser.Scene {
         })
         this.root.add(discardPileText)
 
-        const archivePileX = originX + CARD_WIDTH * 6 + 2 * (CARD_WIDTH + CARD_WIDTH * 0.1)
-        this.createCardDropZone({
-            x: archivePileX,
-            y: originY + CARD_HEIGHT / 2,
-            getMinimumAlpha: () => player.archivePile.length === 0 ? 0.1 : 1,
-            allowCardTypes: ["card-in-hand", "creature", "artifact"],
-            onDrop: (card: Card) => {
-                dispatch({
-                    type: Event.ArchiveCard,
-                    cardID: card.data.get("id"),
-                })
-                card.destroy()
-                this.render()
-            },
-        })
-        const archivePileText = new Phaser.GameObjects.Text(this, archivePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Archive (${player.archivePile.length})`, {
-            color: "#000",
-            fontSize: "10px",
-            backgroundColor: "rgba(255, 255, 255, 1)"
-        })
-        this.root.add(archivePileText)
-
         const drawPileX = originX + CARD_WIDTH * 6 + 1 * (CARD_WIDTH + CARD_WIDTH * 0.1)
         const drawPileZone = this.createCardDropZone({
             x: drawPileX,
@@ -231,6 +209,54 @@ class GameScene extends Phaser.Scene {
             backgroundColor: "rgba(255, 255, 255, 1)"
         })
         this.root.add(drawPileText)
+
+        const archivePileX = originX + CARD_WIDTH * 6 + 2 * (CARD_WIDTH + CARD_WIDTH * 0.1)
+        this.createCardDropZone({
+            x: archivePileX,
+            y: originY + CARD_HEIGHT / 2,
+            getMinimumAlpha: () => player.archivePile.length === 0 ? 0.1 : 1,
+            allowCardTypes: ["card-in-hand", "creature", "artifact"],
+            onDrop: (card: Card) => {
+                dispatch({
+                    type: Event.ArchiveCard,
+                    cardID: card.data.get("id"),
+                })
+                card.destroy()
+                this.render()
+            },
+        })
+        const archivePileText = new Phaser.GameObjects.Text(this, archivePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Archive (${player.archivePile.length})`, {
+            color: "#000",
+            fontSize: "10px",
+            backgroundColor: "rgba(255, 255, 255, 1)"
+        })
+        this.root.add(archivePileText)
+
+        const purgePileX = originX + 760 + nameWidth + CARD_WIDTH / 2
+        const purgePileZone = this.createCardDropZone({
+            x: purgePileX,
+            y: originY + CARD_HEIGHT / 2,
+            getCardImage: () => player.purgePile.length === 0 ? "cardback" : player.purgePile[player.purgePile.length - 1].id,
+            getMinimumAlpha: () => player.purgePile.length === 0 ? 0.1 : 1,
+            allowCardTypes: ["card-in-hand", "creature", "artifact", "upgrade"],
+            onDrop: (card: Card) => {
+                dispatch({
+                    type: Event.PurgeCard,
+                    cardID: card.data.get("id"),
+                })
+                card.destroy()
+                this.render()
+            },
+        })
+        purgePileZone.addListener("pointerup", (e: any) => {
+            // Open purge modal
+        })
+        const purgePileText = new Phaser.GameObjects.Text(this, purgePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Purge (${player.purgePile.length})`, {
+            color: "#000",
+            fontSize: "10px",
+            backgroundColor: "rgba(255, 255, 255, 1)"
+        })
+        this.root.add(purgePileText)
 
         let artifactOffsetX = 0
         for (let i = 0; i < player.artifacts.length; i++) {

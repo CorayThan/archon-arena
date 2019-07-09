@@ -20,6 +20,7 @@ export enum Event {
     DrawCard = "DrawCard",
     ArchiveCard = "ArchiveCard",
     DiscardCard = "DiscardCard",
+    PurgeCard = "PurgeCard",
     PutCardOnDrawPile = "PutCardOnDrawPile",
     ShuffleDeck = "ShuffleDeck",
     AddAmberToCard = "AddAmberToCard",
