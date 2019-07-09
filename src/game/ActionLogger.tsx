@@ -1,18 +1,16 @@
 import { Event } from "./Event"
-import Creature from "./types/Creature"
-import Artifact from "./types/Artifact"
-import CardInHand from "./types/CardInHand"
-import {
-  getCardOwner,
-  getCreatureByID,
-  getArtifactByID,
-  getCardInHandByID,
-  removeCreature,
-  removeArtifact,
-  removeCardFromHand
-} from "./StateUtils"
+import { getCardInHandByID, getCardOwner } from "./StateUtils"
 
-export const buildLogForAction = (action: any, state: object) => {
+export interface Action {
+    message: string
+    side?: "right" | "left"
+    type: Event
+    cardID: string
+    playerName: string
+    amount?: number
+}
+
+export const buildLogForAction = (action: Action, state: object): Action | undefined => {
 
     const events: { [key: string]: Function } = {
         [Event.PlayCreature]: () => {

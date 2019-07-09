@@ -1,6 +1,7 @@
 import { Drawer, List, ListItem, ListItemText } from "@material-ui/core"
 import { observer } from "mobx-react"
 import * as React from "react"
+import { actionStore } from "../stores/ActionStore"
 import { chatStore } from "../stores/ChatStore"
 
 @observer
@@ -15,16 +16,17 @@ export class ChatDrawer extends React.Component {
             >
                 <List>
                     <ListItem>
-                        <ListItemText>
-                            This is a pretend activity / chat log.
+                        <ListItemText primaryTypographyProps={{variant: "h4"}}>
+                            Action Log
                         </ListItemText>
                     </ListItem>
-                    <ListItem>
-                        <ListItemText>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua.
-                        </ListItemText>
-                    </ListItem>
+                    {actionStore.actionLog.map((action, idx) => (
+                        <ListItem key={idx}>
+                            <ListItemText>
+                                {action.message}
+                            </ListItemText>
+                        </ListItem>
+                    ))}
                 </List>
             </Drawer>
         )

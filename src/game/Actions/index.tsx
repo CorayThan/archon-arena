@@ -1,24 +1,11 @@
+import { Action } from "../ActionLogger"
 import { Event } from "../Event"
-import { log } from "../../Utils"
-import {
-    getCardOwner,
-    getCreatureByID,
-    getArtifactByID,
-    getCardInHandByID,
-    removeCreature,
-    removeArtifact,
-    removeCardFromHand,
-    getPlayerByName,
-    shuffleDeck,
-} from "../StateUtils"
-import Creature from "../types/Creature"
-import Artifact from "../types/Artifact"
-import CardInHand from "../types/CardInHand"
-
-import CreatureActions from "./Creature"
+import { getCardOwner, getPlayerByName, removeCardFromHand, shuffleDeck, } from "../StateUtils"
 import ArtifactActions from "./Artifact"
 
-export const exec = (action: any, state: any) => {
+import CreatureActions from "./Creature"
+
+export const exec = (action: Action, state: any) => {
 
     const actionHandlers: { [key: string]: Function } = {
         [Event.PlayUpgrade]: () => {
