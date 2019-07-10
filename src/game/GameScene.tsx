@@ -1,24 +1,18 @@
 import Phaser from "phaser"
-import Card, { CARD_WIDTH, CARD_HEIGHT } from "./Card"
-import { Event } from "./Event"
-import { shuffle } from "lodash"
-import { log } from "../Utils"
-import { getCardType } from "./StateUtils"
-import CardInHand from "./types/CardInHand"
 
 import amber from "../images/amber.png"
 import armor from "../images/armor.png"
 import cardback from "../images/cardback.jpg" // TODO load via HTTP request
+import chains from "../images/chains.png"
 import damage from "../images/damage.png"
 import forgedKey from "../images/forgedkey.png"
-import unforgedKey from "../images/unforgedkey.png"
-import jargogle from "../images/jargogle.png"
-import kelifiDragon from "../images/kelifi-dragon.jpg" // TODO
-import mantleOfTheZealot from "../images/mantle-of-the-zealot.png"
 import power from "../images/power.png"
-import chains from "../images/chains.png"
-import safePlace from "../images/safe-place.png"
 import stun from "../images/stun.png"
+import unforgedKey from "../images/unforgedkey.png"
+import Card, { CARD_HEIGHT, CARD_WIDTH } from "./Card"
+import { Event } from "./Event"
+import { getCardType } from "./StateUtils"
+import CardInHand, { preloadCardsInPhaser } from "./types/CardInHand"
 
 const { KeyCodes } = Phaser.Input.Keyboard
 
@@ -40,11 +34,9 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
+        preloadCardsInPhaser(this, [{name: "Kelifi Dragon"}, {name: "Mantle of the Zealot"}, {name: "Safe Place"}, {name: "Jargogle"}])
+
         this.load.image("cardback", cardback)
-        this.load.image("kelifi-dragon", kelifiDragon)
-        this.load.image("jargogle", jargogle)
-        this.load.image("safe-place", safePlace)
-        this.load.image("mantle-of-the-zealot", mantleOfTheZealot)
         this.load.image("unforged-key", unforgedKey)
         this.load.image("forged-key", forgedKey)
         this.load.image("damage-token", damage)
