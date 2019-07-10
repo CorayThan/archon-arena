@@ -2,7 +2,7 @@ import * as firebase from "firebase"
 import { observable } from "mobx"
 import { GameState } from "../shared/gamestate/GameState"
 import { log } from "../Utils"
-import { playerCollection, playerStore } from "./PlayerStore"
+import { playerStore } from "./PlayerStore"
 
 export const gameStateCollection = () => firebase.firestore().collection("gameState")
 
@@ -41,8 +41,7 @@ export class GameStateStore {
 
     mergeGameState = async (gameState: Partial<GameState>) => {
         this.updatingGameState = true
-        const matchId =
-        await playerCollection().doc(playerStore.currentMatchId).set(gameState, {merge: true})
+        await gameStateCollection().doc(playerStore.currentMatchId).set(gameState, {merge: true})
         this.updatingGameState = false
     }
 
