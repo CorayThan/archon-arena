@@ -1,25 +1,21 @@
+import * as admin from "firebase-admin"
 import { random, shuffle } from "lodash"
-import { v4 as uuid } from "uuid"
-import { Match } from "../../src/shared/Match"
-import { matchCollection } from "./index"
-import { GameState } from "./shared/gamestate/GameState"
-import { Phase } from "./shared/gamestate/Phase"
-import { Deck } from "./shared/keyforge/deck/Deck"
+
+const matchCollection = () => admin.firestore().collection("match")
 
 export class InitializeGame {
 
-    startGame = async (matchId: string): Promise<GameState> => {
+    startGame = async (matchId: string): Promise<any> => {
 
         const matchDoc = await matchCollection().doc(matchId).get()
         if (matchDoc.exists) {
-            const {firstPlayerId, secondPlayerId, firstPlayerActiveDeck, secondPlayerActiveDeck} = matchDoc.data() as Match
+            const {firstPlayerId, secondPlayerId, firstPlayerActiveDeck, secondPlayerActiveDeck} = matchDoc.data()
             const firstPlayer = random(0, 1) === 0 ? firstPlayerId : secondPlayerId!
-            const gameState: GameState = {
-                id: uuid(),
+            const gameState = {
                 turn: 1,
                 startingPlayer: firstPlayer,
                 activePlayer: firstPlayer,
-                phase: Phase.CHOOSE_HAND,
+                phase: "CHOOSE_HAND",
                 playerOneState: this.createPlayerState(firstPlayerId, firstPlayerActiveDeck, firstPlayer === firstPlayerId),
                 playerTwoState: this.createPlayerState(secondPlayerId!, secondPlayerActiveDeck!, firstPlayer === secondPlayerId)
             }
@@ -33,7 +29,7 @@ export class InitializeGame {
         }
     }
 
-    private createPlayerState = (playerId: string, deck: Deck, firstPlayer: boolean) => {
+    private createPlayerState = (playerId: string, deck: any, firstPlayer: boolean) => {
         const cards = shuffle(deck.cards.map((card, idx) => ({
             card,
             num: idx,

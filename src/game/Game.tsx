@@ -1,18 +1,18 @@
 import Phaser from "phaser"
 import React from "react"
-import { actionStore } from "../stores/ActionStore"
-import { chatStore } from "../stores/ChatStore"
+import { chatWidth } from "../matchmaking/ChatDrawer"
+import Action from "../shared/Action"
+import { gameHistoryStore } from "../stores/GameHistoryStore"
 import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
 import { exec } from "./Actions/Actions"
-import Action from "./types/Action"
 import GameScene from "./GameScene"
 
 interface Props {
     state: object
 }
 
-const width = window.innerWidth - chatStore.chatWidth
+const width = window.innerWidth - chatWidth
 const height = window.innerHeight - 150
 
 const config: Phaser.Types.Core.GameConfig = {
@@ -34,7 +34,7 @@ class Game extends React.Component<Props> {
         const logObj = buildLogForAction(action, state)
         log.info("Log is " + prettyJson(logObj))
         if (logObj != null) {
-            actionStore.addAction(logObj)
+            gameHistoryStore.addAction(logObj)
         }
         exec(action, state)
     }

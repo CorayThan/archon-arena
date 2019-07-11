@@ -1,34 +1,25 @@
-import { Event } from "../Event"
 import { shuffle } from "lodash"
-import { log } from "../../Utils"
+import { Event } from "../Event"
 import {
-    getCardOwner,
-    getCardByID,
-    getCardType,
-    getCreatureByID,
+    discardCardsUnderneath,
+    discardCreatureUpgrades,
     getArtifactByID,
-    getCardInHandByID,
+    getCardInArchiveByID,
     getCardInDiscardByID,
     getCardInDrawPileByID,
-    getCardInArchiveByID,
+    getCardInHandByID,
+    getCardOwner,
+    getCardType,
+    getCreatureByID,
     getPlayerByName,
-    removeCreature,
-    removeArtifact,
-    removeUpgrade,
-    removeCardFromHand,
     removeCardByID,
-    discardCreatureUpgrades,
-    discardCardsUnderneath,
+    removeCardFromHand,
 } from "../StateUtils"
-
-import Creature from "../types/Creature"
-import Artifact from "../types/Artifact"
-import Player from "../types/Player"
 import CardInHand from "../types/CardInHand"
-import Action from "../types/Action"
+import Player from "../types/Player"
+import ArtifactActions from "./Artifact"
 
 import CreatureActions from "./Creature"
-import ArtifactActions from "./Artifact"
 
 export const exec = (action: any, state: any) => {
 
