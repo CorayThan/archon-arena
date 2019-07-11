@@ -1,10 +1,10 @@
-import { CardInDeck } from "../keyforge/card/KCard"
 import { Artifact } from "./Artifact"
 import { Creature } from "./Creature"
+import { CardNotInPlay } from "./CardNotInPlay"
 import { Phase } from "./Phase"
-import { Upgrade } from "./Upgrade"
 
 export interface GameState {
+    id: string
     turn: number
     startingPlayer: string
     activePlayer: string
@@ -15,12 +15,14 @@ export interface GameState {
 
 export interface PlayerState {
     playerId: string
-    library: CardInDeck[]
-    hand: CardInDeck[]
-    discard: CardInDeck[]
-    archives: CardInDeck[]
-    purged: CardInDeck[]
+    amber: number,
+    chains: number,
+    keys: number,
+    library: CardNotInPlay[]
+    hand: CardNotInPlay[]
+    discard: CardNotInPlay[]
+    archives: CardNotInPlay[]
+    purged: CardNotInPlay[]
     creatures: Creature[]
     artifacts: Artifact[]
-    upgrades: Upgrade[]
 }

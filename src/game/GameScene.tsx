@@ -2,17 +2,21 @@ import Phaser from "phaser"
 
 import amber from "../images/amber.png"
 import armor from "../images/armor.png"
-import cardback from "../images/cardback.jpg" // TODO load via HTTP request
+import cardback from "../images/cardback.jpg"
 import chains from "../images/chains.png"
 import damage from "../images/damage.png"
 import forgedKey from "../images/forgedkey.png"
 import power from "../images/power.png"
 import stun from "../images/stun.png"
 import unforgedKey from "../images/unforgedkey.png"
+
 import Card, { CARD_HEIGHT, CARD_WIDTH } from "./Card"
 import { Event } from "./Event"
 import { getCardType } from "./StateUtils"
-import CardInHand, { preloadCardsInPhaser } from "./types/CardInHand"
+import { preloadCardsInPhaser } from "./Utils"
+import { Creature } from "../shared/gamestate/Creature"
+import { Artifact } from "../shared/gamestate/Artifact"
+import { CardNotInPlay } from "../shared/gamestate/CardNotInPlay"
 
 const { KeyCodes } = Phaser.Input.Keyboard
 
@@ -39,8 +43,6 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        preloadCardsInPhaser(this, [{name: "Kelifi Dragon"}, {name: "Mantle of the Zealot"}, {name: "Safe Place"}, {name: "Jargogle"}])
-
         this.load.image("cardback", cardback)
         this.load.image("unforged-key", unforgedKey)
         this.load.image("forged-key", forgedKey)
@@ -51,6 +53,23 @@ class GameScene extends Phaser.Scene {
         this.load.image("power-token", power)
         this.load.image("chains", chains)
         this.load.image("doom-token", chains)
+
+        // @ts-ignore
+        const state = this.scene.settings.data.state
+        const players = [state.playerOneState, state.playerTwoState]
+        for (let i = 0; i < players.length; i++) {
+            const player = players[i]
+            preloadCardsInPhaser(this, player.hand)
+            preloadCardsInPhaser(this, player.library)
+            preloadCardsInPhaser(this, player.discard)
+            preloadCardsInPhaser(this, player.archives)
+            preloadCardsInPhaser(this, player.purged)
+            preloadCardsInPhaser(this, player.artifacts)
+            preloadCardsInPhaser(this, player.creatures)
+            player.creatures.forEach((creature: Creature) => {
+                preloadCardsInPhaser(this, creature.upgrades)
+            })
+        }
     }
 
     create() {
@@ -69,25 +88,25 @@ class GameScene extends Phaser.Scene {
         this.root.add(playerNameText)
         const nameWidth = playerNameText.displayWidth
 
-        const amberImage = new Phaser.GameObjects.Image(this, originX + 750, originY + 30, "amber-token")
-        amberImage.setDisplaySize(30, 30)
+        const amberImage = new Phaser.GameObjects.Image(this, originX + 750, originY + 25, "amber-token")
+        amberImage.setDisplaySize(40, 40)
         amberImage.setOrigin(0)
         amberImage.setInteractive({ cursor: "pointer" })
         amberImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
             dispatch({
                 type: Event.AlterPlayerAmber,
-                amount: pointer.event.shiftKey ? -1 : 1,
+                amount: pointer.button === 2 ? -1 : 1,
                 playerName: player.name
             })
             this.render()
         })
         this.root.add(amberImage)
 
-        const amberText = new Phaser.GameObjects.Text(this, originX + 750 + 15, originY + 45, player.amber, {
+        const amberText = new Phaser.GameObjects.Text(this, originX + 750 + 20, originY + 45, player.amber, {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
-            fontSize: "18px"
+            fontSize: "24px"
         })
         amberText.setOrigin(0.5)
         this.root.add(amberText)
@@ -99,7 +118,7 @@ class GameScene extends Phaser.Scene {
         chainsImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
             dispatch({
                 type: Event.AlterPlayerChains,
-                amount: pointer.event.shiftKey ? -1 : 1,
+                amount: pointer.button === 2 ? -1 : 1,
                 playerName: player.name
             })
             this.render()
@@ -116,9 +135,9 @@ class GameScene extends Phaser.Scene {
         this.root.add(chainsText)
 
         for (let i = 0; i < 3; i++) {
-            const textureID = player.keys >= i + 1 ? "forged-key" : "unforged-key"
+            const textureId = player.keys >= i + 1 ? "forged-key" : "unforged-key"
             const keySize = 30
-            const keyImage = new Phaser.GameObjects.Image(this, originX + 710, originY + (keySize + 4) * i + 10, textureID)
+            const keyImage = new Phaser.GameObjects.Image(this, originX + 710, originY + (keySize + 4) * i + 10, textureId)
             keyImage.setDisplaySize(keySize, keySize)
             keyImage.setOrigin(0)
             keyImage.setInteractive({ cursor: "pointer" })
@@ -142,14 +161,14 @@ class GameScene extends Phaser.Scene {
             x: artifactDropZoneX,
             y: originY + artifactOffsetY,
             onDrop: (card: Card) => {
-                const cardID = card.data.get("id")
-                if (getCardType(cardID) !== "card-in-hand")
+                const cardId = card.data.get("id")
+                if (getCardType(cardId) !== "card-in-hand")
                     return
 
                 dispatch({
                     type: Event.PlayArtifact,
                     playerName: player.name,
-                    cardID,
+                    cardId,
                 })
                 card.destroy()
                 this.render()
@@ -161,12 +180,12 @@ class GameScene extends Phaser.Scene {
             x: discardPileX,
             y: originY + CARD_HEIGHT / 2,
             allowCardTypes: ["card-in-hand", "creature", "artifact", "upgrade"],
-            getCardImage: () => player.discardPile.length === 0 ? "cardback" : player.discardPile[player.discardPile.length - 1].id,
-            getMinimumAlpha: () => player.discardPile.length === 0 ? 0.1 : 1,
+            getCardImage: () => player.discard.length === 0 ? "cardback" : player.discard[player.discard.length - 1].id,
+            getMinimumAlpha: () => player.discard.length === 0 ? 0.1 : 1,
             onDrop: (card: Card) => {
                 dispatch({
                     type: Event.DiscardCard,
-                    cardID: card.data.get("id"),
+                    cardId: card.data.get("id"),
                 })
                 card.destroy()
                 this.render()
@@ -177,12 +196,12 @@ class GameScene extends Phaser.Scene {
                 this.openCardModal({
                     x: discardPileZone.x,
                     y: discardPileZone.y,
-                    cards: player.discardPile,
+                    cards: player.discard,
                     orientation,
-                    onClick: (card: CardInHand, i: number) => {
+                    onClick: (card: CardNotInPlay, i: number) => {
                         dispatch({
                             type: Event.MoveCardFromDiscardToHand,
-                            cardID: `${player.name}-card-in-discard-${i}`,
+                            cardId: `${player.name}-card-in-discard-${i}`,
                         })
                         this.render()
                     }
@@ -190,17 +209,19 @@ class GameScene extends Phaser.Scene {
             } else {
                 if (pointer.event.shiftKey) {
                     dispatch({
-                        type: Event.ShuffleDiscardIntoDeck
+                        type: Event.ShuffleDiscardIntoDeck,
+                        playerName: player.name,
                     })
                 } else {
                     dispatch({
-                        type: Event.DrawFromDiscard
+                        type: Event.DrawFromDiscard,
+                        playerName: player.name,
                     })
                 }
                 this.render()
             }
         })
-        const discardPileText = new Phaser.GameObjects.Text(this, discardPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Discard (${player.discardPile.length})`, {
+        const discardPileText = new Phaser.GameObjects.Text(this, discardPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Discard (${player.discard.length})`, {
             color: "#000",
             backgroundColor: "rgba(255, 255, 255, 1)",
             fontSize: "10px",
@@ -211,12 +232,12 @@ class GameScene extends Phaser.Scene {
         const drawPileZone = this.createCardDropZone({
             x: drawPileX,
             y: originY + CARD_HEIGHT / 2,
-            getMinimumAlpha: () => player.drawPile.length === 0 ? 0.1 : 1,
+            getMinimumAlpha: () => player.library.length === 0 ? 0.1 : 1,
             allowCardTypes: ["card-in-hand", "creature", "artifact", "upgrade"],
             onDrop: (card: Card) => {
                 dispatch({
                     type: Event.PutCardOnDrawPile,
-                    cardID: card.data.get("id"),
+                    cardId: card.data.get("id"),
                 })
                 card.destroy()
                 this.render()
@@ -227,12 +248,12 @@ class GameScene extends Phaser.Scene {
                 this.openCardModal({
                     x: drawPileZone.x,
                     y: drawPileZone.y,
-                    cards: player.drawPile.reverse(),
+                    cards: player.library.reverse(),
                     orientation,
-                    onClick: (card: CardInHand, i: number) => {
+                    onClick: (card: CardNotInPlay, i: number) => {
                         dispatch({
                             type: Event.MoveCardFromDrawPileToHand,
-                            cardID: `${player.name}-card-in-draw-${i}`,
+                            cardId: `${player.name}-card-in-draw-${i}`,
                         })
                         this.render()
                     }
@@ -245,7 +266,7 @@ class GameScene extends Phaser.Scene {
                 this.render()
             }
         })
-        const drawPileText = new Phaser.GameObjects.Text(this, drawPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Draw (${player.drawPile.length})`, {
+        const drawPileText = new Phaser.GameObjects.Text(this, drawPileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Draw (${player.library.length})`, {
             color: "#000",
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 1)"
@@ -256,12 +277,12 @@ class GameScene extends Phaser.Scene {
         const archivePileZone = this.createCardDropZone({
             x: archivePileX,
             y: originY + CARD_HEIGHT / 2,
-            getMinimumAlpha: () => player.archivePile.length === 0 ? 0.1 : 1,
+            getMinimumAlpha: () => player.archives.length === 0 ? 0.1 : 1,
             allowCardTypes: ["card-in-hand", "creature", "artifact"],
             onDrop: (card: Card) => {
                 dispatch({
                     type: Event.ArchiveCard,
-                    cardID: card.data.get("id"),
+                    cardId: card.data.get("id"),
                 })
                 card.destroy()
                 this.render()
@@ -272,12 +293,12 @@ class GameScene extends Phaser.Scene {
                 this.openCardModal({
                     x: archivePileZone.x,
                     y: archivePileZone.y,
-                    cards: player.archivePile,
+                    cards: player.archives,
                     orientation,
-                    onClick: (card: CardInHand, i: number) => {
+                    onClick: (card: CardNotInPlay, i: number) => {
                         dispatch({
                             type: Event.MoveCardFromArchiveToHand,
-                            cardID: `${player.name}-card-in-archive-${i}`,
+                            cardId: `${player.name}-card-in-archive-${i}`,
                         })
                         this.render()
                     }
@@ -289,7 +310,7 @@ class GameScene extends Phaser.Scene {
                 this.render()
             }
         })
-        const archivePileText = new Phaser.GameObjects.Text(this, archivePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Archive (${player.archivePile.length})`, {
+        const archivePileText = new Phaser.GameObjects.Text(this, archivePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Archive (${player.archives.length})`, {
             color: "#000",
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 1)"
@@ -300,13 +321,13 @@ class GameScene extends Phaser.Scene {
         const purgePileZone = this.createCardDropZone({
             x: purgePileX,
             y: originY + CARD_HEIGHT / 2,
-            getCardImage: () => player.purgePile.length === 0 ? "cardback" : player.purgePile[player.purgePile.length - 1].id,
-            getMinimumAlpha: () => player.purgePile.length === 0 ? 0.1 : 1,
+            getCardImage: () => player.purged.length === 0 ? "cardback" : player.purged[player.purged.length - 1].id,
+            getMinimumAlpha: () => player.purged.length === 0 ? 0.1 : 1,
             allowCardTypes: ["card-in-hand", "creature", "artifact", "upgrade"],
             onDrop: (card: Card) => {
                 dispatch({
                     type: Event.PurgeCard,
-                    cardID: card.data.get("id"),
+                    cardId: card.data.get("id"),
                 })
                 card.destroy()
                 this.render()
@@ -315,7 +336,7 @@ class GameScene extends Phaser.Scene {
         purgePileZone.addListener("pointerup", () => {
             // Open purge modal
         })
-        const purgePileText = new Phaser.GameObjects.Text(this, purgePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Purge (${player.purgePile.length})`, {
+        const purgePileText = new Phaser.GameObjects.Text(this, purgePileX - CARD_WIDTH * 0.5 + 5, originY + 5, `Purge (${player.purged.length})`, {
             color: "#000",
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 1)"
@@ -427,14 +448,14 @@ class GameScene extends Phaser.Scene {
                 y: originY + creatureOffsetY,
                 visible: false,
                 onDrop: (droppedCard: Card) => {
-                    const droppedCardID = droppedCard.data.get("id")
-                    if (getCardType(droppedCardID) !== "card-in-hand")
+                    const droppedCardId = droppedCard.data.get("id")
+                    if (getCardType(droppedCardId) !== "card-in-hand")
                         return
 
                     dispatch({
                         type: Event.PlayUpgrade,
-                        upgradeID: droppedCard.data.get("id"),
-                        creatureID: creatureCard.data.get("id"),
+                        upgradeId: droppedCard.data.get("id"),
+                        creatureId: creatureCard.data.get("id"),
                     })
                     droppedCard.destroy()
                     this.render()
@@ -466,13 +487,13 @@ class GameScene extends Phaser.Scene {
             x: originX + CARD_WIDTH / 2,
             y: originY + creatureOffsetY,
             onDrop: (card: Card) => {
-                const cardID = card.data.get("id")
-                if (getCardType(cardID) !== "card-in-hand")
+                const cardId = card.data.get("id")
+                if (getCardType(cardId) !== "card-in-hand")
                     return
 
                 dispatch({
                     type: Event.PlayCreature,
-                    cardID: card.data.get("id"),
+                    cardId: card.data.get("id"),
                     playerName: player.name,
                     side: "left",
                 })
@@ -491,13 +512,13 @@ class GameScene extends Phaser.Scene {
                 x: rightCreatureDropZoneX,
                 y: originY + creatureOffsetY,
                 onDrop: (card: Card) => {
-                    const cardID = card.data.get("id")
-                    if (getCardType(cardID) !== "card-in-hand")
+                    const cardId = card.data.get("id")
+                    if (getCardType(cardId) !== "card-in-hand")
                         return
 
                     dispatch({
                         type: Event.PlayCreature,
-                        cardID: card.data.get("id"),
+                        cardId: card.data.get("id"),
                         playerName: player.name,
                         side: "right",
                     })
@@ -512,8 +533,10 @@ class GameScene extends Phaser.Scene {
         const state = this.data.get("state")
         this.root.destroy()
         this.root = this.add.container(0, 0)
-        this.renderPlayerBoard(state.players[0], 5, 5, "top")
-        this.renderPlayerBoard(state.players[1], 5, this.data.get("height") - CARD_HEIGHT - 5, "bottom")
+
+        // TODO self on bottom
+        this.renderPlayerBoard(state.playerOneState, 5, 5, "top")
+        this.renderPlayerBoard(state.playerTwoState, 5, this.data.get("height") - CARD_HEIGHT - 5, "bottom")
 
         if (this.modalContainer) {
             this.modalContainer.destroy()
@@ -546,8 +569,8 @@ class GameScene extends Phaser.Scene {
         // @ts-ignore
         zone.data.set({
             onEnter: (card: Card) => {
-                const cardID = card.data.get("id")
-                const cardType = getCardType(cardID)
+                const cardId = card.data.get("id")
+                const cardType = getCardType(cardId)
                 if (allowCardTypes.includes(cardType)) {
                     image.setAlpha(1)
                 }
@@ -578,7 +601,7 @@ class GameScene extends Phaser.Scene {
     }: {
         x: number,
         y: number,
-        cards: CardInHand[],
+        cards: CardNotInPlay[],
         orientation: string,
         onClick: Function,
     }) {
@@ -587,15 +610,22 @@ class GameScene extends Phaser.Scene {
             delete this.modalContainer
         } else {
             this.modalContainer = new Phaser.GameObjects.Container(this, 0, 0)
-            for (let i = 0; i < cards.length; i++) {
+            for (let i = cards.length - 1; i >= 0; i--) {
                 const card = cards[i]
-                let cardOffsetY = (CARD_HEIGHT * 0.5) * i + CARD_HEIGHT + 10
+                let cardOffsetY = (CARD_HEIGHT * 0.25) * i + CARD_HEIGHT + 10
                 if (orientation === "bottom")
                     cardOffsetY = cardOffsetY * -1
                 const image = new Phaser.GameObjects.Image(this, x, y + cardOffsetY, card.id)
                 image.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
                 image.setInteractive()
                 image.addListener("pointerup", () => { onClick(card, i) })
+                image.addListener("pointerover", () => {
+                    this.showEnlargedCard(card.id)
+                })
+                image.addListener("pointerout", () => {
+                    if (this.cardHoverImage)
+                        this.cardHoverImage.destroy()
+                })
                 this.modalContainer.add(image)
             }
             this.root.add(this.modalContainer)
@@ -618,12 +648,12 @@ class GameScene extends Phaser.Scene {
     onClickCreature(e: MouseEvent, card: Card) {
         const state = this.data.get("state")
         const dispatch = this.data.get("dispatch")
-        const cardID = card.data.get("id")
+        const cardId = card.data.get("id")
 
         if (this.keysDown[KeyCodes.R]) {
             dispatch({
                 type: Event.MoveCreatureRight,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -633,7 +663,7 @@ class GameScene extends Phaser.Scene {
         if (this.keysDown[KeyCodes.L]) {
             dispatch({
                 type: Event.MoveCreatureLeft,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -643,7 +673,7 @@ class GameScene extends Phaser.Scene {
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
                 type: Event.DiscardCard,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -653,7 +683,7 @@ class GameScene extends Phaser.Scene {
         if (this.keysDown[KeyCodes.M]) {
             dispatch({
                 type: Event.MoveCreatureToHand,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -662,7 +692,7 @@ class GameScene extends Phaser.Scene {
 
         dispatch({
             type: Event.UseCreature,
-            cardID,
+            cardId,
         })
         this.render()
     }
@@ -683,12 +713,12 @@ class GameScene extends Phaser.Scene {
     onClickArtifact(e: MouseEvent, card: Card) {
         const state = this.data.get("state")
         const dispatch = this.data.get("dispatch")
-        const cardID = card.data.get("id")
+        const cardId = card.data.get("id")
 
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
                 type: Event.DiscardCard,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -698,7 +728,7 @@ class GameScene extends Phaser.Scene {
         if (this.keysDown[KeyCodes.M]) {
             dispatch({
                 type: Event.MoveArtifactToHand,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -707,19 +737,19 @@ class GameScene extends Phaser.Scene {
 
         dispatch({
             type: Event.UseArtifact,
-            cardID,
+            cardId,
         })
         this.render()
     }
 
     onClickCardInHand(e: MouseEvent, card: Card) {
         const dispatch = this.data.get("dispatch")
-        const cardID = card.data.get("id")
+        const cardId = card.data.get("id")
 
         if (this.keysDown[KeyCodes.D]) {
             dispatch({
                 type: Event.DiscardCard,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -729,7 +759,7 @@ class GameScene extends Phaser.Scene {
         if (this.keysDown[KeyCodes.A]) {
             dispatch({
                 type: Event.PlayArtifact,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -757,10 +787,10 @@ class GameScene extends Phaser.Scene {
         const distY = card.data.get("y") - card.y
         if (distY > CARD_HEIGHT) {
             const dispatch = this.data.get("dispatch")
-            const cardID = card.data.get("id")
+            const cardId = card.data.get("id")
             dispatch({
                 type: Event.PlayAction,
-                cardID,
+                cardId,
             })
             card.destroy()
             this.render()
@@ -792,6 +822,8 @@ class GameScene extends Phaser.Scene {
     }
 
     showEnlargedCard(texture: string) {
+        if (texture === "cardback")
+            return
         const width = 220
         const height = width / .716612378
         const image = new Phaser.GameObjects.Image(this, this.data.get("width") - width / 2 - 10, height / 2 + 10, texture)
@@ -803,12 +835,6 @@ class GameScene extends Phaser.Scene {
     setupKeyboardListeners() {
         const dispatch = this.data.get("dispatch")
 
-        const spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-        spaceBar.on("up", () => {
-            dispatch({ type: Event.EndTurn, })
-            this.render()
-        })
-
         this.input.keyboard.on("keydown", (e: MouseEvent) => {
             this.keysDown[e.which] = true
         })
@@ -816,16 +842,16 @@ class GameScene extends Phaser.Scene {
         this.input.keyboard.on("keyup", (e: MouseEvent) => {
             this.keysDown[e.which] = false
 
-            let cardID
+            let cardId
             if (this.creatureMousingOver)
-                cardID = this.creatureMousingOver.data.get("id")
+                cardId = this.creatureMousingOver.data.get("id")
             if (this.artifactMousingOver)
-                cardID = this.artifactMousingOver.data.get("id")
+                cardId = this.artifactMousingOver.data.get("id")
 
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.C) {
                 dispatch({
                     type: Event.CaptureAmber,
-                    cardID,
+                    cardId,
                     amount: e.shiftKey ? -1 : 1
                 })
                 this.render()
@@ -834,7 +860,7 @@ class GameScene extends Phaser.Scene {
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.S) {
                 dispatch({
                     type: Event.ToggleStun,
-                    cardID,
+                    cardId,
                 })
                 this.render()
             }
@@ -842,7 +868,7 @@ class GameScene extends Phaser.Scene {
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.T) {
                 dispatch({
                     type: Event.ToggleTaunt,
-                    cardID,
+                    cardId,
                 })
                 this.render()
             }
@@ -850,7 +876,7 @@ class GameScene extends Phaser.Scene {
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.P) {
                 dispatch({
                     type: Event.AlterCreaturePower,
-                    cardID,
+                    cardId,
                     amount: e.shiftKey ? -1 : 1
                 })
                 this.render()
@@ -859,7 +885,7 @@ class GameScene extends Phaser.Scene {
             if (this.creatureMousingOver instanceof Card && e.which === KeyCodes.D) {
                 dispatch({
                     type: Event.AlterCreatureDamage,
-                    cardID,
+                    cardId,
                     amount: e.shiftKey ? -1 : 1
                 })
                 this.render()
@@ -868,7 +894,7 @@ class GameScene extends Phaser.Scene {
             if ((this.creatureMousingOver instanceof Card || this.artifactMousingOver instanceof Card) && e.which === KeyCodes.X) {
                 dispatch({
                     type: Event.ToggleDoomToken,
-                    cardID,
+                    cardId,
                 })
                 this.render()
             }
@@ -876,7 +902,7 @@ class GameScene extends Phaser.Scene {
             if ((this.creatureMousingOver instanceof Card || this.artifactMousingOver instanceof Card) && e.which === KeyCodes.A) {
                 dispatch({
                     type: Event.AddAmberToCard,
-                    cardID,
+                    cardId,
                     amount: e.shiftKey ? -1 : 1
                 })
                 this.render()

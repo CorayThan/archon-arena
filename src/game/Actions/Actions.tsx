@@ -1,146 +1,154 @@
 import { shuffle } from "lodash"
 import { Event } from "../Event"
 import {
-    discardCardsUnderneath,
     discardCreatureUpgrades,
-    getArtifactByID,
-    getCardInArchiveByID,
-    getCardInDiscardByID,
-    getCardInDrawPileByID,
-    getCardInHandByID,
+    discardCardsUnderneath,
+    getArtifactById,
     getCardOwner,
+    getCardById,
     getCardType,
-    getCreatureByID,
+    getCreatureById,
+    getCardInHandById,
+    getCardInDiscardById,
+    getCardInDrawPileById,
+    getCardInArchiveById,
     getPlayerByName,
-    removeCardByID,
+    removeCreature,
+    removeArtifact,
+    removeUpgrade,
     removeCardFromHand,
+    removeCardById,
 } from "../StateUtils"
-import CardInHand from "../types/CardInHand"
-import Player from "../types/Player"
-import ArtifactActions from "./Artifact"
+
+//import Action from "../types/Action"
+import { PlayerState as Player } from "../../shared/gamestate/GameState"
+import { Creature } from "../../shared/gamestate/Creature"
+import { Artifact } from "../../shared/gamestate/Artifact"
+import { CardNotInPlay } from "../../shared/gamestate/CardNotInPlay"
 
 import CreatureActions from "./Creature"
+import ArtifactActions from "./Artifact"
 
 export const exec = (action: any, state: any) => {
 
     const actionHandlers: { [key: string]: Function } = {
         [Event.PlayUpgrade]: () => {
-            const owner: Player = getCardOwner(action.upgradeID, state)
-            const upgrade = getCardInHandByID(owner, action.upgradeID)
+            const owner: Player = getCardOwner(action.upgradeId, state)
+            const upgrade = getCardInHandById(owner, action.upgradeId)
             if (!upgrade)
-                throw new Error(`Card ${action.upgradeID} not found in hand`)
-            const creature = getCreatureByID(owner, action.creatureID)
+                throw new Error(`Card ${action.upgradeId} not found in hand`)
+            const creature = getCreatureById(owner, action.creatureId)
             if (!creature)
-                throw new Error(`Card ${action.creatureID} not found in field`)
+                throw new Error(`Card ${action.creatureId} not found in field`)
             creature.upgrades.push(upgrade)
-            removeCardFromHand(owner, action.upgradeID)
+            removeCardFromHand(owner, action.upgradeId)
         },
         [Event.PlayAction]: () => {
-            const owner: Player = getCardOwner(action.upgradeID, state)
-            const card = getCardInHandByID(owner, action.cardID)
+            const owner: Player = getCardOwner(action.cardId, state)
+            const card = getCardInHandById(owner, action.cardId)
             if (!card)
-                throw new Error(`Card ${action.cardID} not found in hand`)
-            removeCardFromHand(owner, action.cardID)
-            owner.discardPile.push(card)
+                throw new Error(`Card ${action.cardId} not found in hand`)
+            removeCardFromHand(owner, action.cardId)
+            owner.discard.push(card)
         },
         [Event.ShuffleDeck]: () => {
             const player = getPlayerByName(action.playerName, state)
-            player.drawPile = shuffle(player.drawPile)
+            player.library = shuffle(player.library)
         },
         [Event.ShuffleDiscardIntoDeck]: () => {
             const player = getPlayerByName(action.playerName, state)
-            player.discardPile.forEach((card: CardInHand) => player.drawPile.push(card))
-            player.discardPile = []
-            player.drawPile = shuffle(player.drawPile)
+            player.discard.forEach((card: CardNotInPlay) => player.library.push(card))
+            player.discard = []
+            player.library = shuffle(player.library)
         },
         [Event.DiscardCard]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            discardCreatureUpgrades(owner, action.cardID)
-            discardCardsUnderneath(owner, action.cardID)
-            const card = removeCardByID(owner, action.cardID)
-            owner.discardPile.push(card)
+            const owner: Player = getCardOwner(action.cardId, state)
+            discardCreatureUpgrades(owner, action.cardId)
+            discardCardsUnderneath(owner, action.cardId)
+            const card = removeCardById(owner, action.cardId)
+            owner.discard.push(card)
         },
         [Event.PutCardOnDrawPile]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            discardCreatureUpgrades(owner, action.cardID)
-            discardCardsUnderneath(owner, action.cardID)
-            const card = removeCardByID(owner, action.cardID)
-            owner.drawPile.unshift(card)
+            const owner: Player = getCardOwner(action.cardId, state)
+            discardCreatureUpgrades(owner, action.cardId)
+            discardCardsUnderneath(owner, action.cardId)
+            const card = removeCardById(owner, action.cardId)
+            owner.library.unshift(card)
         },
         [Event.MoveCardFromDiscardToHand]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            const card = getCardInDiscardByID(owner, action.cardID)
+            const owner: Player = getCardOwner(action.cardId, state)
+            const card = getCardInDiscardById(owner, action.cardId)
             if (!card)
-                throw new Error(`Card ${action.cardID} not found in discard`)
-            owner.discardPile = owner.discardPile.filter((c: CardInHand) => c !== card)
+                throw new Error(`Card ${action.cardId} not found in discard`)
+            owner.discard = owner.discard.filter((c: CardNotInPlay) => c !== card)
             owner.hand.push(card)
         },
         [Event.MoveCardFromDrawPileToHand]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            const card = getCardInDrawPileByID(owner, action.cardID)
+            const owner: Player = getCardOwner(action.cardId, state)
+            const card = getCardInDrawPileById(owner, action.cardId)
             if (!card)
-                throw new Error(`Card ${action.cardID} not found in draw pile`)
-            owner.drawPile = owner.drawPile.filter((c: CardInHand) => c !== card)
+                throw new Error(`Card ${action.cardId} not found in draw pile`)
+            owner.library = owner.library.filter((c: CardNotInPlay) => c !== card)
             owner.hand.push(card)
         },
         [Event.MoveCardFromArchiveToHand]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            const card = getCardInArchiveByID(owner, action.cardID)
+            const owner: Player = getCardOwner(action.cardId, state)
+            const card = getCardInArchiveById(owner, action.cardId)
             if (!card)
-                throw new Error(`Card ${action.cardID} not found in archive`)
-            owner.archivePile = owner.archivePile.filter((c: CardInHand) => c !== card)
+                throw new Error(`Card ${action.cardId} not found in archive`)
+            owner.archives = owner.archives.filter((c: CardNotInPlay) => c !== card)
             owner.hand.push(card)
         },
         [Event.PurgeCard]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            discardCreatureUpgrades(owner, action.cardID)
-            discardCardsUnderneath(owner, action.cardID)
-            const card = removeCardByID(owner, action.cardID)
-            owner.purgePile.push(card)
+            const owner: Player = getCardOwner(action.cardId, state)
+            discardCreatureUpgrades(owner, action.cardId)
+            discardCardsUnderneath(owner, action.cardId)
+            const card = removeCardById(owner, action.cardId)
+            owner.purged.push(card)
         },
         [Event.ArchiveCard]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            discardCreatureUpgrades(owner, action.cardID)
-            discardCardsUnderneath(owner, action.cardID)
-            const card = removeCardByID(owner, action.cardID)
-            owner.archivePile.push(card)
+            const owner: Player = getCardOwner(action.cardId, state)
+            discardCreatureUpgrades(owner, action.cardId)
+            discardCardsUnderneath(owner, action.cardId)
+            const card = removeCardById(owner, action.cardId)
+            owner.archives.push(card)
         },
         [Event.TakeArchive]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            owner.archivePile.forEach((card: CardInHand) => {
+            const owner: Player = getCardOwner(action.cardId, state)
+            owner.archives.forEach((card: CardNotInPlay) => {
                 owner.hand.push(card)
             })
-            owner.archivePile = []
+            owner.archives = []
         },
         [Event.DrawCard]: () => {
             const player = getPlayerByName(action.playerName, state)
 
-            if (player.drawPile.length === 0)
+            if (player.library.length === 0)
                 return
 
-            player.hand.push(player.drawPile.shift())
+            player.hand.push(player.library.shift())
         },
         [Event.DrawFromDiscard]: () => {
             const player = getPlayerByName(action.playerName, state)
 
-            if (player.discardPile.length === 0)
+            if (player.discard.length === 0)
                 return
 
-            player.hand.push(player.discardPile.pop())
+            player.hand.push(player.discard.pop())
         },
         [Event.AddAmberToCard]: () => {
-            const owner: Player = getCardOwner(action.cardID, state)
-            const cardType = getCardType(action.cardID)
+            const owner: Player = getCardOwner(action.cardId, state)
+            const cardType = getCardType(action.cardId)
             if (cardType === "creature") {
-                const creature = getCreatureByID(owner, action.cardID)
+                const creature = getCreatureById(owner, action.cardId)
                 if (!creature)
-                    throw new Error(`Card ${action.cardID} not found`)
+                    throw new Error(`Card ${action.cardId} not found`)
                 creature.tokens.amber += action.amount
                 creature.tokens.amber = Math.max(creature.tokens.amber, 0)
             } else if (cardType === "artifact") {
-                const artifact = getArtifactByID(owner, action.cardID)
+                const artifact = getArtifactById(owner, action.cardId)
                 if (!artifact)
-                    throw new Error(`Card ${action.cardID} not found`)
+                    throw new Error(`Card ${action.cardId} not found`)
                 artifact.tokens.amber += action.amount
                 artifact.tokens.amber = Math.max(artifact.tokens.amber, 0)
             }
@@ -164,22 +172,6 @@ export const exec = (action: any, state: any) => {
             const player = getPlayerByName(action.playerName, state)
             if (player.keys > 0)
                 player.keys -= 1
-        },
-        [Event.EndTurn]: () => {
-            const player = state.players.find((p: any) => p.name === state.activePlayer)
-            player.creatures.forEach((c: any) => c.ready = true)
-            player.artifacts.forEach((c: any) => c.ready = true)
-
-            const handSize = 6
-            for (let i = player.hand.length; i < handSize; i++) {
-                player.hand.push({
-                    name: 'Kelifi Dragon',
-                    id: 'kelifi-dragon',
-                })
-            }
-
-            const newActivePlayer = state.players[0] === player ? state.players[1].name : state.players[0].name
-            state.activePlayer = newActivePlayer
         },
     }
 

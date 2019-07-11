@@ -1,9 +1,15 @@
-import { CardInDeck } from "../keyforge/card/KCard"
+import { CardNotInPlay } from "./CardNotInPlay"
+import { KCard } from "../keyforge/card/KCard"
 
 export interface Artifact {
-    card: CardInDeck
-    amber: number
-    purgedByThis: CardInDeck[]
-    exhausted: boolean
-    cardsBeneath: CardInDeck[]
+    id: string
+    ready: boolean
+    faceup: boolean
+    cardsUnderneath: CardNotInPlay[]
+    purgedByThis: CardNotInPlay[]
+    tokens: {
+        amber: number
+    }
+    ownerId: string
+    backingCard?: KCard
 }

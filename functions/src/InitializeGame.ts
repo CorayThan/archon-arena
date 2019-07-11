@@ -19,7 +19,7 @@ export class InitializeGame {
             }
 
             // TODO Make this work. Check SO for answer: https://stackoverflow.com/questions/56927411/firebase-cloud-function-wont-insert-into-firestore
-            // await firestore.collection("gameState").doc(matchId).set(gameState)
+            await admin.firestore().collection("gameState").doc(matchId).set(gameState)
 
             return gameState
         } else {
@@ -29,13 +29,16 @@ export class InitializeGame {
 
     private createPlayerState = (playerId: string, deck: any, firstPlayer: boolean) => {
         const cards = shuffle(deck.cards.map((card, idx) => ({
-            card,
-            num: idx,
+            id: card.cardTitle.replace(/ /g, "-").toLowerCase(),
+            backingCard: card,
             ownerId: playerId
         })))
 
         return {
             playerId,
+            amber: Math.random() * 8 | 0,
+            chains: 0,
+            keys: 0,
             hand: cards.slice(0, firstPlayer ? 7 : 6),
             library: cards.slice(firstPlayer ? 7 : 6),
             discard: [],

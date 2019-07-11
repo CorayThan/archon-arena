@@ -18,7 +18,7 @@ export interface KCard {
     maverick: boolean
 }
 
-export interface CardInDeck {
+export interface CardNotInPlay {
     card: KCard
     num: number
     ownerId: string

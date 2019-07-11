@@ -8,8 +8,11 @@ import { buildLogForAction } from "./ActionLogger"
 import { exec } from "./Actions/Actions"
 import GameScene from "./GameScene"
 
+import { GameState } from "../shared/gamestate/GameState"
+
 interface Props {
-    state: object
+    state: GameState,
+    setState: Function,
 }
 
 const width = window.innerWidth - chatWidth
@@ -18,7 +21,6 @@ const height = window.innerHeight - 150
 const config: Phaser.Types.Core.GameConfig = {
     parent: "phaser",
     backgroundColor: "#eee",
-    scene: [GameScene],
     width,
     height,
     input: {
@@ -27,7 +29,8 @@ const config: Phaser.Types.Core.GameConfig = {
 }
 
 class Game extends React.Component<Props> {
-    log: object[] = []
+
+    game: Phaser.Game | undefined
 
     dispatch = (action: Action) => {
         const {state} = this.props
@@ -37,6 +40,9 @@ class Game extends React.Component<Props> {
             gameHistoryStore.addAction(logObj)
         }
         exec(action, state)
+        console.log(state)
+
+        // this.props.setState({ data: { activePlayer: "stronglink" } })
     }
 
     render() {
@@ -44,35 +50,37 @@ class Game extends React.Component<Props> {
             <div
                 id="phaser"
                 style={{height: "100%"}}
-            />
+            >
+            </div>
         )
     }
 
-    // TODO we need to delete this and remove the props from this class
-    shouldComponentUpdate() {
-        return false
-    }
+    componentDidUpdate() {
+        if (!this.game && this.props.state) {
+            const {state} = this.props
+            this.game = new Phaser.Game(config)
+            this.game.events.once("ready", () => {
+                if (!this.game)
+                    return
 
-    componentDidMount() {
-        const {state} = this.props
-        log.debug(state)
+                this.game.canvas.addEventListener("contextmenu", (e: MouseEvent) => {
+                    e.preventDefault()
+                    return false
+                });
 
-        const game = new Phaser.Game(config)
-        game.events.once("ready", () => {
-            game.canvas.addEventListener("contextmenu", (e: MouseEvent) => {
-                e.preventDefault()
-                return false
-            });
-
-            const scene = game.scene.getScene("GameScene")
-            // @ts-ignore
-            scene.data.set({
-                state,
-                dispatch: this.dispatch,
-                width,
-                height,
+                const scene = new GameScene()
+                this.game.scene.add("GameScene", scene, true, {
+                    state,
+                })
+                // @ts-ignore
+                scene.data.set({
+                    state,
+                    dispatch: this.dispatch,
+                    width,
+                    height,
+                })
             })
-        })
+        }
     }
 }
 

@@ -22,7 +22,9 @@ Inside the `functions` directory.
 
 ### Install
 
-`yarn`
+```
+yarn
+```
 
 ### Run Locally
 
