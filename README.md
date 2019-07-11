@@ -8,7 +8,7 @@
 
 `npm start`
 
-### Deploy 
+### Deploy (This deploys everything, including functions)
 
 ```
 firebase login
@@ -26,22 +26,6 @@ Inside the `functions` directory.
 
 ### Run Locally
 
-In `index.tsx` uncomment the line:
-
-`firebase.functions().useFunctionsEmulator('http://localhost:5000')`
-
 ```
 npm run serve
-```
-
-### Deploy
-
-Copy `shared` from `src` to `functions/src`.
-In `index.tsx` comment out the line:
-
-`firebase.functions().useFunctionsEmulator('http://localhost:5000')`
-
-```
-npm run build
-npm run deploy
 ```
