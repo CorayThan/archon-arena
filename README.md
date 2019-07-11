@@ -26,6 +26,8 @@ Inside the `functions` directory.
 
 ### Run Locally
 
+Get the file "forge-of-the-archons-firebase-adminsdk-key.json" from someone and drop it in `/functions`
+
 ```
 npm run serve
 ```
