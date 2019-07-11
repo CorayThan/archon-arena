@@ -26,7 +26,6 @@ Inside the `functions` directory.
 
 ### Run Locally
 
-Copy `shared` from `src` to `functions/src`.
 In `index.tsx` uncomment the line:
 
 `firebase.functions().useFunctionsEmulator('http://localhost:5000')`

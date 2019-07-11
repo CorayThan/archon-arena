@@ -1,12 +1,7 @@
 import axios from "axios"
-import { CardType } from "../../shared/keyforge/card/CardType"
-import { Rarity } from "../../shared/keyforge/card/Rarity"
-import { Deck } from "../../shared/keyforge/deck/Deck"
-import { expansionFromNumber } from "../../shared/keyforge/expansion/Expansion"
-import { House } from "../../shared/keyforge/house/House"
 
 export class RequestDeck {
-    findDeck = async (id: string): Promise<Deck> => {
+    findDeck = async (id: string): Promise<any> => {
         const response = await axios.get(`https://www.keyforgegame.com/api/decks/${id}/?links=cards`)
         const deck: KeyForgeDeckDto = response.data
 
@@ -54,7 +49,7 @@ interface KeyForgeDeck {
 }
 
 interface KeyForgeDeckLinks {
-    houses: House[]
+    houses: string[]
     cards: string[]
 }
 
@@ -72,17 +67,34 @@ interface KeyForgeHouse {
 interface KeyForgeCard {
     id: string
     card_title: string
-    house: House
-    card_type: CardType
+    house: string
+    card_type: string
     front_image: string
     card_text: string
     amber: number
     power?: string
     armor?: string
-    rarity: Rarity
+    rarity: string
     flavor_text?: string
     card_number: string
     expansion: number
     is_maverick: boolean
     traits?: string
+}
+
+
+export enum Expansion {
+    COTA = "COTA",
+    AOA = "AOA"
+}
+
+export const expansionFromNumber = (expansionNum: number) => {
+    switch (expansionNum) {
+        case 341:
+            return Expansion.COTA
+        case 435:
+            return Expansion.AOA
+        default:
+            throw new Error("No expansion for number " + expansionNum)
+    }
 }
