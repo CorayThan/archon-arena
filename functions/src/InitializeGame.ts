@@ -1,13 +1,11 @@
 import * as admin from "firebase-admin"
 import { random, shuffle } from "lodash"
 
-const matchCollection = () => admin.firestore().collection("match")
-
 export class InitializeGame {
 
     startGame = async (matchId: string): Promise<any> => {
 
-        const matchDoc = await matchCollection().doc(matchId).get()
+        const matchDoc = await admin.firestore().collection("match").doc(matchId).get()
         if (matchDoc.exists) {
             const {firstPlayerId, secondPlayerId, firstPlayerActiveDeck, secondPlayerActiveDeck} = matchDoc.data()
             const firstPlayer = random(0, 1) === 0 ? firstPlayerId : secondPlayerId!

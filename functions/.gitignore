@@ -10,3 +10,5 @@ node_modules/
 shared/
 
 firebase-debug.log
+
+forge-of-the-archons-firebase-adminsdk-key.json

@@ -16,6 +16,10 @@ import CardInHand, { preloadCardsInPhaser } from "./types/CardInHand"
 
 const { KeyCodes } = Phaser.Input.Keyboard
 
+export const gameSceneHolder: {gameScene?: GameScene} = {
+    gameScene: undefined
+}
+
 class GameScene extends Phaser.Scene {
     // @ts-ignore
     root: Phaser.GameObjects.Container
@@ -31,6 +35,7 @@ class GameScene extends Phaser.Scene {
     constructor() {
         super("GameScene")
         this.keysDown = {}
+        gameSceneHolder.gameScene = this
     }
 
     preload() {

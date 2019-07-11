@@ -1,8 +1,10 @@
 import * as firebase from "firebase"
 import { observable } from "mobx"
+import { gameSceneHolder } from "../game/GameScene"
 import { GameState } from "../shared/gamestate/GameState"
 import { log } from "../Utils"
 import { gameHistoryStore } from "./GameHistoryStore"
+import { matchStore } from "./MatchStore"
 import { playerStore } from "./PlayerStore"
 
 export const gameStateCollection = () => firebase.firestore().collection("gameState")
@@ -49,12 +51,18 @@ export class GameStateStore {
     }
 
     quitGame = async () => {
+        const matchId = playerStore.currentMatchId
         if (this.gameStateUnlistener) {
             this.gameStateUnlistener()
             this.gameStateUnlistener = undefined
         }
-        gameHistoryStore.stopGameHistoryUpdates()
-        playerStore.upsertPlayer({currentMatchId: null})
+        await gameHistoryStore.stopGameHistoryUpdates()
+        if (matchId != null) {
+            await matchStore.cancelMatch(matchId)
+        }
+        if (gameSceneHolder.gameScene != null) {
+            gameSceneHolder.gameScene.game.destroy(true)
+        }
     }
 }
 

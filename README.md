@@ -8,7 +8,7 @@
 
 `npm start`
 
-### Deploy 
+### Deploy (This deploys everything, including functions)
 
 ```
 firebase login
@@ -26,22 +26,8 @@ Inside the `functions` directory.
 
 ### Run Locally
 
-In `index.tsx` uncomment the line:
-
-`firebase.functions().useFunctionsEmulator('http://localhost:5000')`
+Get the file "forge-of-the-archons-firebase-adminsdk-key.json" from someone and drop it in `/functions`
 
 ```
 npm run serve
-```
-
-### Deploy
-
-Copy `shared` from `src` to `functions/src`.
-In `index.tsx` comment out the line:
-
-`firebase.functions().useFunctionsEmulator('http://localhost:5000')`
-
-```
-npm run build
-npm run deploy
 ```
