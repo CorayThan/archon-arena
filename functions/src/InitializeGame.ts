@@ -1,5 +1,4 @@
 import { random, shuffle } from "lodash"
-import { v4 as uuid } from "uuid"
 import { Match } from "../../src/shared/Match"
 import { matchCollection } from "./index"
 import { GameState } from "./shared/gamestate/GameState"
@@ -15,7 +14,6 @@ export class InitializeGame {
             const {firstPlayerId, secondPlayerId, firstPlayerActiveDeck, secondPlayerActiveDeck} = matchDoc.data() as Match
             const firstPlayer = random(0, 1) === 0 ? firstPlayerId : secondPlayerId!
             const gameState: GameState = {
-                id: uuid(),
                 turn: 1,
                 startingPlayer: firstPlayer,
                 activePlayer: firstPlayer,
