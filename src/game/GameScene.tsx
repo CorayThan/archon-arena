@@ -51,7 +51,7 @@ class GameScene extends Phaser.Scene {
     create() {
         this.root = this.add.container(0, 0)
         this.render()
-        this.setupKeyboardListeners()
+        // this.setupKeyboardListeners()
     }
 
     renderPlayerBoard(player: any, originX: number, originY: number, orientation: string) {

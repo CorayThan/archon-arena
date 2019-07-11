@@ -1,6 +1,6 @@
+import Action from "../shared/Action"
 import { Event } from "./Event"
 import { getCardInHandByID, getCardOwner } from "./StateUtils"
-import Action from "./types/Action"
 
 export const buildLogForAction = (action: Action, state: object): Action | undefined => {
 
