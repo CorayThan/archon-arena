@@ -153,8 +153,8 @@ class GameScene extends Phaser.Scene {
 
         const dispatch = this.data.get("dispatch")
         const height = this.data.get("height")
-        const creatureOffsetY = orientation === "top" ? height / 2 - 50 : -height / 2 + 250
-        const artifactOffsetY = orientation === "top" ? 200 : -70
+        const creatureOffsetY = orientation === "top" ? height / 2 - 60 : -height / 2 + 180
+        const artifactOffsetY = orientation === "top" ? CARD_HEIGHT * 1.5 + 10 : -CARD_HEIGHT * 0.5 - 10
 
         const artifactDropZoneX = originX + CARD_WIDTH / 2
         this.createCardDropZone({
