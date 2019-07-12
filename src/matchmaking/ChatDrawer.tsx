@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Drawer, ListItem, ListItemText, TextField } from "@material-ui/core"
-import { observable } from "mobx"
+import { autorun, observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { EventValue } from "../genericcomponents/EventValue"
@@ -8,7 +8,7 @@ import { gameHistoryStore } from "../stores/GameHistoryStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 
-export const chatWidth = 350
+export const chatWidth = 440
 
 @observer
 export class ChatDrawer extends React.Component {
@@ -16,12 +16,38 @@ export class ChatDrawer extends React.Component {
     @observable
     currentMessage = ""
 
+    chatBottomRef: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>()
+    actionsBottomRef: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>()
+
     sendMessage = () => {
         const message = this.currentMessage.trim()
         if (message.length > 0) {
             gameHistoryStore.addMessage({message, playerUsername: playerStore.player.displayName})
             this.currentMessage = ""
         }
+    }
+
+    componentDidMount(): void {
+        autorun(() => {
+            gameHistoryStore.messages.length
+            window.setTimeout(() => {
+                const current = this.chatBottomRef.current
+                if (current) {
+                    current.scrollIntoView({behavior: "auto"})
+                }
+            }, 100)
+        })
+
+
+        autorun(() => {
+            gameHistoryStore.actions.length
+            window.setTimeout(() => {
+                const current = this.actionsBottomRef.current
+                if (current) {
+                    current.scrollIntoView({behavior: "auto"})
+                }
+            }, 100)
+        })
     }
 
     render() {
@@ -46,22 +72,21 @@ export class ChatDrawer extends React.Component {
                         </ListItem>
                     ) : null}
                 </Box>
-                <Box height={"40%"}>
-                    <Divider/>
-                    <ListItem>
-                        <ListItemText primaryTypographyProps={{variant: "h4"}}>
-                            Action Log
-                        </ListItemText>
-                    </ListItem>
-                    <div style={{overflowY: "auto"}}>
-                        {gameHistoryStore.actions.map((action, idx) => (
-                            <ListItem key={idx}>
-                                <ListItemText>
-                                    {action.message}
-                                </ListItemText>
-                            </ListItem>
-                        ))}
-                    </div>
+                <Divider/>
+                <ListItem>
+                    <ListItemText primaryTypographyProps={{variant: "h4"}}>
+                        Action Log
+                    </ListItemText>
+                </ListItem>
+                <Box height={"34%"} style={{overflowY: "auto"}}>
+                    {gameHistoryStore.actions.map((action, idx) => (
+                        <ListItem key={idx}>
+                            <ListItemText>
+                                {action.message}
+                            </ListItemText>
+                        </ListItem>
+                    ))}
+                    <div ref={this.actionsBottomRef}/>
                 </Box>
                 <Box height={"40%"} style={{display: "flex", flexDirection: "column"}}>
                     <Divider/>
@@ -78,6 +103,7 @@ export class ChatDrawer extends React.Component {
                                 </ListItemText>
                             </ListItem>
                         ))}
+                        <div ref={this.chatBottomRef}/>
                     </div>
                     <div style={{flexGrow: 1}}/>
                     <TextField
