@@ -3,6 +3,7 @@ import { Creature } from "./Creature"
 import { CardNotInPlay } from "./CardNotInPlay"
 import { Phase } from "./Phase"
 
+// TODO store started at date
 export interface GameState {
     id: string
     turn: number

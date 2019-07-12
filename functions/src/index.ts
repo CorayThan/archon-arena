@@ -18,6 +18,6 @@ exports.findDeck = functions.https.onCall((data: { deckId: string }) => {
 })
 
 exports.initializeGame = functions.https.onCall((data: { matchId: string }) => {
-    console.log("Init game called")
+    console.log("Init game called with matchId", data.matchId)
     return initializeGame.startGame(data.matchId)
 })

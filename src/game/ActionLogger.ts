@@ -9,7 +9,6 @@ export const buildLogForAction = (action: Action, state: object): Action | undef
             const owner = getCardOwner(action.cardId, state)
             const creature = getCardInHandById(owner, action.cardId)
             if (!creature) throw new Error("creature not found")
-            if (!creature.backingCard) throw new Error("card data missing") // TODO make backingCard manditory
             action.message = `${owner.name} plays ${creature.backingCard.cardTitle} on ${action.side} flank`
             return action
         },

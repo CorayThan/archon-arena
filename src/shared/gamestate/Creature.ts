@@ -12,5 +12,5 @@ export interface Creature {
         [key: string]: number
     }
     ownerId: string
-    backingCard?: KCard
+    backingCard: KCard
 }

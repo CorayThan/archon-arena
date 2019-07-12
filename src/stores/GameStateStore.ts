@@ -22,7 +22,7 @@ export class GameStateStore {
     startGame = async () => {
         const matchId = playerStore.currentMatchId
         const gameState = await firebase.functions().httpsCallable("initializeGame")({matchId})
-        // log.info(`Got GameState: ${prettyJson(gameState)}`)
+        // log.info(`Got GameState: ${gameState}`)
         await gameStateCollection().doc(matchId).set(gameState)
         await gameHistoryStore.createGameHistory()
         // log.info(`Saved gamestate with id ${matchId}`)

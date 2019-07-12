@@ -114,11 +114,11 @@ export const exec = (action: any, state: any) => {
             owner.archives.push(card)
         },
         [Event.TakeArchive]: () => {
-            const owner: Player = getCardOwner(action.cardId, state)
-            owner.archives.forEach((card: CardNotInPlay) => {
-                owner.hand.push(card)
+            const player = getPlayerByName(action.playerName, state)
+            player.archives.forEach((card: CardNotInPlay) => {
+                player.hand.push(card)
             })
-            owner.archives = []
+            player.archives = []
         },
         [Event.DrawCard]: () => {
             const player = getPlayerByName(action.playerName, state)

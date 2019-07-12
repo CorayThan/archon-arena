@@ -11,5 +11,5 @@ export interface Artifact {
         amber: number
     }
     ownerId: string
-    backingCard?: KCard
+    backingCard: KCard
 }

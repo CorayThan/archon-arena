@@ -37,13 +37,9 @@ firebase.initializeApp({
     messagingSenderId: "81787944178",
     appId: "1:81787944178:web:36aa683bc37bfedc"
 })
-<<<<<<< HEAD
 if (isDev) {
     firebase.functions().useFunctionsEmulator("http://localhost:5000")
 }
-=======
-//firebase.functions().useFunctionsEmulator("http://localhost:5000")
->>>>>>> Rough draft of connection to firebase
 
 WebFont.load({
     google: {

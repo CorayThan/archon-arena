@@ -20,7 +20,6 @@ export class InitializeGame {
 
             // TODO Make this work. Check SO for answer: https://stackoverflow.com/questions/56927411/firebase-cloud-function-wont-insert-into-firestore
             await admin.firestore().collection("gameState").doc(matchId).set(gameState)
-
             return gameState
         } else {
             throw new Error(`No match doc for matchId: ${matchId}`)
@@ -45,8 +44,7 @@ export class InitializeGame {
             archives: [],
             purged: [],
             creatures: [],
-            artifacts: [],
-            upgrades: []
+            artifacts: []
         }
     }
 }

@@ -30,7 +30,7 @@ export default {
             tokens: {
                 amber: 0,
             },
-            ownerId: owner.id,
+            ownerId: owner.playerId,
             backingCard: card.backingCard,
         }
 
@@ -53,7 +53,7 @@ export default {
 
         const card: CardNotInPlay = {
             id: artifact.id,
-            ownerId: owner.id,
+            ownerId: owner.playerId,
             backingCard: artifact.backingCard,
         }
         owner.hand.push(card)

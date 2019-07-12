@@ -36,7 +36,7 @@ export default {
                 stun: 0,
                 doom: 0
             },
-            ownerId: owner.id,
+            ownerId: owner.playerId,
             backingCard: card.backingCard,
         }
 
@@ -57,7 +57,7 @@ export default {
 
         const card: CardNotInPlay = {
             id: creature.id,
-            ownerId: owner.id,
+            ownerId: owner.playerId,
             backingCard: creature.backingCard,
         }
         owner.hand.push(card)
@@ -98,7 +98,7 @@ export default {
     },
     [Event.CaptureAmber]: (action: any, state: any) => {
         const owner = getCardOwner(action.cardId, state)
-        const opponent = state.players[0] === owner ? state.players[1] : state.players[0]
+        const opponent = state.playerOneState.playerId === owner.playerId ? state.playerTwoState : state.playerOneState
         const creature = getCreatureById(owner, action.cardId)
         if (!creature)
             throw new Error(`Card ${action.cardId} not found in hand`)

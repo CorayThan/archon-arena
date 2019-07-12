@@ -8,7 +8,7 @@ import { gameHistoryStore } from "../stores/GameHistoryStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 
-export const chatWidth = 480
+export const chatWidth = 350
 
 @observer
 export class ChatDrawer extends React.Component {
@@ -83,7 +83,7 @@ export class ChatDrawer extends React.Component {
                     <TextField
                         value={this.currentMessage}
                         fullWidth={true}
-                        autoFocus={true}
+                        autoFocus={false}
                         multiline={true}
                         rows={3}
                         rowsMax={5}
