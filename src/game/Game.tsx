@@ -45,8 +45,7 @@ class Game extends React.Component<Props> {
         const logObj = buildLogForAction(action, state)
         log.info("Log is " + prettyJson(logObj))
         if (logObj != null) {
-            // throws an error
-            //gameHistoryStore.addAction(logObj)
+            gameHistoryStore.addAction(logObj)
         }
 
         exec(action, state)
