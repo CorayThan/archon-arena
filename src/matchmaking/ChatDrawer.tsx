@@ -1,7 +1,8 @@
-import { Box, Button, Divider, Drawer, ListItem, ListItemText, TextField } from "@material-ui/core"
+import { Box, Button, Divider, Drawer, ListItem, ListItemText, Popover, TextField, Typography } from "@material-ui/core"
 import { autorun, observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
+import { AEvent } from "../game/AEvent"
 import { EventValue } from "../genericcomponents/EventValue"
 import { theme } from "../index"
 import { gameHistoryStore } from "../stores/GameHistoryStore"
@@ -129,6 +130,26 @@ export class ChatDrawer extends React.Component {
                         style={{display: "flex"}}
                     >
                         <Button
+                            variant={"contained"}
+                            color={"secondary"}
+                            style={{margin: theme.spacing(2)}}
+                            onClick={() => {
+                                const gameState = gameStateStore.activeGameState!
+                                const activePlayer = gameState.activePlayer!
+                                const newActivePlayer = activePlayer.id === gameState.playerTwoState.player.id ? gameState.playerOneState.player : gameState.playerTwoState.player
+                                gameHistoryStore.addAction({
+                                    message: `Next Turn, active player ${newActivePlayer.name}`,
+                                    type: AEvent.EndTurn,
+                                    player: activePlayer
+                                })
+                                gameStateStore.mergeGameState({activePlayer: newActivePlayer})
+                            }}
+                        >
+                            End Turn
+                        </Button>
+                        <div style={{flexGrow: 1}}/>
+                        <ShortCutInfo/>
+                        <Button
                             onClick={gameStateStore.quitGame}
                             color={"primary"}
                             style={{margin: theme.spacing(2)}}
@@ -138,6 +159,53 @@ export class ChatDrawer extends React.Component {
                     </div>
                 </Box>
             </Drawer>
+        )
+    }
+}
+
+@observer
+class ShortCutInfo extends React.Component {
+
+    @observable
+    anchorEl?: Element
+
+    render() {
+        return (
+            <div>
+                <Button
+                    onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.anchorEl = event.currentTarget}
+                    style={{margin: theme.spacing(2)}}
+                >
+                    Shortcuts
+                </Button>
+                <Popover
+                    open={!!this.anchorEl}
+                    anchorEl={this.anchorEl}
+                    onClose={() => this.anchorEl = undefined}
+                    anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "center",
+                    }}
+                    transformOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                    }}
+                >
+                    <div
+                        style={{padding: theme.spacing(2)}}
+                    >
+                        <Typography>
+                            Add damage to a creature: D + click
+                        </Typography>
+                        <Typography>
+                            Return creature to hand: M + click
+                        </Typography>
+                        <Typography>
+                            Add power to a creature: P + click
+                        </Typography>
+                    </div>
+                </Popover>
+            </div>
         )
     }
 }

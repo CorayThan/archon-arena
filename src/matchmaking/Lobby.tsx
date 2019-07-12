@@ -28,7 +28,7 @@ export class Lobby extends React.Component {
                         variant={"contained"}
                         color={"primary"}
                         onClick={matchStore.createMatch}
-                        // disabled={createGameDisabled}
+                        disabled={createGameDisabled}
                     >
                         Create game
                     </Button>

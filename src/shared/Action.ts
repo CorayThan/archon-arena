@@ -1,11 +1,13 @@
+import { AEvent } from "../game/AEvent"
+import { PlayerInfo } from "./Player"
+
 export default interface Action {
-    message: string
+    message?: string
     side?: "right" | "left"
-    type: Event
-    cardId: string
-    playerName: string
+    type: AEvent
+    cardId?: string
+    player?: PlayerInfo
     amount?: number
     upgradeId?: string
     creatureId?: string
 }
-

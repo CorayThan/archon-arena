@@ -6,3 +6,8 @@ export interface Player {
     activeDeck?: Deck
     currentMatchId?: string | null
 }
+
+export interface PlayerInfo {
+    id: string
+    name: string
+}

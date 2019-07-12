@@ -1,21 +1,22 @@
 import Action from "../shared/Action"
-import { Event } from "./Event"
+import { GameState } from "../shared/gamestate/GameState"
+import { AEvent } from "./AEvent"
 import { getCardInHandById, getCardOwner } from "./StateUtils"
 
-export const buildLogForAction = (action: Action, state: object): Action | undefined => {
+export const buildLogForAction = (action: Action, state: GameState): Action | undefined => {
 
     const events: { [key: string]: Function } = {
-        [Event.PlayCreature]: () => {
-            const owner = getCardOwner(action.cardId, state)
-            const creature = getCardInHandById(owner, action.cardId)
+        [AEvent.PlayCreature]: () => {
+            const owner = getCardOwner(action.cardId!, state)
+            const creature = getCardInHandById(owner, action.cardId!)
             if (!creature) throw new Error("creature not found")
-            action.message = `${owner.playerId} plays ${creature.backingCard.cardTitle} on ${action.side} flank`
+            action.message = `${owner.player.id} plays ${creature.backingCard.cardTitle} on ${action.side} flank`
             return action
         },
     }
 
     // Add placeholder function for unimplemented events
-    Object.keys(Event)
+    Object.keys(AEvent)
         .forEach(event => {
             if (!events[event])
                 events[event] = () => {
