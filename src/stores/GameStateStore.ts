@@ -2,7 +2,7 @@ import * as firebase from "firebase"
 import { observable } from "mobx"
 import { gameSceneHolder } from "../game/GameScene"
 import { GameState } from "../shared/gamestate/GameState"
-import { log } from "../Utils"
+import { log, prettyJson } from "../Utils"
 import { gameHistoryStore } from "./GameHistoryStore"
 import { matchStore } from "./MatchStore"
 import { playerStore } from "./PlayerStore"
@@ -22,10 +22,8 @@ export class GameStateStore {
     startGame = async () => {
         const matchId = playerStore.currentMatchId
         const gameState = await firebase.functions().httpsCallable("initializeGame")({matchId})
-        // log.info(`Got GameState: ${gameState}`)
-        await gameStateCollection().doc(matchId).set(gameState)
+        log.info(`Created game with gamestate: ${prettyJson(gameState)}`)
         await gameHistoryStore.createGameHistory()
-        // log.info(`Saved gamestate with id ${matchId}`)
     }
 
     listenForGameStateChanges = () => {
@@ -45,6 +43,7 @@ export class GameStateStore {
     }
 
     mergeGameState = async (gameState: Partial<GameState>) => {
+        log.debug(`Merging new state: ${prettyJson(gameState)}`)
         this.updatingGameState = true
         await gameStateCollection().doc(playerStore.currentMatchId).set(gameState, {merge: true})
         this.updatingGameState = false
