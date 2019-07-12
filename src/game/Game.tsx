@@ -5,15 +5,16 @@ import { chatWidth } from "../matchmaking/ChatDrawer"
 import Action from "../shared/Action"
 
 import { GameState } from "../shared/gamestate/GameState"
-import { gameHistoryStore } from "../stores/GameHistoryStore"
-import { gameStateStore } from "../stores/GameStateStore"
 import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
 import { exec } from "./Actions/Actions"
 import GameScene from "./GameScene"
 
 interface Props {
-    playerId: string | undefined,
+    playerId: string | undefined
+    state: GameState | undefined
+    setState: Function
+    logAction: Function
 }
 
 const width = window.innerWidth - chatWidth
@@ -43,11 +44,11 @@ class Game extends React.Component<Props> {
         const logObj = buildLogForAction(action, state)
         log.info("Log is " + prettyJson(logObj))
         if (logObj != null) {
-            gameHistoryStore.addAction(logObj)
+            this.props.logAction(logObj)
         }
 
         exec(action, state)
-        gameStateStore.mergeGameState(state)
+        this.props.setState(state)
     }
 
     render() {
@@ -65,8 +66,8 @@ class Game extends React.Component<Props> {
     }
 
     update() {
-        if (gameStateStore.activeGameState) {
-            this._state = mobx.toJS(gameStateStore.activeGameState)
+        if (this.props.state) {
+            this._state = mobx.toJS(this.props.state)
             const state = this._state
             const {playerId} = this.props
 

@@ -1,11 +1,21 @@
 import Phaser from "phaser"
 import { CardNotInPlay } from "../shared/gamestate/CardNotInPlay"
 
-export const CARD_WIDTH = 80
+export const CARD_WIDTH = 90
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class Card extends Phaser.GameObjects.Container {
 
+    id: string
+    _originX: number
+    _originY: number
+    front: string
+    back: string
+    ready: boolean
+    faceup: boolean
+    tokens: {
+        [key: string]: number
+    }
     ignoreNextPointerUp: boolean
     scene: Phaser.Scene
     cardImage: Phaser.GameObjects.Image
@@ -55,25 +65,21 @@ class Card extends Phaser.GameObjects.Container {
         this.scene = scene
         this.ignoreNextPointerUp = false
 
-        this.setDataEnabled()
-        // @ts-ignore // this method accepts 1 argument. TS is wrong.
-        this.data.set({
-            x,
-            y,
-            id,
-            front,
-            back,
-            ready,
-            faceup,
-            tokens: {
-                amber: 0,
-                damage: 0,
-                armor: 0,
-                power: 0,
-                stun: 0,
-                doom: 0,
-            },
-        })
+        this._originX = x
+        this._originY = y
+        this.id = id
+        this.front = front
+        this.back = back
+        this.ready = ready
+        this.faceup = faceup
+        this.tokens = {
+            amber: 0,
+            damage: 0,
+            armor: 0,
+            power: 0,
+            stun: 0,
+            doom: 0,
+        }
 
         this.cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
         this.add(this.cardImage)
@@ -84,11 +90,10 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         this.upgrades = upgrades.map((card: CardNotInPlay, i: number) => {
-            // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setDataEnabled()
-            const owner = id.split("-")[0]
-            cardImage.data.set("id", `${id}-upgrade-${i}`)
+            // @ts-ignore
+            cardImage.id = `${id}-upgrade-${i}`
             cardImage.setInteractive({ cursor: "pointer" })
             this.scene.input.setDraggable(cardImage)
             cardImage.addListener("pointerover", (e: MouseEvent) => {
@@ -97,32 +102,32 @@ class Card extends Phaser.GameObjects.Container {
             cardImage.addListener("pointerout", () => {
                 onMouseOutUpgrade()
             })
-            cardImage.addListener("drag", (pointer: any, x: number, y: number) => {
+            cardImage.addListener("drag", (pointer: Phaser.Input.Pointer, x: number, y: number) => {
                 cardImage.setPosition(x, y)
             })
-            cardImage.addListener("dragstart", (pointer: any, x: number, y: number) => {
+            cardImage.addListener("dragstart", () => {
                 onDragStart()
             })
-            cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
+            cardImage.addListener("dragend", () => {
                 this.render()
             })
-            cardImage.addListener("dragenter", (pointer: any, zone: any) => {
+            cardImage.addListener("dragenter", (zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onEnter")(cardImage)
             })
-            cardImage.addListener("dragleave", (pointer: any, zone: any) => {
+            cardImage.addListener("dragleave", (zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onLeave")(cardImage)
             })
-            cardImage.addListener("drop", (pointer: any, zone: any) => {
+            cardImage.addListener("drop", (zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onDrop")(cardImage)
             })
             return cardImage
         })
 
-        this.cardImage.addListener("pointerup", (e: any) => {
+        this.cardImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
             if (this.ignoreNextPointerUp) {
                 this.ignoreNextPointerUp = false
             } else {
-                onClick(e.event, this)
+                onClick(pointer.event, this)
             }
         })
 
@@ -135,17 +140,17 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         if (draggable) {
-            this.cardImage.addListener("drag", (pointer: any, x: number, y: number) => {
+            this.cardImage.addListener("drag", (pointer: Phaser.Input.Pointer, x: number, y: number) => {
                 this.setAngle(0)
-                this.setPosition(this.data.get("x") + x, this.data.get("y") + y)
+                this.setPosition(this._originX + x, this._originY + y)
                 this.ignoreNextPointerUp = true
             })
 
-            this.cardImage.addListener("dragstart", (pointer: any, x: number, y: number) => {
+            this.cardImage.addListener("dragstart", () => {
                 onDragStart()
             })
 
-            this.cardImage.addListener("dragend", (pointer: any, x: number, y: number) => {
+            this.cardImage.addListener("dragend", () => {
                 if (onDragEnd) {
                     onDragEnd(this)
                 } else {
@@ -153,15 +158,15 @@ class Card extends Phaser.GameObjects.Container {
                 }
             })
 
-            this.cardImage.addListener("dragenter", (pointer: any, zone: any) => {
+            this.cardImage.addListener("dragenter", (zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onEnter")(this)
             })
 
-            this.cardImage.addListener("dragleave", (pointer: any, zone: any) => {
+            this.cardImage.addListener("dragleave", (zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onLeave")(this)
             })
 
-            this.cardImage.addListener("drop", (pointer: any, zone: any) => {
+            this.cardImage.addListener("drop", (zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onDrop")(this)
             })
         }
@@ -172,8 +177,8 @@ class Card extends Phaser.GameObjects.Container {
     render() {
         this.removeAll()
 
-        if (this.data.get("faceup")) {
-            this.cardImage.setTexture(this.data.get("front"))
+        if (this.faceup) {
+            this.cardImage.setTexture(this.front)
         }
 
         this.cardImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
@@ -193,10 +198,10 @@ class Card extends Phaser.GameObjects.Container {
             this.sendToBack(card)
         })
 
-        if (!this.data.get("ready")) {
+        if (!this.ready) {
             this.setAngle(90)
         }
-        this.setPosition(this.data.get("x"), this.data.get("y"))
+        this.setPosition(this._originX, this._originY)
         this.cardImage.setInteractive({ cursor: "pointer" })
         this.scene.input.setDraggable(this.cardImage)
 
@@ -251,18 +256,17 @@ class Card extends Phaser.GameObjects.Container {
             ]
         ]
 
-        const tokenData = this.data.get("tokens")
+        const tokenData = this.tokens
         const tokens = Object.keys(tokenData).filter(key => tokenData[key] > 0)
-        tokens.forEach((type, i) => {
-            if (tokenData[type] > 0) {
+        tokens.forEach((tokenType, i) => {
+            if (tokenData[tokenType] > 0) {
                 const position = tokenPositions[tokens.length - 1].slice(i * 2)
-
-                const token = new Phaser.GameObjects.Image(this.scene, position[0], position[1], `${type}-token`)
+                const token = new Phaser.GameObjects.Image(this.scene, position[0], position[1], `${tokenType}-token`)
                 token.setDisplaySize(CARD_WIDTH * 0.3, CARD_WIDTH * 0.3)
                 this.add(token)
 
-                if (type !== "stun" && type !== "doom") {
-                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], tokenData[type], {
+                if (tokenType !== "stun" && tokenType !== "doom") {
+                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], ''+tokenData[tokenType], {
                         color: "#fff",
                         stroke: "#000",
                         strokeThickness: 4,
@@ -276,8 +280,7 @@ class Card extends Phaser.GameObjects.Container {
     }
 
     addToken(data: { type: string, amount: number }) {
-        // @ts-ignore // TODO figure out how to make typescript happy
-        this.data.get("tokens")[data.type] += data.amount
+        this.tokens[data.type] += data.amount
         this.render()
     }
 

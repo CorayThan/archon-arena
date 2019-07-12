@@ -8,6 +8,7 @@ import { theme } from "../index"
 import { gameHistoryStore } from "../stores/GameHistoryStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
+import "./ChatDrawer.css"
 
 export const chatWidth = 440
 
@@ -194,14 +195,74 @@ class ShortCutInfo extends React.Component {
                     <div
                         style={{padding: theme.spacing(2)}}
                     >
-                        <Typography>
-                            Add damage to a creature: D + click
+                        <Typography variant="h5">
+                            Cards
                         </Typography>
                         <Typography>
-                            Return creature to hand: M + click
+                            <span className="ChatDrawer-hotkey">B + left click</span> to discard
                         </Typography>
                         <Typography>
-                            Add power to a creature: P + click
+                            <span className="ChatDrawer-hotkey">M + left click</span> to move to hand
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">[hotkey] + right click</span> to reverse action
+                        </Typography>
+                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                            Creatures
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">D + left click</span> to add damage
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">A + left click</span> to add æmber
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">P + left click</span> to add power
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">C + left click</span> to capture æmber
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">S + left click</span> to stun or unstun
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">T + left click</span> to add or remove taunt
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">L + left click</span> to move left
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">R + left click</span> to move right
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">X + left click</span> to add doom token
+                        </Typography>
+                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                            Artifacts
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">A + left click</span> to add æmber
+                        </Typography>
+                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                            Card Piles
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">left click</span> to take top card
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">right click</span> to view contents
+                        </Typography>
+                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                            Library
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">shift + left click</span> to shuffle
+                        </Typography>
+                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                            Discard
+                        </Typography>
+                        <Typography>
+                            <span className="ChatDrawer-hotkey">shift + left click</span> to shuffle into library
                         </Typography>
                     </div>
                 </Popover>
