@@ -4,253 +4,30 @@
   "turn": 1,
   "startingPlayer": "stronglink",
   "activePlayer": "stronglink",
-  "players": [
-    {
-      "name": "stronglink",
-      "amber": 0,
-      "chains": 0,
-      "keys": 0,
-      "deck": {
-        "name": "Overson the Pretentious",
-        "id": "",
-        "cards": []
-      },
-      "drawPile": [],
-      "discardPile": [],
-      "purgePile": [],
-      "archivePile": [],
-      "hand": [
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon"
-        },
-        {
-          "name": "Mantle Of The Zealot",
-          "id": "mantle-of-the-zealot"
-        },
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon"
-        },
-        {
-          "name": "Mantle Of The Zealot",
-          "id": "mantle-of-the-zealot"
-        },
-        {
-          "name": "Mantle Of The Zealot",
-          "id": "mantle-of-the-zealot"
-        }
-      ],
-      "creatures": [
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon",
-          "ready": true,
-          "faceup": true,
-          "taunt": false,
-          "upgrades": [],
-          "cardsUnderneath": [],
-          "tokens": {
-            "armor": 0,
-            "doom": 0,
-            "power": 0,
-            "damage": 0,
-            "amber": 0,
-            "stun": 0
-          }
-        },
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon",
-          "ready": true,
-          "faceup": true,
-          "taunt": false,
-          "upgrades": [],
-          "cardsUnderneath": [],
-          "tokens": {
-            "armor": 0,
-            "doom": 0,
-            "power": 0,
-            "damage": 0,
-            "amber": 0,
-            "stun": 0
-          }
-        },
-        {
-          "name": "Jargogle",
-          "id": "jargogle",
-          "ready": true,
-          "faceup": true,
-          "taunt": false,
-          "upgrades": [],
-          "cardsUnderneath": [
-            {
-              "name": "Jargogle",
-              "id": "jargogle",
-              "facedown": true
-            }
-          ],
-          "tokens": {
-            "armor": 0,
-            "doom": 0,
-            "power": 0,
-            "damage": 0,
-            "amber": 0,
-            "stun": 0
-          }
-        }
-      ],
-      "artifacts": [
-        {
-          "name": "Safe Place",
-          "id": "safe-place",
-          "faceup": true,
-          "ready": true,
-          "tokens": {
-            "amber": 0
-          },
-          "cardsUnderneath": []
-        }, {
-          "name": "Safe Place",
-          "id": "safe-place",
-          "faceup": true,
-          "ready": true,
-          "tokens": {
-            "amber": 0
-          },
-          "cardsUnderneath": []
-        }
-      ]
-    },
-    {
-      "name": "jacketattack",
-      "amber": 12,
-      "chains": 0,
-      "keys": 1,
-      "deck": {
-        "name": "Ze who Stomps on Goblins",
-        "id": "",
-        "cards": []
-      },
-      "drawPile": [],
-      "discardPile": [],
-      "purgePile": [],
-      "archivePile": [],
-      "hand": [
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon"
-        },
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon"
-        },
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon"
-        },
-        {
-          "name": "Mantle Of The Zealot",
-          "id": "mantle-of-the-zealot"
-        },
-        {
-          "name": "Mantle Of The Zealot",
-          "id": "mantle-of-the-zealot"
-        },
-        {
-          "name": "Mantle Of The Zealot",
-          "id": "mantle-of-the-zealot"
-        }
-      ],
-      "creatures": [
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon",
-          "ready": true,
-          "faceup": true,
-          "taunt": false,
-          "upgrades": [],
-          "cardsUnderneath": [],
-          "tokens": {
-            "armor": 0,
-            "doom": 0,
-            "power": 0,
-            "damage": 0,
-            "amber": 0,
-            "stun": 0
-          }
-        },
-        {
-          "name": "Kelifi Dragon",
-          "id": "kelifi-dragon",
-          "ready": true,
-          "faceup": true,
-          "taunt": false,
-          "upgrades": [
-            {
-              "name": "Mantle Of The Zealot",
-              "id": "mantle-of-the-zealot"
-            },
-            {
-              "name": "Mantle Of The Zealot",
-              "id": "mantle-of-the-zealot"
-            }
-          ],
-          "cardsUnderneath": [],
-          "tokens": {
-            "armor": 0,
-            "doom": 0,
-            "power": 0,
-            "damage": 0,
-            "amber": 0,
-            "stun": 0
-          }
-        },
-        {
-          "name": "Jargogle",
-          "id": "jargogle",
-          "ready": true,
-          "faceup": true,
-          "taunt": false,
-          "upgrades": [],
-          "cardsUnderneath": [
-            {
-              "name": "Jargogle",
-              "id": "jargogle",
-              "facedown": true
-            }
-          ],
-          "tokens": {
-            "armor": 0,
-            "doom": 0,
-            "power": 0,
-            "damage": 0,
-            "amber": 0,
-            "stun": 0
-          }
-        }
-      ],
-      "artifacts": [
-        {
-          "name": "Safe Place",
-          "id": "safe-place",
-          "faceup": true,
-          "ready": true,
-          "tokens": {
-            "amber": 0
-          },
-          "cardsUnderneath": []
-        }, {
-          "name": "Safe Place",
-          "id": "safe-place",
-          "faceup": true,
-          "ready": true,
-          "tokens": {
-            "amber": 2
-          },
-          "cardsUnderneath": []
-        }
-      ]
-    }
-  ]
+  "playerOneState": {
+    "playerId": "stronglink",
+    "amber": 0,
+    "chains": 0,
+    "keys": 0,
+    "library": [],
+    "discard": [],
+    "purged": [],
+    "archives": [],
+    "hand": [],
+    "creatures": [],
+    "artifacts": []
+  },
+  "playerTwoState": {
+    "playerId": "jacketattack",
+    "amber": 12,
+    "chains": 0,
+    "keys": 1,
+    "library": [],
+    "discard": [],
+    "purged": [],
+    "archives": [],
+    "hand": [],
+    "creatures": [],
+    "artifacts": []
+  }
 }

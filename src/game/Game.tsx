@@ -7,18 +7,23 @@ import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
 import { exec } from "./Actions/Actions"
 import GameScene from "./GameScene"
+import lodash from "lodash"
+import * as mobx from "mobx"
+
+import { GameState } from "../shared/gamestate/GameState"
 
 interface Props {
-    state: object
+    state: GameState | undefined,
+    playerId: string | undefined,
+    setState: Function,
 }
 
 const width = window.innerWidth - chatWidth
-const height = window.innerHeight - 150
+const height = window.innerHeight - 70
 
 const config: Phaser.Types.Core.GameConfig = {
     parent: "phaser",
     backgroundColor: "#eee",
-    scene: [GameScene],
     width,
     height,
     input: {
@@ -27,52 +32,79 @@ const config: Phaser.Types.Core.GameConfig = {
 }
 
 class Game extends React.Component<Props> {
-    log: object[] = []
+
+    game: Phaser.Game | undefined
+    // Store a state object stripped of proxies defined by mobx
+    _state: GameState | undefined
 
     dispatch = (action: Action) => {
-        const {state} = this.props
+        const state = this._state
+        if (!state)
+            throw new Error("Action dispatched before game state available")
+
         const logObj = buildLogForAction(action, state)
         log.info("Log is " + prettyJson(logObj))
         if (logObj != null) {
-            gameHistoryStore.addAction(logObj)
+            // throws an error
+            //gameHistoryStore.addAction(logObj)
         }
+
         exec(action, state)
+        this.props.setState(state)
     }
 
     render() {
         return (
-            <div
-                id="phaser"
-                style={{height: "100%"}}
-            />
+            <div id="phaser" />
         )
     }
 
-    // TODO we need to delete this and remove the props from this class
-    shouldComponentUpdate() {
-        return false
+    componentDidMount() {
+        this.update()
     }
 
-    componentDidMount() {
-        const {state} = this.props
-        log.debug(state)
+    componentDidUpdate() {
+        this.update()
+    }
 
-        const game = new Phaser.Game(config)
-        game.events.once("ready", () => {
-            game.canvas.addEventListener("contextmenu", (e: MouseEvent) => {
-                e.preventDefault()
-                return false
-            });
+    update() {
+        if (this.props.state) {
+            this._state = mobx.toJS(this.props.state)
+            const state = this._state
+            const {playerId} = this.props
 
-            const scene = game.scene.getScene("GameScene")
-            // @ts-ignore
-            scene.data.set({
-                state,
-                dispatch: this.dispatch,
-                width,
-                height,
-            })
-        })
+            if (this.game) {
+                const scene = this.game.scene.getScene("GameScene") as GameScene
+                if (scene) {
+                    scene.data.set("state", state)
+                    scene.render()
+                }
+            } else {
+                this.game = new Phaser.Game(config)
+                this.game.events.once("ready", () => {
+                    if (!this.game)
+                        return
+
+                    this.game.canvas.addEventListener("contextmenu", (e: MouseEvent) => {
+                        e.preventDefault()
+                        return false
+                    });
+
+                    const scene = new GameScene()
+                    this.game.scene.add("GameScene", scene, true, {
+                        state,
+                    })
+                    // @ts-ignore
+                    scene.data.set({
+                        state,
+                        playerId,
+                        dispatch: this.dispatch,
+                        width,
+                        height,
+                    })
+                })
+            }
+        }
     }
 }
 

@@ -1,6 +1,5 @@
 import Phaser from "phaser"
-import CardInHand from "./types/CardInHand"
-import Upgrade from "./types/Upgrade"
+import { CardNotInPlay } from "../shared/gamestate/CardNotInPlay"
 
 export const CARD_WIDTH = 80
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
@@ -42,8 +41,8 @@ class Card extends Phaser.GameObjects.Container {
         faceup?: boolean,
         ready?: boolean,
         draggable?: boolean,
-        cardsUnderneath?: CardInHand[],
-        upgrades?: Upgrade[],
+        cardsUnderneath?: CardNotInPlay[],
+        upgrades?: CardNotInPlay[],
         onClick: Function,
         onMouseOver: Function,
         onMouseOut: Function,
@@ -84,7 +83,7 @@ class Card extends Phaser.GameObjects.Container {
             return cardImage
         })
 
-        this.upgrades = upgrades.map((card: Upgrade, i: number) => {
+        this.upgrades = upgrades.map((card: CardNotInPlay, i: number) => {
             // @ts-ignore
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setDataEnabled()

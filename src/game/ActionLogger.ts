@@ -1,15 +1,15 @@
 import Action from "../shared/Action"
 import { Event } from "./Event"
-import { getCardInHandByID, getCardOwner } from "./StateUtils"
+import { getCardInHandById, getCardOwner } from "./StateUtils"
 
 export const buildLogForAction = (action: Action, state: object): Action | undefined => {
 
     const events: { [key: string]: Function } = {
         [Event.PlayCreature]: () => {
-            const owner = getCardOwner(action.cardID, state)
-            const creature = getCardInHandByID(owner, action.cardID)
+            const owner = getCardOwner(action.cardId, state)
+            const creature = getCardInHandById(owner, action.cardId)
             if (!creature) throw new Error("creature not found")
-            action.message = `${owner.name} plays ${creature.name} on ${action.side} flank`
+            action.message = `${owner.playerId} plays ${creature.backingCard.cardTitle} on ${action.side} flank`
             return action
         },
     }
