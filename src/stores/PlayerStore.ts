@@ -35,6 +35,7 @@ export class PlayerStore {
         log.debug("Start listening for player changes with id " + id)
         playerCollection().doc(id)
             .onSnapshot((playerDoc) => {
+                log.info("Player change.")
                 const player = playerDoc.data() as unknown as Player
                 if (player) {
 

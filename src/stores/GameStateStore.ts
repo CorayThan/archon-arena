@@ -34,7 +34,7 @@ export class GameStateStore {
         this.gameStateUnlistener = gameStateCollection().doc(matchId)
             .onSnapshot((gameStateDoc) => {
                 const gameState = gameStateDoc.data() as GameState
-                log.debug(`Got gamestate change for gameState with id ${gameStateDoc.id} exists ${gameStateDoc.exists}`)
+                log.info(`Got gamestate change for gameState with id ${gameStateDoc.id} exists ${gameStateDoc.exists}`)
                 if (gameState) {
                     this.activeGameState = gameState
                 } else {

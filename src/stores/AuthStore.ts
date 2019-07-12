@@ -2,6 +2,7 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import { observable } from "mobx"
 import { AuthUser } from "../auth/AuthUser"
+import { log } from "../Utils"
 import { playerStore } from "./PlayerStore"
 
 export class AuthStore {
@@ -14,6 +15,7 @@ export class AuthStore {
 
     listenForAuthUser = () => {
         firebase.auth().onAuthStateChanged((user) => {
+            log.info("Auth state change.")
             if (user) {
                 user.getIdToken().then(() => {
                     const displayName = user.displayName ? user.displayName : undefined

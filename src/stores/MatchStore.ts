@@ -64,12 +64,12 @@ export class MatchStore {
 
     listenForMatches = () => {
         this.matchUnlistener = matchCollection().onSnapshot((querySnapshot) => {
+            log.info("All Matches change.")
             this.allMatches = querySnapshot.docs.map(doc => {
                 const match = doc.data() as Match
                 match.matchId = doc.id
                 return match
             })
-            // log.debug(`Matches info: ${prettyJson(this.allMatches)}`)
         })
     }
 

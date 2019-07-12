@@ -47,7 +47,7 @@ export class GameHistoryStore {
         this.gameHistoryUnlistener = gameHistoryCollection().doc(matchId)
             .onSnapshot((gameHistoryDoc) => {
                 const gameHistory = gameHistoryDoc.data() as GameHistory
-                log.debug(`Got game history change with id ${gameHistoryDoc.id} exists ${gameHistoryDoc.exists}`)
+                log.info(`Got game history change with id ${gameHistoryDoc.id} exists ${gameHistoryDoc.exists}`)
                 if (gameHistory) {
                     this.gameHistory = gameHistory
                 } else {
