@@ -1,4 +1,4 @@
-import { AnyCardInGame } from "../../shared/gamestate/CardInGame"
+import { AnyCardInGame, CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState } from "../../shared/gamestate/GameState"
 
 export interface CardScript {
@@ -24,7 +24,7 @@ export interface CardScript {
      *
      * Returns card ids of valid attack targets
      */
-    validAttackTargets?: (state: GameState) => string[]
+    validAttackTargets?: (state: GameState) => CardInGame[]
 
     /**
      * For Kelifi Dragon
@@ -84,48 +84,25 @@ export interface CardScript {
 
 interface IndividualScript {
     perform: CardScriptExecution
-    targetOrder?: TargetConfig[]
+    validTargets?: (state: GameState) => CardInGame[]
+    choosenTargetsAreValid?: (targets: CardInGame[]) => boolean
 }
 
+/**
+ * Return a new IndividualScript from CardScriptExecution if it can be executed multiple times. For example, Relentless Assault returns its IndividualScript
+ * twice, with the new GameState being resolved in between each execution.
+ */
 type CardScriptExecution = (state: GameState, config?: CardActionConfig) => void | IndividualScript
 type IsActive = (state: GameState) => boolean
 type CurrentQuantity = (state: GameState) => number
 
-interface TargetConfig {
-    types: TargetType[]
-    areas: TargetArea[]
-
-    /**
-     * Undefined represents friendly or enemy
-     */
-    friendly?: boolean
-
-    /**
-     * Undefined or false means not-random
-     */
-    random?: boolean
-}
-
-export enum TargetType {
-    CREATURE,
-    ARTIFACT,
-    UPGRADE,
-    FIGHT,
-    HOUSE
-}
-
-export enum TargetArea {
-    DISCARD,
-    HAND,
-    LIBRARY,
-    ARCHIVE,
-    BOARD
-}
-
 interface CardActionConfig {
     targets?: AnyCardInGame[]
     quantity?: number
-    thisCardId?: string
+    thisCard?: CardInGame
+
+    /**
+     * Used by cards like Relentless Assault which can be executed 3 times.
+     */
+    timesExecuted: number
 }
-
-
