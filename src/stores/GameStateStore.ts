@@ -1,7 +1,8 @@
 import * as firebase from "firebase"
-import { observable } from "mobx"
+import { computed, observable } from "mobx"
 import { gameSceneHolder } from "../game/GameScene"
 import { GameState } from "../shared/gamestate/GameState"
+import { StatusEffect } from "../shared/GameStatusEffect"
 import { log, prettyJson } from "../Utils"
 import { gameHistoryStore } from "./GameHistoryStore"
 import { matchStore } from "./MatchStore"
@@ -62,6 +63,14 @@ export class GameStateStore {
         if (gameSceneHolder.gameScene != null) {
             gameSceneHolder.gameScene.game.destroy(true)
         }
+    }
+
+    @computed
+    get activeStatusEffects(): Map<number, StatusEffect[]> {
+        if (this.activeGameState == null || this.activeGameState.statusEffects == null) {
+            return new Map()
+        }
+        return this.activeGameState.statusEffects
     }
 }
 

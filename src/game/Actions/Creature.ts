@@ -27,6 +27,8 @@ export default {
                 stun: 0,
                 doom: 0
             },
+            power: card.backingCard.power,
+            traits: card.backingCard.traits,
             ownerId: owner.player.id,
             backingCard: card.backingCard,
         }

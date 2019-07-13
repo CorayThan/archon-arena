@@ -14,9 +14,26 @@ export interface CardScript {
     leavesPlay?: IndividualScript
 
     /**
+     * For Niffle Ape, Groggins
+     *
+     * Returns card ids of valid attack targets
+     */
+    validAttackTargets?: (state: GameState) => string[]
+
+    /**
+     * For Kelifi Dragon
+     */
+    canBePlayed?: (state: GameState) => boolean
+
+    /**
      * Like Storm Crawler
      */
     damageDealtWhenFighting?: number
+
+    /**
+     * Like Grabos
+     */
+    damageDealtWhenAttacking?: number
 
     /**
      * Like Lollop

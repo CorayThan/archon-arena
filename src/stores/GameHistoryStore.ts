@@ -2,7 +2,6 @@ import * as firebase from "firebase"
 import { computed, observable } from "mobx"
 import Action from "../shared/Action"
 import { GameHistory } from "../shared/GameHistory"
-import { GameStatusEffect } from "../shared/GameStatusEffect"
 import { PlayerMessage } from "../shared/PlayerMessage"
 import { log } from "../Utils"
 import { playerStore } from "./PlayerStore"
@@ -25,10 +24,6 @@ export class GameHistoryStore {
         await this.mergeGameHistory({actions})
     }
 
-    replaceStaticEffects = async (activeStaticEffects: GameStatusEffect[]) => {
-        await this.mergeGameHistory({activeStaticEffects})
-    }
-
     addMessage = async (message: PlayerMessage) => {
         const messages = this.gameHistory!.messages.slice()
         messages.push(message)
@@ -37,7 +32,7 @@ export class GameHistoryStore {
 
     createGameHistory = async () => {
         const matchId = playerStore.currentMatchId
-        const history: GameHistory = {actions: [], messages: [], activeStaticEffects: []}
+        const history: GameHistory = {actions: [], messages: []}
         await gameHistoryCollection().doc(matchId).set(history)
     }
 
@@ -77,14 +72,6 @@ export class GameHistoryStore {
             return []
         }
         return this.gameHistory.messages
-    }
-
-    @computed
-    get activeStatusEffects(): string[] {
-        if (this.gameHistory == null) {
-            return []
-        }
-        return this.gameHistory.activeStaticEffects
     }
 
     private mergeGameHistory = async (gameHistory: Partial<GameHistory>) => {
