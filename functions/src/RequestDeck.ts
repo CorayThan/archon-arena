@@ -10,22 +10,26 @@ export class RequestDeck {
             name: deck.data.name,
             expansion: expansionFromNumber(deck.data.expansion),
             houses: deck.data._links.houses,
-            cards: deck._linked.cards.map((keyForgeCard) => ({
-                id: keyForgeCard.id,
-                cardTitle: keyForgeCard.card_title,
-                house: keyForgeCard.house,
-                cardType: keyForgeCard.card_type,
-                frontImage: keyForgeCard.front_image,
-                cardText: keyForgeCard.card_text,
-                traits: keyForgeCard.traits == null ? [] : keyForgeCard.traits.split(" • "),
-                amber: keyForgeCard.amber,
-                power: keyForgeCard.power == null ? 0 : Number(keyForgeCard.power),
-                armor: keyForgeCard.armor == null ? 0 : Number(keyForgeCard.armor),
-                flavorText: keyForgeCard.flavor_text,
-                cardNumber: keyForgeCard.card_number,
-                expansion: keyForgeCard.expansion,
-                maverick: keyForgeCard.is_maverick,
-            }))
+            cards: deck.data._links.cards.map((keyForgeCardId, idx) => {
+                const keyForgeCard = deck._linked.cards.filter(fullCard => fullCard.id === keyForgeCardId)[0]
+                return {
+                    idInDeck: deck.data.id + idx,
+                    keyforgeId: keyForgeCard.id,
+                    cardTitle: keyForgeCard.card_title,
+                    house: keyForgeCard.house,
+                    cardType: keyForgeCard.card_type,
+                    frontImage: keyForgeCard.front_image,
+                    cardText: keyForgeCard.card_text,
+                    traits: keyForgeCard.traits == null ? [] : keyForgeCard.traits.split(" • "),
+                    amber: keyForgeCard.amber,
+                    power: keyForgeCard.power == null ? 0 : Number(keyForgeCard.power),
+                    armor: keyForgeCard.armor == null ? 0 : Number(keyForgeCard.armor),
+                    flavorText: keyForgeCard.flavor_text,
+                    cardNumber: keyForgeCard.card_number,
+                    expansion: keyForgeCard.expansion,
+                    maverick: keyForgeCard.is_maverick,
+                }
+            })
         }
     }
 }
