@@ -1,21 +1,23 @@
 import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
+import { Creature } from "../../../shared/gamestate/Creature"
 import { checkIfHasTargets, dealDamage } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    amber: () => 1,
-    onPlay: {
+    power: () => 6,
+    fight: {
         perform: (state, config) => {
             if (checkIfHasTargets(config, 1)) {
                 const target = config.targets[0] as Creature
-                dealDamage(target, 3)
+                dealDamage(target, 2)
             }
         },
+        //if destroyed the creature... choose a target
         targetOrder: [{
-            types: [TargetType.CREATURE],
-            areas: [TargetArea.BOARD]
+            areas: [TargetArea.BOARD],
+            types: [TargetType.CREATURE]
         }]
     }
 }
 
-cardScripts.scripts.set("punch", cardScript)
+cardScripts.scripts.set("ogopogo", cardScript)
