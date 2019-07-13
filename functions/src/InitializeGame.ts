@@ -38,7 +38,7 @@ export class InitializeGame {
                 id: playerId,
                 name: playerName
             },
-            amber: Math.random() * 8 | 0,
+            amber: 0,
             chains: 0,
             keys: 0,
             hand: cards.slice(0, firstPlayer ? 7 : 6),
