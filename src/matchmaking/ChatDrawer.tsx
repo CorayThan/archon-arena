@@ -195,19 +195,15 @@ class ShortCutInfo extends React.Component {
                     <div
                         style={{padding: theme.spacing(2)}}
                     >
-                        <Typography variant="h5">
-                            Cards
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">B + left click</span> to discard
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">M + left click</span> to move to hand
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">[hotkey] + right click</span> to reverse action
-                        </Typography>
-                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                        <ShortCutsSection
+                            title={"Cards"}
+                            shortCuts={[
+                                {key: "B + left click", to: " to discard"},
+                                {key: "M + left click", to: " to move to hand"},
+                                {key: "[hotkey] + left click", to: " to reverse action"},
+                            ]}
+                        />
+                        <Typography variant="h5" style={{marginTop: "10px"}}>
                             Creatures
                         </Typography>
                         <Typography>
@@ -237,13 +233,13 @@ class ShortCutInfo extends React.Component {
                         <Typography>
                             <span className="ChatDrawer-hotkey">X + left click</span> to add doom token
                         </Typography>
-                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                        <Typography variant="h5" style={{marginTop: "10px"}}>
                             Artifacts
                         </Typography>
                         <Typography>
                             <span className="ChatDrawer-hotkey">A + left click</span> to add æmber
                         </Typography>
-                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                        <Typography variant="h5" style={{marginTop: "10px"}}>
                             Card Piles
                         </Typography>
                         <Typography>
@@ -252,21 +248,39 @@ class ShortCutInfo extends React.Component {
                         <Typography>
                             <span className="ChatDrawer-hotkey">right click</span> to view contents
                         </Typography>
-                        <Typography variant="h5" style={{ marginTop: "10px"}}>
+                        <Typography variant="h5" style={{marginTop: "10px"}}>
                             Library
                         </Typography>
                         <Typography>
                             <span className="ChatDrawer-hotkey">shift + left click</span> to shuffle
                         </Typography>
-                        <Typography variant="h5" style={{ marginTop: "10px"}}>
-                            Discard
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">shift + left click</span> to shuffle into library
-                        </Typography>
+                        <ShortCutsSection title={"Discard"} shortCuts={[{key: "shift + left click", to: "to shuffle into library"}]}/>
                     </div>
                 </Popover>
             </div>
         )
     }
 }
+
+const ShortCutsSection = (props: { title: string, shortCuts: { key: string, to: string }[] }) => (
+    <>
+        <Typography variant="h5" style={{marginTop: theme.spacing(1)}}>
+            {props.title}
+        </Typography>
+        {props.shortCuts.map(shortCut => (
+            <div key={shortCut.key}>
+                <Typography>
+                    <span
+                        style={{
+                            background: "rgb(242, 242, 242)",
+                            fontSize: 14,
+                            textTransform: "uppercase"
+                        }}
+                    >
+                        {shortCut.key}
+                    </span> {shortCut.to}
+                </Typography>
+            </div>
+        ))}
+    </>
+)

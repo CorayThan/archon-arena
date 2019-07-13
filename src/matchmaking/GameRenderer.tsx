@@ -2,15 +2,16 @@ import { observer } from "mobx-react"
 import * as React from "react"
 import { Redirect, RouteComponentProps } from "react-router"
 import Game from "../game/Game"
+import { Loader } from "../genericcomponents/Loader"
 import { TopBar } from "../genericcomponents/TopBar"
 import { Routes } from "../routing/Routes"
+import Action from "../shared/Action"
+import { GameState } from "../shared/gamestate/GameState"
 import { authStore } from "../stores/AuthStore"
+import { gameHistoryStore } from "../stores/GameHistoryStore"
+import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 import { ChatDrawer } from "./ChatDrawer"
-import { gameStateStore } from "../stores/GameStateStore"
-import { gameHistoryStore } from "../stores/GameHistoryStore"
-import { GameState } from "../shared/gamestate/GameState"
-import Action from "../shared/Action"
 
 //import fixture from "../fixtures/game-state.json"
 
@@ -24,6 +25,10 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
         }
         // for local game development
         //redirect = null
+
+        if (gameStateStore.activeGameState == null) {
+            return <Loader/>
+        }
 
         return (
             <div style={{display: "flex"}}>
