@@ -19,7 +19,8 @@ export class Lobby extends React.Component {
     }
 
     render() {
-        const createGameDisabled = !playerStore.userCanCreateGames || playerStore.player.currentMatchId != null || matchStore.creatingMatch
+        const createGameDisabled = (!playerStore.userCanCreateGames || playerStore.player.currentMatchId != null || matchStore.creatingMatch) &&
+            playerStore.player.displayName != "coraythan" && playerStore.player.displayName != "stronglink"
         return (
             <div>
                 <TopBar/>

@@ -1,0 +1,1383 @@
+{
+  "id": "1",
+  "activePlayer": {
+    "id": "GQYXEhjmxEMlVcVzZY0gmYpnd872",
+    "name": "stronglink"
+  },
+  "phase": "CHOOSE_HAND",
+  "playerOneState": {
+    "amber": 3,
+    "archives": [],
+    "artifacts": [],
+    "chains": 0,
+    "creatures": [],
+    "discard": [],
+    "hand": [
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "067",
+          "cardText": "Play: Your opponent discards a random card from their hand.",
+          "cardTitle": "Mind Barb",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_067_GJXV3PCXVPMW_en.png",
+          "house": "Dis",
+          "id": "ea2a390e-e121-4cbd-96c5-2430cc600e81",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "mind-barb",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "302",
+          "cardText": "Elusive.\u000bYou may use Mack the Knife as if it belonged to the active house.\u000bAction: Deal 1<D> to a creature. If this damage destroys that creature, gain 1<A>.",
+          "cardTitle": "Mack the Knife",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_302_RP49F4QFW3FM_en.png",
+          "house": "Shadows",
+          "id": "23099339-dbe2-4b35-b26b-9dfb4c0fb35a",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "mack-the-knife",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "281",
+          "cardText": "Play: Deal 2<D> to a creature. If this damage destroys that creature, steal 1<A>.",
+          "cardTitle": "Relentless Whispers",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_281_MPVFFW3882CJ_en.png",
+          "house": "Shadows",
+          "id": "15f1a6f4-873f-4fa9-a080-7f01e72bbff1",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "relentless-whispers",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "298",
+          "cardText": "Elusive. Skirmish.\u000bEach time you play an artifact, steal 1<A>.",
+          "cardTitle": "Carlo Phantom",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“Give me half a chance an’ I’ll steal the whole of it.”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_298_5PGPFVJF9292_en.png",
+          "house": "Shadows",
+          "id": "71274e08-79b6-469b-9426-8af07d582704",
+          "maverick": false,
+          "power": 1,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "carlo-phantom",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "055",
+          "cardText": "Play: Choose a house on your opponent’s identity card. Your opponent must choose that house as their active house on their next turn.",
+          "cardTitle": "Control the Weak",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_055_7CJ4H2WMJWQ2_en.png",
+          "house": "Dis",
+          "id": "d2edea65-7c2f-487f-a6f4-f44a077c4a65",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "control-the-weak",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "022",
+          "cardText": "Action: Ready and fight with a friendly creature.",
+          "cardTitle": "Gauntlet of Command",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": "“I said ‘take me to your leader’ and got a fist to the face.”  –Captain Val Jericho",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_022_5F6F47CPQM7J_en.png",
+          "house": "Brobnar",
+          "id": "86db8510-2854-440b-8ee5-559855bb7d2c",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Item"
+          ]
+        },
+        "id": "gauntlet-of-command",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "274",
+          "cardText": "Play: Return 2 enemy creatures to their owner’s hand.",
+          "cardTitle": "Lights Out",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_274_P4W2FF886X6V_en.png",
+          "house": "Shadows",
+          "id": "c5f7e033-f62e-442e-97a1-b23b47cde1e8",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "lights-out",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      }
+    ],
+    "keys": 0,
+    "library": [
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "305",
+          "cardText": "Elusive. (The first time this creature is attacked each turn, no damage is dealt.)\u000bReap: Use an opponent’s artifact as if it were yours.",
+          "cardTitle": "Nexus",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_305_7QJVVWFQJPHJ_en.png",
+          "house": "Shadows",
+          "id": "d988a134-ff29-40f7-bac7-3fd49fe525f8",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Cyborg",
+            "Thief"
+          ]
+        },
+        "id": "nexus",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "306",
+          "cardText": "Elusive. (The first time this creature is attacked each turn, no damage is dealt.)\u000bAction: Steal 1<A>.",
+          "cardTitle": "Noddy the Thief",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_306_6374XF5G5XMR_en.png",
+          "house": "Shadows",
+          "id": "3a0c1861-3d38-4167-b0c1-afaa9cbe5e50",
+          "maverick": false,
+          "power": 2,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "noddy-the-thief",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "024",
+          "cardText": "Omni: Sacrifice Mighty Javelin. Deal 4<D> to a creature.",
+          "cardTitle": "Mighty Javelin",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_024_CG2485CM5HV4_en.png",
+          "house": "Brobnar",
+          "id": "12acf848-7838-4668-a2df-620e67e6d916",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Weapon"
+          ]
+        },
+        "id": "mighty-javelin",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "071",
+          "cardText": "Play: Destroy the 3 most powerful creatures. ",
+          "cardTitle": "Three Fates",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": "“Destitution. Dereliction. Defenestration.”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_071_5P29489P6443_en.png",
+          "house": "Dis",
+          "id": "9644c85a-12a7-44ff-a8bb-877dddb46995",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "three-fates",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "020",
+          "cardText": "Each friendly creature gets +1 power.",
+          "cardTitle": "Banner of Battle",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_020_3FQVR3V3CR7F_en.png",
+          "house": "Brobnar",
+          "id": "57f8a873-414b-4c77-be9a-15561c76f719",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Item"
+          ]
+        },
+        "id": "banner-of-battle",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "284",
+          "cardText": "Play: If you have not played any other cards this turn, gain 3<A>. For the remainder of the turn, you cannot play cards.",
+          "cardTitle": "Treasure Map",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_284_Q7HHRF75F97J_en.png",
+          "house": "Shadows",
+          "id": "ccfd5033-ffd1-4d9a-b4be-2f9dc90095c8",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "treasure-map",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "081",
+          "cardText": "Play: Capture 3<A>.",
+          "cardTitle": "Charette",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "It doesn’t like to share.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_081_GM7WM322M4_en.png",
+          "house": "Dis",
+          "id": "c5ed37f7-0d05-48bc-a595-4f25c0ec1e6d",
+          "maverick": false,
+          "power": 4,
+          "traits": [
+            "Demon"
+          ]
+        },
+        "id": "charette",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "068",
+          "cardText": "Play: Each undamaged creature captures 1<A> from its opponent. ",
+          "cardTitle": "Pandemonium",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_068_52H2XVR2J45G_en.png",
+          "house": "Dis",
+          "id": "9ba24b81-1887-46fd-9ec4-d8851af7e574",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "pandemonium",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "026",
+          "cardText": "Omni: Sacrifice Screechbomb. Your opponent loses 2<A>.",
+          "cardTitle": "Screechbomb",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": "“I think that thing made me deaf!”\u000b“What? I can’t hear you! I think that thing made me deaf!” ",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_026_WGX3X54PQCMP_en.png",
+          "house": "Brobnar",
+          "id": "3d650fe4-817a-4922-ba0f-297c1ebf816d",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Weapon"
+          ]
+        },
+        "id": "screechbomb",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "099",
+          "cardText": "During their “draw cards” step, your opponent refills their hand to 1 less card.",
+          "cardTitle": "Succubus",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_099_C63GPXC7XM83_en.png",
+          "house": "Dis",
+          "id": "3c4513a3-260e-441f-8abf-b27c1c4e23ef",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Demon"
+          ]
+        },
+        "id": "succubus",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "311",
+          "cardText": "Silvertooth enters play ready.",
+          "cardTitle": "Silvertooth",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "If you see teeth gleaming in the dark, it’s already too late.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_311_69G639M8F4F2_en.png",
+          "house": "Shadows",
+          "id": "74422031-b763-4f04-9f90-3f580ad69d3f",
+          "maverick": false,
+          "power": 2,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "silvertooth",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "308",
+          "cardText": "Fight: Steal 1<A>.",
+          "cardTitle": "Dodger",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“What did you do, Tiny?” –Valdr",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_308_4VWXF7969J9H_en.png",
+          "house": "Shadows",
+          "id": "429e5d71-40bc-4ff4-ae81-4d5c0c10d15e",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "dodger",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "073",
+          "cardText": "Action: Use a friendly creature.",
+          "cardTitle": "Dominator Bauble",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": "“I know I shouldn’t’a nicked it, but ‘twere so…shiny. –Noddy the Thief",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_073_QRQ93X7RG4J9_en.png",
+          "house": "Dis",
+          "id": "96548d93-b318-40e3-9f5c-3297c8070ebd",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Item"
+          ]
+        },
+        "id": "dominator-bauble",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "087",
+          "cardText": "After an enemy creature is destroyed fighting Overlord Greking, put that creature into play under your control.",
+          "cardTitle": "Overlord Greking",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_087_JFFVJ73VP9VQ_en.png",
+          "house": "Dis",
+          "id": "4f1c5b07-d31a-4177-b3b2-d1890d41c3e4",
+          "maverick": false,
+          "power": 7,
+          "traits": [
+            "Demon"
+          ]
+        },
+        "id": "overlord-greking",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "035",
+          "cardText": "Fight: Gain 1<A>.",
+          "cardTitle": "Headhunter",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“I mean, I think it’s a head...”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_035_M3H9MVCF63W7_en.png",
+          "house": "Brobnar",
+          "id": "0c3231e1-1230-4e7d-890e-6d3149125de2",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "headhunter",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "106",
+          "cardText": "This creature gets +2 power and gains hazardous 2. (Before this creature is attacked, deal 2<D> to the attacking enemy.)",
+          "cardTitle": "Flame-Wreathed",
+          "cardType": "Upgrade",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_106_4G49CMC5XCX4_en.png",
+          "house": "Dis",
+          "id": "365b2432-0b7f-4f67-9fa6-e4b726de5c4e",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "flame-wreathed",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "314",
+          "cardText": "Skirmish. (When you use this creature to fight, it is dealt no damage in return.)\u000bFight: Steal 1<A>.",
+          "cardTitle": "Umbra",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“When the fightin’s done, the real work begins.” ",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_314_VHG44C64WFXQ_en.png",
+          "house": "Shadows",
+          "id": "a8f25ae7-75f4-4768-94f0-87d62036516c",
+          "maverick": false,
+          "power": 2,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "umbra",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 1,
+          "cardNumber": "032",
+          "cardText": "Before Fight: Deal 1<D> to each enemy creature.",
+          "cardTitle": "Firespitter",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "Guess how he got that name.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_032_PVV2WC6R6QWP_en.png",
+          "house": "Brobnar",
+          "id": "29eafbc7-7fc5-4239-b2a7-8bc90df1fc0f",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "firespitter",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "030",
+          "cardText": "Play: Your opponent loses 1<A>.",
+          "cardTitle": "Bumpsy",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "Whatever he doesn’t like, he breaks. He doesn’t like anything.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_030_X82H79CQ6XH6_en.png",
+          "house": "Brobnar",
+          "id": "fc3d397a-3a51-4963-940c-6b43221b7667",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "bumpsy",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "031",
+          "cardText": "Play: Destroy each creature with power 3 or lower.",
+          "cardTitle": "Earthshaker",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“Did you feel that?”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_031_C7RGGJ9WG7XW_en.png",
+          "house": "Brobnar",
+          "id": "05193f38-c59c-4cf1-92e9-87e69b3bb76e",
+          "maverick": false,
+          "power": 7,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "earthshaker",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "062",
+          "cardText": "Play: Destroy a creature that is not on a flank.",
+          "cardTitle": "Hand of Dis",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": "“Let me give you a hand...”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_062_8WF3JF84X9VM_en.png",
+          "house": "Dis",
+          "id": "d42dd1d0-3462-410f-b683-dd0768b84188",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "hand-of-dis",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "310",
+          "cardText": "Shadow Self deals no damage when fighting.  \u000bDamage dealt to non-Specter neighbors is dealt to Shadow Self instead.",
+          "cardTitle": "Shadow Self",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_310_C33C4J4W6726_en.png",
+          "house": "Shadows",
+          "id": "11663693-8a10-4783-9f89-47f43c49bfa3",
+          "maverick": false,
+          "power": 9,
+          "traits": [
+            "Specter"
+          ]
+        },
+        "id": "shadow-self",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "005",
+          "cardText": "Play: If your opponent has 7<A> or more, they lose 4<A>.",
+          "cardTitle": "Burn the Stockpile",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": "“If you can’t protect it, you don’t deserve it.” –Bilgum Avalanche",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_005_7WCGR88265CM_en.png",
+          "house": "Brobnar",
+          "id": "09101020-58c5-4d9f-b93b-7fb25d684ff0",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "burn-the-stockpile",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "058",
+          "cardText": "Play: Return an enemy creature to its owner’s hand.",
+          "cardTitle": "Fear",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_058_7RV7CX53R83P_en.png",
+          "house": "Dis",
+          "id": "10715fd2-031a-47ca-9119-9b7b2ec1d2c0",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "fear",
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+      }
+    ],
+    "player": {
+      "id": "GQYXEhjmxEMlVcVzZY0gmYpnd872",
+      "name": "stronglink"
+    },
+    "purged": []
+  },
+  "playerTwoState": {
+    "amber": 4,
+    "archives": [],
+    "artifacts": [],
+    "chains": 0,
+    "creatures": [],
+    "discard": [],
+    "hand": [
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "310",
+          "cardText": "Shadow Self deals no damage when fighting.  \u000bDamage dealt to non-Specter neighbors is dealt to Shadow Self instead.",
+          "cardTitle": "Shadow Self",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_310_C33C4J4W6726_en.png",
+          "house": "Shadows",
+          "id": "11663693-8a10-4783-9f89-47f43c49bfa3",
+          "maverick": false,
+          "power": 9,
+          "traits": [
+            "Specter"
+          ]
+        },
+        "id": "shadow-self",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 1,
+          "cardNumber": "032",
+          "cardText": "Before Fight: Deal 1<D> to each enemy creature.",
+          "cardTitle": "Firespitter",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "Guess how he got that name.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_032_PVV2WC6R6QWP_en.png",
+          "house": "Brobnar",
+          "id": "29eafbc7-7fc5-4239-b2a7-8bc90df1fc0f",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "firespitter",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "071",
+          "cardText": "Play: Destroy the 3 most powerful creatures. ",
+          "cardTitle": "Three Fates",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": "“Destitution. Dereliction. Defenestration.”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_071_5P29489P6443_en.png",
+          "house": "Dis",
+          "id": "9644c85a-12a7-44ff-a8bb-877dddb46995",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "three-fates",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "306",
+          "cardText": "Elusive. (The first time this creature is attacked each turn, no damage is dealt.)\u000bAction: Steal 1<A>.",
+          "cardTitle": "Noddy the Thief",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_306_6374XF5G5XMR_en.png",
+          "house": "Shadows",
+          "id": "3a0c1861-3d38-4167-b0c1-afaa9cbe5e50",
+          "maverick": false,
+          "power": 2,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "noddy-the-thief",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "314",
+          "cardText": "Skirmish. (When you use this creature to fight, it is dealt no damage in return.)\u000bFight: Steal 1<A>.",
+          "cardTitle": "Umbra",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“When the fightin’s done, the real work begins.” ",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_314_VHG44C64WFXQ_en.png",
+          "house": "Shadows",
+          "id": "a8f25ae7-75f4-4768-94f0-87d62036516c",
+          "maverick": false,
+          "power": 2,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "umbra",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "073",
+          "cardText": "Action: Use a friendly creature.",
+          "cardTitle": "Dominator Bauble",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": "“I know I shouldn’t’a nicked it, but ‘twere so…shiny. –Noddy the Thief",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_073_QRQ93X7RG4J9_en.png",
+          "house": "Dis",
+          "id": "96548d93-b318-40e3-9f5c-3297c8070ebd",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Item"
+          ]
+        },
+        "id": "dominator-bauble",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      }
+    ],
+    "keys": 0,
+    "library": [
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "031",
+          "cardText": "Play: Destroy each creature with power 3 or lower.",
+          "cardTitle": "Earthshaker",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“Did you feel that?”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_031_C7RGGJ9WG7XW_en.png",
+          "house": "Brobnar",
+          "id": "05193f38-c59c-4cf1-92e9-87e69b3bb76e",
+          "maverick": false,
+          "power": 7,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "earthshaker",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "081",
+          "cardText": "Play: Capture 3<A>.",
+          "cardTitle": "Charette",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "It doesn’t like to share.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_081_GM7WM322M4_en.png",
+          "house": "Dis",
+          "id": "c5ed37f7-0d05-48bc-a595-4f25c0ec1e6d",
+          "maverick": false,
+          "power": 4,
+          "traits": [
+            "Demon"
+          ]
+        },
+        "id": "charette",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "308",
+          "cardText": "Fight: Steal 1<A>.",
+          "cardTitle": "Dodger",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“What did you do, Tiny?” –Valdr",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_308_4VWXF7969J9H_en.png",
+          "house": "Shadows",
+          "id": "429e5d71-40bc-4ff4-ae81-4d5c0c10d15e",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "dodger",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "068",
+          "cardText": "Play: Each undamaged creature captures 1<A> from its opponent. ",
+          "cardTitle": "Pandemonium",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_068_52H2XVR2J45G_en.png",
+          "house": "Dis",
+          "id": "9ba24b81-1887-46fd-9ec4-d8851af7e574",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "pandemonium",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "106",
+          "cardText": "This creature gets +2 power and gains hazardous 2. (Before this creature is attacked, deal 2<D> to the attacking enemy.)",
+          "cardTitle": "Flame-Wreathed",
+          "cardType": "Upgrade",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_106_4G49CMC5XCX4_en.png",
+          "house": "Dis",
+          "id": "365b2432-0b7f-4f67-9fa6-e4b726de5c4e",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "flame-wreathed",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "298",
+          "cardText": "Elusive. Skirmish.\u000bEach time you play an artifact, steal 1<A>.",
+          "cardTitle": "Carlo Phantom",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“Give me half a chance an’ I’ll steal the whole of it.”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_298_5PGPFVJF9292_en.png",
+          "house": "Shadows",
+          "id": "71274e08-79b6-469b-9426-8af07d582704",
+          "maverick": false,
+          "power": 1,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "carlo-phantom",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "274",
+          "cardText": "Play: Return 2 enemy creatures to their owner’s hand.",
+          "cardTitle": "Lights Out",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_274_P4W2FF886X6V_en.png",
+          "house": "Shadows",
+          "id": "c5f7e033-f62e-442e-97a1-b23b47cde1e8",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "lights-out",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "035",
+          "cardText": "Fight: Gain 1<A>.",
+          "cardTitle": "Headhunter",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "“I mean, I think it’s a head...”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_035_M3H9MVCF63W7_en.png",
+          "house": "Brobnar",
+          "id": "0c3231e1-1230-4e7d-890e-6d3149125de2",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "headhunter",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "030",
+          "cardText": "Play: Your opponent loses 1<A>.",
+          "cardTitle": "Bumpsy",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "Whatever he doesn’t like, he breaks. He doesn’t like anything.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_030_X82H79CQ6XH6_en.png",
+          "house": "Brobnar",
+          "id": "fc3d397a-3a51-4963-940c-6b43221b7667",
+          "maverick": false,
+          "power": 5,
+          "traits": [
+            "Giant"
+          ]
+        },
+        "id": "bumpsy",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "005",
+          "cardText": "Play: If your opponent has 7<A> or more, they lose 4<A>.",
+          "cardTitle": "Burn the Stockpile",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": "“If you can’t protect it, you don’t deserve it.” –Bilgum Avalanche",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_005_7WCGR88265CM_en.png",
+          "house": "Brobnar",
+          "id": "09101020-58c5-4d9f-b93b-7fb25d684ff0",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "burn-the-stockpile",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "284",
+          "cardText": "Play: If you have not played any other cards this turn, gain 3<A>. For the remainder of the turn, you cannot play cards.",
+          "cardTitle": "Treasure Map",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_284_Q7HHRF75F97J_en.png",
+          "house": "Shadows",
+          "id": "ccfd5033-ffd1-4d9a-b4be-2f9dc90095c8",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "treasure-map",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "055",
+          "cardText": "Play: Choose a house on your opponent’s identity card. Your opponent must choose that house as their active house on their next turn.",
+          "cardTitle": "Control the Weak",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_055_7CJ4H2WMJWQ2_en.png",
+          "house": "Dis",
+          "id": "d2edea65-7c2f-487f-a6f4-f44a077c4a65",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "control-the-weak",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "022",
+          "cardText": "Action: Ready and fight with a friendly creature.",
+          "cardTitle": "Gauntlet of Command",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": "“I said ‘take me to your leader’ and got a fist to the face.”  –Captain Val Jericho",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_022_5F6F47CPQM7J_en.png",
+          "house": "Brobnar",
+          "id": "86db8510-2854-440b-8ee5-559855bb7d2c",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Item"
+          ]
+        },
+        "id": "gauntlet-of-command",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "062",
+          "cardText": "Play: Destroy a creature that is not on a flank.",
+          "cardTitle": "Hand of Dis",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": "“Let me give you a hand...”",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_062_8WF3JF84X9VM_en.png",
+          "house": "Dis",
+          "id": "d42dd1d0-3462-410f-b683-dd0768b84188",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "hand-of-dis",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "026",
+          "cardText": "Omni: Sacrifice Screechbomb. Your opponent loses 2<A>.",
+          "cardTitle": "Screechbomb",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": "“I think that thing made me deaf!”\u000b“What? I can’t hear you! I think that thing made me deaf!” ",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_026_WGX3X54PQCMP_en.png",
+          "house": "Brobnar",
+          "id": "3d650fe4-817a-4922-ba0f-297c1ebf816d",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Weapon"
+          ]
+        },
+        "id": "screechbomb",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "281",
+          "cardText": "Play: Deal 2<D> to a creature. If this damage destroys that creature, steal 1<A>.",
+          "cardTitle": "Relentless Whispers",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_281_MPVFFW3882CJ_en.png",
+          "house": "Shadows",
+          "id": "15f1a6f4-873f-4fa9-a080-7f01e72bbff1",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "relentless-whispers",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "087",
+          "cardText": "After an enemy creature is destroyed fighting Overlord Greking, put that creature into play under your control.",
+          "cardTitle": "Overlord Greking",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_087_JFFVJ73VP9VQ_en.png",
+          "house": "Dis",
+          "id": "4f1c5b07-d31a-4177-b3b2-d1890d41c3e4",
+          "maverick": false,
+          "power": 7,
+          "traits": [
+            "Demon"
+          ]
+        },
+        "id": "overlord-greking",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "067",
+          "cardText": "Play: Your opponent discards a random card from their hand.",
+          "cardTitle": "Mind Barb",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_067_GJXV3PCXVPMW_en.png",
+          "house": "Dis",
+          "id": "ea2a390e-e121-4cbd-96c5-2430cc600e81",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "mind-barb",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "305",
+          "cardText": "Elusive. (The first time this creature is attacked each turn, no damage is dealt.)\u000bReap: Use an opponent’s artifact as if it were yours.",
+          "cardTitle": "Nexus",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_305_7QJVVWFQJPHJ_en.png",
+          "house": "Shadows",
+          "id": "d988a134-ff29-40f7-bac7-3fd49fe525f8",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Cyborg",
+            "Thief"
+          ]
+        },
+        "id": "nexus",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "302",
+          "cardText": "Elusive.\u000bYou may use Mack the Knife as if it belonged to the active house.\u000bAction: Deal 1<D> to a creature. If this damage destroys that creature, gain 1<A>.",
+          "cardTitle": "Mack the Knife",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_302_RP49F4QFW3FM_en.png",
+          "house": "Shadows",
+          "id": "23099339-dbe2-4b35-b26b-9dfb4c0fb35a",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "mack-the-knife",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "311",
+          "cardText": "Silvertooth enters play ready.",
+          "cardTitle": "Silvertooth",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": "If you see teeth gleaming in the dark, it’s already too late.",
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_311_69G639M8F4F2_en.png",
+          "house": "Shadows",
+          "id": "74422031-b763-4f04-9f90-3f580ad69d3f",
+          "maverick": false,
+          "power": 2,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "id": "silvertooth",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "058",
+          "cardText": "Play: Return an enemy creature to its owner’s hand.",
+          "cardTitle": "Fear",
+          "cardType": "Action",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_058_7RV7CX53R83P_en.png",
+          "house": "Dis",
+          "id": "10715fd2-031a-47ca-9119-9b7b2ec1d2c0",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        },
+        "id": "fear",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "020",
+          "cardText": "Each friendly creature gets +1 power.",
+          "cardTitle": "Banner of Battle",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_020_3FQVR3V3CR7F_en.png",
+          "house": "Brobnar",
+          "id": "57f8a873-414b-4c77-be9a-15561c76f719",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Item"
+          ]
+        },
+        "id": "banner-of-battle",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "024",
+          "cardText": "Omni: Sacrifice Mighty Javelin. Deal 4<D> to a creature.",
+          "cardTitle": "Mighty Javelin",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_024_CG2485CM5HV4_en.png",
+          "house": "Brobnar",
+          "id": "12acf848-7838-4668-a2df-620e67e6d916",
+          "maverick": false,
+          "power": 0,
+          "traits": [
+            "Weapon"
+          ]
+        },
+        "id": "mighty-javelin",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "099",
+          "cardText": "During their “draw cards” step, your opponent refills their hand to 1 less card.",
+          "cardTitle": "Succubus",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_099_C63GPXC7XM83_en.png",
+          "house": "Dis",
+          "id": "3c4513a3-260e-441f-8abf-b27c1c4e23ef",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Demon"
+          ]
+        },
+        "id": "succubus",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      }
+    ],
+    "player": {
+      "id": "JbJVLoByLugroFf311uGKDrn89y1",
+      "name": "coraythan"
+    },
+    "purged": []
+  },
+  "startingPlayer": {
+    "id": "GQYXEhjmxEMlVcVzZY0gmYpnd872",
+    "name": "stronglink"
+  },
+  "turn": 1
+}

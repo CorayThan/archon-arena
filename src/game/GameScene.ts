@@ -14,7 +14,6 @@ import { CardNotInPlay } from "../shared/gamestate/CardNotInPlay"
 import { Creature } from "../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import { AEvent } from "./AEvent"
-
 import Card, { CARD_HEIGHT, CARD_WIDTH } from "./Card"
 import { getCardType } from "./StateUtils"
 import { preloadCardsInPhaser } from "./Utils"
@@ -27,8 +26,7 @@ export const gameSceneHolder: { gameScene?: GameScene } = {
 
 class GameScene extends Phaser.Scene {
     state: GameState
-    // @ts-ignore
-    root: Phaser.GameObjects.Container
+    root: Phaser.GameObjects.Container | undefined
     cardHoverImage: Phaser.GameObjects.Image | undefined
     creatureMousingOver: Phaser.GameObjects.GameObject | undefined
     artifactMousingOver: Phaser.GameObjects.GameObject | undefined
@@ -78,21 +76,47 @@ class GameScene extends Phaser.Scene {
         this.root = this.add.container(0, 0)
         this.render()
         this.setupKeyboardListeners()
+        //  Set the camera bounds to be the size of the image
+        this.cameras.main.setBounds(0, 0, CARD_WIDTH * 20, this.height)
+
+        //  Camera controls
+        var cursors = this.input.keyboard.createCursorKeys()
+
+        var controlConfig = {
+            camera: this.cameras.main,
+            left: cursors.left,
+            right: cursors.right,
+            up: cursors.up,
+            down: cursors.down,
+            acceleration: 0.06,
+            drag: 0.0005,
+            maxSpeed: 1.0
+        }
+
+        // @ts-ignore
+        this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig)
+    }
+
+    // @ts-ignore
+    update(time, delta) {
+        // @ts-ignore
+        this.controls.update(delta)
     }
 
     renderPlayerBoard(player: PlayerState, originX: number, originY: number, orientation: string) {
         const dispatch = this.dispatch
-        const height = this.height
-        const playerNameText = new Phaser.GameObjects.Text(this, originX + 750, originY, player.player.name, {
+
+        const playerDataOffsetX = CARD_WIDTH * 9.2
+        const playerNameText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX, originY, player.player.name, {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
             fontSize: "18px"
         })
-        this.root.add(playerNameText)
+        this.root!.add(playerNameText)
         const nameWidth = playerNameText.displayWidth
 
-        const amberImage = new Phaser.GameObjects.Image(this, originX + 750, originY + 25, "amber-token")
+        const amberImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX, originY + 25, "amber-token")
         amberImage.setDisplaySize(40, 40)
         amberImage.setOrigin(0)
         amberImage.setInteractive({cursor: "pointer"})
@@ -104,18 +128,18 @@ class GameScene extends Phaser.Scene {
             })
             this.render()
         })
-        this.root.add(amberImage)
+        this.root!.add(amberImage)
 
-        const amberText = new Phaser.GameObjects.Text(this, originX + 750 + 20, originY + 45, player.amber.toString(), {
+        const amberText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX + 20, originY + 45, player.amber.toString(), {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
             fontSize: "24px"
         })
         amberText.setOrigin(0.5)
-        this.root.add(amberText)
+        this.root!.add(amberText)
 
-        const chainsImage = new Phaser.GameObjects.Image(this, originX + 750, originY + 70, "chains")
+        const chainsImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX, originY + 70, "chains")
         chainsImage.setDisplaySize(30, 30)
         chainsImage.setOrigin(0)
         chainsImage.setInteractive({cursor: "pointer"})
@@ -127,21 +151,21 @@ class GameScene extends Phaser.Scene {
             })
             this.render()
         })
-        this.root.add(chainsImage)
+        this.root!.add(chainsImage)
 
-        const chainsText = new Phaser.GameObjects.Text(this, originX + 750 + 15, originY + 85, player.chains.toString(), {
+        const chainsText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX + 15, originY + 85, player.chains.toString(), {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
             fontSize: "18px"
         })
         chainsText.setOrigin(0.5)
-        this.root.add(chainsText)
+        this.root!.add(chainsText)
 
         for (let i = 0; i < 3; i++) {
             const textureId = player.keys >= i + 1 ? "forged-key" : "unforged-key"
             const keySize = 30
-            const keyImage = new Phaser.GameObjects.Image(this, originX + 710, originY + (keySize + 4) * i + 10, textureId)
+            const keyImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX - 40, originY + (keySize + 4) * i + 10, textureId)
             keyImage.setDisplaySize(keySize, keySize)
             keyImage.setOrigin(0)
             keyImage.setInteractive({cursor: "pointer"})
@@ -152,10 +176,10 @@ class GameScene extends Phaser.Scene {
                 })
                 this.render()
             })
-            this.root.add(keyImage)
+            this.root!.add(keyImage)
         }
 
-        const creatureOffsetY = orientation === "top" ? height / 2 - 60 : -height / 2 + 180
+        const creatureOffsetY = orientation === "top" ? CARD_HEIGHT * 2.5 + 20 : -CARD_HEIGHT * 1.5 - 20
         const artifactOffsetY = orientation === "top" ? CARD_HEIGHT * 1.5 + 10 : -CARD_HEIGHT * 0.5 - 10
 
         const artifactDropZoneX = originX + CARD_WIDTH / 2
@@ -163,7 +187,7 @@ class GameScene extends Phaser.Scene {
             x: artifactDropZoneX,
             y: originY + artifactOffsetY,
             onDrop: (card: Card) => {
-                const cardId = card.data.get("id")
+                const cardId = card.id
                 if (getCardType(cardId) !== "card-in-hand")
                     return
 
@@ -187,7 +211,7 @@ class GameScene extends Phaser.Scene {
             onDrop: (card: Card) => {
                 dispatch({
                     type: AEvent.DiscardCard,
-                    cardId: card.data.get("id"),
+                    cardId: card.id,
                     player: player.player
                 })
                 card.destroy()
@@ -230,7 +254,7 @@ class GameScene extends Phaser.Scene {
             backgroundColor: "rgba(255, 255, 255, 1)",
             fontSize: "10px",
         })
-        this.root.add(discardPileText)
+        this.root!.add(discardPileText)
 
         const drawPileX = originX + CARD_WIDTH * 6 + (CARD_WIDTH + CARD_WIDTH * 0.1)
         const drawPileZone = this.createCardDropZone({
@@ -241,7 +265,7 @@ class GameScene extends Phaser.Scene {
             onDrop: (card: Card) => {
                 dispatch({
                     type: AEvent.PutCardOnDrawPile,
-                    cardId: card.data.get("id"),
+                    cardId: card.id,
                     player: player.player
                 })
                 card.destroy()
@@ -278,7 +302,7 @@ class GameScene extends Phaser.Scene {
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 1)"
         })
-        this.root.add(drawPileText)
+        this.root!.add(drawPileText)
 
         const archivePileX = originX + CARD_WIDTH * 6 + 2 * (CARD_WIDTH + CARD_WIDTH * 0.1)
         const archivePileZone = this.createCardDropZone({
@@ -289,7 +313,7 @@ class GameScene extends Phaser.Scene {
             onDrop: (card: Card) => {
                 dispatch({
                     type: AEvent.ArchiveCard,
-                    cardId: card.data.get("id"),
+                    cardId: card.id,
                     player: player.player
                 })
                 card.destroy()
@@ -325,9 +349,9 @@ class GameScene extends Phaser.Scene {
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 1)"
         })
-        this.root.add(archivePileText)
+        this.root!.add(archivePileText)
 
-        const purgePileX = originX + 760 + nameWidth + CARD_WIDTH / 2
+        const purgePileX = originX + playerDataOffsetX + 10 + nameWidth + CARD_WIDTH / 2
         const purgePileZone = this.createCardDropZone({
             x: purgePileX,
             y: originY + CARD_HEIGHT / 2,
@@ -337,7 +361,7 @@ class GameScene extends Phaser.Scene {
             onDrop: (card: Card) => {
                 dispatch({
                     type: AEvent.PurgeCard,
-                    cardId: card.data.get("id"),
+                    cardId: card.id,
                     player: player.player
                 })
                 card.destroy()
@@ -352,7 +376,7 @@ class GameScene extends Phaser.Scene {
             fontSize: "10px",
             backgroundColor: "rgba(255, 255, 255, 1)"
         })
-        this.root.add(purgePileText)
+        this.root!.add(purgePileText)
 
         let artifactOffsetX = 0
         for (let i = 0; i < player.artifacts.length; i++) {
@@ -397,7 +421,7 @@ class GameScene extends Phaser.Scene {
                         amount: tokenAmount,
                     })
                 })
-            this.root.add(card)
+            this.root!.add(card)
         }
 
         let lastCreatureX = 0
@@ -452,7 +476,7 @@ class GameScene extends Phaser.Scene {
                     })
                 })
             lastCreatureX = creatureCard.x
-            this.root.add(creatureCard)
+            this.root!.add(creatureCard)
 
             const dropZoneX = creatureCard.x
             this.createCardDropZone({
@@ -460,14 +484,14 @@ class GameScene extends Phaser.Scene {
                 y: originY + creatureOffsetY,
                 visible: false,
                 onDrop: (droppedCard: Card) => {
-                    const droppedCardId = droppedCard.data.get("id")
+                    const droppedCardId = droppedCard.id
                     if (getCardType(droppedCardId) !== "card-in-hand")
                         return
 
                     dispatch({
                         type: AEvent.PlayUpgrade,
-                        upgradeId: droppedCard.data.get("id"),
-                        creatureId: creatureCard.data.get("id"),
+                        upgradeId: droppedCard.id,
+                        creatureId: creatureCard.id,
                         player: player.player
                     })
                     droppedCard.destroy()
@@ -493,20 +517,20 @@ class GameScene extends Phaser.Scene {
                 onDragStart: this.onDragStart.bind(this),
                 onDragEnd: this.onDragEndCardInHand.bind(this),
             })
-            this.root.add(card)
+            this.root!.add(card)
         }
 
         this.createCardDropZone({
             x: originX + CARD_WIDTH / 2,
             y: originY + creatureOffsetY,
             onDrop: (card: Card) => {
-                const cardId = card.data.get("id")
+                const cardId = card.id
                 if (getCardType(cardId) !== "card-in-hand")
                     return
 
                 dispatch({
                     type: AEvent.PlayCreature,
-                    cardId: card.data.get("id"),
+                    cardId: card.id,
                     player: player.player,
                     side: "left",
                 })
@@ -525,13 +549,13 @@ class GameScene extends Phaser.Scene {
                 x: rightCreatureDropZoneX,
                 y: originY + creatureOffsetY,
                 onDrop: (card: Card) => {
-                    const cardId = card.data.get("id")
+                    const cardId = card.id
                     if (getCardType(cardId) !== "card-in-hand")
                         return
 
                     dispatch({
                         type: AEvent.PlayCreature,
-                        cardId: card.data.get("id"),
+                        cardId: card.id,
                         player: player.player,
                         side: "right",
                     })
@@ -543,8 +567,8 @@ class GameScene extends Phaser.Scene {
     }
 
     render() {
-        this.root.destroy()
-        this.root = this.add.container(0, 0)
+        this.root!.destroy()
+        this.root! = this.add.container(0, 0)
 
         let opponentState
         let ownState
@@ -556,8 +580,8 @@ class GameScene extends Phaser.Scene {
             opponentState = this.state.playerTwoState
         }
 
-        this.renderPlayerBoard(opponentState, 5, 5, "top")
-        this.renderPlayerBoard(ownState, 5, this.height - CARD_HEIGHT - 5, "bottom")
+        this.renderPlayerBoard(opponentState, 5, 0, "top")
+        this.renderPlayerBoard(ownState, 5, this.height - CARD_HEIGHT - 0, "bottom")
 
         if (this.modalContainer) {
             this.modalContainer.destroy()
@@ -591,7 +615,7 @@ class GameScene extends Phaser.Scene {
         // @ts-ignore
         zone.data.set({
             onEnter: (card: Card) => {
-                const cardId = card.data.get("id")
+                const cardId = card.id
                 const cardType = getCardType(cardId)
                 if (allowCardTypes.includes(cardType)) {
                     image.setAlpha(1)
@@ -605,12 +629,12 @@ class GameScene extends Phaser.Scene {
 
         zone.data.get("onLeave")()
         image.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
-        this.root.add(zone)
+        this.root!.add(zone)
         if (visible) {
-            this.root.add(image)
-            this.root.sendToBack(image)
+            this.root!.add(image)
+            this.root!.sendToBack(image)
         }
-        this.root.sendToBack(zone)
+        this.root!.sendToBack(zone)
         return zone
     }
 
@@ -653,12 +677,12 @@ class GameScene extends Phaser.Scene {
                 })
                 this.modalContainer.add(image)
             }
-            this.root.add(this.modalContainer)
+            this.root!.add(this.modalContainer)
         }
     }
 
     onMouseOverCreature(e: MouseEvent, target: Card) {
-        const texture = target.data.get("front")
+        const texture = target.front
         this.showEnlargedCard(texture)
         this.creatureMousingOver = target
     }
@@ -672,7 +696,7 @@ class GameScene extends Phaser.Scene {
 
     onClickCreature(e: MouseEvent, card: Card) {
         const dispatch = this.dispatch
-        const cardId = card.data.get("id")
+        const cardId = card.id
 
         if (this.keysDown[KeyCodes.R]) {
             dispatch({
@@ -790,7 +814,7 @@ class GameScene extends Phaser.Scene {
     }
 
     onMouseOverArtifact(e: MouseEvent, target: Card) {
-        const texture = target.data.get("front")
+        const texture = target.front
         this.showEnlargedCard(texture)
         this.artifactMousingOver = target
     }
@@ -803,7 +827,7 @@ class GameScene extends Phaser.Scene {
     }
 
     onClickArtifact(e: MouseEvent, card: Card) {
-        const cardId = card.data.get("id")
+        const cardId = card.id
 
         if (this.keysDown[KeyCodes.B]) {
             this.dispatch({
@@ -821,15 +845,6 @@ class GameScene extends Phaser.Scene {
                 cardId,
             })
             card.destroy()
-            this.render()
-            return
-        }
-
-        if (this.keysDown[KeyCodes.X]) {
-            this.dispatch({
-                type: AEvent.ToggleDoomToken,
-                cardId,
-            })
             this.render()
             return
         }
@@ -853,21 +868,11 @@ class GameScene extends Phaser.Scene {
 
     onClickCardInHand(e: MouseEvent, card: Card) {
         const dispatch = this.dispatch
-        const cardId = card.data.get("id")
+        const cardId = card.id
 
-        if (this.keysDown[KeyCodes.D]) {
+        if (this.keysDown[KeyCodes.B]) {
             dispatch({
                 type: AEvent.DiscardCard,
-                cardId,
-            })
-            card.destroy()
-            this.render()
-            return
-        }
-
-        if (this.keysDown[KeyCodes.A]) {
-            dispatch({
-                type: AEvent.PlayArtifact,
                 cardId,
             })
             card.destroy()
@@ -880,7 +885,7 @@ class GameScene extends Phaser.Scene {
     }
 
     onMouseOverCardInHand(e: MouseEvent, target: Card) {
-        const texture = target.data.get("front")
+        const texture = target.front
         this.showEnlargedCard(texture)
         this.cardInHandMousingOver = target
     }
@@ -893,9 +898,9 @@ class GameScene extends Phaser.Scene {
     }
 
     onDragEndCardInHand(card: Card) {
-        const distY = card.data.get("y") - card.y
+        const distY = card._originY - card.y
         if (distY > CARD_HEIGHT) {
-            const cardId = card.data.get("id")
+            const cardId = card.id
             this.dispatch({
                 type: AEvent.PlayAction,
                 cardId,
@@ -908,7 +913,7 @@ class GameScene extends Phaser.Scene {
     }
 
     onMouseOverUpgrade(e: MouseEvent, target: Card) {
-        const texture = target.data.get("front")
+        const texture = target.front
         this.showEnlargedCard(texture)
         this.creatureMousingOver = target
     }
@@ -936,7 +941,7 @@ class GameScene extends Phaser.Scene {
         const height = width / .716612378
         const image = new Phaser.GameObjects.Image(this, this.width - width / 2 - 10, height / 2 + 10, texture)
         image.setDisplaySize(width, height)
-        this.root.add(image)
+        this.root!.add(image)
         this.cardHoverImage = image
     }
 
