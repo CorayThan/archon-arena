@@ -3,12 +3,12 @@ import { cardScripts } from "../../types/CardScripts"
 import { putInArchives } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    power: 2,
-    elusive: true,
+    power: () => 2,
+    elusive: () => true,
     reap: {
         perform: (state, config) => {
-            const targetId = config!.targets![0]
-            putInArchives(state, targetId, true)
+            const target = config!.targets![0]
+            putInArchives(state, target, true)
         },
         targetOrder: [{types: [TargetType.CREATURE], areas: [TargetArea.BOARD], friendly: false}]
     }

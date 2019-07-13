@@ -1,6 +1,6 @@
 import { shuffle } from "lodash"
 import Action from "../../shared/Action"
-import { CardNotInPlay } from "../../shared/gamestate/CardNotInPlay"
+import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState, PlayerState as Player } from "../../shared/gamestate/GameState"
 import { AEvent } from "../AEvent"
 import {
@@ -50,7 +50,7 @@ export const exec = (action: Action, state: GameState) => {
         },
         [AEvent.ShuffleDiscardIntoDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
-            player.discard.forEach((card: CardNotInPlay) => player.library.push(card))
+            player.discard.forEach((card: CardInGame) => player.library.push(card))
             player.discard = []
             player.library = shuffle(player.library)
         },
@@ -73,7 +73,7 @@ export const exec = (action: Action, state: GameState) => {
             const card = getCardInDiscardById(owner, action.cardId!)
             if (!card)
                 throw new Error(`Card ${action.cardId} not found in discard`)
-            owner.discard = owner.discard.filter((c: CardNotInPlay) => c !== card)
+            owner.discard = owner.discard.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
         [AEvent.MoveCardFromDrawPileToHand]: () => {
@@ -81,7 +81,7 @@ export const exec = (action: Action, state: GameState) => {
             const card = getCardInDrawPileById(owner, action.cardId!)
             if (!card)
                 throw new Error(`Card ${action.cardId} not found in draw pile`)
-            owner.library = owner.library.filter((c: CardNotInPlay) => c !== card)
+            owner.library = owner.library.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
         [AEvent.MoveCardFromArchiveToHand]: () => {
@@ -89,7 +89,7 @@ export const exec = (action: Action, state: GameState) => {
             const card = getCardInArchiveById(owner, action.cardId!)
             if (!card)
                 throw new Error(`Card ${action.cardId} not found in archive`)
-            owner.archives = owner.archives.filter((c: CardNotInPlay) => c !== card)
+            owner.archives = owner.archives.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
         [AEvent.PurgeCard]: () => {
@@ -108,7 +108,7 @@ export const exec = (action: Action, state: GameState) => {
         },
         [AEvent.TakeArchive]: () => {
             const player = getPlayerById(action.player!.id, state)
-            player.archives.forEach((card: CardNotInPlay) => {
+            player.archives.forEach((card: CardInGame) => {
                 player.hand.push(card)
             })
             player.archives = []

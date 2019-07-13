@@ -1,7 +1,7 @@
 import { StatusEffect } from "../GameStatusEffect"
 import { PlayerInfo } from "../Player"
 import { Artifact } from "./Artifact"
-import { CardNotInPlay } from "./CardNotInPlay"
+import { CardInGame } from "./CardInGame"
 import { Creature } from "./Creature"
 import { Phase } from "./Phase"
 
@@ -27,11 +27,11 @@ export interface PlayerState {
     amber: number,
     chains: number,
     keys: number,
-    library: CardNotInPlay[]
-    hand: CardNotInPlay[]
-    discard: CardNotInPlay[]
-    archives: CardNotInPlay[]
-    purged: CardNotInPlay[]
+    library: CardInGame[]
+    hand: CardInGame[]
+    discard: CardInGame[]
+    archives: CardInGame[]
+    purged: CardInGame[]
     creatures: Creature[]
     artifacts: Artifact[]
 }

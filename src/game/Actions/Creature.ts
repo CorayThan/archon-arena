@@ -1,5 +1,5 @@
 import Action from "../../shared/Action"
-import { CardNotInPlay } from "../../shared/gamestate/CardNotInPlay"
+import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { Creature } from "../../shared/gamestate/Creature"
 import { GameState } from "../../shared/gamestate/GameState"
 import { AEvent } from "../AEvent"
@@ -48,7 +48,7 @@ export default {
         if (!creature)
             throw new Error(`Card ${action.cardId} not found in hand`)
 
-        const card: CardNotInPlay = {
+        const card: CardInGame = {
             id: creature.id,
             ownerId: owner.player.id,
             backingCard: creature.backingCard,

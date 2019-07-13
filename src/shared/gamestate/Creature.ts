@@ -1,7 +1,7 @@
-import { KCard } from "../../shared/keyforge/card/KCard"
-import { CardNotInPlay } from "./CardNotInPlay"
+import { KCard } from "../keyforge/card/KCard"
+import { CardInGame } from "./CardInGame"
 
-export interface Creature extends CardNotInPlay {
+export interface Creature extends CardInGame {
     id: string
     ready: boolean
     faceup: boolean
@@ -11,8 +11,8 @@ export interface Creature extends CardNotInPlay {
 
     power: number
     traits: string[]
-    upgrades: CardNotInPlay[]
-    cardsUnderneath: CardNotInPlay[]
+    upgrades: CardInGame[]
+    cardsUnderneath: CardInGame[]
     tokens: {
         [key: string]: number
     }

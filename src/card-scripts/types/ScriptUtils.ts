@@ -1,5 +1,5 @@
 import { remove } from "lodash"
-import { CardNotInPlay } from "../../shared/gamestate/CardNotInPlay"
+import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { Creature } from "../../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../../shared/gamestate/GameState"
 
@@ -15,11 +15,11 @@ export const friendlyCreatures = (state: GameState): Creature[] => {
     return activePlayerState(state).creatures
 }
 
-export const removeAndReturn = (state: GameState, id: string): CardNotInPlay => {
-    const check = (card: CardNotInPlay) => card.id === id
+export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
+    const check = (cardToCheck: CardInGame) => cardToCheck.id === card.id
     const playerStates = [state.playerOneState, state.playerTwoState]
     playerStates.forEach((playerState) => {
-        let removed: CardNotInPlay[] = remove(playerState.creatures, check)
+        let removed: CardInGame[] = remove(playerState.creatures, check)
         if (removed.length > 0) {
             return removed[0]
         }
@@ -44,11 +44,11 @@ export const removeAndReturn = (state: GameState, id: string): CardNotInPlay => 
             return removed[0]
         }   
     })
-    throw new Error("Couldn't find card with id " + id)
+    throw new Error("Couldn't find card with id " + card.id)
 }
 
-export const putInArchives = (state: GameState, id: string, friendlyArchives: boolean) => {
-    const toAdd = removeAndReturn(state, id)
+export const putInArchives = (state: GameState, card: CardInGame, friendlyArchives: boolean) => {
+    const toAdd = removeAndReturn(state, card)
     const myState = friendlyArchives ? activePlayerState(state) : inactivePlayerState(state)
     myState.archives.push(toAdd)
 }
