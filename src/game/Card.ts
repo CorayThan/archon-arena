@@ -1,7 +1,7 @@
 import Phaser from "phaser"
 import { CardInGame } from "../shared/gamestate/CardInGame"
 
-export const CARD_WIDTH = 90
+export const CARD_WIDTH = 100
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
 
 class Card extends Phaser.GameObjects.Container {

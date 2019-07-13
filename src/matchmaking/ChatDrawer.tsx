@@ -8,7 +8,6 @@ import { theme } from "../index"
 import { gameHistoryStore } from "../stores/GameHistoryStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
-import "./ChatDrawer.css"
 
 export const chatWidth = 440
 
@@ -200,60 +199,42 @@ class ShortCutInfo extends React.Component {
                             shortCuts={[
                                 {key: "B + left click", to: " to discard"},
                                 {key: "M + left click", to: " to move to hand"},
-                                {key: "[hotkey] + left click", to: " to reverse action"},
+                                {key: "[hotkey] + right click", to: " to reverse action"},
                             ]}
                         />
-                        <Typography variant="h5" style={{marginTop: "10px"}}>
-                            Creatures
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">D + left click</span> to add damage
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">A + left click</span> to add æmber
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">P + left click</span> to add power
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">C + left click</span> to capture æmber
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">S + left click</span> to stun or unstun
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">T + left click</span> to add or remove taunt
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">L + left click</span> to move left
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">R + left click</span> to move right
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">X + left click</span> to add doom token
-                        </Typography>
-                        <Typography variant="h5" style={{marginTop: "10px"}}>
-                            Artifacts
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">A + left click</span> to add æmber
-                        </Typography>
-                        <Typography variant="h5" style={{marginTop: "10px"}}>
-                            Card Piles
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">left click</span> to take top card
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">right click</span> to view contents
-                        </Typography>
-                        <Typography variant="h5" style={{marginTop: "10px"}}>
-                            Library
-                        </Typography>
-                        <Typography>
-                            <span className="ChatDrawer-hotkey">shift + left click</span> to shuffle
-                        </Typography>
+                        <ShortCutsSection
+                            title={"Creatures"}
+                            shortCuts={[
+                                {key: "D + left click", to: " to add damage"},
+                                {key: "A + left click", to: " to add æmber"},
+                                {key: "P + left click", to: " to add power"},
+                                {key: "C + left click", to: " to capture æmber"},
+                                {key: "S + left click", to: " to stun or unstun"},
+                                {key: "T + left click", to: " to add or remove taunt"},
+                                {key: "L + left click", to: " to move left"},
+                                {key: "R + left click", to: " to move right"},
+                                {key: "X + left click", to: " to add doom token"},
+                            ]}
+                        />
+                        <ShortCutsSection
+                            title={"Artifacts"}
+                            shortCuts={[
+                                {key: "A + left click", to: " to add æmber"},
+                            ]}
+                        />
+                        <ShortCutsSection
+                            title={"Card Piles"}
+                            shortCuts={[
+                                {key: "left click", to: " to take top card"},
+                                {key: "right click", to: " to view contents"},
+                            ]}
+                        />
+                        <ShortCutsSection
+                            title={"Library"}
+                            shortCuts={[
+                                {key: "shift + left click", to: " to shuffle"},
+                            ]}
+                        />
                         <ShortCutsSection title={"Discard"} shortCuts={[{key: "shift + left click", to: "to shuffle into library"}]}/>
                     </div>
                 </Popover>
