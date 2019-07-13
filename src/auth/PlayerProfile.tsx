@@ -137,7 +137,7 @@ export class PlayerProfile extends React.Component {
                                 <List
                                     style={{margin: theme.spacing(2)}}
                                 >
-                                    {playerStore.player.decks.map(deck => (
+                                    {playerStore.player.decks !== undefined && playerStore.player.decks.map(deck => (
                                         <ListItem key={deck.id}>
                                             <Typography>{deck.name}</Typography>
                                             <div style={{flexGrow: 1}}/>

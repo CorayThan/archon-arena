@@ -158,7 +158,7 @@ class Card extends Phaser.GameObjects.Container {
                 }
             })
 
-            this.cardImage.addListener("dragenter", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone, a:any) => {
+            this.cardImage.addListener("dragenter", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onEnter")(this)
             })
 
