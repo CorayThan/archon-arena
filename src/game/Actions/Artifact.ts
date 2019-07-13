@@ -1,25 +1,16 @@
-import { Event } from "../Event"
-import { log } from "../../Utils"
-import {
-    getCardOwner,
-    getPlayerByName,
-    getCreatureById,
-    getArtifactById,
-    getCardInHandById,
-    removeCreature,
-    removeArtifact,
-    removeCardFromHand
-} from "../StateUtils"
-import { Creature } from "../../shared/gamestate/Creature"
+import Action from "../../shared/Action"
 import { Artifact } from "../../shared/gamestate/Artifact"
 import { CardNotInPlay } from "../../shared/gamestate/CardNotInPlay"
+import { GameState } from "../../shared/gamestate/GameState"
+import { AEvent } from "../AEvent"
+import { getArtifactById, getCardInHandById, getCardOwner, getPlayerById, removeArtifact, removeCardFromHand } from "../StateUtils"
 
 export default {
-    [Event.PlayArtifact]: (action: any, state: any) => {
-        const owner = getCardOwner(action.cardId, state)
-        const card = getCardInHandById(owner, action.cardId)
+    [AEvent.PlayArtifact]: (action: Action, state: GameState) => {
+        const owner = getCardOwner(action.cardId!, state)
+        const card = getCardInHandById(owner, action.cardId!)
         if (!card)
-            throw new Error(`Card ${action.cardId} not found in hand`)
+            throw new Error(`Card ${action.cardId!} not found in hand`)
 
         const artifact: Artifact = {
             id: card.id,
@@ -30,33 +21,33 @@ export default {
             tokens: {
                 amber: 0,
             },
-            ownerId: owner.playerId,
+            ownerId: owner.player.id,
             backingCard: card.backingCard,
         }
 
-        const player = getPlayerByName(action.playerName, state)
+        const player = getPlayerById(action.player!.id, state)
         player.artifacts.push(artifact)
         removeCardFromHand(owner, action.cardId)
     },
-    [Event.UseArtifact]: (action: any, state: any) => {
-        const owner = getCardOwner(action.cardId, state)
+    [AEvent.UseArtifact]: (action: Action, state: GameState) => {
+        const owner = getCardOwner(action.cardId!, state)
         const artifact = getArtifactById(owner, action.cardId)
         if (!artifact)
             throw new Error(`Card ${action.cardId} not found in hand`)
         artifact.ready = !artifact.ready
     },
-    [Event.MoveArtifactToHand]: (action: any, state: any) => {
-        const owner = getCardOwner(action.cardId, state)
+    [AEvent.MoveArtifactToHand]: (action: Action, state: GameState) => {
+        const owner = getCardOwner(action.cardId!, state)
         const artifact = getArtifactById(owner, action.cardId)
         if (!artifact)
             throw new Error(`Card ${action.cardId} not found in hand`)
 
         const card: CardNotInPlay = {
             id: artifact.id,
-            ownerId: owner.playerId,
+            ownerId: owner.player.id,
             backingCard: artifact.backingCard,
         }
         owner.hand.push(card)
-        removeArtifact(owner, action.cardId)
+        removeArtifact(owner, action.cardId!)
     },
 }

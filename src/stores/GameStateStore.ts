@@ -43,7 +43,7 @@ export class GameStateStore {
     }
 
     mergeGameState = async (gameState: Partial<GameState>) => {
-        log.debug(`Merging new state`)
+        log.debug(`Merging new state ${prettyJson(gameState)}`)
         this.updatingGameState = true
         await gameStateCollection().doc(playerStore.currentMatchId).set(gameState, {merge: true})
         this.updatingGameState = false

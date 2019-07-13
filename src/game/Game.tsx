@@ -1,21 +1,19 @@
+import * as mobx from "mobx"
 import Phaser from "phaser"
 import React from "react"
 import { chatWidth } from "../matchmaking/ChatDrawer"
 import Action from "../shared/Action"
+
+import { GameState } from "../shared/gamestate/GameState"
 import { gameHistoryStore } from "../stores/GameHistoryStore"
+import { gameStateStore } from "../stores/GameStateStore"
 import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
 import { exec } from "./Actions/Actions"
 import GameScene from "./GameScene"
-import lodash from "lodash"
-import * as mobx from "mobx"
-
-import { GameState } from "../shared/gamestate/GameState"
 
 interface Props {
-    state: GameState | undefined,
     playerId: string | undefined,
-    setState: Function,
 }
 
 const width = window.innerWidth - chatWidth
@@ -49,12 +47,12 @@ class Game extends React.Component<Props> {
         }
 
         exec(action, state)
-        this.props.setState(state)
+        gameStateStore.mergeGameState(state)
     }
 
     render() {
         return (
-            <div id="phaser" />
+            <div id="phaser"/>
         )
     }
 
@@ -67,15 +65,15 @@ class Game extends React.Component<Props> {
     }
 
     update() {
-        if (this.props.state) {
-            this._state = mobx.toJS(this.props.state)
+        if (gameStateStore.activeGameState) {
+            this._state = mobx.toJS(gameStateStore.activeGameState)
             const state = this._state
             const {playerId} = this.props
 
             if (this.game) {
                 const scene = this.game.scene.getScene("GameScene") as GameScene
                 if (scene) {
-                    scene.data.set("state", state)
+                    scene.state = state
                     scene.render()
                 }
             } else {
@@ -87,20 +85,10 @@ class Game extends React.Component<Props> {
                     this.game.canvas.addEventListener("contextmenu", (e: MouseEvent) => {
                         e.preventDefault()
                         return false
-                    });
+                    })
 
-                    const scene = new GameScene()
-                    this.game.scene.add("GameScene", scene, true, {
-                        state,
-                    })
-                    // @ts-ignore
-                    scene.data.set({
-                        state,
-                        playerId,
-                        dispatch: this.dispatch,
-                        width,
-                        height,
-                    })
+                    const scene = new GameScene(state, playerId!, this.dispatch, width, height)
+                    this.game.scene.add("GameScene", scene, true)
                 })
             }
         }

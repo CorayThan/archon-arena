@@ -1,14 +1,12 @@
+import { observer } from "mobx-react"
 import * as React from "react"
 import { Redirect, RouteComponentProps } from "react-router"
 import Game from "../game/Game"
 import { TopBar } from "../genericcomponents/TopBar"
 import { Routes } from "../routing/Routes"
+import { authStore } from "../stores/AuthStore"
 import { playerStore } from "../stores/PlayerStore"
 import { ChatDrawer } from "./ChatDrawer"
-import { observer } from "mobx-react"
-import { gameStateStore } from "../stores/GameStateStore"
-import { GameState } from "../shared/gamestate/GameState"
-import { authStore } from "../stores/AuthStore"
 
 @observer
 export class GameRenderer extends React.Component<RouteComponentProps> {
@@ -25,11 +23,7 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
                 <div>
                     <TopBar/>
                     <Game
-                        state={gameStateStore.activeGameState}
-                        playerId={ authStore.authUser === undefined ? '' : authStore.authUser.uid}
-                        setState={(gameState: Partial<GameState>) => {
-                            gameStateStore.mergeGameState(gameState)
-                        }}
+                        playerId={authStore.authUser === undefined ? "" : authStore.authUser.uid}
                     />
                 </div>
                 <ChatDrawer/>

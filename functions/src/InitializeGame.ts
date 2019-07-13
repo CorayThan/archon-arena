@@ -7,15 +7,15 @@ export class InitializeGame {
 
         const matchDoc = await admin.firestore().collection("match").doc(matchId).get()
         if (matchDoc.exists) {
-            const {firstPlayerId, secondPlayerId, firstPlayerActiveDeck, secondPlayerActiveDeck} = matchDoc.data()
+            const {firstPlayerId, secondPlayerId, firstPlayerDisplayName, secondPlayerDisplayName, firstPlayerActiveDeck, secondPlayerActiveDeck} = matchDoc.data()
             const firstPlayer = random(0, 1) === 0 ? firstPlayerId : secondPlayerId!
             const gameState = {
                 turn: 1,
                 startingPlayer: firstPlayer,
                 activePlayer: firstPlayer,
                 phase: "CHOOSE_HAND",
-                playerOneState: this.createPlayerState(firstPlayerId, firstPlayerActiveDeck, firstPlayer === firstPlayerId),
-                playerTwoState: this.createPlayerState(secondPlayerId!, secondPlayerActiveDeck!, firstPlayer === secondPlayerId)
+                playerOneState: this.createPlayerState(firstPlayerId, firstPlayerDisplayName, firstPlayerActiveDeck, firstPlayer === firstPlayerId),
+                playerTwoState: this.createPlayerState(secondPlayerId!, secondPlayerDisplayName!, secondPlayerActiveDeck!, firstPlayer === secondPlayerId)
             }
 
             // TODO Make this work. Check SO for answer: https://stackoverflow.com/questions/56927411/firebase-cloud-function-wont-insert-into-firestore
@@ -26,7 +26,7 @@ export class InitializeGame {
         }
     }
 
-    private createPlayerState = (playerId: string, deck: any, firstPlayer: boolean) => {
+    private createPlayerState = (playerId: string, playerName: string, deck: any, firstPlayer: boolean) => {
         const cards = shuffle(deck.cards.map((card, idx) => ({
             id: card.cardTitle.replace(/ /g, "-").toLowerCase(),
             backingCard: card,
@@ -34,7 +34,10 @@ export class InitializeGame {
         })))
 
         return {
-            playerId,
+            player: {
+                id: playerId,
+                name: playerName
+            },
             amber: Math.random() * 8 | 0,
             chains: 0,
             keys: 0,
