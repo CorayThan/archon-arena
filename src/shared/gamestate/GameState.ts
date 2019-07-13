@@ -1,3 +1,4 @@
+import { StatusEffect } from "../GameStatusEffect"
 import { PlayerInfo } from "../Player"
 import { Artifact } from "./Artifact"
 import { CardNotInPlay } from "./CardNotInPlay"
@@ -13,6 +14,12 @@ export interface GameState {
     phase: Phase
     playerOneState: PlayerState
     playerTwoState: PlayerState
+
+    /**
+     * Map key is turn of the game it is applied to (Treasure map applies to current turn's index, scrambler storm to next,e tc.)
+     * array is all the effects in effect for that turn
+     */
+    statusEffects?: Map<number, StatusEffect[]>
 }
 
 export interface PlayerState {

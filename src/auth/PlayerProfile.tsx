@@ -167,12 +167,18 @@ export class PlayerProfile extends React.Component {
                                                 <TableCell>
                                                     {playerStore.player.decks !== undefined && playerStore.activeDeckId !== deck.id ? (
                                                         <>
-                                                            <Button style={{margin: theme.spacing(1)}} color={"primary"}
-                                                                    onClick={() => this.setActiveDeck(deck)}>
+                                                            <Button
+                                                                style={{margin: theme.spacing(1)}}
+                                                                color={"primary"}
+                                                                onClick={() => this.setActiveDeck(deck)}
+                                                            >
                                                                 Make Active
                                                             </Button>
-                                                            <Button style={{margin: theme.spacing(1)}} color={"secondary"}
-                                                                    onClick={() => this.removeDeck(deck)}>
+                                                            <Button
+                                                                style={{margin: theme.spacing(1)}}
+                                                                color={"secondary"}
+                                                                onClick={() => this.removeDeck(deck)}
+                                                            >
                                                                 Delete
                                                             </Button>
                                                         </>
