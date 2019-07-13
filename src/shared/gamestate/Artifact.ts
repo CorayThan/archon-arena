@@ -1,12 +1,12 @@
 import { KCard } from "../keyforge/card/KCard"
-import { CardNotInPlay } from "./CardNotInPlay"
+import { CardInGame } from "./CardInGame"
 
-export interface Artifact extends CardNotInPlay {
+export interface Artifact extends CardInGame {
     id: string
     ready: boolean
     faceup: boolean
-    cardsUnderneath: CardNotInPlay[]
-    purgedByThis: CardNotInPlay[]
+    cardsUnderneath: CardInGame[]
+    purgedByThis: CardInGame[]
     tokens: {
         amber: number
     }

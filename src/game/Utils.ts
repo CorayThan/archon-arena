@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import { CardNotInPlay } from "../shared/gamestate/CardNotInPlay"
+import { CardInGame } from "../shared/gamestate/CardInGame"
 
 const cardNameReplacementRegex = /[^\d\w\s]/g
 const spaceRegex = /\s/g
@@ -11,8 +11,8 @@ const cardNameToCardNameKey = (name: string) => {
 
 const cardNameToUrl = (name: string) => `https://keyforge-card-images.s3-us-west-2.amazonaws.com/card-imgs/${cardNameToCardNameKey(name)}.png`
 
-export const preloadCardsInPhaser = (scene: Phaser.Scene, cards: CardNotInPlay[]) => {
-    cards.forEach((card: CardNotInPlay) => {
+export const preloadCardsInPhaser = (scene: Phaser.Scene, cards: CardInGame[]) => {
+    cards.forEach((card: CardInGame) => {
         scene.load.image(card.id, cardNameToUrl(card.backingCard.cardTitle))
     })
 }

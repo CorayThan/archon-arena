@@ -1,7 +1,13 @@
+import { AnyCardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState } from "../../shared/gamestate/GameState"
 
 export interface CardScript {
-    amber?: number
+
+    /**
+     * Cards like Free Markets require these to be functions
+     */
+    amber?: CurrentQuantity
+
     entersPlay?: IndividualScript
     onPlay?: IndividualScript
     beforeFight?: IndividualScript
@@ -23,22 +29,12 @@ export interface CardScript {
     /**
      * For Kelifi Dragon
      */
-    canBePlayed?: (state: GameState) => boolean
+    canBePlayed?: IsActive
 
     /**
-     * Like Storm Crawler
+     * Like Storm Crawler, Grabos, Lollop (can use game state's current player to determine if attacking or attacked)
      */
-    damageDealtWhenFighting?: number
-
-    /**
-     * Like Grabos
-     */
-    damageDealtWhenAttacking?: number
-
-    /**
-     * Like Lollop
-     */
-    damageDealtWhenAttacked?: number
+    fightingDamageDealt?: CurrentQuantity
 
     /**
      * For things like Banner of Battle or Iron Obelisk to modify game state before it is passed to a card script or auto game functions (like killing
@@ -46,19 +42,23 @@ export interface CardScript {
      */
     staticEffect?: CardScriptExecution
 
-    alpha?: boolean
-    omega?: boolean
-    elusive?: boolean
-    skirmish?: boolean
-    poison?: boolean
-    deploy?: boolean
-    taunt?: boolean
-    assault?: number
-    hazardous?: number
-    power?: number
-    armor?: number
-    cannotReap?: boolean
-    canAlwaysUse?: boolean
+    alpha?: IsActive
+    omega?: IsActive
+    elusive?: IsActive
+
+    /**
+     * Cards like Spyyyder need these to be functions.
+     */
+    skirmish?: IsActive
+    poison?: IsActive
+    deploy?: IsActive
+    taunt?: IsActive
+    assault?: CurrentQuantity
+    hazardous?: CurrentQuantity
+    power?: CurrentQuantity
+    armor?: CurrentQuantity
+    cannotReap?: IsActive
+    canAlwaysUse?: IsActive
 
     /**
      * Cards like Cybergiant Rig
@@ -88,11 +88,21 @@ interface IndividualScript {
 }
 
 type CardScriptExecution = (state: GameState, config?: CardActionConfig) => void | IndividualScript
+type IsActive = (state: GameState) => boolean
+type CurrentQuantity = (state: GameState) => number
 
 interface TargetConfig {
     types: TargetType[]
     areas: TargetArea[]
+
+    /**
+     * Undefined represents friendly or enemy
+     */
     friendly?: boolean
+
+    /**
+     * Undefined or false means not-random
+     */
     random?: boolean
 }
 
@@ -113,7 +123,9 @@ export enum TargetArea {
 }
 
 interface CardActionConfig {
-    targets?: string[]
+    targets?: AnyCardInGame[]
     quantity?: number
     thisCardId?: string
 }
+
+

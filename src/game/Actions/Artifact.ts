@@ -1,6 +1,6 @@
 import Action from "../../shared/Action"
 import { Artifact } from "../../shared/gamestate/Artifact"
-import { CardNotInPlay } from "../../shared/gamestate/CardNotInPlay"
+import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState } from "../../shared/gamestate/GameState"
 import { AEvent } from "../AEvent"
 import { getArtifactById, getCardInHandById, getCardOwner, getPlayerById, removeArtifact, removeCardFromHand } from "../StateUtils"
@@ -42,7 +42,7 @@ export default {
         if (!artifact)
             throw new Error(`Card ${action.cardId} not found in hand`)
 
-        const card: CardNotInPlay = {
+        const card: CardInGame = {
             id: artifact.id,
             ownerId: owner.player.id,
             backingCard: artifact.backingCard,

@@ -1,5 +1,5 @@
 import { remove } from "lodash"
-import { CardNotInPlay } from "../../shared/gamestate/CardNotInPlay"
+import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { Creature } from "../../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../../shared/gamestate/GameState"
 
@@ -15,11 +15,11 @@ export const friendlyCreatures = (state: GameState): Creature[] => {
     return activePlayerState(state).creatures
 }
 
-export const removeAndReturn = (state: GameState, id: string): CardNotInPlay => {
-    const check = (card: CardNotInPlay) => card.id === id
+export const removeAndReturn = (state: GameState, id: string): CardInGame => {
+    const check = (card: CardInGame) => card.id === id
     const playerStates = [state.playerOneState, state.playerTwoState]
     playerStates.forEach((playerState) => {
-        let removed: CardNotInPlay[] = remove(playerState.creatures, check)
+        let removed: CardInGame[] = remove(playerState.creatures, check)
         if (removed.length > 0) {
             return removed[0]
         }

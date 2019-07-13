@@ -3,7 +3,7 @@ import { cardScripts } from "../../types/CardScripts"
 import { friendlyCreatures } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    power: 6,
+    power: () => 6,
     staticEffect: (state, config) => {
         const friendlies = friendlyCreatures(state)
         friendlies
