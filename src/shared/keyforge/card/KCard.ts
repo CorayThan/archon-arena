@@ -2,7 +2,8 @@ import { House } from "../house/House"
 import { CardType } from "./CardType"
 
 export interface KCard {
-    id: string
+    idInDeck: string
+    keyforgeId: string
     cardTitle: string
     house: House
     cardType: CardType

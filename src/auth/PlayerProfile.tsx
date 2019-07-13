@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, List, ListItem, Paper, TextField, Typography } from "@material-ui/core"
+import { Button, Divider, Grid, Link, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from "@material-ui/core"
 import { observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
@@ -50,6 +50,12 @@ export class PlayerProfile extends React.Component {
     setActiveDeck = (deck: Deck) => {
         playerStore.upsertPlayer({
             activeDeck: deck
+        })
+    }
+
+    removeDeck = (remove: Deck) => {
+        playerStore.upsertPlayer({
+            decks: playerStore.player.decks.filter(deck => deck.id !== remove.id)
         })
     }
 
@@ -134,19 +140,48 @@ export class PlayerProfile extends React.Component {
                                 >
                                     Remove all decks
                                 </Button>
-                                <List
+                                <Table
                                     style={{margin: theme.spacing(2)}}
                                 >
-                                    {playerStore.player.decks !== undefined && playerStore.player.decks.map(deck => (
-                                        <ListItem key={deck.id}>
-                                            <Typography>{deck.name}</Typography>
-                                            <div style={{flexGrow: 1}}/>
-                                            {playerStore.activeDeckId !== deck.id ? (
-                                                <Button color={"primary"} onClick={() => this.setActiveDeck(deck)}>Make Active</Button>
-                                            ) : null}
-                                        </ListItem>
-                                    ))}
-                                </List>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>
+                                                Name
+                                            </TableCell>
+                                            <TableCell>
+                                                Cards in Deck
+                                            </TableCell>
+
+                                            <TableCell/>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {playerStore.player.decks.map(deck => (
+                                            <TableRow key={deck.id}>
+                                                <TableCell>
+                                                    <Link href={"https://decksofkeyforge.com/decks/" + deck.id}>{deck.name}</Link>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {deck.cards.length}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {playerStore.player.decks !== undefined && playerStore.activeDeckId !== deck.id ? (
+                                                        <>
+                                                            <Button style={{margin: theme.spacing(1)}} color={"primary"}
+                                                                    onClick={() => this.setActiveDeck(deck)}>
+                                                                Make Active
+                                                            </Button>
+                                                            <Button style={{margin: theme.spacing(1)}} color={"secondary"}
+                                                                    onClick={() => this.removeDeck(deck)}>
+                                                                Delete
+                                                            </Button>
+                                                        </>
+                                                    ) : null}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
                             </Paper>
                         </Grid>
                     </Grid>
