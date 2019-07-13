@@ -14,5 +14,6 @@ const cardNameToUrl = (name: string) => `https://keyforge-card-images.s3-us-west
 export const preloadCardsInPhaser = (scene: Phaser.Scene, cards: CardNotInPlay[]) => {
     cards.forEach((card: CardNotInPlay) => {
         scene.load.image(card.id, cardNameToUrl(card.backingCard.cardTitle))
+        scene.load.image(card.id + "-hover", cardNameToUrl(card.backingCard.cardTitle))
     })
 }
