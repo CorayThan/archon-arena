@@ -1,7 +1,7 @@
-import { CardNotInPlay } from "./CardNotInPlay"
 import { KCard } from "../keyforge/card/KCard"
+import { CardNotInPlay } from "./CardNotInPlay"
 
-export interface Artifact {
+export interface Artifact extends CardNotInPlay {
     id: string
     ready: boolean
     faceup: boolean

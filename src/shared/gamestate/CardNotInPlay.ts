@@ -1,4 +1,4 @@
-import { KCard } from "../../shared/keyforge/card/KCard"
+import { KCard } from "../keyforge/card/KCard"
 
 export interface CardNotInPlay {
     id: string
