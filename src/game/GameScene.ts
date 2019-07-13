@@ -32,6 +32,7 @@ class GameScene extends Phaser.Scene {
     artifactMousingOver: Phaser.GameObjects.GameObject | undefined
     cardInHandMousingOver: Phaser.GameObjects.GameObject | undefined
     modalContainer: Phaser.GameObjects.Container | undefined
+    cameraControls: Phaser.Cameras.Controls.FixedKeyControl | undefined
     keysDown: {
         [key: string]: boolean
     }
@@ -76,38 +77,35 @@ class GameScene extends Phaser.Scene {
         this.root = this.add.container(0, 0)
         this.render()
         this.setupKeyboardListeners()
-        //  Set the camera bounds to be the size of the image
+
         this.cameras.main.setBounds(0, 0, CARD_WIDTH * 20, this.height)
-
-        //  Camera controls
-        var cursors = this.input.keyboard.createCursorKeys()
-
-        var controlConfig = {
+        const cursors = this.input.keyboard.createCursorKeys()
+        this.cameraControls = new Phaser.Cameras.Controls.FixedKeyControl({
             camera: this.cameras.main,
             left: cursors.left,
             right: cursors.right,
-            up: cursors.up,
-            down: cursors.down,
-            acceleration: 0.06,
-            drag: 0.0005,
-            maxSpeed: 1.0
-        }
+            speed: 1,
+        })
+        this.input.keyboard.removeCapture("SPACE, SHIFT, UP, DOWN")
+        this.input.keyboard.disableGlobalCapture()
+        this.input.on("gameout", () => {
+            this.input.keyboard.enabled = false
+        })
 
-        // @ts-ignore
-        this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig)
+        this.input.on("gameover", () => {
+            this.input.keyboard.enabled = true
+        })
     }
 
-    // @ts-ignore
-    update(time, delta) {
-        // @ts-ignore
-        this.controls.update(delta)
+    update(time: number, delta: number) {
+        this.cameraControls!.update(delta)
     }
 
     renderPlayerBoard(player: PlayerState, originX: number, originY: number, orientation: string) {
         const dispatch = this.dispatch
 
         const playerDataOffsetX = CARD_WIDTH * 9.2
-        const playerNameText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX, originY, player.player.name, {
+        const playerNameText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX + 10, originY, player.player.name, {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
@@ -116,8 +114,8 @@ class GameScene extends Phaser.Scene {
         this.root!.add(playerNameText)
         const nameWidth = playerNameText.displayWidth
 
-        const amberImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX, originY + 25, "amber-token")
-        amberImage.setDisplaySize(40, 40)
+        const amberImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX + 5, originY + 25, "amber-token")
+        amberImage.setDisplaySize(50, 50)
         amberImage.setOrigin(0)
         amberImage.setInteractive({cursor: "pointer"})
         amberImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
@@ -130,16 +128,16 @@ class GameScene extends Phaser.Scene {
         })
         this.root!.add(amberImage)
 
-        const amberText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX + 20, originY + 45, player.amber.toString(), {
+        const amberText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX + 30, originY + 50, player.amber.toString(), {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
-            fontSize: "24px"
+            fontSize: "28px"
         })
         amberText.setOrigin(0.5)
         this.root!.add(amberText)
 
-        const chainsImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX, originY + 70, "chains")
+        const chainsImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX + 5, originY + 85, "chains")
         chainsImage.setDisplaySize(30, 30)
         chainsImage.setOrigin(0)
         chainsImage.setInteractive({cursor: "pointer"})
@@ -153,7 +151,7 @@ class GameScene extends Phaser.Scene {
         })
         this.root!.add(chainsImage)
 
-        const chainsText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX + 15, originY + 85, player.chains.toString(), {
+        const chainsText = new Phaser.GameObjects.Text(this, originX + playerDataOffsetX + 20, originY + 100, player.chains.toString(), {
             color: "#fff",
             stroke: "#000",
             strokeThickness: 4,
@@ -164,8 +162,8 @@ class GameScene extends Phaser.Scene {
 
         for (let i = 0; i < 3; i++) {
             const textureId = player.keys >= i + 1 ? "forged-key" : "unforged-key"
-            const keySize = 30
-            const keyImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX - 40, originY + (keySize + 4) * i + 10, textureId)
+            const keySize = 40
+            const keyImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX - 40, originY + (keySize + 4) * i + 5, textureId)
             keyImage.setDisplaySize(keySize, keySize)
             keyImage.setOrigin(0)
             keyImage.setInteractive({cursor: "pointer"})
@@ -350,7 +348,7 @@ class GameScene extends Phaser.Scene {
         })
         this.root!.add(archivePileText)
 
-        const purgePileX = originX + playerDataOffsetX + 10 + nameWidth + CARD_WIDTH / 2
+        const purgePileX = originX + playerDataOffsetX + 20 + nameWidth + CARD_WIDTH / 2
         const purgePileZone = this.createCardDropZone({
             x: purgePileX,
             y: originY + CARD_HEIGHT / 2,
@@ -946,14 +944,6 @@ class GameScene extends Phaser.Scene {
     }
 
     setupKeyboardListeners() {
-        //this.input.on("gameout", () => {
-        //this.input.keyboard.enabled = false
-        //})
-
-        //this.input.on("gameover", () => {
-        //this.input.keyboard.enabled = true
-        //})
-
         this.input.keyboard.on("keydown", (e: MouseEvent) => {
             this.keysDown[e.which] = true
         })
