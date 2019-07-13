@@ -567,7 +567,8 @@ class GameScene extends Phaser.Scene {
     }
 
     render() {
-        this.root!.destroy()
+        if (this.root)
+            this.root.destroy()
         this.root! = this.add.container(0, 0)
 
         let opponentState
@@ -939,7 +940,7 @@ class GameScene extends Phaser.Scene {
             return
         const width = 220
         const height = width / .716612378
-        const image = new Phaser.GameObjects.Image(this, this.width - width / 2 - 10, height / 2 + 10, texture)
+        const image = new Phaser.GameObjects.Image(this, this.width - width / 2 - 10, height / 2 + 10, texture + "-hover")
         image.setDisplaySize(width, height)
         this.root!.add(image)
         this.cardHoverImage = image

@@ -23,11 +23,15 @@ const height = window.innerHeight - 70
 const config: Phaser.Types.Core.GameConfig = {
     parent: "phaser",
     backgroundColor: "#eee",
+    type: Phaser.CANVAS,
     width,
     height,
     input: {
         mouse: true,
     },
+    render: {
+        roundPixels: true,
+    }
 }
 
 class Game extends React.Component<Props> {
