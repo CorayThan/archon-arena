@@ -111,13 +111,13 @@ class Card extends Phaser.GameObjects.Container {
             cardImage.addListener("dragend", () => {
                 this.render()
             })
-            cardImage.addListener("dragenter", (zone: Phaser.GameObjects.Zone) => {
+            cardImage.addListener("dragenter", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onEnter")(cardImage)
             })
-            cardImage.addListener("dragleave", (zone: Phaser.GameObjects.Zone) => {
+            cardImage.addListener("dragleave", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onLeave")(cardImage)
             })
-            cardImage.addListener("drop", (zone: Phaser.GameObjects.Zone) => {
+            cardImage.addListener("drop", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onDrop")(cardImage)
             })
             return cardImage
@@ -158,15 +158,15 @@ class Card extends Phaser.GameObjects.Container {
                 }
             })
 
-            this.cardImage.addListener("dragenter", (zone: Phaser.GameObjects.Zone) => {
+            this.cardImage.addListener("dragenter", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone, a:any) => {
                 zone.data.get("onEnter")(this)
             })
 
-            this.cardImage.addListener("dragleave", (zone: Phaser.GameObjects.Zone) => {
+            this.cardImage.addListener("dragleave", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onLeave")(this)
             })
 
-            this.cardImage.addListener("drop", (zone: Phaser.GameObjects.Zone) => {
+            this.cardImage.addListener("drop", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
                 zone.data.get("onDrop")(this)
             })
         }
