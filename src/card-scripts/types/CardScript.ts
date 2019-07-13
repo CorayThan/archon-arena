@@ -23,8 +23,6 @@ export interface CardScript {
      */
     damageDealtWhenAttacked?: number
 
-
-
     /**
      * For things like Banner of Battle or Iron Obelisk to modify game state before it is passed to a card script or auto game functions (like killing
      * creatures or forging keys) are run.
