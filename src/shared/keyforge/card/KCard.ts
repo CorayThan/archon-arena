@@ -18,9 +18,3 @@ export interface KCard {
     expansion: number
     maverick: boolean
 }
-
-export interface CardNotInPlay {
-    card: KCard
-    num: number
-    ownerId: string
-}

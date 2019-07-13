@@ -10,7 +10,7 @@ import power from "../images/power.png"
 import stun from "../images/stun.png"
 import unforgedKey from "../images/unforgedkey.png"
 import Action from "../shared/Action"
-import { CardNotInPlay } from "../shared/gamestate/CardNotInPlay"
+import { CardInGame } from "../shared/gamestate/CardInGame"
 import { Creature } from "../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import { AEvent } from "./AEvent"
@@ -223,7 +223,7 @@ class GameScene extends Phaser.Scene {
                     y: discardPileZone.y,
                     cards: player.discard,
                     orientation,
-                    onClick: (card: CardNotInPlay, i: number) => {
+                    onClick: (card: CardInGame, i: number) => {
                         dispatch({
                             type: AEvent.MoveCardFromDiscardToHand,
                             cardId: `${player.player.id}-card-in-discard-${i}`,
@@ -277,7 +277,7 @@ class GameScene extends Phaser.Scene {
                     y: drawPileZone.y,
                     cards: player.library.reverse(),
                     orientation,
-                    onClick: (card: CardNotInPlay, i: number) => {
+                    onClick: (card: CardInGame, i: number) => {
                         dispatch({
                             type: AEvent.MoveCardFromDrawPileToHand,
                             cardId: `${player.player.id}-card-in-draw-${i}`,
@@ -324,7 +324,7 @@ class GameScene extends Phaser.Scene {
                     y: archivePileZone.y,
                     cards: player.archives,
                     orientation,
-                    onClick: (card: CardNotInPlay, i: number) => {
+                    onClick: (card: CardInGame, i: number) => {
                         dispatch({
                             type: AEvent.MoveCardFromArchiveToHand,
                             cardId: `${player.player.id}-card-in-archive-${i}`,
@@ -646,7 +646,7 @@ class GameScene extends Phaser.Scene {
         }: {
             x: number,
             y: number,
-            cards: CardNotInPlay[],
+            cards: CardInGame[],
             orientation: string,
             onClick: Function,
         }) {

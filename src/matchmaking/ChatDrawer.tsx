@@ -65,10 +65,10 @@ export class ChatDrawer extends React.Component {
                             Active Effects
                         </ListItemText>
                     </ListItem>
-                    {gameHistoryStore.activeStatusEffects.length > 0 ? (
+                    {gameStateStore.activeStatusEffects.size > 0 ? (
                         <ListItem>
                             <ListItemText primaryTypographyProps={{variant: "subtitle1", color: "error"}}>
-                                {gameHistoryStore.activeStatusEffects.join(" – ")}
+                                {/*{gameStateStore.activeStatusEffects.join(" – ")}*/}
                             </ListItemText>
                         </ListItem>
                     ) : null}
