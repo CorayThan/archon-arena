@@ -15,8 +15,8 @@ export const friendlyCreatures = (state: GameState): Creature[] => {
     return activePlayerState(state).creatures
 }
 
-export const removeAndReturn = (state: GameState, id: string): CardInGame => {
-    const check = (card: CardInGame) => card.id === id
+export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
+    const check = (cardToCheck: CardInGame) => cardToCheck.id === card.id
     const playerStates = [state.playerOneState, state.playerTwoState]
     playerStates.forEach((playerState) => {
         let removed: CardInGame[] = remove(playerState.creatures, check)
@@ -44,11 +44,11 @@ export const removeAndReturn = (state: GameState, id: string): CardInGame => {
             return removed[0]
         }   
     })
-    throw new Error("Couldn't find card with id " + id)
+    throw new Error("Couldn't find card with id " + card.id)
 }
 
-export const putInArchives = (state: GameState, id: string, friendlyArchives: boolean) => {
-    const toAdd = removeAndReturn(state, id)
+export const putInArchives = (state: GameState, card: CardInGame, friendlyArchives: boolean) => {
+    const toAdd = removeAndReturn(state, card)
     const myState = friendlyArchives ? activePlayerState(state) : inactivePlayerState(state)
     myState.archives.push(toAdd)
 }
