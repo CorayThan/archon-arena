@@ -171,7 +171,7 @@ class GameScene extends Phaser.Scene {
             keyImage.setInteractive({cursor: "pointer"})
             keyImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
                 dispatch({
-                    type: pointer.event.shiftKey ? AEvent.UnForgeKey : AEvent.ForgeKey,
+                    type: pointer.button === 2 ? AEvent.UnForgeKey : AEvent.ForgeKey,
                     player: player.player
                 })
                 this.render()
@@ -280,7 +280,6 @@ class GameScene extends Phaser.Scene {
                     cards: player.library.reverse(),
                     orientation,
                     onClick: (card: CardNotInPlay, i: number) => {
-                        i = Math.abs(i - player.library.length + 1)
                         dispatch({
                             type: AEvent.MoveCardFromDrawPileToHand,
                             cardId: `${player.player.id}-card-in-draw-${i}`,
