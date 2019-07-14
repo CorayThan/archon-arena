@@ -10,8 +10,20 @@ export interface CardScript {
 
     entersPlay?: IndividualScript
     onPlay?: IndividualScript
+
+    /**
+     * Firespitter, etc.
+     */
     beforeFight?: IndividualScript
+
+    /**
+     * Dodger, Headhunter, etc.
+     */
     fight?: IndividualScript
+
+    /**
+     * Greking, Brain Eater, Krump, etc. Check in action log if destroyed.
+     */
     onAnyFight?: IndividualScript
     omni?: IndividualScript
     reap?: IndividualScript
@@ -92,12 +104,16 @@ interface IndividualScript {
  * Return a new IndividualScript from CardScriptExecution if it can be executed multiple times. For example, Relentless Assault returns its IndividualScript
  * twice, with the new GameState being resolved in between each execution.
  */
-type CardScriptExecution = (state: GameState, config?: CardActionConfig) => void | IndividualScript
+type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
 type IsActive = (state: GameState) => boolean
 type CurrentQuantity = (state: GameState) => number
 
 interface CardActionConfig {
     targets?: AnyCardInGame[]
+
+    /**
+     * Cards like Dance of Doom, Vigor
+     */
     quantity?: number
     thisCard?: CardInGame
 
