@@ -7,9 +7,9 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: allCreatures,
-        choosenTargetsAreValid: checkIfHasOneTarget,
+        chosenTargetsAreValid: checkIfHasOneTarget,
         perform: (state, config) => {
-            dealDamageWithSplash(state, config!.targets[0] as Creature, 2, 1)
+            dealDamageWithSplash(state, config.targets[0] as Creature, 2, 1)
         }
     }
 }

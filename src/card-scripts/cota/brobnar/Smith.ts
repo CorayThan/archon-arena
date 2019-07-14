@@ -5,7 +5,7 @@ import { friendlyCreatures, enemyCreatures, activePlayerState } from "../../type
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        perform: (state, config) => {
+        perform: (state) => {
             if (friendlyCreatures(state).length > enemyCreatures(state).length)
                 activePlayerState(state).amber += 2
         }

@@ -6,7 +6,7 @@ import { friendlyCreatures, readyCreature, checkIfHasTargets, fightUsingCreature
 const cardScript: CardScript = {
     onPlay: {
         validTargets: friendlyCreatures,
-        choosenTargetsAreValid: (targets) => {
+        chosenTargetsAreValid: (targets) => {
             if (targets.length > 0 && targets.length < 4) {
                 return new Set(targets).size !== targets.length
             } else { 
@@ -14,17 +14,17 @@ const cardScript: CardScript = {
             }
         },
         perform: (state, config) => {
-            if (checkIfHasTargets(config!.targets, 1)) {
+            if (checkIfHasTargets(config.targets, 1)) {
                 readyCreature(config.targets[0] as Creature)
                 fightUsingCreature(config.targets[0] as Creature)
             }
-            if (checkIfHasTargets(config!.targets, 2)) {
-                readyCreature(config!.targets[1] as Creature)
-                fightUsingCreature(config!.targets[1] as Creature)
+            if (checkIfHasTargets(config.targets, 2)) {
+                readyCreature(config.targets[1] as Creature)
+                fightUsingCreature(config.targets[1] as Creature)
             }
-            if (checkIfHasTargets(config!.targets, 3)) {
-                readyCreature(config!.targets[2] as Creature)
-                fightUsingCreature(config!.targets[2] as Creature)
+            if (checkIfHasTargets(config.targets, 3)) {
+                readyCreature(config.targets[2] as Creature)
+                fightUsingCreature(config.targets[2] as Creature)
             }
         }
     }

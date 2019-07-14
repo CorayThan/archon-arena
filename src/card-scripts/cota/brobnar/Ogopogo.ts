@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     fight: {
         //TODO if destroyed the creature it fought... choose a target
         validTargets: allCreatures,
-        choosenTargetsAreValid: checkIfHasOneTarget,
+        chosenTargetsAreValid: checkIfHasOneTarget,
         perform: (state, config) => {
             dealDamage(config!.targets[0] as Creature, 2)
         }

@@ -7,9 +7,9 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: allCreatures,
-        choosenTargetsAreValid: checkIfHasOneTarget,
+        chosenTargetsAreValid: checkIfHasOneTarget,
         perform: (state, config) => {
-            const targetedCreature = config!.targets[0] as Creature
+            const targetedCreature = config.targets[0] as Creature
             const neighbors = getNeighbors(enemyCreatures(state), targetedCreature)
             stunCreature(targetedCreature)
             neighbors.forEach(neighbor => stunCreature(neighbor))

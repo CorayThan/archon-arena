@@ -6,10 +6,9 @@ import { friendlyCreatures, cardEnemy } from "../../types/ScriptUtils"
 const cardScript: CardScript = {
     staticEffect: (state, config) => {
         if (config!.thisCard) {
-            const damagedBrobs = friendlyCreatures(state)
-            .filter(creature => creature.backingCard.house = House.Brobnar)
-            .filter(creature => creature.tokens.damage > 0).length
-            cardEnemy(state, config!.thisCard).keyCost += damagedBrobs
+            cardEnemy(state, config!.thisCard).keyCost += friendlyCreatures(state)
+                .filter(creature => creature.backingCard.house = House.Brobnar)
+                .filter(creature => creature.tokens.damage > 0).length
         }
     }
 }

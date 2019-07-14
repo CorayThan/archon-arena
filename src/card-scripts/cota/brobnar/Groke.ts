@@ -5,7 +5,7 @@ import { inactivePlayerState } from "../../types/ScriptUtils"
 const cardScript: CardScript = {
     power: () => 5,
     fight: {
-        perform: (state, config) => {
+        perform: (state) => {
             if (inactivePlayerState(state).amber > 0)
                 inactivePlayerState(state).amber--
         }

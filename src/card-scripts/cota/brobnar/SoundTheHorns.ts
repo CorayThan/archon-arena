@@ -8,15 +8,15 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state) => {
-            var endSearching = false
+            let endSearching = false
             while(!endSearching && activePlayerState(state).library.length > 0) {
-                var discardedCard = discardTopCard(state, true)
+                let discardedCard = discardTopCard(state, true)
                 if ((discardedCard as Creature).power && discardedCard.backingCard.house === House.Brobnar) {
                     endSearching = true
                     returnToHand(discardedCard)
                 }
             }
-    }
+        }
     }
 }
 

@@ -1,9 +1,8 @@
-import { remove } from "lodash"
-import { CardInGame } from "../../shared/gamestate/CardInGame"
-import { Creature } from "../../shared/gamestate/Creature"
-import { Artifact } from "../../shared/gamestate/Artifact"
-import { GameState, PlayerState } from "../../shared/gamestate/GameState"
-import { CardActionConfig } from "CardScript"
+import {remove} from "lodash"
+import {CardInGame} from "../../shared/gamestate/CardInGame"
+import {Creature} from "../../shared/gamestate/Creature"
+import {Artifact} from "../../shared/gamestate/Artifact"
+import {GameState, PlayerState} from "../../shared/gamestate/GameState"
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -90,10 +89,6 @@ export const putInArchives = (state: GameState, card: CardInGame, friendlyArchiv
     myState.archives.push(toAdd)
 }
 
-export const checkIfHasOneTarget = (targets: CardInGame[]): boolean => {
-    return targets!.length === 1
-}
-
 export const checkIfHasTargets = (targets: CardInGame[], amount: number): boolean => {
     return targets!.length >= amount
 }
@@ -119,7 +114,7 @@ export const putOnTopOfDeck = (card: CardInGame) => {
 }
 
 export const getNeighbors = (creatures: Creature[], creature: Creature): Creature[] => {
-    var foundCreatures:Creature[]
+    let foundCreatures:Creature[]
     const index = creatures.findIndex(creat => creat.id === creature.id)
     if (index > 0 && index < creatures.length-1)
         foundCreatures = [creatures[index-1], creatures[index+1]]
@@ -170,10 +165,12 @@ export const gainChains = (state: PlayerState, amount:number) => {
 
 export const enemyCreatureDiedThisTurn = (state: GameState): boolean => {
     //TODO
+    return false
 }
 
 export const discardTopCard = (state: GameState, activePlayer: boolean): CardInGame => {
     //TODO
+    return state.playerOneState.creatures[0]
 }
 
 export const captureAmber = (state: GameState, creature: Creature, amount: number) => {

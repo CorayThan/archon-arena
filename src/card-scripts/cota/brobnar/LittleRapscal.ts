@@ -5,7 +5,7 @@ import { friendlyCreatures, enemyCreatures, mustFightWhenUsedIfAble } from "../.
 const cardScript: CardScript = {
     power: () => 2,
     elusive: () => true,
-    staticEffect: (state, config) => {
+    staticEffect: (state) => {
         friendlyCreatures(state).forEach(creature => mustFightWhenUsedIfAble(creature))
         enemyCreatures(state).forEach(creature => mustFightWhenUsedIfAble(creature))
     }

@@ -1,6 +1,5 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
-import { inactivePlayerState } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     runAfterAnyAction: {

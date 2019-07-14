@@ -84,22 +84,29 @@ export interface CardScript {
 
 interface IndividualScript {
     perform: CardScriptExecution
-    validTargets?: (state: GameState) => CardInGame[]
-    choosenTargetsAreValid?: (targets: CardInGame[]) => boolean
+    numberOfTargets?: (state: GameState) => number
+    uniqueTargets?: () => boolean
+    upToTargets?: () => boolean
+    validTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
 }
 
 /**
  * Return a new IndividualScript from CardScriptExecution if it can be executed multiple times. For example, Relentless Assault returns its IndividualScript
  * twice, with the new GameState being resolved in between each execution.
  */
-type CardScriptExecution = (state: GameState, config?: CardActionConfig) => void | IndividualScript
+type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
 type IsActive = (state: GameState) => boolean
-type CurrentQuantity = (state: GameState) => number
+type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
 interface CardActionConfig {
-    targets?: AnyCardInGame[]
+    targets: AnyCardInGame[]
+    thisCard: CardInGame
+
+    /**
+     * Used by cards like Vigor or Dance of Doom
+     */
     quantity?: number
-    thisCard?: CardInGame
 
     /**
      * Used by cards like Relentless Assault which can be executed 3 times.

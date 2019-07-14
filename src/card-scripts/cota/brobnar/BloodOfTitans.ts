@@ -1,13 +1,11 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { checkIfHasTargets, dealDamageWithSplash } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
+import {Creature} from "../../../shared/gamestate/Creature";
 
 const cardScript: CardScript = {
     amber: () => 1,
     staticEffect: (state, config) => {
-        //need to get the creature this is attached to 
-        const creature = ???
-        creature.power += 5
+        (config.targets[0] as Creature).power += 5
     }
 }
 

@@ -1,6 +1,5 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { checkIfHasTargets, dealDamageWithSplash } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     runAfterAnyActionThisTurn: {

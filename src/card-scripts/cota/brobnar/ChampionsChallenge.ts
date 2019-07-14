@@ -1,12 +1,10 @@
 import { cardScripts } from "../../types/CardScripts"
 import { CardScript } from "../../types/CardScript"
-import { Creature } from "../../../shared/gamestate/Creature"
-import { GameState } from "../../../shared/gamestate/GameState"
 import { getMostPowerful, enemyCreatures, friendlyCreatures, destroyCard, readyCreature, fightUsingCreature } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
-        perform: (state, config) => {
+        perform: (state) => {
             if (enemyCreatures(state).length > 0) {
                 const mostPowerfulEnemy = getMostPowerful(enemyCreatures(state), 1)[0]
                 enemyCreatures(state)
