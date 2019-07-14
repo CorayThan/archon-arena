@@ -1,6 +1,6 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
-import { checkIfHasTargets, dealDamage } from "../../types/ScriptUtils"
+import { checkIfHasTargets, allCreatures, dealDamage } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
@@ -10,11 +10,8 @@ const cardScript: CardScript = {
                 const target = config.targets[0] as Creature
                 dealDamage(target, 3)
             }
-        },
-        targetOrder: [{
-            types: [TargetType.CREATURE],
-            areas: [TargetArea.BOARD]
-        }]
+        }
+        validTargets: allCreatures
     }
 }
 

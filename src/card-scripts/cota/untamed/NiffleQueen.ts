@@ -7,10 +7,10 @@ const cardScript: CardScript = {
     staticEffect: (state, config) => {
         const friendlies = friendlyCreatures(state)
         friendlies
-            .filter(friendly => friendly.id !== config!.thisCardId && friendly.traits.includes("beast"))
+            .filter(friendly => friendly.id !== config!.thisCard!.id && friendly.traits.includes("beast"))
             .forEach(beast => beast.power += 1)
         friendlies
-            .filter(friendly => friendly.id !== config!.thisCardId && friendly.traits.includes("niffle"))
+            .filter(friendly => friendly.id !== config!.thisCard!.id && friendly.traits.includes("niffle"))
             .forEach(niffle => niffle.power += 1)
     }
 }

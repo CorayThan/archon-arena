@@ -21,6 +21,11 @@ export const enemyCreatures = (state: GameState): Creature[] => {
     return inactivePlayerState(state).creatures
 }
 
+export const allCreatures = (state: GameState): Creature[] => {
+    return activePlayerState(state).creatures.concat(inactivePlayerState(state).creatures)
+
+}
+
 export const cardController = (state: GameState, cardId: string): PlayerState => {
     const playerOneState = state.playerOneState
     if (
@@ -42,6 +47,7 @@ export const cardEnemy = (state: GameState, cardId: string): PlayerState => {
     else
         return playerOneState
 }
+
 
 export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
     const check = (cardToCheck: CardInGame) => cardToCheck.id === card.id
