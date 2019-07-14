@@ -10,8 +10,30 @@ export interface CardScript {
 
     entersPlay?: IndividualScript
     onPlay?: IndividualScript
+
+    /**
+     * Firespitter, etc.
+     */
     beforeFight?: IndividualScript
+
+    /**
+     * Interdimensional Graft etc
+     */
+    onNextKeyForge?: IndividualScript
+
+    /**
+     * Forgemaster Og
+     */
+    onKeyForge?: IndividualScript
+
+    /**
+     * Dodger, Headhunter, etc.
+     */
     fight?: IndividualScript
+
+    /**
+     * Greking, Brain Eater, Krump, etc. Check in action log if destroyed.
+     */
     onAnyFight?: IndividualScript
     omni?: IndividualScript
     reap?: IndividualScript
@@ -104,7 +126,7 @@ interface CardActionConfig {
     thisCard: CardInGame
 
     /**
-     * Used by cards like Vigor or Dance of Doom
+     * Cards like Dance of Doom, Vigor
      */
     quantity?: number
 

@@ -9,8 +9,8 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            destroyCard(config!.thisCard)
-            dealDamage(config!.targets[0] as Creature, 4)
+            destroyCard(config.thisCard)
+            dealDamage(config.targets[0] as Creature, 4)
         }
     }
 }

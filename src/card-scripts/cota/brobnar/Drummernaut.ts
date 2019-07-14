@@ -1,7 +1,7 @@
 import { cardScripts } from "../../types/CardScripts"
 import { CardScript } from "../../types/CardScript"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { friendlyCreatures, returnToHand } from "../../types/ScriptUtils"
+import { friendlyCreatures, putInHand } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     //TODO would be nice to not have to duplicate this three times over, without making a dedicated function in ScriptUtils for this...
@@ -15,7 +15,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state, config) => {
             const targetedGiant = config.targets[0] as Creature
-            returnToHand(targetedGiant)
+            putInHand(targetedGiant)
         }
     },
     fight: {
@@ -28,7 +28,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state, config) => {
             const targetedGiant = config.targets[0] as Creature
-            returnToHand(targetedGiant)
+            putInHand(targetedGiant)
         }
     },
     reap: {
@@ -41,7 +41,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state, config) => {
             const targetedGiant = config.targets[0] as Creature
-            returnToHand(targetedGiant)
+            putInHand(targetedGiant)
         }
     }
 }

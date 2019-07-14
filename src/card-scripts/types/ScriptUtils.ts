@@ -28,7 +28,7 @@ export const allArtifacts = (state: GameState): Artifact[] => {
     return activePlayerState(state).artifacts.concat(inactivePlayerState(state).artifacts)
 }
 
-export const cardController = (state: GameState, card: CardInGame): PlayerState => {
+export const friendlyPlayer = (state: GameState, card: CardInGame): PlayerState => {
     const playerOneState = state.playerOneState
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
@@ -39,7 +39,7 @@ export const cardController = (state: GameState, card: CardInGame): PlayerState 
         return state.playerTwoState
 }
 
-export const cardEnemy = (state: GameState, card: CardInGame): PlayerState => {    
+export const enemyPlayer = (state: GameState, card: CardInGame): PlayerState => {
     const playerOneState = state.playerOneState
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
@@ -87,10 +87,6 @@ export const putInArchives = (state: GameState, card: CardInGame, friendlyArchiv
     const toAdd = removeAndReturn(state, card)
     const myState = friendlyArchives ? activePlayerState(state) : inactivePlayerState(state)
     myState.archives.push(toAdd)
-}
-
-export const checkIfHasTargets = (targets: CardInGame[], amount: number): boolean => {
-    return targets!.length >= amount
 }
 
 export const stunCreature = (creature: Creature) => {
@@ -155,7 +151,7 @@ export const getMostPowerful = (creatures: Creature[], amount: number): Creature
     return creatures.slice(amount)
 }
 
-export const returnToHand = (card: CardInGame) => {
+export const putInHand = (card: CardInGame) => {
     //TODO
 }
 
@@ -180,5 +176,22 @@ export const captureAmber = (state: GameState, creature: Creature, amount: numbe
 
 export const mustFightWhenUsedIfAble = (creature: Creature) => {
     //I'm drawing a complete blank here
+    //TODO
+}
+
+export const getNumberOfCreaturesDestroyedInAFight = (state: GameState): number => {
+    //TODO
+    return 0
+}
+
+export const exhaustCard = (card: Creature | Artifact) => {
+    card.ready = false
+}
+
+export const modifyAmber = (playerState: PlayerState, amount: number) => {
+    playerState.amber = Math.max(playerState.amber + amount, 0)
+}
+
+export const shuffleDeck = (state: GameState) => {
     //TODO
 }
