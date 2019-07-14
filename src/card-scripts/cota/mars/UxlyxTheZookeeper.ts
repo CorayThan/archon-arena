@@ -1,6 +1,6 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
-import { putInArchives } from "../../types/ScriptUtils"
+import { enemyCreatures, putInArchives } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 2,
@@ -10,7 +10,7 @@ const cardScript: CardScript = {
             const target = config!.targets![0]
             putInArchives(state, target, true)
         },
-        targetOrder: [{types: [TargetType.CREATURE], areas: [TargetArea.BOARD], friendly: false}]
+        validTargets: enemyCreatures
     }
 }
 

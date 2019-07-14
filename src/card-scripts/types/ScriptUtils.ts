@@ -15,6 +15,13 @@ export const friendlyCreatures = (state: GameState): Creature[] => {
     return activePlayerState(state).creatures
 }
 
+export const enemyCreatures = (state: GameState): Creature[] => {
+    return inactivePlayerState(state).creatures
+}
+export const allCreatures = (state: GameState): Creature[] => {
+    return activePlayerState(state).creatures.concat(inactivePlayerState(state).creatures)
+}
+
 export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
     const check = (cardToCheck: CardInGame) => cardToCheck.id === card.id
     const playerStates = [state.playerOneState, state.playerTwoState]
