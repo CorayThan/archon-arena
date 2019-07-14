@@ -1,25 +1,29 @@
 import { cardScripts } from "../../types/CardScripts"
-import { CardScript, TargetType, TargetArea } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { checkIfHasTargets, dealDamage } from "../../types/ScriptUtils"
+import { House } from "../../../shared/keyforge/house/House"
 import { GameState } from "../../../shared/gamestate/GameState"
+import { friendlyCreatures, dealDamage } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
 	amber: () => 1,
 	alpha: () => true,
     onPlay: {
-        perform: (state, config) => {
-        	if (checkIfHasTargets(config, 1)) {
-                const targets = config.targets
-                targets
-                .forEach(card => dealDamage(card as Creature, 2))
-            }
+        validTargets: (state) => {
+            return friendlyCreatures(state)
+            .filter(creature => creature.backingCard.house === House.Brobnar)
+            .filter(creature => creature.ready)
         },
-        targetOrder: [{
-            areas: [TargetArea.BOARD],
-            types: [TargetType.CREATURE],
-            //need to have a variable amount of targets
-        }]
+        choosenTargetsAreValid: (targets) => {
+            //TODO yet another place where I need state for validation
+            return targets.length === friendlyCreatures(state)
+            .filter(creature => creature.backingCard.house === House.Brobnar)
+            .filter(creature => creature.ready).length
+
+        },
+        perform: (state, config) => {
+            config.targets.forEach(card => dealDamage(card as Creature, 2))
+        }
     }
 }
 

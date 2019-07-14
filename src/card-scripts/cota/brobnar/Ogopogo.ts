@@ -1,22 +1,17 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { checkIfHasTargets, dealDamage } from "../../types/ScriptUtils"
+import { allCreatures, checkIfHasOneTarget, dealDamage } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 6,
     fight: {
+        //TODO if destroyed the creature it fought... choose a target
+        validTargets: allCreatures,
+        choosenTargetsAreValid: checkIfHasOneTarget,
         perform: (state, config) => {
-            if (checkIfHasTargets(config, 1)) {
-                const target = config.targets[0] as Creature
-                dealDamage(target, 2)
-            }
-        },
-        //if destroyed the creature... choose a target
-        targetOrder: [{
-            areas: [TargetArea.BOARD],
-            types: [TargetType.CREATURE]
-        }]
+            dealDamage(config!.targets[0] as Creature, 2)
+        }
     }
 }
 

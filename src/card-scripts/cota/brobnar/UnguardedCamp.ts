@@ -1,22 +1,22 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
-import { checkIfHasTargets, captureAmber } from "../../types/ScriptUtils"
+import { checkIfHasTargets, captureAmber, friendlyCreatures, enemyCreatures } from "../../types/ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        perform: (state, config) => {
-            if (checkIfHasTargets(config, 1)) {
-                config.targets.forEach(creature => captureAmber(state, creature as Creature, 1))
-            }
+        validTargets: (state) => {
+            return friendlyCreatures(state).length > enemyCreatures(state).length ? friendlyCreatures(state) : []
         },
-        targetOrder: [{
-            //variable amount of targets again, each different this time
-            areas: [TargetArea.BOARD],
-            types: [TargetType.CREATURE],
-            friendly: true
-        }]
+        choosenTargetsAreValid: (targets) => {
+            //TODO another place where I need state for validation...
+            return friendlyCreatures(state).length - enemyCreatures(state).length === targets.length
+            && new Set(targets).size === targets.length
+        },
+        perform: (state, config) => {
+            config!.targets.forEach(creature => captureAmber(state, creature as Creature, 1))
+        }
     }
 }
 

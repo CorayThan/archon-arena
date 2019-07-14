@@ -1,22 +1,26 @@
 import { cardScripts } from "../../types/CardScripts"
-import { CardScript, TargetType, TargetArea } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { getMostPowerful, enemyCreatures, friendlyCreatures, destroyCard, readyCreature, fightUsingCreature } from "../../types/ScriptUtils"
 import { GameState } from "../../../shared/gamestate/GameState"
+import { getMostPowerful, enemyCreatures, friendlyCreatures, destroyCard, readyCreature, fightUsingCreature } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
         perform: (state, config) => {
-            const mostPowerfulEnemy = getMostPowerful(enemyCreatures(state), 1)[0]
-            enemyCreatures(state)
-            .filter(creature => creature.id !== mostPowerfulEnemy.id)
-            .forEach(creature => destroyCard(creature))
-            const mostPowerfulFriendly = getMostPowerful(friendlyCreatures(state), 1)[0]
-            friendlyCreatures(state)
-            .filter(creature => creature.id !== mostPowerfulFriendly.id)
-            .forEach(creature => destroyCard(creature))
-            readyCreature(mostPowerfulFriendly)
-            fightUsingCreature(mostPowerfulFriendly)
+            if (enemyCreatures(state).length > 0) {
+                const mostPowerfulEnemy = getMostPowerful(enemyCreatures(state), 1)[0]
+                enemyCreatures(state)
+                .filter(creature => creature.id !== mostPowerfulEnemy.id)
+                .forEach(creature => destroyCard(creature))                
+            }
+            if (friendlyCreatures(state).length > 0) {
+                const mostPowerfulFriendly = getMostPowerful(friendlyCreatures(state), 1)[0]
+                friendlyCreatures(state)
+                .filter(creature => creature.id !== mostPowerfulFriendly.id)
+                .forEach(creature => destroyCard(creature))
+                readyCreature(mostPowerfulFriendly)
+                fightUsingCreature(mostPowerfulFriendly)
+            }
         }
     }
 }

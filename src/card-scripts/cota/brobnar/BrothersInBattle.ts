@@ -1,26 +1,20 @@
-import { CardScript, TargetType, TargetArea } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
-import { checkIfHasTargets, friendlyCreatures } from "../../types/ScriptUtils"
-import { enableFighting } from "../../types/ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
+import { checkIfHasOneTarget, friendlyCreatures, enableFighting } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
+        //TODO Is this the proper way to make Houses be the targets? Houses definitely aren't CardInPlay...
+        validTargets: Object.values(House),
+        choosenTargetsAreValid: checkIfHasOneTarget,
         perform: (state) => {
-        	if (checkIfHasTargets(config, 1)) {
-                const chosenHouse = config.targets[0] as House
-            	friendlyCreatures(state)
-            	//can't check a creature's house???
-            	.filter(creature => creature.house == chosenHouse)
-            	.forEach(creature => enableFighting(creature))
-            }
-        },
-        targetOrder: [{
-            types: [TargetType.HOUSE],
-            //Why do I need to choose an area when choosing a house :thinking:
-            areas: [TargetArea.BOARD]
-        }]
+            const chosenHouse = config!.targets[0] as House
+        	friendlyCreatures(state)
+        	.filter(creature => creature.backingCard.house == chosenHouse)
+        	.forEach(creature => enableFighting(creature))
+        }
     }
 }
 

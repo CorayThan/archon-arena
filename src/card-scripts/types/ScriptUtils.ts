@@ -23,25 +23,28 @@ export const enemyCreatures = (state: GameState): Creature[] => {
 
 export const allCreatures = (state: GameState): Creature[] => {
     return activePlayerState(state).creatures.concat(inactivePlayerState(state).creatures)
-
 }
 
-export const cardController = (state: GameState, cardId: string): PlayerState => {
+export const allArtifacts = (state: GameState): Artifact[] => {
+    return activePlayerState(state).artifacts.concat(inactivePlayerState(state).artifacts)
+}
+
+export const cardController = (state: GameState, card: CardInGame): PlayerState => {
     const playerOneState = state.playerOneState
     if (
-        playerOneState.artifacts.map(artifact => artifact.id).indexOf(cardId) !== -1
-        || playerOneState.creatures.map(creature => creature.id).indexOf(cardId) !== -1
+        playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
+        || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
         )
         return playerOneState
     else
         return state.playerTwoState
 }
 
-export const cardEnemy = (state: GameState, cardId: string): PlayerState => {    
+export const cardEnemy = (state: GameState, card: CardInGame): PlayerState => {    
     const playerOneState = state.playerOneState
     if (
-        playerOneState.artifacts.map(artifact => artifact.id).indexOf(cardId) !== -1
-        || playerOneState.creatures.map(creature => creature.id).indexOf(cardId) !== -1
+        playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
+        || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
         )
         return state.playerTwoState
     else
@@ -87,8 +90,12 @@ export const putInArchives = (state: GameState, card: CardInGame, friendlyArchiv
     myState.archives.push(toAdd)
 }
 
-export const checkIfHasTargets = (config: CardActionConfig, numberOfTargets: number): boolean => {
-    return config && config.targets && config.targets.length >= numberOfTargets
+export const checkIfHasOneTarget = (targets: CardInGame[]): boolean => {
+    return targets!.length === 1
+}
+
+export const checkIfHasTargets = (targets: CardInGame[], amount: number): boolean => {
+    return targets!.length >= amount
 }
 
 export const stunCreature = (creature: Creature) => {
@@ -174,7 +181,7 @@ export const captureAmber = (state: GameState, creature: Creature, amount: numbe
     //TODO
 }
 
-export const mustFightIfAble = (creature: Creature) => {
+export const mustFightWhenUsedIfAble = (creature: Creature) => {
     //I'm drawing a complete blank here
     //TODO
 }

@@ -1,24 +1,19 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
-import { activePlayerState, checkIfHasTargets, dealDamage } from "../../types/ScriptUtils"
+import { activePlayerState, enemyCreatures, checkIfHasOneTarget, dealDamage } from "../../types/ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     alpha: () => true,
     power: () => 3,
     onPlay: {
-        perform: (state) => {
-            if (checkIfHasTargets(config, 1)) {
-                const targetedCreature = config.targets[0] as Creature
-                dealDamage(targetedCreature, 3)
-            }
+        validTargets: (state) => {
+            return activePlayerState(state).amber < 3 ? [] : enemyCreatures(state)
         },
-        targetOrder: [{
-            //TODO need conditional targetting here, should only happen if active player has 3+ aember...
-            areas: [TargetArea.BOARD],
-            types: [TargetType.CREATURE],
-            friendly: false
-        }]
+        choosenTargetsAreValid: checkIfHasOneTarget,
+        perform: (state) => {
+            dealDamage(config.targets[0] as Creature, 3)
+        }
     }
 }
 
