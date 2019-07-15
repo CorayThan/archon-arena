@@ -180,6 +180,8 @@ export const removeCardFromHand = (player: PlayerState, cardId?: string) => {
     const card = player.hand.find((card: CardInGame, i: number) => {
         return `${player.player.id}-card-in-hand-${i}` === cardId
     })
+    if (!card)
+        throw new Error(`Expected to find card ${cardId} in hand`)
     player.hand = player.hand.filter((c: CardInGame) => c !== card)
     return card
 }

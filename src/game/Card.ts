@@ -1,5 +1,6 @@
 import Phaser from "phaser"
 import { CardInGame } from "../shared/gamestate/CardInGame"
+import { cardScripts } from "../card-scripts/CardScripts"
 
 export const CARD_WIDTH = 100
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
@@ -183,7 +184,6 @@ class Card extends Phaser.GameObjects.Container {
 
         this.cardImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
         this.add(this.cardImage)
-
         this.upgrades.forEach((card: Phaser.GameObjects.Image, i: number) => {
             card.setPosition(this.cardImage.x, this.cardImage.y - (CARD_HEIGHT * 0.15) * (i + 1))
             card.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
@@ -197,6 +197,18 @@ class Card extends Phaser.GameObjects.Container {
             this.add(card)
             this.sendToBack(card)
         })
+
+        if (this.faceup) {
+            const script = cardScripts.scripts.get(this.front)
+            if (!script) {
+                const manualModeIndicator = new Phaser.GameObjects.Text(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, "-------", {
+                    color: "#e03f3f",
+                    backgroundColor: "#e03f3f",
+                    fontSize: "16px"
+                })
+                this.add(manualModeIndicator)
+            }
+        }
 
         if (!this.ready) {
             this.setAngle(90)

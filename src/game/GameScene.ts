@@ -74,7 +74,6 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
-        this.root = this.add.container(0, 0)
         this.render()
         this.setupKeyboardListeners()
 
@@ -564,8 +563,9 @@ class GameScene extends Phaser.Scene {
     }
 
     render() {
-        if (this.root)
+        if (this.root) {
             this.root.destroy()
+        }
         this.root! = this.add.container(0, 0)
 
         let opponentState

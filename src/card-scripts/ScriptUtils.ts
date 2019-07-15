@@ -1,7 +1,7 @@
 import { remove } from "lodash"
-import { CardInGame } from "../../shared/gamestate/CardInGame"
-import { Creature } from "../../shared/gamestate/Creature"
-import { GameState, PlayerState } from "../../shared/gamestate/GameState"
+import { CardInGame } from "../shared/gamestate/CardInGame"
+import { Creature } from "../shared/gamestate/Creature"
+import { GameState, PlayerState } from "../shared/gamestate/GameState"
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -25,7 +25,8 @@ export const allCreatures = (state: GameState): Creature[] => {
 export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
     const check = (cardToCheck: CardInGame) => cardToCheck.id === card.id
     const playerStates = [state.playerOneState, state.playerTwoState]
-    playerStates.forEach((playerState) => {
+    for (let i = 0; i < playerStates.length; i++) {
+        const playerState = playerStates[i]
         let removed: CardInGame[] = remove(playerState.creatures, check)
         if (removed.length > 0) {
             return removed[0]
@@ -50,7 +51,7 @@ export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame 
         if (removed.length > 0) {
             return removed[0]
         }   
-    })
+    }
     throw new Error("Couldn't find card with id " + card.id)
 }
 
