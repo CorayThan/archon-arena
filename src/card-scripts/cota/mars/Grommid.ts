@@ -1,11 +1,9 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    amber: () =>  0,
-    onPlay: {
+    power: () => 10,
 
-    }
 }
 
 cardScripts.scripts.set("grommid", cardScript)

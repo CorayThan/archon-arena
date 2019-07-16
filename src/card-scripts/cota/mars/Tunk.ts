@@ -1,11 +1,10 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    amber: () =>  0,
-    onPlay: {
+    power: () => 6,
+    armor: () => 1,
 
-    }
 }
 
 cardScripts.scripts.set("tunk", cardScript)

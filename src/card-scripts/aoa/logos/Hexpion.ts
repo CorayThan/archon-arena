@@ -1,11 +1,14 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    amber: () =>  0,
-    onPlay: {
+    power: () => 2,
+    onFight: {
+        perform: (state, config) => {
+            //Add onDestroyed code here
+        }
+    },
 
-    }
 }
 
 cardScripts.scripts.set("hexpion", cardScript)

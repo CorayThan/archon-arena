@@ -1,11 +1,13 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    amber: () =>  0,
-    onPlay: {
+    onFight: {
+        perform: (state, config) => {
+            //Add onFight code here
+        }
+    },
 
-    }
 }
 
 cardScripts.scripts.set("killzord-mk-9001", cardScript)

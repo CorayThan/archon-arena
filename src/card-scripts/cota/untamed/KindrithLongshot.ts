@@ -1,11 +1,16 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    amber: () =>  0,
-    onPlay: {
+    power: () => 3,
+    elusive: () => true,
+    skirmish: () => true,
+    onReap: {
+        perform: (state, config) => {
+            //Add onReap code here
+        }
+    },
 
-    }
 }
 
 cardScripts.scripts.set("kindrith-longshot", cardScript)

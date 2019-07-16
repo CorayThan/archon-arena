@@ -1,11 +1,15 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    amber: () =>  0,
-    onPlay: {
+    power: () => 2,
+    elusive: () => true,
+    onAction: {
+        perform: (state, config) => {
+            //Add onAction code here
+        }
+    },
 
-    }
 }
 
 cardScripts.scripts.set("noddy-the-thief", cardScript)

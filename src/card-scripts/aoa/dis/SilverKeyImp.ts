@@ -1,11 +1,15 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    amber: () =>  0,
+    power: () => 2,
+    elusive: () => true,
     onPlay: {
+        perform: (state, config) => {
+            //Add onPlay code here
+        }
+    },
 
-    }
 }
 
 cardScripts.scripts.set("silver-key-imp", cardScript)

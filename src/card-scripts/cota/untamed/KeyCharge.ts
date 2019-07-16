@@ -1,19 +1,13 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { activePlayerState } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     onPlay: {
-        perform: (state) => {
-            const player = activePlayerState(state)
-            player.amber -= 1
-            // TODO this will need to use a "key cost calculation" / "can forge" reusable function
-            if (player.amber > 5) {
-                player.amber -= 6
-                player.keys++
-            }
+        perform: (state, config) => {
+            //Add onPlay code here
         }
-    }
+    },
+
 }
 
 cardScripts.scripts.set("key-charge", cardScript)

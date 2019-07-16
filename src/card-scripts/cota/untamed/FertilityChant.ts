@@ -1,14 +1,14 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { inactivePlayerState } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     amber: () => 4,
     onPlay: {
-        perform: (state) => {
-            inactivePlayerState(state).amber += 2
+        perform: (state, config) => {
+            //Add onPlay code here
         }
-    }
+    },
+
 }
 
 cardScripts.scripts.set("fertility-chant", cardScript)
