@@ -9,6 +9,7 @@ import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
 import { exec } from "./Actions/Actions"
 import GameScene from "./GameScene"
+import "../card-scripts/imports"
 
 interface Props {
     playerId: string | undefined
