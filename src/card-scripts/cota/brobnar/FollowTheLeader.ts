@@ -1,7 +1,6 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { friendlyCreatures } from "../../types/ScriptUtils"
-import { enableFighting } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
+import {enableFighting, friendlyCreatures} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {

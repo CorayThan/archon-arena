@@ -1,6 +1,6 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import {friendlyCreatures, enemyPlayer, friendlyPlayer, enemyCreatures} from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
+import {enemyCreatures, enemyPlayer, friendlyCreatures, friendlyPlayer} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
@@ -14,4 +14,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("grump-buggy", cardScript)
+//cardScripts.scripts.set("grump-buggy", cardScript)

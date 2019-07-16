@@ -1,8 +1,6 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { enemyCreatures } from "../../types/ScriptUtils"
-import { onFlank } from "../../types/ScriptUtils"
-import { dealDamage } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
+import {dealDamage, enemyCreatures, onFlank} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 4,

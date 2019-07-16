@@ -1,5 +1,5 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 import {inactivePlayerState, modifyAmber} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
