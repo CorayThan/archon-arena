@@ -25,10 +25,22 @@ export const discardCardsUnderneath = (player: PlayerState, cardId?: string) => 
     }
 }
 
-export const getCardType = (cardId: string) => {
-    if (cardId.indexOf("upgrade") !== -1)
-        return "upgrade"
-    return cardId.slice(cardId.indexOf("-") + 1, cardId.lastIndexOf("-"))
+export const getCardType = (owner: PlayerState, cardId: string) => {
+    if (owner.creatures.find((card: Creature) => card.id === cardId))
+        return "creature"
+    if (owner.artifacts.find((card: Artifact) => card.id === cardId))
+        return "artifact"
+    if (owner.hand.find((card: CardInGame) => card.id === cardId))
+        return "hand"
+    if (owner.discard.find((card: CardInGame) => card.id === cardId))
+        return "discard"
+    if (owner.purged.find((card: CardInGame) => card.id === cardId))
+        return "purged"
+    if (owner.library.find((card: CardInGame) => card.id === cardId))
+        return "library"
+    if (owner.archives.find((card: CardInGame) => card.id === cardId))
+        return "archives"
+    return "upgrade"
 }
 
 export const getPlayerById = (id: string, state: GameState) => {
@@ -36,28 +48,28 @@ export const getPlayerById = (id: string, state: GameState) => {
 }
 
 export const getCardOwner = (cardId: string, state: GameState) => {
-    let card: Artifact | Creature | CardInGame | undefined = state.playerOneState.creatures.find((card: Creature, i: number) => {
-        return `${state.playerOneState.player.id}-creature-${i}` === cardId
+    let card: Artifact | Creature | CardInGame | undefined = state.playerOneState.creatures.find((card: Creature) => {
+        return card.id === cardId
     })
-    card = card || state.playerOneState.artifacts.find((card: Artifact, i: number) => {
-        return `${state.playerOneState.player.id}-artifact-${i}` === cardId
+    card = card || state.playerOneState.artifacts.find((card: Artifact) => {
+        return card.id === cardId
     })
-    card = card || state.playerOneState.hand.find((card: CardInGame, i: number) => {
-        return `${state.playerOneState.player.id}-card-in-hand-${i}` === cardId
+    card = card || state.playerOneState.hand.find((card: CardInGame) => {
+        return card.id === cardId
     })
-    card = card || state.playerOneState.discard.find((card: CardInGame, i: number) => {
-        return `${state.playerOneState.player.id}-card-in-discard-${i}` === cardId
+    card = card || state.playerOneState.discard.find((card: CardInGame) => {
+        return card.id === cardId
     })
-    card = card || state.playerOneState.archives.find((card: CardInGame, i: number) => {
-        return `${state.playerOneState.player.id}-card-in-archive-${i}` === cardId
+    card = card || state.playerOneState.archives.find((card: CardInGame) => {
+        return card.id === cardId
     })
-    card = card || state.playerOneState.library.find((card: CardInGame, i: number) => {
-        return `${state.playerOneState.player.id}-card-in-draw-${i}` === cardId
+    card = card || state.playerOneState.library.find((card: CardInGame) => {
+        return card.id === cardId
     })
     for (let i = 0; i < state.playerOneState.creatures.length; i++) {
         const creature: Creature = state.playerOneState.creatures[i]
-        const upgrade = creature.upgrades.find((c: CardInGame, j: number) => {
-            return `${state.playerOneState.player.id}-creature-${i}-upgrade-${j}` === cardId
+        const upgrade = creature.upgrades.find((c: CardInGame) => {
+            return c.id === cardId
         })
 
         if (upgrade) {
@@ -86,28 +98,28 @@ export const getCardById = (owner: PlayerState, cardId: string) => {
 }
 
 export const getCreatureById = (player: PlayerState, cardId?: string) => {
-    return player.creatures.find((card: Creature, i: number) => {
-        return `${player.player.id}-creature-${i}` === cardId
+    return player.creatures.find((card: Creature) => {
+        return card.id === cardId
     })
 }
 
 export const getArtifactById = (player: PlayerState, cardId?: string) => {
-    return player.artifacts.find((card: Artifact, i: number) => {
-        return `${player.player.id}-artifact-${i}` === cardId
+    return player.artifacts.find((card: Artifact) => {
+        return card.id === cardId
     })
 }
 
 export const getCardInHandById = (player: PlayerState, cardId?: string) => {
-    return player.hand.find((card: CardInGame, i: number) => {
-        return `${player.player.id}-card-in-hand-${i}` === cardId
+    return player.hand.find((card: CardInGame) => {
+        return card.id === cardId
     })
 }
 
 export const getUpgradeById = (player: PlayerState, cardId: string) => {
     for (let i = 0; i < player.creatures.length; i++) {
         const creature: Creature = player.creatures[i]
-        const upgrade = creature.upgrades.find((c: CardInGame, j: number) => {
-            return `${player.player.id}-creature-${i}-upgrade-${j}` === cardId
+        const upgrade = creature.upgrades.find((c: CardInGame) => {
+            return c.id === cardId
         })
 
         if (upgrade) {
@@ -117,37 +129,37 @@ export const getUpgradeById = (player: PlayerState, cardId: string) => {
 }
 
 export const getCardInDiscardById = (player: PlayerState, cardId: string) => {
-    return player.discard.find((c: CardInGame, i: number) => {
-        return `${player.player.id}-card-in-discard-${i}` === cardId
+    return player.discard.find((card: CardInGame) => {
+        return card.id === cardId
     })
 }
 
 export const getCardInDrawPileById = (player: PlayerState, cardId: string) => {
-    return player.library.find((c: CardInGame, i: number) => {
-        return `${player.player.id}-card-in-draw-${i}` === cardId
+    return player.library.find((card: CardInGame) => {
+        return card.id === cardId
     })
 }
 
 export const getCardInArchiveById = (player: PlayerState, cardId: string) => {
-    return player.archives.find((c: CardInGame, i: number) => {
-        return `${player.player.id}-card-in-archive-${i}` === cardId
+    return player.archives.find((card: CardInGame) => {
+        return card.id === cardId
     })
 }
 
 export const removeCardById = (player: PlayerState, cardId: string) => {
-    const cardType = getCardType(cardId)
+    const cardType = getCardType(player, cardId)
     const removalFunctions: { [key: string]: Function } = {
         creature: removeCreature,
         artifact: removeArtifact,
         upgrade: removeUpgrade,
-        "card-in-hand": removeCardFromHand,
+        hand: removeCardFromHand,
     }
     return removalFunctions[cardType](player, cardId)
 }
 
 export const removeCreature = (player: PlayerState, cardId: string) => {
-    const card = player.creatures.find((card: Creature, i: number) => {
-        return `${player.player.id}-creature-${i}` === cardId
+    const card = player.creatures.find((card: Creature) => {
+        return card.id === cardId
     })
     player.creatures = player.creatures.filter((c: Creature) => c !== card)
     return card
@@ -156,8 +168,8 @@ export const removeCreature = (player: PlayerState, cardId: string) => {
 export const removeUpgrade = (player: PlayerState, cardId: string) => {
     for (let i = 0; i < player.creatures.length; i++) {
         const creature: Creature = player.creatures[i]
-        const upgrade = creature.upgrades.find((c: CardInGame, j: number) => {
-            return `${player.player.id}-creature-${i}-upgrade-${j}` === cardId
+        const upgrade = creature.upgrades.find((c: CardInGame) => {
+            return c.id === cardId
         })
 
         if (upgrade) {
@@ -169,16 +181,16 @@ export const removeUpgrade = (player: PlayerState, cardId: string) => {
 }
 
 export const removeArtifact = (player: PlayerState, cardId: string) => {
-    const card = player.artifacts.find((card: CardInGame, i: number) => {
-        return `${player.player.id}-artifact-${i}` === cardId
+    const card = player.artifacts.find((card: CardInGame) => {
+        return card.id === cardId
     })
     player.artifacts = player.artifacts.filter((c: CardInGame) => c !== card)
     return card
 }
 
 export const removeCardFromHand = (player: PlayerState, cardId?: string) => {
-    const card = player.hand.find((card: CardInGame, i: number) => {
-        return `${player.player.id}-card-in-hand-${i}` === cardId
+    const card = player.hand.find((card: CardInGame) => {
+        return card.id === cardId
     })
     if (!card)
         throw new Error(`Expected to find card ${cardId} in hand`)
