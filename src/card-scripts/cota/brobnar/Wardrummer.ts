@@ -1,6 +1,7 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {friendlyCreatures, putInHand} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+import {friendlyCreatures, putInHand} from "../../ScriptUtils"
+
 import {House} from "../../../shared/keyforge/house/House";
 
 const cardScript: CardScript = {

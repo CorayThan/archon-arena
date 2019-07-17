@@ -1,6 +1,7 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {activePlayerState, getNumberOfCreaturesDestroyedInAFight} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+import {activePlayerState, getNumberOfCreaturesDestroyedInAFight} from "../../ScriptUtils"
+
 
 const cardScript: CardScript = {
     action: {

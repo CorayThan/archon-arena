@@ -1,6 +1,7 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {activePlayerState, modifyAmber} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+import {activePlayerState, modifyAmber} from "../../ScriptUtils"
+
 
 //TODO You cannot use this card unless you have discarded an Untamed card from your hand this turn.
 

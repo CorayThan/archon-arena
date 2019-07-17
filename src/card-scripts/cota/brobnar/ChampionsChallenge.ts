@@ -1,4 +1,4 @@
-import {cardScripts} from "../../types/CardScripts"
+import {cardScripts} from "../../CardScripts"
 import {CardScript} from "../../types/CardScript"
 import {
     destroyCard,
@@ -7,7 +7,8 @@ import {
     friendlyCreatures,
     getMostPowerful,
     readyCreature
-} from "../../types/ScriptUtils"
+} from "../../ScriptUtils"
+
 
 const cardScript: CardScript = {
     onPlay: {

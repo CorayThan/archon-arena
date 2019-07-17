@@ -1,6 +1,7 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {inactivePlayerState} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+import {inactivePlayerState} from "../../ScriptUtils"
+
 
 const cardScript: CardScript = {
     power: () => 5,

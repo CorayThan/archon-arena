@@ -1,6 +1,7 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {inactivePlayerState, steal} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+import {inactivePlayerState, steal} from "../../ScriptUtils"
+
 
 const cardScript: CardScript = {
     action: {

@@ -1,7 +1,8 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
+import {cardScripts} from "../../CardScripts"
 import {House} from "../../../shared/keyforge/house/House"
-import {enableFighting, friendlyCreatures} from "../../types/ScriptUtils"
+import {enableFighting, friendlyCreatures} from "../../ScriptUtils"
+
 
 const cardScript: CardScript = {
     amber: () => 1,

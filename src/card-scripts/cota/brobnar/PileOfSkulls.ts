@@ -1,5 +1,4 @@
-import {CardScript, TargetArea, TargetType} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
 
 const cardScript: CardScript = {
     runAfterAnyAction: {

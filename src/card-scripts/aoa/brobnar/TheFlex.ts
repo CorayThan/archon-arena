@@ -1,6 +1,7 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {activePlayerState, exhaustCard, friendlyCreatures} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+import {activePlayerState, exhaustCard, friendlyCreatures} from "../../ScriptUtils"
+
 import {House} from "../../../shared/keyforge/house/House";
 import {Creature} from "../../../shared/gamestate/Creature";
 

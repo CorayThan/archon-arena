@@ -1,7 +1,8 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
+import {cardScripts} from "../../CardScripts"
 import {Creature} from "../../../shared/gamestate/Creature"
-import {activePlayerState, friendlyPlayer} from "../../types/ScriptUtils"
+import {activePlayerState, friendlyPlayer} from "../../ScriptUtils"
+
 
 const cardScript: CardScript = {
     power: () => 11,

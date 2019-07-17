@@ -1,6 +1,7 @@
-import {cardScripts} from "../../types/CardScripts"
+import {cardScripts} from "../../CardScripts"
 import {CardScript} from "../../types/CardScript"
-import {activePlayerState, allCreatures, destroyCard, gainChains} from "../../types/ScriptUtils"
+import {activePlayerState, allCreatures, destroyCard, gainChains} from "../../ScriptUtils"
+
 
 const cardScript: CardScript = {
     onPlay: {

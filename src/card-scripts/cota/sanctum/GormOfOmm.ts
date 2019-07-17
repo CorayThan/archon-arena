@@ -1,5 +1,5 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
+import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
     omni: {
