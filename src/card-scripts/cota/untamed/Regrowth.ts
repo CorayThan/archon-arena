@@ -1,14 +1,12 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {putInHand} from "../../ScriptUtils"
-
+import {activePlayerState, putInHand} from "../../ScriptUtils"
 import {CardInGame} from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        //TODO activePlayerDiscard in Util
-        validTargets: activePlayerDiscard('creatures'),
+        validTargets: (state) => activePlayerState(state).filter(card => card.backingCard.cardType === "Creature"),
         numberOfTargets: () => 1,
         perform: (state, config) => {
             config.targets.forEach(target => putInHand(target as CardInGame))

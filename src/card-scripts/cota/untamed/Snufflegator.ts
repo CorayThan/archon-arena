@@ -3,8 +3,7 @@ import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
     power: () => 4,
-    skirmish: () => true,
-
+    skirmish: () => true
 }
 
 cardScripts.scripts.set("snufflegator", cardScript)

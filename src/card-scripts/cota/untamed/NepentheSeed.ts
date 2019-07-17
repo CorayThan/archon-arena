@@ -1,13 +1,11 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {destroyCard, discardedCards, putInHand} from "../../ScriptUtils"
-
+import {activePlayerState, destroyCard, putInHand} from "../../ScriptUtils"
 import {CardInGame} from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     omni: {
-        //TODO add discardedCards to Util
-        validTargets: discardedCards,
+        validTargets: (state) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
         perform: (state, config) => {
             destroyCard(config.thisCard)
