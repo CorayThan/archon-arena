@@ -3,9 +3,9 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 3,
-    onReap: {
+    reap: {
         perform: (state, config) => {
-            //Add onReap code here
+            //Add reap code here
         }
     },
 

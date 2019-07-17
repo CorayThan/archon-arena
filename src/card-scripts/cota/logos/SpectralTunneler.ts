@@ -3,14 +3,14 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     amber: () => 1,
-    onReap: {
+    reap: {
         perform: (state, config) => {
-            //Add onReap code here
+            //Add reap code here
         }
     },
-    onAction: {
+    action: {
         perform: (state, config) => {
-            //Add onAction code here
+            //Add action code here
         }
     },
 

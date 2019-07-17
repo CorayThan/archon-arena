@@ -4,14 +4,14 @@ import {cardScripts} from "../../types/CardScripts"
 const cardScript: CardScript = {
     power: () => 5,
     armor: () => 2,
-    onFight: {
+    fight: {
         perform: (state, config) => {
-            //Add onFight code here
+            //Add fight code here
         }
     },
-    onBeforeFight: {
+    beforeFight: {
         perform: (state, config) => {
-            //Add onBeforeFight code here
+            //Add beforeFight code here
         }
     },
 

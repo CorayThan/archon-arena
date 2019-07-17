@@ -3,9 +3,9 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 2,
-    onFight: {
+    destroyed: {
         perform: (state, config) => {
-            //Add onDestroyed code here
+            //Add destoryed code here
         }
     },
 

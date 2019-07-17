@@ -3,9 +3,9 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 4,
-    onFight: {
+    fight: {
         perform: (state, config) => {
-            //Add onFight code here
+            //Add fight code here
         }
     },
 

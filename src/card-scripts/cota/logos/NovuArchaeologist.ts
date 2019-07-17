@@ -3,9 +3,9 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 4,
-    onAction: {
+    action: {
         perform: (state, config) => {
-            //Add onAction code here
+            //Add action code here
         }
     },
 

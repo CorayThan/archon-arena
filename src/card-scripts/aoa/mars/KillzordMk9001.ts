@@ -2,9 +2,9 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    onFight: {
+    fight: {
         perform: (state, config) => {
-            //Add onFight code here
+            //Add fight code here
         }
     },
 

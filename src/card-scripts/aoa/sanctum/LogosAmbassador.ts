@@ -4,14 +4,14 @@ import {cardScripts} from "../../types/CardScripts"
 const cardScript: CardScript = {
     power: () => 1,
     elusive: () => true,
-    onReap: {
+    reap: {
         perform: (state, config) => {
-            //Add onReap code here
+            //Add reap code here
         }
     },
-    onFight: {
+    fight: {
         perform: (state, config) => {
-            //Add onFight code here
+            //Add fight code here
         }
     },
 

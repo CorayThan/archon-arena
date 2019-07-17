@@ -2,14 +2,14 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    onReap: {
+    reap: {
         perform: (state, config) => {
-            //Add onReap code here
+            //Add reap code here
         }
     },
-    onFight: {
+    fight: {
         perform: (state, config) => {
-            //Add onFight code here
+            //Add fight code here
         }
     },
 

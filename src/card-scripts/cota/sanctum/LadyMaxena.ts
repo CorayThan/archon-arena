@@ -9,9 +9,9 @@ const cardScript: CardScript = {
             //Add onPlay code here
         }
     },
-    onAction: {
+    action: {
         perform: (state, config) => {
-            //Add onAction code here
+            //Add action code here
         }
     },
 

@@ -2,9 +2,9 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    onAction: {
+    action: {
         perform: (state, config) => {
-            //Add onAction code here
+            //Add action code here
         }
     },
 

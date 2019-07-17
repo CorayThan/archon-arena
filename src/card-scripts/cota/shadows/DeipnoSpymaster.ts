@@ -4,9 +4,9 @@ import {cardScripts} from "../../types/CardScripts"
 const cardScript: CardScript = {
     power: () => 1,
     elusive: () => true,
-    onOmni: {
+    omni: {
         perform: (state, config) => {
-            //Add onOmni code here
+            //Add omni code here
         }
     },
 

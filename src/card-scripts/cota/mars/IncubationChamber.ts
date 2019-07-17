@@ -2,9 +2,9 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    onOmni: {
+    omni: {
         perform: (state, config) => {
-            //Add onOmni code here
+            //Add omni code here
         }
     },
 

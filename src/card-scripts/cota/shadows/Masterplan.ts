@@ -8,9 +8,9 @@ const cardScript: CardScript = {
             //Add onPlay code here
         }
     },
-    onOmni: {
+    omni: {
         perform: (state, config) => {
-            //Add onOmni code here
+            //Add omni code here
         }
     },
 
