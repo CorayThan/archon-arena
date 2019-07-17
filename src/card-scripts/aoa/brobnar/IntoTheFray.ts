@@ -1,5 +1,5 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     runAfterAnyActionThisTurn: {
@@ -9,4 +9,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("into-the-fray", cardScript)
+//cardScripts.scripts.set("into-the-fray", cardScript)

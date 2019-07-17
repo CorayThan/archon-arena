@@ -1,5 +1,5 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     runAfterAnyAction: {
@@ -12,4 +12,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("autocannon", cardScript)
+//cardScripts.scripts.set("autocannon", cardScript)
