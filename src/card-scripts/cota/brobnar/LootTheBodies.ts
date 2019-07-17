@@ -1,5 +1,5 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
+import {CardScript, TargetArea, TargetType} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     runAfterAnyActionThisTurn: {
@@ -9,4 +9,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("loot-the-bodies", cardScript)
+//cardScripts.scripts.set("loot-the-bodies", cardScript)

@@ -2,17 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
+    runAfterAnyActionThisTurn: {
         perform: (state, config) => {
-            //Add onPlay code here
+            //TODO if action === fight
         }
-    },
-    onFight: {
-        perform: (state, config) => {
-            //Add onFight code here
-        }
-    },
-
+    }
 }
 
-cardScripts.scripts.set("into-the-fray", cardScript)
+//cardScripts.scripts.set("into-the-fray", cardScript)

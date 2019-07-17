@@ -2,12 +2,12 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    power: () => 6,
-    onAnyFight: {
+    power: () => 7,
+    runAfterAnyAction: {
         perform: (state, config) => {
-            //TODO if destroyed target in a fight
+            //check if action is creature entering board
         }
     }
 }
 
-//cardScripts.scripts.set("krump", cardScript)
+//cardScripts.scripts.set("bellowing-patriazate", cardScript)

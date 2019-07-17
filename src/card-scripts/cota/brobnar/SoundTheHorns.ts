@@ -1,8 +1,8 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { Creature } from "../../../shared/gamestate/Creature"
-import { House } from "../../../shared/keyforge/house/House"
-import { discardTopCard, activePlayerState, putInHand } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
+import {Creature} from "../../../shared/gamestate/Creature"
+import {House} from "../../../shared/keyforge/house/House"
+import {activePlayerState, discardTopCard, putInHand} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,

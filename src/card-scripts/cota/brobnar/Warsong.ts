@@ -9,4 +9,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("warsong", cardScript)
+//cardScripts.scripts.set("warsong", cardScript)

@@ -1,14 +1,14 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
+import {Creature} from "../../../shared/gamestate/Creature";
 
 const cardScript: CardScript = {
-    amber: () => 1,
     onPlay: {
         perform: (state, config) => {
-            //Add onPlay code here
+            (config.targets[0] as Creature).tokens.damage = 0
         }
     },
-
+    taunt: () => true
 }
 
 cardScripts.scripts.set("yo-mama-mastery", cardScript)

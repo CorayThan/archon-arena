@@ -1,7 +1,7 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { House } from "../../../shared/keyforge/house/House"
-import { friendlyCreatures, enemyPlayer } from "../../types/ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
+import {House} from "../../../shared/keyforge/house/House"
+import {enemyPlayer, friendlyCreatures} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     staticEffect: (state, config) => {
@@ -13,4 +13,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("iron-obelisk", cardScript)
+//cardScripts.scripts.set("iron-obelisk", cardScript)

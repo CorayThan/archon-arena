@@ -1,9 +1,12 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 6,
-
+    runAfterAnyAction: {
+        perform: (state) => {
+            //TODO if action; discarded a brobnar card
+        }
+    }
 }
 
-cardScripts.scripts.set("rock-hurling-giant", cardScript)
+//cardScripts.scripts.set("rock-hurling-giant", cardScript)

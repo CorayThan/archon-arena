@@ -1,15 +1,16 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
+import {dealDamage, enemyCreatures, onFlank} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 4,
-    armor: () => 1,
     onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
+        perform: (state) => {
+            enemyCreatures(state)
+            .filter(creature => onFlank(enemyCreatures(state), creature))
+            .forEach(creature => dealDamage(creature, 2))
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("brammo", cardScript)

@@ -1,6 +1,5 @@
-import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
-import { cardScripts } from "../../types/CardScripts"
-import { Creature } from "../../../shared/gamestate/Creature"
+import {CardScript, TargetArea, TargetType} from "../../types/CardScript"
+import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     runAfterAnyAction: {
@@ -11,4 +10,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("pile-of-skulls", cardScript)
+//cardScripts.scripts.set("pile-of-skulls", cardScript)

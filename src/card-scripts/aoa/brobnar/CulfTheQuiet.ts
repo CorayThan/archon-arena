@@ -3,8 +3,7 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 6,
-    elusive: () => true,
-
+    elusive: () => true
 }
 
 cardScripts.scripts.set("culf-the-quiet", cardScript)

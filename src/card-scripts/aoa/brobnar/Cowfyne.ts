@@ -1,19 +1,16 @@
-import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
+import {CardScript} from "../../types/CardScript"
+import {Creature} from "../../../shared/gamestate/Creature"
+import {dealDamage, enemyCreatures, getNeighbors} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    power: () => 5,
-    onFight: {
+    power: () =>  5,
+    beforeFight: {
         perform: (state, config) => {
-            //Add onFight code here
+            const neighbors = getNeighbors(enemyCreatures(state), config.targets[0] as Creature)
+            neighbors.forEach(neighbor => dealDamage(neighbor, 2))
         }
-    },
-    onBeforeFight: {
-        perform: (state, config) => {
-            //Add onBeforeFight code here
-        }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("cowfyne", cardScript)

@@ -1,9 +1,12 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 6,
-
+    fight: {
+        perform: (state) => {
+            //TODO if the fight target is destroyed by that fight.
+        }
+    }
 }
 
-cardScripts.scripts.set("mugwump", cardScript)
+///cardScripts.scripts.set("mugwump", cardScript)
