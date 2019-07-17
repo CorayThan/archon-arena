@@ -1,14 +1,15 @@
 import * as mobx from "mobx"
 import Phaser from "phaser"
 import React from "react"
-import { chatWidth } from "../matchmaking/ChatDrawer"
+import {chatWidth} from "../matchmaking/ChatDrawer"
 import Action from "../shared/Action"
 
-import { GameState } from "../shared/gamestate/GameState"
-import { log, prettyJson } from "../Utils"
-import { buildLogForAction } from "./ActionLogger"
-import { exec } from "./Actions/Actions"
+import {GameState} from "../shared/gamestate/GameState"
+import {log, prettyJson} from "../Utils"
+import {buildLogForAction} from "./ActionLogger"
+import {exec} from "./Actions/Actions"
 import GameScene from "./GameScene"
+import "../card-scripts/imports"
 
 interface Props {
     playerId: string | undefined

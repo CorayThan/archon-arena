@@ -10,13 +10,13 @@ import power from "../images/power.png"
 import stun from "../images/stun.png"
 import unforgedKey from "../images/unforgedkey.png"
 import Action from "../shared/Action"
-import { CardInGame } from "../shared/gamestate/CardInGame"
-import { Creature } from "../shared/gamestate/Creature"
-import { GameState, PlayerState } from "../shared/gamestate/GameState"
-import { AEvent } from "./AEvent"
-import Card, { CARD_HEIGHT, CARD_WIDTH } from "./Card"
-import { getCardType } from "./StateUtils"
-import { preloadCardsInPhaser } from "./Utils"
+import {CardInGame} from "../shared/gamestate/CardInGame"
+import {Creature} from "../shared/gamestate/Creature"
+import {GameState, PlayerState} from "../shared/gamestate/GameState"
+import {AEvent} from "./AEvent"
+import Card, {CARD_HEIGHT, CARD_WIDTH} from "./Card"
+import {getCardType} from "./StateUtils"
+import {preloadCardsInPhaser} from "./Utils"
 
 const {KeyCodes} = Phaser.Input.Keyboard
 
@@ -74,7 +74,6 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
-        this.root = this.add.container(0, 0)
         this.render()
         this.setupKeyboardListeners()
 
@@ -564,8 +563,9 @@ class GameScene extends Phaser.Scene {
     }
 
     render() {
-        if (this.root)
+        if (this.root) {
             this.root.destroy()
+        }
         this.root! = this.add.container(0, 0)
 
         let opponentState

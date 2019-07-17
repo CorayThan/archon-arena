@@ -1,7 +1,7 @@
-import { Artifact } from "../shared/gamestate/Artifact"
-import { CardInGame } from "../shared/gamestate/CardInGame"
-import { Creature } from "../shared/gamestate/Creature"
-import { GameState, PlayerState } from "../shared/gamestate/GameState"
+import {Artifact} from "../shared/gamestate/Artifact"
+import {CardInGame} from "../shared/gamestate/CardInGame"
+import {Creature} from "../shared/gamestate/Creature"
+import {GameState, PlayerState} from "../shared/gamestate/GameState"
 
 export const discardCreatureUpgrades = (player: PlayerState, cardId?: string) => {
     const creature = getCreatureById(player, cardId)
@@ -180,6 +180,8 @@ export const removeCardFromHand = (player: PlayerState, cardId?: string) => {
     const card = player.hand.find((card: CardInGame, i: number) => {
         return `${player.player.id}-card-in-hand-${i}` === cardId
     })
+    if (!card)
+        throw new Error(`Expected to find card ${cardId} in hand`)
     player.hand = player.hand.filter((c: CardInGame) => c !== card)
     return card
 }

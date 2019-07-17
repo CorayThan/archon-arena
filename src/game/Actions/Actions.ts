@@ -1,8 +1,8 @@
-import { shuffle } from "lodash"
+import {shuffle} from "lodash"
 import Action from "../../shared/Action"
-import { CardInGame } from "../../shared/gamestate/CardInGame"
-import { GameState, PlayerState as Player } from "../../shared/gamestate/GameState"
-import { AEvent } from "../AEvent"
+import {CardInGame} from "../../shared/gamestate/CardInGame"
+import {GameState, PlayerState as Player} from "../../shared/gamestate/GameState"
+import {AEvent} from "../AEvent"
 import {
     discardCardsUnderneath,
     discardCreatureUpgrades,
@@ -19,30 +19,33 @@ import {
     removeCardFromHand,
 } from "../StateUtils"
 import ArtifactActions from "./Artifact"
-
 import CreatureActions from "./Creature"
+import {cardScripts} from "../../card-scripts/CardScripts"
 
 export const exec = (action: Action, state: GameState) => {
 
     const actionHandlers: { [key: string]: Function } = {
-        [AEvent.PlayUpgrade]: () => {
-            const owner: Player = getCardOwner(action.upgradeId!, state)
-            const upgrade = getCardInHandById(owner, action.upgradeId)
-            if (!upgrade)
-                throw new Error(`Card ${action.upgradeId} not found in hand`)
-            const creature = getCreatureById(owner, action.creatureId)
-            if (!creature)
-                throw new Error(`Card ${action.creatureId} not found in field`)
-            creature.upgrades.push(upgrade)
-            removeCardFromHand(owner, action.upgradeId)
-        },
         [AEvent.PlayAction]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInHandById(owner, action.cardId)
-            if (!card)
-                throw new Error(`Card ${action.cardId} not found in hand`)
+            const cardScript = cardScripts.scripts.get(card!.id)
+            if (cardScript) {
+                if (cardScript.amber) {
+                    owner.amber += cardScript.amber(state)
+                }
+                if (cardScript.onPlay && cardScript.onPlay.perform) {
+                    cardScript.onPlay.perform(state, {timesExecuted: 0})
+                }
+            }
             removeCardFromHand(owner, action.cardId)
-            owner.discard.push(card)
+            owner.discard.push(card!)
+        },
+        [AEvent.PlayUpgrade]: () => {
+            const owner: Player = getCardOwner(action.upgradeId!, state)
+            const upgrade = getCardInHandById(owner, action.upgradeId)
+            const creature = getCreatureById(owner, action.creatureId)
+            creature!.upgrades.push(upgrade!)
+            removeCardFromHand(owner, action.upgradeId)
         },
         [AEvent.ShuffleDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
@@ -179,5 +182,6 @@ export const exec = (action: Action, state: GameState) => {
                 }
         })
 
-    actionHandlers[action.type](action, state)
+    const fn = actionHandlers[action.type]
+    fn(action, state)
 }

@@ -1,4 +1,4 @@
-import {CardScript} from "./CardScript"
+import {CardScript} from "./types/CardScript"
 
 export class CardScripts {
 

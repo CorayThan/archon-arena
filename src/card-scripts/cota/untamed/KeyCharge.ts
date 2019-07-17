@@ -1,14 +1,16 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {activePlayerState, modifyAmber} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+import {activePlayerState} from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
         perform: (state) => {
-            modifyAmber(activePlayerState(state), -1)
-            if (activePlayerState(state).amber >= activePlayerState(state).keyCost) {
-                modifyAmber(activePlayerState(state), -(activePlayerState(state).keyCost))
-                activePlayerState(state).keys += 1
+            const player = activePlayerState(state)
+            player.amber -= 1
+            // TODO this will need to use a "key cost calculation" / "can forge" reusable function
+            if (player.amber > 5) {
+                player.amber -= 6
+                player.keys++
             }
         }
     }
