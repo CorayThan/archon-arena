@@ -9,7 +9,7 @@ const cardScript: CardScript = {
         validTargets: (state, config) => {
             const friendlies = friendlyCreatures(state)
             return friendlies
-            .filter(creature => creature.traits.includes("Giant") && creature.id !== config.thisCard.id)
+                .filter(creature => creature.traits.includes("Giant") && creature.id !== config.thisCard.id)
 
         },
         numberOfTargets: () => 1,

@@ -1,5 +1,4 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
 import {enemyCreatures, enemyPlayer, friendlyCreatures, friendlyPlayer} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {

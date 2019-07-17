@@ -14,7 +14,7 @@ const cardScript: CardScript = {
         perform: (state, config) => {
             const target = config.targets[0] as Creature
             exhaustCard(target)
-            activePlayerState(state).amber += Math.floor(target.power/2)
+            activePlayerState(state).amber += Math.floor(target.power / 2)
         }
     }
 }
