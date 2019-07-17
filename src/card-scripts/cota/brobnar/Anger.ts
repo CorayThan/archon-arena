@@ -4,7 +4,7 @@ import {Creature} from "../../../shared/gamestate/Creature"
 import {fightUsingCreature, friendlyCreatures, readyCreature} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    amber: () =>  1,
+    amber: () => 1,
     onPlay: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,

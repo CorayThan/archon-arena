@@ -3,6 +3,7 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     amber: () => 1,
+    hazardous: () => true,
 
 }
 

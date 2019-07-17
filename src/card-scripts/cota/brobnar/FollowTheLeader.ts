@@ -6,7 +6,7 @@ const cardScript: CardScript = {
     onPlay: {
         perform: (state) => {
             friendlyCreatures(state)
-            .forEach(creature => enableFighting(creature))
+                .forEach(creature => enableFighting(creature))
         }
     }
 }

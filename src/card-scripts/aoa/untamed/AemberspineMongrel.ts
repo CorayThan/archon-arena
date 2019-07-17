@@ -3,6 +3,7 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 3,
+    hazardous: () => true,
 
 }
 

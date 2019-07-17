@@ -3,6 +3,7 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 11,
+    taunt: () => true,
     reap: {
         perform: (state, config) => {
             //Add reap code here

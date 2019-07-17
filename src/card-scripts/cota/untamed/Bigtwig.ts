@@ -14,8 +14,9 @@ const cardScript: CardScript = {
         },
     },
     fight: {
-        validTargets: (state) => enemyCreatures(state).filter(creature => creature.tokens.stun >0),
-        perform: () => {}
+        validTargets: (state) => enemyCreatures(state).filter(creature => creature.tokens.stun > 0),
+        perform: () => {
+        }
     }
 }
 

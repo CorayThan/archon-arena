@@ -3,6 +3,7 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     amber: () => 1,
+    omega: () => true,
     onPlay: {
         perform: (state, config) => {
             //Add onPlay code here

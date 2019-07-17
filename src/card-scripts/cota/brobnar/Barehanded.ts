@@ -3,7 +3,7 @@ import {CardScript} from "../../types/CardScript"
 import {allArtifacts, putOnTopOfDeck} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    amber: () =>  1,
+    amber: () => 1,
     onPlay: {
         validTargets: allArtifacts,
         numberOfTargets: (state) => {

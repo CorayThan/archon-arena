@@ -15,14 +15,14 @@ const cardScript: CardScript = {
             if (enemyCreatures(state).length > 0) {
                 const mostPowerfulEnemy = getMostPowerful(enemyCreatures(state), 1)[0]
                 enemyCreatures(state)
-                .filter(creature => creature.id !== mostPowerfulEnemy.id)
-                .forEach(creature => destroyCard(creature))                
+                    .filter(creature => creature.id !== mostPowerfulEnemy.id)
+                    .forEach(creature => destroyCard(creature))
             }
             if (friendlyCreatures(state).length > 0) {
                 const mostPowerfulFriendly = getMostPowerful(friendlyCreatures(state), 1)[0]
                 friendlyCreatures(state)
-                .filter(creature => creature.id !== mostPowerfulFriendly.id)
-                .forEach(creature => destroyCard(creature))
+                    .filter(creature => creature.id !== mostPowerfulFriendly.id)
+                    .forEach(creature => destroyCard(creature))
                 readyCreature(mostPowerfulFriendly)
                 fightUsingCreature(mostPowerfulFriendly)
             }

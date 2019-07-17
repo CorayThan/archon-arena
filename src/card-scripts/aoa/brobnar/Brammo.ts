@@ -7,8 +7,8 @@ const cardScript: CardScript = {
     onPlay: {
         perform: (state) => {
             enemyCreatures(state)
-            .filter(creature => onFlank(enemyCreatures(state), creature))
-            .forEach(creature => dealDamage(creature, 2))
+                .filter(creature => onFlank(enemyCreatures(state), creature))
+                .forEach(creature => dealDamage(creature, 2))
         }
     }
 }

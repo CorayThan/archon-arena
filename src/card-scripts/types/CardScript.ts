@@ -1,5 +1,5 @@
-import { AnyCardInGame, CardInGame } from "../../shared/gamestate/CardInGame"
-import { GameState } from "../../shared/gamestate/GameState"
+import {AnyCardInGame, CardInGame} from "../../shared/gamestate/CardInGame"
+import {GameState} from "../../shared/gamestate/GameState"
 
 export interface CardScript {
 

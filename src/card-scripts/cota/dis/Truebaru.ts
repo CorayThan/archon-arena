@@ -3,9 +3,10 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     power: () => 7,
-    destroyed: {
+    taunt: () => true,
+    fight: {
         perform: (state, config) => {
-            //Add destoryed code here
+            //Add onDestroyed code here
         }
     },
 

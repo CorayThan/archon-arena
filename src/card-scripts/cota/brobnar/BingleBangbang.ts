@@ -4,7 +4,7 @@ import {Creature} from "../../../shared/gamestate/Creature"
 import {dealDamage, enemyCreatures, getNeighbors} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    power: () =>  2,
+    power: () => 2,
     beforeFight: {
         perform: (state, config) => {
             const neighbors = getNeighbors(enemyCreatures(state), config.targets[0] as Creature)

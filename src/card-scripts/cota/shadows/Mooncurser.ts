@@ -4,6 +4,7 @@ import {cardScripts} from "../../types/CardScripts"
 const cardScript: CardScript = {
     power: () => 1,
     skirmish: () => true,
+    poison: () => true,
     fight: {
         perform: (state, config) => {
             //Add fight code here

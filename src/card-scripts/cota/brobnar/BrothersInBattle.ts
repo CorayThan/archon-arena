@@ -10,9 +10,9 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state, config) => {
             const chosenHouse = config.targets[0] as House
-        	friendlyCreatures(state)
-        	.filter(creature => creature.backingCard.house == chosenHouse)
-        	.forEach(creature => enableFighting(creature))
+            friendlyCreatures(state)
+                .filter(creature => creature.backingCard.house == chosenHouse)
+                .forEach(creature => enableFighting(creature))
         }
     }
 }

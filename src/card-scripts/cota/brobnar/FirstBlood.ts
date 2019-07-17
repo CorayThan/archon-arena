@@ -5,8 +5,8 @@ import {House} from "../../../shared/keyforge/house/House"
 import {allCreatures, dealDamage, friendlyCreatures} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-	amber: () => 1,
-	alpha: () => true,
+    amber: () => 1,
+    alpha: () => true,
     onPlay: {
         validTargets: allCreatures,
         numberOfTargets: (state) => {

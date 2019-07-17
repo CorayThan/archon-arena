@@ -7,7 +7,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state) => {
-            if(enemyCards(state).filter(card => card.backingCard.house === House.Logos).length >= 3) {
+            if (enemyCards(state).filter(card => card.backingCard.house === House.Logos).length >= 3) {
                 steal(state, 2)
             }
         }

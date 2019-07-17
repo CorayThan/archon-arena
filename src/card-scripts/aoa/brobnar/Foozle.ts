@@ -6,7 +6,7 @@ const cardScript: CardScript = {
     reap: {
         perform: (state) => {
             if (enemyCreatureDiedThisTurn(state))
-            	activePlayerState(state).amber++
+                activePlayerState(state).amber++
         }
     }
 }

@@ -9,7 +9,7 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-           stunCreature(config.targets[0] as Creature)
+            stunCreature(config.targets[0] as Creature)
         }
     }
 }

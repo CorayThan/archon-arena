@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     onPlay: {
         perform: (state) => {
             let endSearching = false
-            while(!endSearching && activePlayerState(state).library.length > 0) {
+            while (!endSearching && activePlayerState(state).library.length > 0) {
                 let discardedCard = discardTopCard(state, true)
                 if ((discardedCard as Creature).power && discardedCard.backingCard.house === House.Brobnar) {
                     endSearching = true

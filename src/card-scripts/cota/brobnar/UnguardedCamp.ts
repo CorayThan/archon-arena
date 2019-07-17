@@ -14,7 +14,7 @@ const cardScript: CardScript = {
         },
         chosenTargetsAreValid: (targets, state) => {
             return friendlyCreatures(state).length - enemyCreatures(state).length === targets.length
-            && new Set(targets).size === targets.length
+                && new Set(targets).size === targets.length
         },
         uniqueTargets: () => true,
         perform: (state, config) => {

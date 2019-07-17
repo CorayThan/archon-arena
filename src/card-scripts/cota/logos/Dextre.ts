@@ -8,9 +8,9 @@ const cardScript: CardScript = {
             //Add onPlay code here
         }
     },
-    destroyed: {
+    fight: {
         perform: (state, config) => {
-            //Add destoryed code here
+            //Add onDestroyed code here
         }
     },
 

@@ -19,7 +19,7 @@ const cardScript: CardScript = {
         perform: (state, config) => {
             let destroyedPower = 0
             config.targets.forEach(creature => {
-                if(destroyCard(creature))
+                if (destroyCard(creature))
                     destroyedPower += (creature as Creature).power
             })
             if (destroyedPower >= 25)

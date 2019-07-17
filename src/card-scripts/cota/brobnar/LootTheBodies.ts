@@ -3,9 +3,9 @@ import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
     runAfterAnyActionThisTurn: {
-    	perform: (state, config) => {
-    		//TODO if action = enemy creature destroyed
-    	}
+        perform: (state, config) => {
+            //TODO if action = enemy creature destroyed
+        }
     }
 }
 
