@@ -6,8 +6,10 @@ const cardScript: CardScript = {
     power: () => 2,
     staticEffect: (state) => {
         //TODO if action; creature entering board
-        if (friendlyCreatures.enter) {
-            modifyAmber(activePlayerState(state), 1)
+        if (config.thisCard.ownerId === activePlayerState(state).id) {
+            if (friendlyCreatures.enter) {
+                modifyAmber(activePlayerState(state), 1)
+            }
         }
     }
 }

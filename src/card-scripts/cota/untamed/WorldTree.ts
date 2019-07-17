@@ -1,17 +1,17 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {activePlayerState, destroyCard, putInHand} from "../../ScriptUtils"
+import {activePlayerState, putOnTopOfDeck} from "../../ScriptUtils"
 import {CardInGame} from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
-    omni: {
+    action: {
         validTargets: (state) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            destroyCard(config.thisCard)
-            config.targets.forEach(target => putInHand(target as CardInGame))
+            config.targets.forEach(target => putOnTopOfDeck(target as CardInGame))
         }
-    }
+    },
+
 }
 
-cardScripts.scripts.set("nepenthe-seed", cardScript)
+cardScripts.scripts.set("world-tree", cardScript)

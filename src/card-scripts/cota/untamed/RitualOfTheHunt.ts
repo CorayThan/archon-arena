@@ -2,6 +2,7 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 import {destroyCard, enableUse, friendlyCreatures} from "../../types/ScriptUtils"
 import {Creature} from "../../../shared/gamestate/Creature"
+import {House} from "../../../shared/keyforge/house/House"
 //TODO add enableUse to Utils
 const cardScript: CardScript = {
     amber: () => 1,
@@ -9,8 +10,7 @@ const cardScript: CardScript = {
         perform: (state, config) => {
             destroyCard(config.thisCard)
             friendlyCreatures(state)
-            //TODO add house to Creature
-                .filter(creature => creature.house === "Untamted")
+                .filter(card => card.backingCard.house === House.Untamed)
                 .forEach(target => enableUse(target as Creature))
         }
     }
