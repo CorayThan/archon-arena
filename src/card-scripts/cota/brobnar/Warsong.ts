@@ -2,12 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
+    runAfterAnyActionThisTurn: {
         perform: (state, config) => {
-            //Add onPlay code here
+            //TODO if action = friendly creature fights
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("warsong", cardScript)

@@ -1,13 +1,14 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
+import {destroyCard, enemyPlayer, modifyAmber} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
-    onOmni: {
+    omni: {
         perform: (state, config) => {
-            //Add onOmni code here
+            destroyCard(config.thisCard)
+            modifyAmber(enemyPlayer(state, config.thisCard), -2)
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("screechbomb", cardScript)

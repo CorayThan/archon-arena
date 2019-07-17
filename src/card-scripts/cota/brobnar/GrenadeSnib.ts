@@ -1,14 +1,14 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../types/CardScripts"
+import {enemyPlayer, modifyAmber} from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 2,
-    onFight: {
+    destroyed: {
         perform: (state, config) => {
-            //Add onDestroyed code here
+            modifyAmber(enemyPlayer(state, config.thisCard), -2)
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("grenade-snib", cardScript)

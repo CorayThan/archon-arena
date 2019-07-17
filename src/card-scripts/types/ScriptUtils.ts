@@ -21,31 +21,11 @@ export const enemyCreatures = (state: GameState): Creature[] => {
 }
 
 export const allCreatures = (state: GameState): Creature[] => {
-    return friendlyCreatures(state).concat(enemyCreatures(state))
-}
-
-export const friendlyArtifacts = (state: GameState): Artifact[] => {
-    return activePlayerState(state).artifacts
-}
-
-export const enemyArtifacts = (state: GameState): Artifact[] => {
-    return inactivePlayerState(state).artifacts
+    return activePlayerState(state).creatures.concat(inactivePlayerState(state).creatures)
 }
 
 export const allArtifacts = (state: GameState): Artifact[] => {
-    return friendlyArtifacts(state).concat(enemyArtifacts(state))
-}
-
-
-export const enemyUpgrades = (state: GameState): CardInGame[] => {
-    //TODO
-    return []
-}
-
-export const enemyCards = (state: GameState): CardInGame[] => {
-    return enemyCreatures(state).map(creature => creature as CardInGame)
-        .concat(enemyArtifacts(state).map(artifact => artifact as CardInGame))
-        .concat(enemyUpgrades(state))
+    return activePlayerState(state).artifacts.concat(inactivePlayerState(state).artifacts)
 }
 
 export const friendlyPlayer = (state: GameState, card: CardInGame): PlayerState => {
@@ -53,7 +33,7 @@ export const friendlyPlayer = (state: GameState, card: CardInGame): PlayerState 
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
         || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
-    )
+        )
         return playerOneState
     else
         return state.playerTwoState
@@ -64,7 +44,7 @@ export const enemyPlayer = (state: GameState, card: CardInGame): PlayerState => 
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
         || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
-    )
+        )
         return state.playerTwoState
     else
         return playerOneState
@@ -98,7 +78,7 @@ export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame 
         removed = remove(playerState.library, check)
         if (removed.length > 0) {
             return removed[0]
-        }
+        }   
     })
     throw new Error("Couldn't find card with id " + card.id)
 }
@@ -113,9 +93,8 @@ export const stunCreature = (creature: Creature) => {
     creature.tokens.stun = 1
 }
 
-export const destroyCard = (card: CardInGame):boolean => {
-    //TODO, the return statement says whether the card was actually destroyed
-    return true
+export const destroyCard = (card: CardInGame) => {
+    //TODO
 }
 
 export const readyCreature = (creature: Creature) => {
@@ -191,7 +170,8 @@ export const discardTopCard = (state: GameState, activePlayer: boolean): CardInG
 }
 
 export const captureAmber = (state: GameState, creature: Creature, amount: number) => {
-    creature.tokens.amber += modifyAmber(enemyPlayer(state, creature), amount)
+    //I feel like cards should have a reference to their controller somehow...
+    //TODO
 }
 
 export const mustFightWhenUsedIfAble = (creature: Creature) => {
@@ -208,32 +188,10 @@ export const exhaustCard = (card: Creature | Artifact) => {
     card.ready = false
 }
 
-export const modifyAmber = (playerState: PlayerState, amount: number):number => {
-    const actualChange = playerState.amber + amount >= 0 ? amount : playerState.amber
-    playerState.amber = playerState.amber + actualChange
-    return actualChange
+export const modifyAmber = (playerState: PlayerState, amount: number) => {
+    playerState.amber = Math.max(playerState.amber + amount, 0)
 }
 
 export const shuffleDeck = (state: GameState) => {
     //TODO
-}
-
-export const numberOfCardsPlayedThisTurn = (state: GameState):number => {
-    //TODO
-    return 0
-}
-
-export const healCreature = (creature: Creature, amount:number):number => {
-    const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage
-    creature.tokens.damage = creature.tokens.damage - actualChange
-    return actualChange
-}
-
-export const amountOfShards = (state: GameState):number => {
-    return friendlyArtifacts(state)
-        .filter(artifact => (artifact as Artifact).backingCard.traits.includes("Shard")).length
-}
-
-export const steal = (state: GameState, amount: number):number => {
-    return modifyAmber(activePlayerState(state), modifyAmber(inactivePlayerState(state), amount))
 }

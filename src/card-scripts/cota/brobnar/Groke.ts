@@ -1,14 +1,15 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../types/CardScripts"
-import {activePlayerState, modifyAmber} from "../../types/ScriptUtils"
+import { inactivePlayerState } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 5,
     fight: {
         perform: (state) => {
-            modifyAmber(activePlayerState(state), 1)
+            if (inactivePlayerState(state).amber > 0)
+                inactivePlayerState(state).amber--
         }
     }
 }
 
-cardScripts.scripts.set("headhunter", cardScript)
+cardScripts.scripts.set("groke", cardScript)

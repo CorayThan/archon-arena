@@ -1,13 +1,17 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
+import { cardScripts } from "../../types/CardScripts"
+import { CardScript} from "../../types/CardScript"
+import { allCreatures, destroyCard, activePlayerState, gainChains } from "../../types/ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
+        perform: (state) => {
+        	const creaturesInPlay = allCreatures(state)
+        	creaturesInPlay
+        	.filter(creature => creature.tokens.damage === 0)
+        	.forEach(creature => destroyCard(creature))
+        	gainChains(activePlayerState(state), 3)
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("cowards-end", cardScript)

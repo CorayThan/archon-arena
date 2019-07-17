@@ -1,13 +1,12 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
+import { CardScript, TargetArea, TargetType } from "../../types/CardScript"
+import { cardScripts } from "../../types/CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
-
+    runAfterAnyActionThisTurn: {
+    	perform: (state, config) => {
+    		//TODO if action = enemy creature destroyed
+    	}
+    }
 }
 
 cardScripts.scripts.set("loot-the-bodies", cardScript)
