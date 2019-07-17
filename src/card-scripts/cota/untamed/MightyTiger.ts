@@ -1,11 +1,15 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
+import {dealDamage, enemyCreatures} from "../../types/ScriptUtils"
+import {Creature} from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     power: () => 4,
     onPlay: {
+        validTargets: enemyCreatures,
+        numberOfTargets: () => 1,
         perform: (state, config) => {
-            //Add onPlay code here
+            config.targets.forEach(target => dealDamage(target as Creature, 4))
         }
     },
 

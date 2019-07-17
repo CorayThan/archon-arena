@@ -6,8 +6,7 @@ const cardScript: CardScript = {
         perform: (state, config) => {
             //TODO
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("bear-flute", cardScript)

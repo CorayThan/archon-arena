@@ -5,10 +5,9 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state, config) => {
-            //Add onPlay code here
+            //TODO
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("lifeweb", cardScript)
