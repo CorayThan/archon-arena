@@ -1,6 +1,6 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
-import {allCreatures, stunCreature, exhaustCard, enemyCreatures} from "../../types/ScriptUtils"
+import {allCreatures, enemyCreatures, exhaustCard, stunCreature} from "../../types/ScriptUtils"
 import {Creature} from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -9,13 +9,20 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            stunCreature(config.targets[0] as Creature)
-            exhaustCard(config.targets[0] as Creature)
-        },
+            config.targets.forEach(target => stunCreature(target as Creature))
+            config.targets.forEach(target => exhaustCard(target as Creature))
+        }
     },
     fight: {
+<<<<<<< HEAD
         validTargets: (state) => enemyCreatures(state).filter(creature => creature.tokens.stun >0),
         perform: () => {}
+=======
+        //TODO can only fight stunned
+        validTargets: (state) => enemyCreatures(state).filter(creature => creature.tokens.stun > 0),
+        perform: () => {
+        }
+>>>>>>> 4cbad0f... untamed Stuff
     }
 }
 

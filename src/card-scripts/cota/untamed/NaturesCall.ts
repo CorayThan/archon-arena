@@ -1,17 +1,17 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../types/CardScripts"
+import {allCreatures, putInHand} from "../../types/ScriptUtils"
 import {Creature} from "../../../shared/gamestate/Creature"
-import {allCreatures, dealDamage, friendlyCreatures} from "../../types/ScriptUtils"
-
 
 const cardScript: CardScript = {
+    amber: () => 1,
     onPlay: {
         validTargets: allCreatures,
-        numberOfTargets: () => friendlyCreatures.length,
+        numberOfTargets: () => 3,
         perform: (state, config) => {
-            config.targets.forEach(target => dealDamage(target as Creature, 1))
+            config.targets.forEach(target => putInHand(target as Creature))
         }
     }
 }
 
-cardScripts.scripts.set("cooperative-hunting", cardScript)
+cardScripts.scripts.set("natures-call", cardScript)
