@@ -7,7 +7,7 @@ const cardScript: CardScript = {
     elusive: () => true,
     reap: {
         perform: (state, config) => {
-            const target = config!.targets![0]
+            const target = config.targets!![0]
             putInArchives(state, target, true)
         },
         validTargets: enemyCreatures

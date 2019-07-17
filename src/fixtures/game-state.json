@@ -6,6 +6,7 @@
   },
   "playerOneState": {
     "amber": 3,
+    "keyCost": 6,
     "archives": [],
     "artifacts": [],
     "chains": 0,
@@ -691,6 +692,7 @@
   },
   "playerTwoState": {
     "amber": 4,
+    "keyCost": 6,
     "archives": [],
     "artifacts": [],
     "chains": 0,

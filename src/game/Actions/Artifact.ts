@@ -2,11 +2,11 @@ import Action from "../../shared/Action"
 import { Artifact } from "../../shared/gamestate/Artifact"
 import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState } from "../../shared/gamestate/GameState"
-import { AEvent } from "../AEvent"
+import { GameEvent } from "../GameEvent"
 import { getArtifactById, getCardInHandById, getCardOwner, getPlayerById, removeArtifact, removeCardFromHand } from "../StateUtils"
 
 export default {
-    [AEvent.PlayArtifact]: (action: Action, state: GameState) => {
+    [GameEvent.PlayArtifact]: (action: Action, state: GameState) => {
         const owner = getCardOwner(action.cardId!, state)
         const card = getCardInHandById(owner, action.cardId!)
         if (!card)
@@ -29,14 +29,14 @@ export default {
         player.artifacts.push(artifact)
         removeCardFromHand(owner, action.cardId)
     },
-    [AEvent.UseArtifact]: (action: Action, state: GameState) => {
+    [GameEvent.UseArtifact]: (action: Action, state: GameState) => {
         const owner = getCardOwner(action.cardId!, state)
         const artifact = getArtifactById(owner, action.cardId)
         if (!artifact)
             throw new Error(`Card ${action.cardId} not found in hand`)
         artifact.ready = !artifact.ready
     },
-    [AEvent.MoveArtifactToHand]: (action: Action, state: GameState) => {
+    [GameEvent.MoveArtifactToHand]: (action: Action, state: GameState) => {
         const owner = getCardOwner(action.cardId!, state)
         const artifact = getArtifactById(owner, action.cardId)
         if (!artifact)
