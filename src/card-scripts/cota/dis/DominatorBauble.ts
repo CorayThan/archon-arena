@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    action: {
-        perform: (state, config) => {
-            //Add action code here
-        }
-    },
+//TODO Action: Use a friendly creature.
+	action: {
+		perform: (state, config) => {
+        //Add action code here
+}	},
 
 }
 

@@ -2,18 +2,17 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    power: () => 4,
-    armor: () => 1,
-    reap: {
-        perform: (state, config) => {
-            //Add reap code here
-        }
-    },
-    fight: {
-        perform: (state, config) => {
-            //Add fight code here
-        }
-    },
+	power: () =>  4,
+	armor: () =>  1,
+//TODO Your opponent’s keys cost +1<A>.Fight/Reap: Capture 1<A>.
+	reap: {
+		perform: (state, config) => {
+        //Add reap code here
+}	},
+	fight: {
+		perform: (state, config) => {
+        //Add fight code here
+}	},
 
 }
 

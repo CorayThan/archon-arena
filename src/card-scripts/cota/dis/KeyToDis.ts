@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    omni: {
-        perform: (state, config) => {
-            //Add omni code here
-        }
-    },
+//TODO Omni: Sacrifice Key to Dis. Destroy each creature.
+	omni: {
+		perform: (state, config) => {
+        //Add omni code here
+}	},
 
 }
 

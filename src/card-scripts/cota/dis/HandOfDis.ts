@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+//TODO Play: Destroy a creature that is not on a flank.
+	onPlay: {
+		perform: (state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 

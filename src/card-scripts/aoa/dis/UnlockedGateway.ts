@@ -2,12 +2,14 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    omega: () => true,
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+	omega: () =>  true,
+//TODO Omega. (After you play this card,
+end this step.)
+Destroy each creature.
+	onPlay: {
+		(state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 

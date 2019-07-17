@@ -2,12 +2,12 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    power: () => 5,
-    action: {
-        perform: (state, config) => {
-            //Add action code here
-        }
-    },
+	power: () =>  5,
+//TODO Action: Steal 1A.
+	action: {
+		perform: (state, config) => {
+        //Add action code here
+}	},
 
 }
 

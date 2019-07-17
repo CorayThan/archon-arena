@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+//TODO Play: Stun each non-Mars creature. Gain 2 chains.
+	onPlay: {
+		perform: (state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 

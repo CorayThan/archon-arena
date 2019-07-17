@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+//TODO Play: Ready and fight with a friendly creature. Deal 2D to the attacked creature’s neighbors.
+	onPlay: {
+		perform: (state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 

@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+//TODO Play: Destroy each creature with power 3 or higher.
+	onPlay: {
+		perform: (state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 

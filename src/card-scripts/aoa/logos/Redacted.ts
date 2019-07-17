@@ -1,6 +1,9 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
-const cardScript: CardScript = {}
+const cardScript: CardScript = {
+//TODO After you choose Logos as your active house, place 1A from the common supply on [REDACTED]. When there are 4 or more A on [REDACTED], sacrifice it and forge a key at no cost.
+
+}
 
 cardScripts.scripts.set("redacted", cardScript)

@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    reap: {
-        perform: (state, config) => {
-            //Add reap code here
-        }
-    },
+//TODO This creature gains, “Reap: Steal 1<A>.” 
+	reap: {
+		perform: (state, config) => {
+        //Add reap code here
+}	},
 
 }
 

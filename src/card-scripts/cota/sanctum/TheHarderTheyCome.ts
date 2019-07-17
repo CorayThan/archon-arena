@@ -2,11 +2,11 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+//TODO Play: Purge a creature with power 5 or higher.
+	onPlay: {
+		perform: (state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 

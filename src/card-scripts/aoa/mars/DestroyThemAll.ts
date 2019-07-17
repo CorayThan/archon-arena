@@ -2,11 +2,12 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+//TODO Play: Destroy an artifact, a creature,
+and an upgrade.
+	onPlay: {
+		(state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 

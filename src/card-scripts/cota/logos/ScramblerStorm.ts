@@ -2,12 +2,12 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-    amber: () => 1,
-    onPlay: {
-        perform: (state, config) => {
-            //Add onPlay code here
-        }
-    },
+	amber: () =>  1,
+//TODO Play: Your opponent cannot play action cards on their next turn.
+	onPlay: {
+		perform: (state, config) => {
+        //Add onPlay code here
+}	},
 
 }
 
