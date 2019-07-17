@@ -1,24 +1,24 @@
+# Archon Arena
+
+![https://i.imgur.com/Kn5La99.png](https://i.imgur.com/Kn5La99.png)
+
 ## Frontend
 
-### Install
+### Setup
 
-`yarn`
+```
+yarn
+```
 
 ### Run locally
 
-`npm start`
+1. Open _src/matchmaking/GameRenderer.tsx_
+2. Follow the instructions in the file
+3. `yarn start`
 
-### Deploy (This deploys everything, including functions)
+## Backend Functions
 
-```
-firebase login
-npm run build
-firebase deploy
-```
-
-## Functions
-
-Inside the `functions` directory.
+The code inside `functions` usually does not need to be changed.
 
 ### Install
 
@@ -26,10 +26,18 @@ Inside the `functions` directory.
 yarn
 ```
 
-### Run Locally
+### Run locally
 
 Get the file "forge-of-the-archons-firebase-adminsdk-key.json" from someone and drop it in `/functions`
 
 ```
-npm run serve
+yarn serve
+```
+
+## Deploy
+
+```
+firebase login
+yarn build
+firebase deploy
 ```

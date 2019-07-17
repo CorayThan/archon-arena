@@ -3,7 +3,6 @@ import { PlayerInfo } from "../Player"
 import { Artifact } from "./Artifact"
 import { CardInGame } from "./CardInGame"
 import { Creature } from "./Creature"
-import { Phase } from "./Phase"
 
 // TODO store started at date
 export interface GameState {
@@ -11,7 +10,6 @@ export interface GameState {
     turn: number
     startingPlayer: PlayerInfo
     activePlayer: PlayerInfo
-    phase: Phase
     playerOneState: PlayerState
     playerTwoState: PlayerState
 
