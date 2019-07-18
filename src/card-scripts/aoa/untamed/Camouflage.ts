@@ -2,8 +2,8 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 
 const cardScript: CardScript = {
-	amber: () =>  1,
-//TODO Creatures not on a flank cannot fight this creature.
+    // Creatures not on a flank cannot fight this creature.
+    amber: () => 1,
 
 }
 
