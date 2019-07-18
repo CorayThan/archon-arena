@@ -1,5 +1,5 @@
-import { KCard } from "../keyforge/card/KCard"
-import { CardInGame } from "./CardInGame"
+import {KCard} from "../keyforge/card/KCard"
+import {CardInGame} from "./CardInGame"
 
 export interface Creature extends CardInGame {
     id: string
@@ -8,8 +8,13 @@ export interface Creature extends CardInGame {
 
     // TODO remove, get from script
     taunt: boolean
+    elusive: boolean
+    skirmish: boolean
+    poison: boolean
+    deploy: boolean
 
     power: number
+    hazardous: number
     traits: string[]
     upgrades: CardInGame[]
     cardsUnderneath: CardInGame[]

@@ -1,8 +1,8 @@
-import { shuffle } from "lodash"
+import {shuffle} from "lodash"
 import Action from "../../shared/Action"
-import { CardInGame } from "../../shared/gamestate/CardInGame"
-import { GameState, PlayerState as Player } from "../../shared/gamestate/GameState"
-import { AEvent } from "../AEvent"
+import {CardInGame} from "../../shared/gamestate/CardInGame"
+import {GameState, PlayerState as Player} from "../../shared/gamestate/GameState"
+import {AEvent} from "../AEvent"
 import {
     discardCardsUnderneath,
     discardCreatureUpgrades,
@@ -20,7 +20,7 @@ import {
 } from "../StateUtils"
 import ArtifactActions from "./Artifact"
 import CreatureActions from "./Creature"
-import { cardScripts } from "../../card-scripts/CardScripts"
+import {cardScripts} from "../../card-scripts/CardScripts"
 
 export const exec = (action: Action, state: GameState) => {
 
@@ -34,7 +34,7 @@ export const exec = (action: Action, state: GameState) => {
                     owner.amber += cardScript.amber(state)
                 }
                 if (cardScript.onPlay && cardScript.onPlay.perform) {
-                    cardScript.onPlay.perform(state, { timesExecuted: 0 })
+                    cardScript.onPlay.perform(state, {timesExecuted: 0})
                 }
             }
             removeCardFromHand(owner, action.cardId)

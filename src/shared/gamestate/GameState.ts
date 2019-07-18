@@ -1,8 +1,8 @@
-import { StatusEffect } from "../GameStatusEffect"
-import { PlayerInfo } from "../Player"
-import { Artifact } from "./Artifact"
-import { CardInGame } from "./CardInGame"
-import { Creature } from "./Creature"
+import {StatusEffect} from "../GameStatusEffect"
+import {PlayerInfo} from "../Player"
+import {Artifact} from "./Artifact"
+import {CardInGame} from "./CardInGame"
+import {Creature} from "./Creature"
 
 // TODO store started at date
 export interface GameState {
@@ -25,6 +25,7 @@ export interface PlayerState {
     amber: number,
     chains: number,
     keys: number,
+    handSize: number,
     library: CardInGame[]
     hand: CardInGame[]
     discard: CardInGame[]
