@@ -1,4 +1,4 @@
-import {shuffle} from "lodash"
+import {ceil, shuffle} from "lodash"
 import Action from "../../shared/Action"
 import {CardInGame} from "../../shared/gamestate/CardInGame"
 import {GameState, PlayerState as Player} from "../../shared/gamestate/GameState"
