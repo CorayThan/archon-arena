@@ -6,7 +6,9 @@ const cardScript: CardScript = {
     // A stolen or captured from your pool is taken from the common supply instead.
     power: () => 1,
     elusive: () => true,
-
+    staticEffect: () => {
+        //TODO redirect or re-add steal/capture amber
+    }
 }
 
 cardScripts.scripts.set("pos-pixies", cardScript)
