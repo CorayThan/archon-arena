@@ -153,6 +153,7 @@ export const exec = (action: Action, state: GameState) => {
             const player = getPlayerById(action.player!.id, state)
             player.chains += action.amount!
             player.chains = Math.max(player.chains, 0)
+            player.handSize = 6 - ceil(player.chains / 6)
         },
         [AEvent.AlterPlayerAmber]: () => {
             const player = getPlayerById(action.player!.id, state)
