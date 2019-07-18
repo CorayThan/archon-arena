@@ -1,8 +1,8 @@
-import {remove} from "lodash"
-import {CardInGame} from "../../shared/gamestate/CardInGame"
-import {Creature} from "../../shared/gamestate/Creature"
-import {Artifact} from "../../shared/gamestate/Artifact"
-import {GameState, PlayerState} from "../../shared/gamestate/GameState"
+import {remove, shuffle, slice, take} from "lodash"
+import {CardInGame} from "../shared/gamestate/CardInGame"
+import {Creature} from "../shared/gamestate/Creature"
+import {Artifact} from "../shared/gamestate/Artifact"
+import {GameState, PlayerState} from "../shared/gamestate/GameState"
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -109,6 +109,18 @@ export const putInArchives = (state: GameState, card: CardInGame, friendlyArchiv
     myState.archives.push(toAdd)
 }
 
+export const purgeCard = (state: GameState, card: CardInGame, friendly: boolean) => {
+    const toAdd = removeAndReturn(state, card)
+    const myState = friendly ? activePlayerState(state) : inactivePlayerState(state)
+    myState.purged.push(toAdd)
+}
+
+export const discardCard = (state: GameState, card: CardInGame, friendly: boolean) => {
+    const toAdd = removeAndReturn(state, card)
+    const myState = friendly ? activePlayerState(state) : inactivePlayerState(state)
+    myState.discard.push(toAdd)
+}
+
 export const stunCreature = (creature: Creature) => {
     creature.tokens.stun = 1
 }
@@ -167,9 +179,9 @@ export const enableFighting = (creature: Creature) => {
     //TODO
 }
 
-export const getMostPowerful = (creatures: Creature[], amount: number): Creature[] => {
-    creatures.sort((a, b) => a.power - b.power)
-    return creatures.slice(amount)
+export const getMostPowerful = (creatures: Creature[]): Creature[] => {
+    return creatures.sort((a, b) => a.power - b.power)
+        .filter(creature => creature.power >= creatures[0].power)
 }
 
 export const putInHand = (card: CardInGame) => {
@@ -214,8 +226,21 @@ export const modifyAmber = (playerState: PlayerState, amount: number): number =>
     return actualChange
 }
 
-export const shuffleDeck = (state: GameState) => {
-    //TODO
+export const drawHand = (playerState: PlayerState) => {
+    const amount = playerState.handSize - playerState.hand.length
+    if (0 >= amount) return
+    drawCards(playerState, amount)
+    playerState.chains--
+}
+
+export const drawCards = (playerState: PlayerState, amount: number) => {
+    if (playerState.library.length < amount) {
+        amount = amount - playerState.library.length
+        playerState.hand.concat(playerState.library)
+        playerState.library = shuffle(playerState.discard)
+    }
+    playerState.hand.concat(take(playerState.library, amount))
+    playerState.library = slice(playerState.library, 0, amount - 1)
 }
 
 export const numberOfCardsPlayedThisTurn = (state: GameState): number => {
@@ -234,6 +259,19 @@ export const amountOfShards = (state: GameState): number => {
         .filter(artifact => (artifact as Artifact).backingCard.traits.includes("Shard")).length
 }
 
+export const creaturesWithTrait = (state: GameState, type: string, trait: string): Creature[] => {
+    const creatures = (type === 'enemy' ? enemyCreatures(state) :
+        (type === "friendly" ? friendlyCreatures(state) : allCreatures(state)))
+    return creatures.filter(creature => (creature as Creature).traits.includes(trait))
+}
+
+export const artifactsWithTrait = (state: GameState, type: string, trait: string): Artifact[] => {
+    const artifacts = (type === 'enemy' ? enemyArtifacts(state) :
+        (type === "friendly" ? friendlyArtifacts(state) : allArtifacts(state)))
+    return artifacts.filter(artifact => (artifact as Artifact).backingCard.traits.includes(trait))
+}
+
 export const steal = (state: GameState, amount: number): number => {
+    if (amount > inactivePlayerState(state).amber) amount = inactivePlayerState(state).amber
     return modifyAmber(activePlayerState(state), modifyAmber(inactivePlayerState(state), amount))
 }
