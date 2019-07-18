@@ -1,0 +1,20 @@
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../CardScripts"
+import {activePlayerState, artifactsWithTrait, putOnTopOfDeck} from "../../ScriptUtils"
+import {CardInGame} from "../../../shared/gamestate/CardInGame"
+import {shuffle} from "lodash"
+
+const cardScript: CardScript = {
+    // Action: Shuffle a card from your discard pile into your deck for each friendly Shard.
+    //
+    action: {
+        validTargets: (state) => activePlayerState(state).discard,
+        numberOfTargets: (state) => artifactsWithTrait(state, 'friendly', 'Shard').length,
+        perform: (state, config) => {
+            config.targets.forEach(target => putOnTopOfDeck(target as CardInGame))
+            shuffle(activePlayerState(state).library)
+        }
+    }
+}
+
+cardScripts.scripts.set("shard-of-life", cardScript)
