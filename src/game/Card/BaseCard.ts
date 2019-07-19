@@ -168,6 +168,8 @@ class Card extends Phaser.GameObjects.Container {
             })
 
             this.cardImage.interactiveZone.addListener("dragstart", () => {
+                // @ts-ignore
+                this.scene.root.bringToTop(this)
                 onDragStart()
             })
 

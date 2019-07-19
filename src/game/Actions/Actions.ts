@@ -58,11 +58,15 @@ export const exec = (action: Action, state: GameState) => {
             player.library = shuffle(player.library)
         },
         [AEvent.DiscardCard]: () => {
+            // We allow players to place their cards
+            // in their own discard or their opponents.
+            // Attachments go to the card owner for simplicity's sake.
+            const player = getPlayerById(action.player!.id, state)
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
             const card = removeCardById(owner, action.cardId!)
-            owner.discard.push(card)
+            player.discard.push(card)
         },
         [AEvent.PutCardOnDrawPile]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)

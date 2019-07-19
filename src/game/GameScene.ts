@@ -232,7 +232,6 @@ class GameScene extends Phaser.Scene {
                     player: player.player,
                     cardId,
                 })
-                card.destroy()
                 this.render()
             }
         })
@@ -251,7 +250,6 @@ class GameScene extends Phaser.Scene {
                     cardId: card.id,
                     player: player.player
                 })
-                card.destroy()
                 this.render()
             }
         })
@@ -306,7 +304,6 @@ class GameScene extends Phaser.Scene {
                     cardId: card.id,
                     player: player.player
                 })
-                card.destroy()
                 this.render()
             },
         })
@@ -354,7 +351,6 @@ class GameScene extends Phaser.Scene {
                     cardId: card.id,
                     player: player.player
                 })
-                card.destroy()
                 this.render()
             },
         })
@@ -403,7 +399,6 @@ class GameScene extends Phaser.Scene {
                     cardId: card.id,
                     player: player.player
                 })
-                card.destroy()
                 this.render()
             },
         })
@@ -569,7 +564,6 @@ class GameScene extends Phaser.Scene {
                     player: player.player,
                     side: "left",
                 })
-                card.destroy()
                 this.render()
             }
         })
@@ -595,15 +589,45 @@ class GameScene extends Phaser.Scene {
                         player: player.player,
                         side: "right",
                     })
-                    card.destroy()
                     this.render()
                 }
             })
         }
+
+        const handDropZoneWidth = handWidth + 50
+        const handDropZoneX = originX + handDropZoneWidth / 2
+        const handDropZoneY = originY + CARD_HEIGHT / 2
+        const handDropZone = new Phaser.GameObjects.Zone(this, handDropZoneX, handDropZoneY, handDropZoneWidth, CARD_HEIGHT)
+        handDropZone.setRectangleDropZone(handDropZoneWidth, CARD_HEIGHT)
+        handDropZone.setDataEnabled()
+        // @ts-ignore
+        handDropZone.data.set({
+            onEnter: () => {},
+            onLeave: () => {},
+            onDrop: (card: Card) => {
+                const cardType = getCardType(player, card.id)
+                if (cardType === CardType.ARTIFACT) {
+                    this.dispatch({
+                        type: AEvent.MoveArtifactToHand,
+                        cardId: card.id,
+                    })
+                }
+                if (cardType === CardType.CREATURE) {
+                    dispatch({
+                        type: AEvent.MoveCreatureToHand,
+                        cardId: card.id,
+                    })
+                }
+                this.render()
+            }
+        })
+        this.root!.add(handDropZone)
+        this.root!.sendToBack(handDropZone)
     }
 
     render() {
         if (this.root) {
+            this.root.list.forEach((obj: Phaser.GameObjects.GameObject) => obj.destroy())
             this.root.destroy()
         }
         this.root! = this.add.container(0, 0)
@@ -699,7 +723,7 @@ class GameScene extends Phaser.Scene {
             this.modalContainer = new Phaser.GameObjects.Container(this, 0, 0)
             for (let i = cards.length - 1; i >= 0; i--) {
                 const card = cards[i]
-                let cardOffsetY = (CARD_HEIGHT * 0.25) * i + CARD_HEIGHT + 10
+                let cardOffsetY = (CARD_HEIGHT * 0.1) * i + CARD_HEIGHT + 10
                 if (playerPosition === PlayerPosition.BOTTOM)
                     cardOffsetY = cardOffsetY * -1
                 const image = new Phaser.GameObjects.Image(this, x, y + cardOffsetY, card.backingCard.cardTitle)
@@ -747,7 +771,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.MoveCreatureRight,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
@@ -757,7 +780,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.MoveCreatureLeft,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
@@ -767,7 +789,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.DiscardCard,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
@@ -777,7 +798,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.MoveCreatureToHand,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
@@ -787,7 +807,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.ToggleStun,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
@@ -880,7 +899,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.DiscardCard,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
@@ -890,7 +908,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.MoveArtifactToHand,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
@@ -921,12 +938,10 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.DiscardCard,
                 cardId,
             })
-            card.destroy()
             this.render()
             return
         }
 
-        card.destroy()
         this.render()
     }
 
@@ -953,7 +968,6 @@ class GameScene extends Phaser.Scene {
                 type: AEvent.PlayAction,
                 cardId,
             })
-            card.destroy()
             this.render()
         } else {
             card.render()
