@@ -24,6 +24,21 @@ export const gameSceneHolder: { gameScene?: GameScene } = {
     gameScene: undefined
 }
 
+// TODO Replace magic strings with these enum values
+export enum ImageKeys {
+    CARDBACK = "cardback",
+    UNFORGED_KEY = "unforged-key",
+    FORGED_KEY = "forged-key",
+    DAMAGE_TOKEN = "damage-token",
+    AMBER_TOKEN = "amber-token",
+    STUN_TOKEN = "stun-token",
+    ARMOR_TOKEN = "armor-token",
+    POWER_TOKEN = "power-token",
+    CHAINS = "chains",
+    DOOM_TOKEN = "doom-token",
+    UNDER_CONSTRUCTION = "under-construction"
+}
+
 class GameScene extends Phaser.Scene {
     state: GameState
     root: Phaser.GameObjects.Container | undefined
@@ -45,16 +60,17 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("cardback", cardback)
-        this.load.image("unforged-key", unforgedKey)
-        this.load.image("forged-key", forgedKey)
-        this.load.image("damage-token", damage)
-        this.load.image("amber-token", amber)
-        this.load.image("stun-token", stun)
-        this.load.image("armor-token", armor)
-        this.load.image("power-token", power)
-        this.load.image("chains", chains)
-        this.load.image("doom-token", chains)
+        this.load.image(ImageKeys.CARDBACK, cardback)
+        this.load.image(ImageKeys.UNFORGED_KEY, unforgedKey)
+        this.load.image(ImageKeys.FORGED_KEY, forgedKey)
+        this.load.image(ImageKeys.DAMAGE_TOKEN, damage)
+        this.load.image(ImageKeys.AMBER_TOKEN, amber)
+        this.load.image(ImageKeys.STUN_TOKEN, stun)
+        this.load.image(ImageKeys.ARMOR_TOKEN, armor)
+        this.load.image(ImageKeys.POWER_TOKEN, power)
+        this.load.image(ImageKeys.CHAINS, chains)
+        this.load.image(ImageKeys.DOOM_TOKEN, chains)
+        // this.load.image(ImageKeys.UNDER_CONSTRUCTION, underConstruction)
 
         const state = this.state
         const players = [state.playerOneState, state.playerTwoState]

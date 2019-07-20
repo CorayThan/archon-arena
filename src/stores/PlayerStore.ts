@@ -42,6 +42,9 @@ export class PlayerStore {
                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     const {activeDeck, decks, ...rest} = player
                     log.debug("Got new player info " + prettyJson(rest))
+                    if (player.decks == null) {
+                        player.decks = []
+                    }
                     this.player = player
                     if (player.currentMatchId) {
                         gameStateStore.listenForGameStateChanges()

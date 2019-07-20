@@ -1,6 +1,6 @@
 import Phaser from "phaser"
-import { CardInGame } from "../shared/gamestate/CardInGame"
 import { cardScripts } from "../card-scripts/CardScripts"
+import { CardInGame } from "../shared/gamestate/CardInGame"
 
 export const CARD_WIDTH = 100
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
@@ -86,8 +86,7 @@ class Card extends Phaser.GameObjects.Container {
         this.add(this.cardImage)
 
         this.cardsUnderneath = cardsUnderneath.map(() => {
-            const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
-            return cardImage
+            return new Phaser.GameObjects.Image(scene, 0, 0, back)
         })
 
         this.upgrades = upgrades.map((card: CardInGame, i: number) => {
@@ -206,6 +205,8 @@ class Card extends Phaser.GameObjects.Container {
                     backgroundColor: "#e03f3f",
                     fontSize: "16px"
                 })
+                // TODO This should work, wtf phaser
+                // const manualModeIndicator = new Phaser.GameObjects.Image(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, ImageKeys.UNDER_CONSTRUCTION)
                 this.add(manualModeIndicator)
             }
         }
