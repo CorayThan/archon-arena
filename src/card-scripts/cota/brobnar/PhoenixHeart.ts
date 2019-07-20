@@ -6,7 +6,7 @@ import {allCreatures, dealDamage, putInHand} from "../../ScriptUtils"
 const cardScript: CardScript = {
     destroyed: {
         perform: (state, config) => {
-            putInHand(config.thisCard)
+            putInHand(state, config.thisCard)
             allCreatures(state).forEach(creature => dealDamage(creature, 3))
         }
     }

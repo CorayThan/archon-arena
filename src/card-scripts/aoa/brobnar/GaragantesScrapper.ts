@@ -13,7 +13,7 @@ const cardScript: CardScript = {
             return activePlayerState(state).amber < 3 ? 0 : 1
         },
         perform: (state, config) => {
-            dealDamage(config.targets[0] as Creature, 3)
+            dealDamage(config.targets as Creature[], 3)
         }
     }
 }

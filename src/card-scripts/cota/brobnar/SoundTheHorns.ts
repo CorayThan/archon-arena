@@ -14,7 +14,7 @@ const cardScript: CardScript = {
                 let discardedCard = discardTopCard(state, true)
                 if ((discardedCard as Creature).power && discardedCard.backingCard.house === House.Brobnar) {
                     endSearching = true
-                    putInHand(discardedCard)
+                    putInHand(state, discardedCard)
                 }
             }
         }

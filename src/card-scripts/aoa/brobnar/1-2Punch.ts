@@ -1,7 +1,7 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 import {Creature} from "../../../shared/gamestate/Creature"
-import {destroyCard, enemyCreatures, stunCreature} from "../../ScriptUtils"
+import {destroyCards, enemyCreatures, stunCreatures} from "../../ScriptUtils"
 
 
 const cardScript: CardScript = {
@@ -12,9 +12,9 @@ const cardScript: CardScript = {
         perform: (state, config) => {
             const targetedCreature = config.targets[0] as Creature
             if (targetedCreature.tokens.stun > 0)
-                destroyCard(targetedCreature)
+                destroyCards(state, config.targets)
             else
-                stunCreature(targetedCreature)
+                stunCreatures(config.targets as Creature[])
         }
     }
 }

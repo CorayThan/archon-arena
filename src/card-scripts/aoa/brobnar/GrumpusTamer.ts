@@ -12,7 +12,7 @@ const cardScript: CardScript = {
         },
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            putInHand(config.targets[0])
+            putInHand(state, config.targets)
             shuffleDeck(state)
         }
     }

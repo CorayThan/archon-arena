@@ -11,7 +11,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state, config) => {
             destroyCard(config.thisCard)
-            dealDamage(config.targets[0] as Creature, 4)
+            dealDamage(config.targets as Creature[], 4)
         }
     }
 }

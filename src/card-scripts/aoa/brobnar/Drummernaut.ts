@@ -1,6 +1,5 @@
 import {cardScripts} from "../../CardScripts"
 import {CardScript} from "../../types/CardScript"
-import {Creature} from "../../../shared/gamestate/Creature"
 import {friendlyCreatures, putInHand} from "../../ScriptUtils"
 
 
@@ -15,8 +14,7 @@ const cardScript: CardScript = {
         },
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            const targetedGiant = config.targets[0] as Creature
-            putInHand(targetedGiant)
+            putInHand(state, config.targets)
         }
     },
     fight: {
@@ -28,8 +26,7 @@ const cardScript: CardScript = {
         },
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            const targetedGiant = config.targets[0] as Creature
-            putInHand(targetedGiant)
+            putInHand(state, config.targets)
         }
     },
     reap: {
@@ -41,8 +38,7 @@ const cardScript: CardScript = {
         },
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            const targetedGiant = config.targets[0] as Creature
-            putInHand(targetedGiant)
+            putInHand(state, config.targets)
         }
     }
 }
