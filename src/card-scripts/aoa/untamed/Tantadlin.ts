@@ -2,7 +2,6 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 import {discardCard, inactivePlayerState} from "../../ScriptUtils"
 import {shuffle} from "lodash"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     // Tantadlin only deals 2D when fighting.
@@ -11,7 +10,7 @@ const cardScript: CardScript = {
     power: () => 9,
     fight: {
         perform: (state) => {
-            discardCard(state, (shuffle(inactivePlayerState(state).archives)[0] as CardInGame), false)
+            discardCard(state, (shuffle(inactivePlayerState(state).archives).slice(0, 1)))
         }
     }
 }

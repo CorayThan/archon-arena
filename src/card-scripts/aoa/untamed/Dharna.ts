@@ -1,6 +1,6 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {activePlayerState, friendlyCreatures, healCreature, modifyAmber} from "../../ScriptUtils"
+import {activePlayerState, friendlyCreatures, healCreatures, modifyAmber} from "../../ScriptUtils"
 import {Creature} from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -19,7 +19,7 @@ const cardScript: CardScript = {
             .filter(creature => (creature as Creature).tokens.damage > 0),
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            healCreature(config.targets[0] as Creature, 2)
+            healCreatures(config.targets as Creature[], 2)
         }
     }
 }
