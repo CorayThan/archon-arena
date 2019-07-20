@@ -6,6 +6,7 @@ export interface CardInGame {
     id: string
     ownerId: string
     backingCard: KCard
+    traits: string[]
 }
 
 export type AnyCardInGame = CardInGame | Creature | Artifact

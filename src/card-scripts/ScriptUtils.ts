@@ -12,6 +12,10 @@ export const inactivePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id !== state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
 }
 
+export const allPlayerStates = (state: GameState) => {
+    return [state.playerOneState, state.playerTwoState]
+}
+
 export const friendlyCreatures = (state: GameState): Creature[] => {
     return activePlayerState(state).creatures
 }
@@ -103,35 +107,94 @@ export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame 
     throw new Error("Couldn't find card with id " + card.id)
 }
 
-export const putInArchives = (state: GameState, card: CardInGame, friendlyArchives: boolean) => {
-    const toAdd = removeAndReturn(state, card)
-    const myState = friendlyArchives ? activePlayerState(state) : inactivePlayerState(state)
-    myState.archives.push(toAdd)
+
+export const putInHand = (state: GameState, cards: CardInGame[]) => {
+    cards.forEach(card => {
+        const toAdd = removeAndReturn(state, card)
+        const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
+        myState.hand.push(toAdd)
+    })
 }
 
-export const purgeCard = (state: GameState, card: CardInGame, friendly: boolean) => {
-    const toAdd = removeAndReturn(state, card)
-    const myState = friendly ? activePlayerState(state) : inactivePlayerState(state)
-    myState.purged.push(toAdd)
+export const putInArchives = (state: GameState, cards: CardInGame[], friendly: boolean) => {
+    cards.forEach(card => {
+        const toAdd = removeAndReturn(state, card)
+        const myState = friendly ? activePlayerState(state) : inactivePlayerState(state)
+        myState.archives.push(toAdd)
+    })
 }
 
-export const discardCard = (state: GameState, card: CardInGame, friendly: boolean) => {
-    const toAdd = removeAndReturn(state, card)
-    const myState = friendly ? activePlayerState(state) : inactivePlayerState(state)
-    myState.discard.push(toAdd)
+export const purgeCards = (state: GameState, cards: CardInGame[]) => {
+    cards.forEach(card => {
+        const toAdd = removeAndReturn(state, card)
+        const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
+        myState.purged.push(toAdd)
+    })
 }
 
-export const stunCreature = (creature: Creature) => {
-    creature.tokens.stun = 1
+export const discardCard = (state: GameState, cards: CardInGame[]) => {
+    cards.forEach(card => {
+        const toAdd = removeAndReturn(state, card)
+        const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
+        myState.discard.push(toAdd)
+    })
+}
+
+export const stunCreatures = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.tokens.stun = 1)
+}
+
+export const unStunCreatures = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.tokens.stun = 0)
+}
+
+export const alterArmor = (creatures: Creature[], amount: number) => {
+    creatures.forEach(creature => creature.tokens.armor += amount)
+}
+
+export const alterPower = (creatures: Creature[], amount: number) => {
+    creatures.forEach(creature => creature.tokens.power += amount)
+}
+
+export const giveSkirmish = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.skirmish = true)
+}
+
+export const takeSkirmish = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.skirmish = false)
+}
+
+export const giveTaunt = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.taunt = true)
+}
+
+export const removeTaunt = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.taunt = true)
 }
 
 export const destroyCard = (card: CardInGame): boolean => {
     //TODO, the return statement says whether the card was actually destroyed
     return true
 }
+export const useCreatures = (creatures: Creature[]) => {
+    //TODO, the return statement says whether the card was actually destroyed
+}
+
+export const destroyCards = (state: GameState, cards: CardInGame[]) => {
+    cards.forEach(card => {
+        const toAdd = removeAndReturn(state, card)
+        const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
+        //TODO Check to see if card has destroyed effects then put in discard if is can
+        myState.discard.push(toAdd)
+    })
+}
 
 export const readyCreature = (creature: Creature) => {
     creature.ready = true
+}
+
+export const readyCreatures = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.ready = true)
 }
 
 export const fightUsingCreature = (creature: Creature) => {
@@ -157,12 +220,48 @@ export const getNeighbors = (creatures: Creature[], creature: Creature): Creatur
 }
 
 export const onFlank = (creatures: Creature[], creature: Creature): boolean => {
-    const index = creatures.findIndex(creat => creat.id === creature.id)
+    const index = creatures.findIndex(x => x.id === creature.id)
     return index === 0 || index === creatures.length - 1
 }
 
-export const dealDamage = (creature: Creature, damage: number) => {
-    creature.tokens.damage += damage
+export const isFlank = (state: GameState, creature: Creature): boolean => {
+    return allFlankCreatures(state).some(x => (x as Creature).id === creature.id)
+}
+
+export const friendlyFlankCreatures = (state: GameState): Creature[] => {
+    const creatures = friendlyCreatures(state)
+    if (creatures.length < 3) return creatures
+    return creatures.slice(0, 1).slice(-1)
+}
+
+export const enemyFlankCreatures = (state: GameState): Creature[] => {
+    const creatures = enemyCreatures(state)
+    if (creatures.length < 3) return creatures
+    return creatures.slice(0, 1).slice(-1)
+}
+
+export const allFlankCreatures = (state: GameState): Creature[] => {
+    return friendlyFlankCreatures(state).concat(enemyFlankCreatures(state))
+}
+
+export const friendlyNonFlankCreatures = (state: GameState): Creature[] => {
+    const creatures = friendlyCreatures(state)
+    if (creatures.length < 3) return []
+    return creatures.slice(1, creatures.length - 2)
+}
+
+export const enemyNonFlankCreatures = (state: GameState): Creature[] => {
+    const creatures = enemyCreatures(state)
+    if (creatures.length < 3) return creatures
+    return creatures.slice(1, creatures.length - 2)
+}
+
+export const allNonFlankCreatures = (state: GameState): Creature[] => {
+    return friendlyNonFlankCreatures(state).concat(enemyNonFlankCreatures(state))
+}
+
+export const dealDamage = (creatures: Creature[], damage: number) => {
+    creatures.forEach(creature => creature.tokens.damage += damage)
 }
 
 export const dealDamageWithSplash = (state: GameState, creature: Creature, damage: number, splash: number) => {
@@ -175,7 +274,7 @@ export const placeAmber = (creature: Creature, amber: number) => {
     creature.tokens.amber += amber
 }
 
-export const enableFighting = (creature: Creature) => {
+export const enableFighting = (creatures: Creature[]) => {
     //TODO
 }
 
@@ -183,9 +282,9 @@ export const getMostPowerful = (creatures: Creature[]): Creature[] => {
     return creatures.sort((a, b) => a.power - b.power)
         .filter(creature => creature.power >= creatures[0].power)
 }
-
-export const putInHand = (card: CardInGame) => {
-    //TODO
+export const getLeastPowerful = (creatures: Creature[]): Creature[] => {
+    return creatures.sort((a, b) => b.power - a.power)
+        .filter(creature => creatures[0].power <= creature.power)
 }
 
 export const gainChains = (state: PlayerState, amount: number) => {
@@ -248,10 +347,22 @@ export const numberOfCardsPlayedThisTurn = (state: GameState): number => {
     return 0
 }
 
+export const cardsPlayedThisTurn = (state: GameState): CardInGame[] => {
+    //TODO
+    return [] as CardInGame[]
+}
+
 export const healCreature = (creature: Creature, amount: number): number => {
     const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage
     creature.tokens.damage = creature.tokens.damage - actualChange
     return actualChange
+}
+
+export const healCreatures = (creatures: Creature[], amount: number) => {
+    creatures.forEach(creature => {
+        const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage
+        creature.tokens.damage = creature.tokens.damage - actualChange
+    })
 }
 
 export const amountOfShards = (state: GameState): number => {
@@ -259,16 +370,8 @@ export const amountOfShards = (state: GameState): number => {
         .filter(artifact => (artifact as Artifact).backingCard.traits.includes("Shard")).length
 }
 
-export const creaturesWithTrait = (state: GameState, type: string, trait: string): Creature[] => {
-    const creatures = (type === 'enemy' ? enemyCreatures(state) :
-        (type === "friendly" ? friendlyCreatures(state) : allCreatures(state)))
-    return creatures.filter(creature => (creature as Creature).traits.includes(trait))
-}
-
-export const artifactsWithTrait = (state: GameState, type: string, trait: string): Artifact[] => {
-    const artifacts = (type === 'enemy' ? enemyArtifacts(state) :
-        (type === "friendly" ? friendlyArtifacts(state) : allArtifacts(state)))
-    return artifacts.filter(artifact => (artifact as Artifact).backingCard.traits.includes(trait))
+export const getCardsWithTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
+    return cards.filter(card => card.traits.includes(trait))
 }
 
 export const steal = (state: GameState, amount: number): number => {
