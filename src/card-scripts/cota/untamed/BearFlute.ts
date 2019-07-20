@@ -1,8 +1,7 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {activePlayerState, allCreatures, healCreature, putInHand} from "../../ScriptUtils"
+import {activePlayerState, allCreatures, healCreatures, putInHand} from "../../ScriptUtils"
 import {Creature} from "../../../shared/gamestate/Creature"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     action: {
@@ -10,14 +9,14 @@ const cardScript: CardScript = {
         //If there are no Ancient Bears in play, search your deck and discard pile
         //and put each Ancient Bear from them into your hand.
         //If you do, shuffle your discard pile into your deck
-        validTargets: (state) => allCreatures(state).filter(card => card.backingCard.card_title === "Ancient Bear"),
+        validTargets: (state) => allCreatures(state).filter(card => card.backingCard.cardTitle === "Ancient Bear"),
         numberOfTargets: () => 1,
         perform: (state, config) => {
             if (config.targets.length > 0) {
-                healCreature(config.targets[0], (config.targets[0] as Creature).tokens.damage)
+                healCreatures(config.targets as Creature[], (config.targets[0] as Creature).tokens.damage)
             } else {
-                activePlayerState(state).discard.filter(card => card.backingCard.card_title === "Ancient Bear")
-                    .forEach(bear => putInHand(bear as CardInGame))
+                const bears = activePlayerState(state).discard.filter(card => card.backingCard.cardTitle === "Ancient Bear")
+                putInHand(state, bears)
                 //TODO SHUFFLE discard into deck
             }
         }
