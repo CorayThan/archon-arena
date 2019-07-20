@@ -1,6 +1,6 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {activePlayerState, inactivePlayerState, modifyAmber, purgeCard} from "../../ScriptUtils"
+import {activePlayerState, inactivePlayerState, modifyAmber, purgeCards} from "../../ScriptUtils"
 import {CardInGame} from "../../../shared/gamestate/CardInGame"
 import {House} from "../../../shared/keyforge/house/House"
 
@@ -9,10 +9,10 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state) => {
-            [activePlayerState(state), inactivePlayerState(state)].forEach((playerState, index) => {
+            [activePlayerState(state), inactivePlayerState(state)].forEach(playerState => {
                 const purgedCards = playerState.discard
                     .filter(card => (card as CardInGame).backingCard.house === House.Untamed)
-                purgedCards.forEach(card => purgeCard(state, card, index === 0))
+                purgeCards(state, purgedCards)
                 modifyAmber(playerState, purgedCards.length)
             })
         }

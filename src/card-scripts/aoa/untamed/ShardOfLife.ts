@@ -1,6 +1,11 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {activePlayerState, artifactsWithTrait, putOnTopOfDeck} from "../../ScriptUtils"
+import {
+    activePlayerState,
+    friendlyArtifacts,
+    getCardsWithTrait,
+    putOnTopOfDeck
+} from "../../ScriptUtils"
 import {CardInGame} from "../../../shared/gamestate/CardInGame"
 import {shuffle} from "lodash"
 
@@ -9,7 +14,7 @@ const cardScript: CardScript = {
     //
     action: {
         validTargets: (state) => activePlayerState(state).discard,
-        numberOfTargets: (state) => artifactsWithTrait(state, 'friendly', 'Shard').length,
+        numberOfTargets: (state) => getCardsWithTrait(friendlyArtifacts(state), 'Shard').length,
         perform: (state, config) => {
             config.targets.forEach(target => putOnTopOfDeck(target as CardInGame))
             shuffle(activePlayerState(state).library)
