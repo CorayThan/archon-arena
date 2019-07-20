@@ -1,19 +1,18 @@
-import { CardScript } from "../../types/CardScript"
-import { cardScripts } from "../../CardScripts"
-import { GameState, PlayerState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, inactivePlayerState } from "../../ScriptUtils"
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../CardScripts"
+import {allPlayerStates} from "../../ScriptUtils"
 
 const cardScript: CardScript = {
+    // Play: Each player with 6<A> or more is reduced to 5<A>.
     amber: () => 1,
     onPlay: {
-        perform: (state: GameState) => {
-            const ownState = activePlayerState(state) as PlayerState
-            ownState.amber = Math.min(ownState.amber, 5)
-
-            const opponentState = inactivePlayerState(state) as PlayerState
-            opponentState.amber = Math.min(opponentState.amber, 5)
+        perform: (state) => {
+            allPlayerStates(state).forEach(player => {
+                if (player.amber >= 6) player.amber = 5
+            })
         }
-    }
+    },
+
 }
 
 cardScripts.scripts.set("doorstep-to-heaven", cardScript)
