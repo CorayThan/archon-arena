@@ -8,16 +8,14 @@ const cardScript: CardScript = {
     power: () => 2,
     onPlay: {
         perform: (state, config) => {
-            allCreatures(state).forEach(target => {
-                if (target.id !== config.thisCard.id) dealDamage(target as Creature, 2)
-            })
+            const creatures = allCreatures(state).filter(card => (card as Creature).id !== config.thisCard.id)
+            dealDamage(creatures, 2)
         }
     },
     reap: {
         perform: (state, config) => {
-            allCreatures(state).forEach(target => {
-                if (target.id !== config.thisCard.id) dealDamage(target as Creature, 2)
-            })
+            const creatures = allCreatures(state).filter(card => (card as Creature).id !== config.thisCard.id)
+            dealDamage(creatures, 2)
         }
     }
 }

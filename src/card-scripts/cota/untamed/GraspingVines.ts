@@ -2,15 +2,12 @@ import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 import {allArtifacts, putInHand} from "../../ScriptUtils"
 
-import {Artifact} from "../../../shared/gamestate/Artifact"
-
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: allArtifacts,
         perform: (state, config) => {
-            const targetedArtifact = config.targets[0] as Artifact
-            putInHand(targetedArtifact)
+            putInHand(state, config.targets)
         }
     }
 }

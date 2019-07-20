@@ -1,7 +1,6 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
 import {activePlayerState, destroyCard, putInHand} from "../../ScriptUtils"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     omni: {
@@ -9,7 +8,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state, config) => {
             destroyCard(config.thisCard)
-            config.targets.forEach(target => putInHand(target as CardInGame))
+            putInHand(state, config.targets)
         }
     }
 }

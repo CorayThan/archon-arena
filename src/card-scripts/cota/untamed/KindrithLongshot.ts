@@ -12,7 +12,7 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            dealDamage(config.targets[0] as Creature, 2)
+            dealDamage(config.targets as Creature[], 2)
         }
     },
 
