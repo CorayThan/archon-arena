@@ -1,0 +1,20 @@
+import {CardScript} from "../../types/CardScript"
+import {cardScripts} from "../../CardScripts"
+import {captureAmber, inactivePlayerState} from "../../ScriptUtils"
+import {Creature} from "../../../shared/gamestate/Creature"
+
+const cardScript: CardScript = {
+    // Play: If your opponent has 7 or more <A>, capture all but 5 of it.
+    power: () => 5,
+    armor: () => 1,
+    onPlay: {
+        perform: (state, config) => {
+            const enemyAmber = inactivePlayerState(state).amber
+            if (enemyAmber > 7) {
+                captureAmber(state, config.thisCard as Creature, enemyAmber - 5)
+            }
+        }
+    }
+}
+
+cardScripts.scripts.set("gatekeeper", cardScript)
