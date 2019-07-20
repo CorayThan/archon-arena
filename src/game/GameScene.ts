@@ -8,6 +8,7 @@ import damage from "../images/damage.png"
 import forgedKey from "../images/forgedkey.png"
 import power from "../images/power.png"
 import stun from "../images/stun.png"
+import underConstruction from "../images/under-construction.png"
 import unforgedKey from "../images/unforgedkey.png"
 import Action from "../shared/Action"
 import { CardInGame } from "../shared/gamestate/CardInGame"
@@ -70,7 +71,7 @@ class GameScene extends Phaser.Scene {
         this.load.image(ImageKeys.POWER_TOKEN, power)
         this.load.image(ImageKeys.CHAINS, chains)
         this.load.image(ImageKeys.DOOM_TOKEN, chains)
-        // this.load.image(ImageKeys.UNDER_CONSTRUCTION, underConstruction)
+        this.load.image(ImageKeys.UNDER_CONSTRUCTION, underConstruction)
 
         const state = this.state
         const players = [state.playerOneState, state.playerTwoState]

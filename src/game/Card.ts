@@ -1,6 +1,7 @@
 import Phaser from "phaser"
 import { cardScripts } from "../card-scripts/CardScripts"
 import { CardInGame } from "../shared/gamestate/CardInGame"
+import { ImageKeys } from "./GameScene"
 
 export const CARD_WIDTH = 100
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
@@ -200,13 +201,8 @@ class Card extends Phaser.GameObjects.Container {
         if (this.faceup) {
             const script = cardScripts.scripts.get(this.front)
             if (!script) {
-                const manualModeIndicator = new Phaser.GameObjects.Text(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, "-------", {
-                    color: "#e03f3f",
-                    backgroundColor: "#e03f3f",
-                    fontSize: "16px"
-                })
-                // TODO This should work, wtf phaser
-                // const manualModeIndicator = new Phaser.GameObjects.Image(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, ImageKeys.UNDER_CONSTRUCTION)
+                const manualModeIndicator = new Phaser.GameObjects.Image(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, ImageKeys.UNDER_CONSTRUCTION)
+                manualModeIndicator.scale = 0.02
                 this.add(manualModeIndicator)
             }
         }
