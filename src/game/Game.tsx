@@ -45,7 +45,6 @@ class Game extends React.Component<Props> {
         const state = this._state
         if (!state)
             throw new Error("Action dispatched before game state available")
-        console.log(state)
 
         const logObj = buildLogForAction(action, state)
         log.info("Log is " + prettyJson(logObj))

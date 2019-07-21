@@ -2,6 +2,7 @@ import { Artifact } from "../shared/gamestate/Artifact"
 import { CardInGame } from "../shared/gamestate/CardInGame"
 import { Creature } from "../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
+import CardType from "./CardType"
 
 export const discardCreatureUpgrades = (player: PlayerState, cardId?: string) => {
     const creature = getCreatureById(player, cardId)
@@ -27,20 +28,20 @@ export const discardCardsUnderneath = (player: PlayerState, cardId?: string) => 
 
 export const getCardType = (owner: PlayerState, cardId: string) => {
     if (owner.creatures.find((card: Creature) => card.id === cardId))
-        return "creature"
+        return CardType.CREATURE
     if (owner.artifacts.find((card: Artifact) => card.id === cardId))
-        return "artifact"
+        return CardType.ARTIFACT
     if (owner.hand.find((card: CardInGame) => card.id === cardId))
-        return "hand"
+        return CardType.HAND
     if (owner.discard.find((card: CardInGame) => card.id === cardId))
-        return "discard"
+        return CardType.DISCARD
     if (owner.purged.find((card: CardInGame) => card.id === cardId))
-        return "purged"
+        return CardType.PURGED
     if (owner.library.find((card: CardInGame) => card.id === cardId))
-        return "library"
+        return CardType.LIBRARY
     if (owner.archives.find((card: CardInGame) => card.id === cardId))
-        return "archives"
-    return "upgrade"
+        return CardType.ARCHIVE
+    return CardType.UPGRADE
 }
 
 export const getPlayerById = (id: string, state: GameState) => {
