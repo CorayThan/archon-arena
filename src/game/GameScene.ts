@@ -1,6 +1,8 @@
 import Phaser from "phaser"
 
 import amber from "../images/amber.png"
+import cardPower from "../images/card-power.png"
+import enhancedCardPower from "../images/enhanced-card-power.png"
 import armor from "../images/armor.png"
 import cardback from "../images/cardback.jpg"
 import chains from "../images/chains.png"
@@ -10,15 +12,24 @@ import power from "../images/power.png"
 import stun from "../images/stun.png"
 import underConstruction from "../images/under-construction.png"
 import unforgedKey from "../images/unforgedkey.png"
+
 import Action from "../shared/Action"
 import { CardInGame } from "../shared/gamestate/CardInGame"
 import { Creature } from "../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import { AEvent } from "./AEvent"
-import Card, { CARD_HEIGHT, CARD_WIDTH } from "./Card"
-import CardType from "./CardType"
 import { getCardType } from "./StateUtils"
 import { preloadCardsInPhaser } from "./Utils"
+import CardType from "./CardType"
+import Card from "./Card"
+import SmallCard from "./SmallCard"
+import { cardScripts } from "../card-scripts/CardScripts"
+import {
+    CARD_HEIGHT,
+    CARD_WIDTH,
+    SMALL_CARD_WIDTH,
+    SMALL_CARD_HEIGHT,
+} from "./constants"
 
 const {KeyCodes} = Phaser.Input.Keyboard
 
@@ -42,13 +53,16 @@ export enum ImageKey {
     POWER_TOKEN = "power-token",
     CHAINS = "chains",
     DOOM_TOKEN = "doom-token",
-    UNDER_CONSTRUCTION = "under-construction"
+    UNDER_CONSTRUCTION = "under-construction",
+    CARD_POWER = "card-power",
+    ENHANCED_CARD_POWER = "enhanced-card-power",
 }
 
 class GameScene extends Phaser.Scene {
     state: GameState
     root: Phaser.GameObjects.Container | undefined
     cardHoverImage: Phaser.GameObjects.Image | undefined
+    cardHoverManualIndicator: Phaser.GameObjects.Text | undefined
     creatureMousingOver: Phaser.GameObjects.GameObject | undefined
     artifactMousingOver: Phaser.GameObjects.GameObject | undefined
     cardInHandMousingOver: Phaser.GameObjects.GameObject | undefined
@@ -77,6 +91,8 @@ class GameScene extends Phaser.Scene {
         this.load.image(ImageKey.CHAINS, chains)
         this.load.image(ImageKey.DOOM_TOKEN, chains)
         this.load.image(ImageKey.UNDER_CONSTRUCTION, underConstruction)
+        this.load.image(ImageKey.CARD_POWER, cardPower)
+        this.load.image(ImageKey.ENHANCED_CARD_POWER, enhancedCardPower)
 
         const state = this.state
         const players = [state.playerOneState, state.playerTwoState]
@@ -407,19 +423,15 @@ class GameScene extends Phaser.Scene {
 
             if (i > 0) {
                 const previousArtifact = player.artifacts[i - 1]
-                if (!player.artifacts[i - 1].ready) {
-                    artifactOffsetX += CARD_WIDTH * 0.2
-                } else {
-                    artifactOffsetX += (CARD_WIDTH * 0.1) * previousArtifact.cardsUnderneath.length
-                }
+                artifactOffsetX += (SMALL_CARD_WIDTH * 0.1) * previousArtifact.cardsUnderneath.length
             }
 
             if (!artifact.ready) {
-                artifactOffsetX += CARD_WIDTH * 0.2
-                artifactOffsetX += (CARD_WIDTH * 0.1) * (artifact.cardsUnderneath.length)
+                artifactOffsetX += SMALL_CARD_HEIGHT * 0.1
+                artifactOffsetX += (SMALL_CARD_HEIGHT * 0.1) * (artifact.cardsUnderneath.length)
             }
 
-            const card = new Card({
+            const card = new SmallCard({
                 scene: this,
                 x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1) + artifactOffsetX,
                 y: originY + artifactOffsetY,
@@ -430,6 +442,7 @@ class GameScene extends Phaser.Scene {
                 ready: artifact.ready,
                 cardsUnderneath: artifact.cardsUnderneath,
                 draggable: true,
+                backingCard: artifact.backingCard,
                 onClick: this.onClickArtifact.bind(this),
                 onMouseOver: this.onMouseOverArtifact.bind(this),
                 onMouseOut: this.onMouseOutArtifact.bind(this),
@@ -458,22 +471,17 @@ class GameScene extends Phaser.Scene {
 
             if (i > 0) {
                 const previousCreature = player.creatures[i - 1]
-                if (!player.creatures[i - 1].ready) {
-                    creatureOffsetX += CARD_WIDTH * 0.2
-                    creatureOffsetX += (CARD_WIDTH * 0.2) * previousCreature.upgrades.length
-                } else {
-                    creatureOffsetX += (CARD_WIDTH * 0.1) * previousCreature.cardsUnderneath.length
-                }
+                creatureOffsetX += (SMALL_CARD_WIDTH * 0.1) * previousCreature.cardsUnderneath.length
             }
 
             if (!creature.ready) {
-                creatureOffsetX += CARD_WIDTH * 0.2
-                creatureOffsetX += (CARD_WIDTH * 0.1) * (creature.cardsUnderneath.length)
+                creatureOffsetX += SMALL_CARD_HEIGHT * 0.1
+                creatureOffsetX += (SMALL_CARD_HEIGHT * 0.1) * (creature.cardsUnderneath.length)
             }
 
-            const creatureCard = new Card({
+            const creatureCard = new SmallCard({
                 scene: this,
-                x: originX + CARD_WIDTH / 2 + (CARD_WIDTH + CARD_WIDTH * 0.1) * (i + 1) + creatureOffsetX,
+                x: originX + SMALL_CARD_WIDTH / 2 + (SMALL_CARD_WIDTH + SMALL_CARD_WIDTH * 0.1) * (i + 1) + creatureOffsetX,
                 y: creatureY,
                 id: creature.id,
                 front: creature.backingCard.cardTitle,
@@ -483,6 +491,7 @@ class GameScene extends Phaser.Scene {
                 cardsUnderneath: creature.cardsUnderneath,
                 upgrades: creature.upgrades,
                 draggable: true,
+                backingCard: creature.backingCard,
                 onClick: this.onClickCreature.bind(this),
                 onMouseOver: this.onMouseOverCreature.bind(this),
                 onMouseOut: this.onMouseOutCreature.bind(this),
@@ -535,6 +544,7 @@ class GameScene extends Phaser.Scene {
                 back: ImageKey.CARDBACK,
                 faceup: playerPosition === PlayerPosition.BOTTOM,
                 draggable: true,
+                backingCard: player.hand[i].backingCard,
                 onClick: this.onClickCardInHand.bind(this),
                 onMouseOver: this.onMouseOverCardInHand.bind(this),
                 onMouseOut: this.onMouseOutCardInHand.bind(this),
@@ -702,8 +712,10 @@ class GameScene extends Phaser.Scene {
                     this.showEnlargedCard(card.id)
                 })
                 image.addListener("pointerout", () => {
-                    if (this.cardHoverImage)
+                    if (this.cardHoverImage) {
                         this.cardHoverImage.destroy()
+                        this.cardHoverManualIndicator!.destroy()
+                    }
                 })
                 this.modalContainer.add(image)
             }
@@ -720,8 +732,10 @@ class GameScene extends Phaser.Scene {
     onMouseOutCreature() {
         this.creatureMousingOver = undefined
 
-        if (this.cardHoverImage)
+        if (this.cardHoverImage) {
             this.cardHoverImage.destroy()
+            this.cardHoverManualIndicator!.destroy()
+        }
     }
 
     onClickCreature(e: MouseEvent, card: Card) {
@@ -852,8 +866,10 @@ class GameScene extends Phaser.Scene {
     onMouseOutArtifact() {
         this.artifactMousingOver = undefined
 
-        if (this.cardHoverImage)
+        if (this.cardHoverImage) {
             this.cardHoverImage.destroy()
+            this.cardHoverManualIndicator!.destroy()
+        }
     }
 
     onClickArtifact(e: MouseEvent, card: Card) {
@@ -923,8 +939,10 @@ class GameScene extends Phaser.Scene {
     onMouseOutCardInHand() {
         this.cardInHandMousingOver = undefined
 
-        if (this.cardHoverImage)
+        if (this.cardHoverImage) {
             this.cardHoverImage.destroy()
+            this.cardHoverManualIndicator!.destroy()
+        }
     }
 
     onDragEndCardInHand(card: Card) {
@@ -943,7 +961,7 @@ class GameScene extends Phaser.Scene {
     }
 
     onMouseOverUpgrade(e: MouseEvent, target: Card) {
-        const texture = target.front
+        const texture = target.data.get("front")
         this.showEnlargedCard(texture)
         this.creatureMousingOver = target
     }
@@ -951,8 +969,10 @@ class GameScene extends Phaser.Scene {
     onMouseOutUpgrade() {
         this.creatureMousingOver = undefined
 
-        if (this.cardHoverImage)
+        if (this.cardHoverImage) {
             this.cardHoverImage.destroy()
+            this.cardHoverManualIndicator!.destroy()
+        }
     }
 
     onDragStart() {
@@ -960,8 +980,10 @@ class GameScene extends Phaser.Scene {
         this.artifactMousingOver = undefined
         this.cardInHandMousingOver = undefined
 
-        if (this.cardHoverImage)
+        if (this.cardHoverImage) {
             this.cardHoverImage.destroy()
+            this.cardHoverManualIndicator!.destroy()
+        }
     }
 
     showEnlargedCard(texture: string) {
@@ -971,8 +993,17 @@ class GameScene extends Phaser.Scene {
         const height = width / .716612378
         const image = new Phaser.GameObjects.Image(this, this.width - width / 2 - 10, height / 2 + 10, texture + "-hover")
         image.setDisplaySize(width, height)
+
         this.root!.add(image)
         this.cardHoverImage = image
+
+        const script = cardScripts.scripts.get(texture)
+        this.cardHoverManualIndicator = new Phaser.GameObjects.Text(this, this.width - 97, 10, "---------", {
+            color: script !== undefined ? "#77dd77" : "#e03f3f",
+            backgroundColor: script !== undefined ? "#77dd77" : "#e03f3f",
+            fontSize: "16px"
+        })
+        this.root!.add(this.cardHoverManualIndicator)
     }
 
     setupKeyboardListeners() {
