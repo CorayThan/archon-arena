@@ -16,9 +16,9 @@ import { Creature } from "../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import { AEvent } from "./AEvent"
 import Card, { CARD_HEIGHT, CARD_WIDTH } from "./Card"
+import CardType from "./CardType"
 import { getCardType } from "./StateUtils"
 import { preloadCardsInPhaser } from "./Utils"
-import CardType from "./CardType"
 
 const {KeyCodes} = Phaser.Input.Keyboard
 
@@ -31,8 +31,7 @@ export enum PlayerPosition {
     BOTTOM = "bottom"
 }
 
-// TODO Replace magic strings with these enum values
-export enum ImageKeys {
+export enum ImageKey {
     CARDBACK = "cardback",
     UNFORGED_KEY = "unforged-key",
     FORGED_KEY = "forged-key",
@@ -67,17 +66,17 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image(ImageKeys.CARDBACK, cardback)
-        this.load.image(ImageKeys.UNFORGED_KEY, unforgedKey)
-        this.load.image(ImageKeys.FORGED_KEY, forgedKey)
-        this.load.image(ImageKeys.DAMAGE_TOKEN, damage)
-        this.load.image(ImageKeys.AMBER_TOKEN, amber)
-        this.load.image(ImageKeys.STUN_TOKEN, stun)
-        this.load.image(ImageKeys.ARMOR_TOKEN, armor)
-        this.load.image(ImageKeys.POWER_TOKEN, power)
-        this.load.image(ImageKeys.CHAINS, chains)
-        this.load.image(ImageKeys.DOOM_TOKEN, chains)
-        this.load.image(ImageKeys.UNDER_CONSTRUCTION, underConstruction)
+        this.load.image(ImageKey.CARDBACK, cardback)
+        this.load.image(ImageKey.UNFORGED_KEY, unforgedKey)
+        this.load.image(ImageKey.FORGED_KEY, forgedKey)
+        this.load.image(ImageKey.DAMAGE_TOKEN, damage)
+        this.load.image(ImageKey.AMBER_TOKEN, amber)
+        this.load.image(ImageKey.STUN_TOKEN, stun)
+        this.load.image(ImageKey.ARMOR_TOKEN, armor)
+        this.load.image(ImageKey.POWER_TOKEN, power)
+        this.load.image(ImageKey.CHAINS, chains)
+        this.load.image(ImageKey.DOOM_TOKEN, chains)
+        this.load.image(ImageKey.UNDER_CONSTRUCTION, underConstruction)
 
         const state = this.state
         const players = [state.playerOneState, state.playerTwoState]
@@ -159,7 +158,7 @@ class GameScene extends Phaser.Scene {
         amberText.setOrigin(0.5)
         this.root!.add(amberText)
 
-        const chainsImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX + 5, originY + 85, "chains")
+        const chainsImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX + 5, originY + 85, ImageKey.CHAINS)
         chainsImage.setDisplaySize(30, 30)
         chainsImage.setOrigin(0)
         chainsImage.setInteractive({cursor: "pointer"})
@@ -183,7 +182,7 @@ class GameScene extends Phaser.Scene {
         this.root!.add(chainsText)
 
         for (let i = 0; i < 3; i++) {
-            const textureId = player.keys >= i + 1 ? "forged-key" : "unforged-key"
+            const textureId = player.keys >= i + 1 ? ImageKey.FORGED_KEY : ImageKey.UNFORGED_KEY
             const keySize = 40
             const keyImage = new Phaser.GameObjects.Image(this, originX + playerDataOffsetX - 40, originY + (keySize + 4) * i + 5, textureId)
             keyImage.setDisplaySize(keySize, keySize)
@@ -228,7 +227,7 @@ class GameScene extends Phaser.Scene {
             x: discardPileX,
             y: originY + CARD_HEIGHT / 2,
             allowCardTypes: [CardType.HAND, CardType.CREATURE, CardType.ARTIFACT, CardType.UPGRADE],
-            getCardImage: () => player.discard.length === 0 ? "cardback" : player.discard[player.discard.length - 1].backingCard.cardTitle,
+            getCardImage: () => player.discard.length === 0 ? ImageKey.CARDBACK : player.discard[player.discard.length - 1].backingCard.cardTitle,
             getMinimumAlpha: () => player.discard.length === 0 ? 0.1 : 1,
             onDrop: (card: Card) => {
                 dispatch({
@@ -379,7 +378,7 @@ class GameScene extends Phaser.Scene {
             player,
             x: purgePileX,
             y: originY + CARD_HEIGHT / 2,
-            getCardImage: () => player.purged.length === 0 ? "cardback" : player.purged[player.purged.length - 1].backingCard.cardTitle,
+            getCardImage: () => player.purged.length === 0 ? ImageKey.CARDBACK : player.purged[player.purged.length - 1].backingCard.cardTitle,
             getMinimumAlpha: () => player.purged.length === 0 ? 0.1 : 1,
             allowCardTypes: [CardType.HAND, CardType.CREATURE, CardType.ARTIFACT, CardType.UPGRADE],
             onDrop: (card: Card) => {
@@ -426,7 +425,7 @@ class GameScene extends Phaser.Scene {
                 y: originY + artifactOffsetY,
                 id: artifact.id,
                 front: artifact.backingCard.cardTitle,
-                back: "cardback",
+                back: ImageKey.CARDBACK,
                 faceup: artifact.faceup,
                 ready: artifact.ready,
                 cardsUnderneath: artifact.cardsUnderneath,
@@ -478,7 +477,7 @@ class GameScene extends Phaser.Scene {
                 y: creatureY,
                 id: creature.id,
                 front: creature.backingCard.cardTitle,
-                back: "cardback",
+                back: ImageKey.CARDBACK,
                 faceup: creature.faceup,
                 ready: creature.ready,
                 cardsUnderneath: creature.cardsUnderneath,
@@ -532,8 +531,8 @@ class GameScene extends Phaser.Scene {
                 x: originX + CARD_WIDTH / 2 + i * Math.min((handWidth / player.hand.length), CARD_WIDTH * 0.8),
                 y: originY + CARD_HEIGHT / 2,
                 id: player.hand[i].id,
-                front: playerPosition === PlayerPosition.TOP ? "cardback" : player.hand[i].backingCard.cardTitle,
-                back: "cardback",
+                front: playerPosition === PlayerPosition.TOP ? ImageKey.CARDBACK : player.hand[i].backingCard.cardTitle,
+                back: ImageKey.CARDBACK,
                 faceup: playerPosition === PlayerPosition.BOTTOM,
                 draggable: true,
                 onClick: this.onClickCardInHand.bind(this),
@@ -623,7 +622,7 @@ class GameScene extends Phaser.Scene {
             x,
             y,
             onDrop,
-            getCardImage = () => "cardback",
+            getCardImage = () => ImageKey.CARDBACK,
             getMinimumAlpha = () => 0.1,
             visible = true,
             allowCardTypes = [CardType.HAND],
@@ -966,7 +965,7 @@ class GameScene extends Phaser.Scene {
     }
 
     showEnlargedCard(texture: string) {
-        if (texture === "cardback")
+        if (texture === ImageKey.CARDBACK)
             return
         const width = 220
         const height = width / .716612378
