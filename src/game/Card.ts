@@ -1,6 +1,7 @@
 import Phaser from "phaser"
-import { CardInGame } from "../shared/gamestate/CardInGame"
 import { cardScripts } from "../card-scripts/CardScripts"
+import { CardInGame } from "../shared/gamestate/CardInGame"
+import { ImageKey } from "./GameScene"
 
 export const CARD_WIDTH = 100
 export const CARD_HEIGHT = CARD_WIDTH / .716612378
@@ -11,7 +12,7 @@ class Card extends Phaser.GameObjects.Container {
     _originX: number
     _originY: number
     front: string
-    back: string
+    back: ImageKey
     ready: boolean
     faceup: boolean
     tokens: {
@@ -48,7 +49,7 @@ class Card extends Phaser.GameObjects.Container {
         y: number,
         id: string,
         front: string,
-        back: string,
+        back: ImageKey,
         faceup?: boolean,
         ready?: boolean,
         draggable?: boolean,
@@ -86,8 +87,7 @@ class Card extends Phaser.GameObjects.Container {
         this.add(this.cardImage)
 
         this.cardsUnderneath = cardsUnderneath.map(() => {
-            const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
-            return cardImage
+            return new Phaser.GameObjects.Image(scene, 0, 0, back)
         })
 
         this.upgrades = upgrades.map((card: CardInGame) => {
@@ -201,11 +201,8 @@ class Card extends Phaser.GameObjects.Container {
         if (this.faceup) {
             const script = cardScripts.scripts.get(this.front.replace(/ /g, "-").toLowerCase())
             if (!script) {
-                const manualModeIndicator = new Phaser.GameObjects.Text(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, "-------", {
-                    color: "#e03f3f",
-                    backgroundColor: "#e03f3f",
-                    fontSize: "16px"
-                })
+                const manualModeIndicator = new Phaser.GameObjects.Image(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, ImageKey.UNDER_CONSTRUCTION)
+                manualModeIndicator.scale = 0.02
                 this.add(manualModeIndicator)
             }
         }
