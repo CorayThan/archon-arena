@@ -28,7 +28,7 @@ export const exec = (action: Action, state: GameState) => {
         [AEvent.PlayAction]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInHandById(owner, action.cardId)
-            const cardScript = cardScripts.scripts.get(card!.id)
+            const cardScript = cardScripts.scripts.get(card!.backingCard.cardTitle.replace(/ /g, "-").toLowerCase())
             if (cardScript) {
                 if (cardScript.amber) {
                     owner.amber += cardScript.amber(state)
@@ -134,7 +134,7 @@ export const exec = (action: Action, state: GameState) => {
         },
         [AEvent.AddAmberToCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
-            const cardType = getCardType(action.cardId!)
+            const cardType = getCardType(owner, action.cardId!)
             if (cardType === "creature") {
                 const creature = getCreatureById(owner, action.cardId)
                 if (!creature)

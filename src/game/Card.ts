@@ -90,11 +90,11 @@ class Card extends Phaser.GameObjects.Container {
             return cardImage
         })
 
-        this.upgrades = upgrades.map((card: CardInGame, i: number) => {
+        this.upgrades = upgrades.map((card: CardInGame) => {
             const cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             cardImage.setDataEnabled()
             // @ts-ignore
-            cardImage.id = `${id}-upgrade-${i}`
+            cardImage.id = card.id
             cardImage.setInteractive({ cursor: "pointer" })
             this.scene.input.setDraggable(cardImage)
             cardImage.addListener("pointerover", (e: MouseEvent) => {
@@ -199,7 +199,7 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         if (this.faceup) {
-            const script = cardScripts.scripts.get(this.front)
+            const script = cardScripts.scripts.get(this.front.replace(/ /g, "-").toLowerCase())
             if (!script) {
                 const manualModeIndicator = new Phaser.GameObjects.Text(this.scene, -CARD_WIDTH / 2 + 25, CARD_HEIGHT / 2 - 25, "-------", {
                     color: "#e03f3f",
