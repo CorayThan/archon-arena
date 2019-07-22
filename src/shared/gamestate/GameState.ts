@@ -25,6 +25,7 @@ export interface PlayerState {
     amber: number,
     chains: number,
     keys: number,
+    keyCost: number,
     handSize: number,
     library: CardInGame[]
     hand: CardInGame[]

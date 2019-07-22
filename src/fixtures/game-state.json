@@ -9,6 +9,8 @@
     "archives": [],
     "artifacts": [],
     "chains": 0,
+    "keyCost": 6,
+    "handSize": 6,
     "creatures": [],
     "discard": [],
     "hand": [
@@ -52,6 +54,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "mack-the-knife",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -72,6 +75,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Shadows",
         "id": "relentless-whispers",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -95,6 +99,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "carlo-phantom",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -115,6 +120,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "control-the-weak",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -137,6 +143,7 @@
             "Item"
           ]
         },
+        "house": "Brobnar",
         "id": "gauntlet-of-command",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -157,6 +164,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Shadows",
         "id": "lights-out",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       }
@@ -183,6 +191,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "nexus",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -206,6 +215,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "noddy-the-thief",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -228,6 +238,7 @@
             "Weapon"
           ]
         },
+        "house": "Brobnar",
         "id": "mighty-javelin",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -248,6 +259,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "three-fates",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -270,6 +282,7 @@
             "Item"
           ]
         },
+        "house": "Brobnar",
         "id": "banner-of-battle",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -290,6 +303,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Shadows",
         "id": "treasure-map",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -312,6 +326,7 @@
             "Demon"
           ]
         },
+        "house": "Dis",
         "id": "charette",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -332,6 +347,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "pandemonium",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -354,6 +370,7 @@
             "Weapon"
           ]
         },
+        "house": "Brobnar",
         "id": "screechbomb",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -376,6 +393,7 @@
             "Demon"
           ]
         },
+        "house": "Dis",
         "id": "succubus",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -399,6 +417,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "silvertooth",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -422,6 +441,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "dodger",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -444,6 +464,7 @@
             "Item"
           ]
         },
+        "house": "Dis",
         "id": "dominator-bauble",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -466,6 +487,7 @@
             "Demon"
           ]
         },
+        "house": "Dis",
         "id": "overlord-greking",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -488,6 +510,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "headhunter",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -508,6 +531,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "flame-wreathed",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -531,6 +555,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "umbra",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -553,6 +578,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "firespitter",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -575,6 +601,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "bumpsy",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -597,6 +624,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "earthshaker",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -617,6 +645,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "hand-of-dis",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -639,6 +668,7 @@
             "Specter"
           ]
         },
+        "house": "Shadows",
         "id": "shadow-self",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -659,6 +689,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Brobnar",
         "id": "burn-the-stockpile",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
@@ -679,6 +710,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "fear",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       }
@@ -694,6 +726,8 @@
     "archives": [],
     "artifacts": [],
     "chains": 0,
+    "keyCost": 6,
+    "handSize": 6,
     "creatures": [],
     "discard": [],
     "hand": [
@@ -717,7 +751,8 @@
           ]
         },
         "id": "shadow-self",
-        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1",
+        "house": "Shadows"
       },
       {
         "backingCard": {
@@ -738,6 +773,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "firespitter",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -758,6 +794,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "three-fates",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -781,6 +818,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "noddy-the-thief",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -804,6 +842,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "umbra",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -826,6 +865,7 @@
             "Item"
           ]
         },
+        "house": "Dis",
         "id": "dominator-bauble",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       }
@@ -851,6 +891,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "earthshaker",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -873,6 +914,7 @@
             "Demon"
           ]
         },
+        "house": "Dis",
         "id": "charette",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -896,6 +938,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "dodger",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -916,6 +959,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "pandemonium",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -936,6 +980,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "flame-wreathed",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -959,6 +1004,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "carlo-phantom",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -979,6 +1025,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Shadows",
         "id": "lights-out",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1001,6 +1048,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "headhunter",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1023,6 +1071,7 @@
             "Giant"
           ]
         },
+        "house": "Brobnar",
         "id": "bumpsy",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1043,6 +1092,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Brobnar",
         "id": "burn-the-stockpile",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1063,6 +1113,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Shadows",
         "id": "treasure-map",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1083,6 +1134,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "control-the-weak",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1105,6 +1157,7 @@
             "Item"
           ]
         },
+        "house": "Brobnar",
         "id": "gauntlet-of-command",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1125,6 +1178,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "hand-of-dis",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1147,6 +1201,7 @@
             "Weapon"
           ]
         },
+        "house": "Brobnar",
         "id": "screechbomb",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1167,6 +1222,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Shadows",
         "id": "relentless-whispers",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1189,6 +1245,7 @@
             "Demon"
           ]
         },
+        "house": "Dis",
         "id": "overlord-greking",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1209,6 +1266,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "mind-barb",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1232,6 +1290,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "nexus",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1255,6 +1314,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "mack-the-knife",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1278,6 +1338,7 @@
             "Thief"
           ]
         },
+        "house": "Shadows",
         "id": "silvertooth",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1298,6 +1359,7 @@
           "power": 0,
           "traits": []
         },
+        "house": "Dis",
         "id": "fear",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1320,6 +1382,7 @@
             "Item"
           ]
         },
+        "house": "Brobnar",
         "id": "banner-of-battle",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1342,6 +1405,7 @@
             "Weapon"
           ]
         },
+        "house": "Brobnar",
         "id": "mighty-javelin",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
@@ -1364,6 +1428,7 @@
             "Demon"
           ]
         },
+        "house": "Dis",
         "id": "succubus",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       }

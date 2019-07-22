@@ -21,6 +21,7 @@ import {
 import ArtifactActions from "./Artifact"
 import CreatureActions from "./Creature"
 import {cardScripts} from "../../card-scripts/CardScripts"
+//import {number} from "prop-types"
 
 export const exec = (action: Action, state: GameState) => {
 
@@ -31,10 +32,10 @@ export const exec = (action: Action, state: GameState) => {
             const cardScript = cardScripts.scripts.get(card!.id)
             if (cardScript) {
                 if (cardScript.amber) {
-                    owner.amber += cardScript.amber(state)
+                    //owner.amber += cardScript.amber(state)
                 }
                 if (cardScript.onPlay && cardScript.onPlay.perform) {
-                    cardScript.onPlay.perform(state, {timesExecuted: 0})
+                    // cardScript.onPlay.perform(state, {timesExecuted: 0})
                 }
             }
             removeCardFromHand(owner, action.cardId)

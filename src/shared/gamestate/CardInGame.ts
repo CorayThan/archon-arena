@@ -5,8 +5,8 @@ import { Creature } from "./Creature"
 export interface CardInGame {
     id: string
     ownerId: string
+    house: string
     backingCard: KCard
-    traits: string[]
 }
 
 export type AnyCardInGame = CardInGame | Creature | Artifact
