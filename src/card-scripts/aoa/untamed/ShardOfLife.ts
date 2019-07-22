@@ -6,7 +6,6 @@ import {
     getCardsWithTrait,
     putOnTopOfDeck
 } from "../../ScriptUtils"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
 import {shuffle} from "lodash"
 
 const cardScript: CardScript = {
@@ -16,7 +15,7 @@ const cardScript: CardScript = {
         validTargets: (state) => activePlayerState(state).discard,
         numberOfTargets: (state) => getCardsWithTrait(friendlyArtifacts(state), 'Shard').length,
         perform: (state, config) => {
-            config.targets.forEach(target => putOnTopOfDeck(target as CardInGame))
+            putOnTopOfDeck(state, config.targets)
             shuffle(activePlayerState(state).library)
         }
     }
