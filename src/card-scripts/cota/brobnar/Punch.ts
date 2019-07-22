@@ -1,16 +1,17 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {allCreatures, dealDamage} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import {allCreatures} from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        validTargets: allCreatures,
-        numberOfTargets: () => 1,
         perform: (state, config) => {
-            dealDamage(config.targets as Creature[], 3)
-        }
+            if (config && config.targets && config.targets[0]) {
+                // pseudo code
+                // dealDamage(target, 3)
+            }
+        },
+        validTargets: allCreatures
     }
 }
 
