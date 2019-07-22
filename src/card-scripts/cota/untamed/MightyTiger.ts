@@ -9,10 +9,9 @@ const cardScript: CardScript = {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            config.targets.forEach(target => dealDamage(target as Creature, 4))
+            dealDamage(config.targets as Creature[], 4)
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("mighty-tiger", cardScript)

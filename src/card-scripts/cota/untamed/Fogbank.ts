@@ -1,13 +1,13 @@
 import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {enemyCreatures} from "../../types/ScriptUtils"
+import {cardScripts} from "../../CardScripts"
+// import {enemyCreatures} from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: () => {
             //TODO This isn't functional, but its an idea
-            enemyCreatures.forEach(creature => creature.enableFighting = false)
+            //enemyCreatures(state).forEach(creature => creature.enableFighting = false)
         }
     },
 

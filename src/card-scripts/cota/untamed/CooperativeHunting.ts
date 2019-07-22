@@ -9,7 +9,7 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => friendlyCreatures.length,
         perform: (state, config) => {
-            config.targets.forEach(target => dealDamage(target as Creature, 1))
+            dealDamage(config.targets as Creature[], 1)
         }
     }
 }
