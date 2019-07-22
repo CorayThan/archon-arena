@@ -10,10 +10,9 @@ const cardScript: CardScript = {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            config.targets.forEach(target => dealDamage(target as Creature, 2))
+            dealDamage(config.targets as Creature[], 2)
         }
     }
-
 }
 
 cardScripts.scripts.set("lupo-the-scarred", cardScript)

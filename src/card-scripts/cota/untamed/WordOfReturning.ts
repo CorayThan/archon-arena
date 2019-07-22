@@ -12,7 +12,7 @@ const cardScript: CardScript = {
                 const targetCreature = creature as Creature
                 modifyAmber(activePlayerState(state), targetCreature.tokens.amber)
                 targetCreature.tokens.amber = 0
-                dealDamage(targetCreature, 1)
+                dealDamage([targetCreature] as Creature[], 1)
             })
         }
     }

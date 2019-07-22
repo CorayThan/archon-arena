@@ -5,7 +5,7 @@ import {activePlayerState, putInHand} from "../../ScriptUtils"
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        validTargets: (state) => activePlayerState(state).filter(card => card.backingCard.cardType === "Creature"),
+        validTargets: (state) => activePlayerState(state).discard.filter(x => x.backingCard.cardType === "Creature"),
         numberOfTargets: () => 1,
         perform: (state, config) => {
             putInHand(state, config.targets)
