@@ -1,6 +1,6 @@
 import {CardScript} from "../../types/CardScript"
 import {cardScripts} from "../../CardScripts"
-import {allCreatures} from "../../ScriptUtils"
+import {allCreatures, takeSkirmish, takeTaunt} from "../../ScriptUtils"
 import {Creature} from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -11,20 +11,15 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            config.targets.forEach(creature => {
-                (creature as Creature).taunt = false
-                (creature as Creature).elusive = false
-            })
+            takeTaunt(config.targets as Creature[])
+            takeSkirmish(config.targets as Creature[])
         }
     },
-    atEndOfYourTurn: {
-        perform: (state, config) => {
-            config.targets.forEach(creature => {
-                (creature as Creature).taunt = true
-                (creature as Creature).elusive = true
-            })
-        }
-    }
+    // atEndOfYourTurn: {
+    //     perform: (state, config) => {
+    //
+    //     }
+    // }
 
 }
 
