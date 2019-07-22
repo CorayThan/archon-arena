@@ -118,10 +118,10 @@ interface IndividualScript {
  * twice, with the new GameState being resolved in between each execution.
  */
 type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
-type IsActive = (state: GameState) => boolean
+type IsActive = (state: GameState, config: CardActionConfig) => boolean
 type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
-interface CardActionConfig {
+export interface CardActionConfig {
     targets?: AnyCardInGame[]
     thisCard: CardInGame
 

@@ -7,8 +7,8 @@ const cardScript: CardScript = {
         perform: (state) => {
         	const creaturesInPlay = allCreatures(state)
         	creaturesInPlay
-        	.filter(creature => creature.tokens.damage === 0)
-        	.forEach(creature => destroyCard(creature))
+                .filter(creature => creature.tokens.damage === 0)
+                .forEach(creature => destroyCard(state, creature))
         	gainChains(activePlayerState(state), 3)
         }
     }

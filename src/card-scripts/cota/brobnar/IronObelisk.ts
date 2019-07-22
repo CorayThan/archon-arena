@@ -1,12 +1,12 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { House } from "../../../shared/keyforge/house/House"
-import { friendlyCreatures, enemyPlayer } from "../../ScriptUtils"
+import { friendlyCreatures, enemyPlayerForCard } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     staticEffect: (state, config) => {
         if (config!.thisCard) {
-            enemyPlayer(state, config!.thisCard).keyCost += friendlyCreatures(state)
+            enemyPlayerForCard(state, config!.thisCard).keyCost += friendlyCreatures(state)
                 .filter(creature => creature.backingCard.house = House.Brobnar)
                 .filter(creature => creature.tokens.damage > 0).length
         }

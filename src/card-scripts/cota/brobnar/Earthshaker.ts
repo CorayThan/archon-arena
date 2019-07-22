@@ -1,6 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import {allCreatures, destroyCard} from "../../ScriptUtils"
+import { allCreatures, destroyCard } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 7,
@@ -8,7 +8,7 @@ const cardScript: CardScript = {
         perform: (state) => {
             allCreatures(state)
                 .filter(creature => creature.power <= 3)
-                .forEach(creature => destroyCard(creature))
+                .forEach(creature => destroyCard(state, creature))
         }
     }
 }

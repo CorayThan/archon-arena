@@ -51,7 +51,7 @@ export const enemyCards = (state: GameState): CardInGame[] => {
         .concat(enemyUpgrades(state))
 }
 
-export const friendlyPlayer = (state: GameState, card: CardInGame): PlayerState => {
+export const friendlyPlayerForCard = (state: GameState, card: CardInGame): PlayerState => {
     const playerOneState = state.playerOneState
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
@@ -62,7 +62,7 @@ export const friendlyPlayer = (state: GameState, card: CardInGame): PlayerState 
         return state.playerTwoState
 }
 
-export const enemyPlayer = (state: GameState, card: CardInGame): PlayerState => {
+export const enemyPlayerForCard = (state: GameState, card: CardInGame): PlayerState => {
     const playerOneState = state.playerOneState
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
@@ -76,7 +76,8 @@ export const enemyPlayer = (state: GameState, card: CardInGame): PlayerState => 
 export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
     const check = (cardToCheck: CardInGame) => cardToCheck.id === card.id
     const playerStates = [state.playerOneState, state.playerTwoState]
-    playerStates.forEach((playerState) => {
+    for (let i = 0; i < playerStates.length; i++) {
+        const playerState = playerStates[i];
         let removed: CardInGame[] = remove(playerState.creatures, check)
         if (removed.length > 0) {
             return removed[0]
@@ -101,7 +102,7 @@ export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame 
         if (removed.length > 0) {
             return removed[0]
         }   
-    })
+    }
     throw new Error("Couldn't find card with id " + card.id)
 }
 
@@ -115,7 +116,11 @@ export const stunCreature = (creature: Creature) => {
     creature.tokens.stun = 1
 }
 
-export const destroyCard = (card: CardInGame):boolean => {
+export const destroyCard = (state: GameState, card: CardInGame): boolean => {
+    const owner: PlayerState = friendlyPlayerForCard(state, card)
+    removeAndReturn(state, card)
+    owner.discard.push(card)
+
     //TODO, the return statement says whether the card was actually destroyed
     return true
 }
@@ -196,7 +201,7 @@ export const discardTopCard = (state: GameState, activePlayer: boolean): CardInG
 }
 
 export const captureAmber = (state: GameState, creature: Creature, amount: number) => {
-    creature.tokens.amber += modifyAmber(enemyPlayer(state, creature), amount)
+    creature.tokens.amber += modifyAmber(enemyPlayerForCard(state, creature), amount)
 }
 
 export const mustFightWhenUsedIfAble = (creature: Creature) => {
@@ -213,32 +218,32 @@ export const exhaustCard = (card: Creature | Artifact) => {
     card.ready = false
 }
 
-export const modifyAmber = (playerState: PlayerState, amount: number):number => {
+export const modifyAmber = (playerState: PlayerState, amount: number): number => {
     const actualChange = playerState.amber + amount >= 0 ? amount : playerState.amber
     playerState.amber = playerState.amber + actualChange
     return actualChange
 }
 
-export const shuffleDeck = (state: GameState) => {
+export const shuffleDeck = (playerState: PlayerState) => {
     //TODO
 }
 
-export const numberOfCardsPlayedThisTurn = (state: GameState):number => {
+export const numberOfCardsPlayedThisTurn = (state: GameState): number => {
     //TODO
     return 0
 }
 
-export const healCreature = (creature: Creature, amount:number):number => {
+export const healCreature = (creature: Creature, amount:number): number => {
     const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage
     creature.tokens.damage = creature.tokens.damage - actualChange
     return actualChange
 }
 
-export const amountOfShards = (state: GameState):number => {
+export const amountOfShards = (state: GameState): number => {
     return friendlyArtifacts(state)
         .filter(artifact => (artifact as Artifact).backingCard.traits.includes("Shard")).length
 }
 
-export const steal = (state: GameState, amount: number):number => {
+export const steal = (state: GameState, amount: number): number => {
     return modifyAmber(activePlayerState(state), modifyAmber(inactivePlayerState(state), amount))
 }
