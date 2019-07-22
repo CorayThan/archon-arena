@@ -18,9 +18,11 @@ export default {
             faceup: true,
             cardsUnderneath: [],
             purgedByThis: [],
+            house: card.backingCard.house,
             tokens: {
                 amber: 0,
             },
+            traits: card.backingCard.traits,
             ownerId: owner.player.id,
             backingCard: card.backingCard,
         }
@@ -45,6 +47,7 @@ export default {
         const card: CardInGame = {
             id: artifact.id,
             ownerId: owner.player.id,
+            house: artifact.backingCard.house,
             backingCard: artifact.backingCard,
         }
         owner.hand.push(card)
