@@ -29,6 +29,7 @@ class SmallCard extends BaseCard {
             if (this.tokens.power) {
                 power += this.tokens.power
             }
+            power = Math.max(0, power)
 
             const powerText = new Phaser.GameObjects.Text(this.scene, powerX, powerY, ''+power, {
                 color: "#fff",
