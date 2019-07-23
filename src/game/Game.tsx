@@ -1,9 +1,9 @@
 import * as mobx from "mobx"
 import Phaser from "phaser"
 import React from "react"
+import { debounce } from "lodash"
 import { chatWidth } from "../matchmaking/ChatDrawer"
 import Action from "../shared/Action"
-
 import { GameState } from "../shared/gamestate/GameState"
 import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
@@ -41,6 +41,11 @@ class Game extends React.Component<Props> {
     // Store a state object stripped of proxies defined by mobx
     _state: GameState | undefined
 
+    constructor(props: Props) {
+        super(props)
+        this.updateGameState = debounce(this.updateGameState.bind(this), 200)
+    }
+
     dispatch = (action: Action) => {
         const state = this._state
         if (!state)
@@ -53,6 +58,10 @@ class Game extends React.Component<Props> {
         }
 
         exec(action, state)
+        this.updateGameState(state)
+    }
+
+    updateGameState(state: GameState) {
         this.props.setState(state)
     }
 
@@ -81,6 +90,11 @@ class Game extends React.Component<Props> {
                 if (scene) {
                     scene.state = state
                     scene.render()
+                    if (state.activePlayer.id === playerId) {
+                        scene.sys.resume()
+                    } else {
+                        scene.sys.pause()
+                    }
                 }
             } else {
                 this.game = new Phaser.Game(config)
