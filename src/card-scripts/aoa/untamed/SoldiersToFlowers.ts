@@ -1,8 +1,8 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, inactivePlayerState, modifyAmber, purgeCards} from "../../ScriptUtils"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
-import {House} from "../../../shared/keyforge/house/House"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, inactivePlayerState, modifyAmber, purgeCards } from "../../ScriptUtils"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
+import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
     // Play: Purge each Untamed creature from each player’s discard pile. For each card purged this way, its owner gains 1A.

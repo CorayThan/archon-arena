@@ -1,8 +1,8 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {destroyCard, enemyCreatures, friendlyCreatures, getMostPowerful} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {House} from "../../../shared/keyforge/house/House"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { destroyCard, enemyCreatures, friendlyCreatures, getMostPowerful } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
     // Play: Destroy the most powerful creature controlled by each player who does not control a ready Untamed creature.

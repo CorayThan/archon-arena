@@ -1,12 +1,12 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 import {
     activePlayerState,
     friendlyArtifacts,
     getCardsWithTrait,
     putOnTopOfDeck
 } from "../../ScriptUtils"
-import {shuffle} from "lodash"
+import { shuffle } from "lodash"
 
 const cardScript: CardScript = {
     // Action: Shuffle a card from your discard pile into your deck for each friendly Shard.

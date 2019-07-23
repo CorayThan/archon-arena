@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {toTheRight} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { toTheRight } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Creatures to the right of Panpaca, Anga in the battleline get +2 power.
