@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {fightUsingCreatures, friendlyCreatures, getNeighbors, readyCreatures} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { fightUsingCreatures, friendlyCreatures, getNeighbors, readyCreatures } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Deploy. (This creature can enter play anywhere in your battleline.)
@@ -31,8 +31,7 @@ const cardScript: CardScript = {
             readyCreatures(config.targets as Creature[])
             fightUsingCreatures(config.targets as Creature[])
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("the-grey-rider", cardScript)

@@ -1,12 +1,12 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 import {
     activePlayerState,
     enemyArtifacts,
     friendlyArtifacts,
     inactivePlayerState
 } from "../../ScriptUtils"
-import {Artifact} from "../../../shared/gamestate/Artifact"
+import { Artifact } from "../../../shared/gamestate/Artifact"
 
 const cardScript: CardScript = {
     // Reap: Give control of a friendly artifact to your opponent. If you do, they must give you 2A.

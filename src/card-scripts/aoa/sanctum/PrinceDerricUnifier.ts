@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, friendlyCreatures, modifyAmber} from "../../ScriptUtils"
-import {uniq} from "lodash"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, friendlyCreatures, modifyAmber } from "../../ScriptUtils"
+import { uniq } from "lodash"
 
 const cardScript: CardScript = {
     // Play: Gain 3A if you control creatures from 3 different houses.

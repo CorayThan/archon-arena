@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {alterArmor} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { alterArmor } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // This creature gets +1 armor. Play: Fully heal this creature.

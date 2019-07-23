@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {alterPower, friendlyCreatures, getNeighbors} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { alterPower, friendlyCreatures, getNeighbors } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Deploy. (This creature can enter play anywhere in your battleline.) “Lion” Bautrem’s neighbors get +2 power.

@@ -1,11 +1,11 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 import {
     fightUsingCreatures,
     friendlyCreatures,
     readyCreatures
 } from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Play: Ready and fight with a friendly creature. Deal 2D to the attacked creature’s neighbors.

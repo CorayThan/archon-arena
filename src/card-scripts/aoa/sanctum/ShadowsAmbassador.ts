@@ -1,10 +1,10 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, friendlyArtifacts, friendlyCreatures} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {House} from "../../../shared/keyforge/house/House"
-import {Artifact} from "../../../shared/gamestate/Artifact"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, friendlyArtifacts, friendlyCreatures } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { House } from "../../../shared/keyforge/house/House"
+import { Artifact } from "../../../shared/gamestate/Artifact"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     // Elusive. (The first time this creature is attacked each turn, no damage is dealt.) Fight/Reap: You may play or use a Shadows card this turn.

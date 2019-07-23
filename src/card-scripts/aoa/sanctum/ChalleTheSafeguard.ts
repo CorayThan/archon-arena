@@ -1,5 +1,5 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 
 const cardScript: CardScript = {
     // Deploy. (This creature can enter play anywhere in your battleline.)
