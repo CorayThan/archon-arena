@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {friendlyCreatures, unStunCreatures} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { friendlyCreatures, unStunCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: Unstun each friendly creature.

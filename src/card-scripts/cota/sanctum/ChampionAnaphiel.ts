@@ -1,5 +1,5 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 
 const cardScript: CardScript = {
     // Taunt. (This creature’s neighbors cannot be attacked unless they have taunt.)

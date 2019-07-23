@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {alterArmor, friendlyCreatures, getNeighbors} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { alterArmor, friendlyCreatures, getNeighbors } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Each of Bulwark’s neighbors gets +2 armor.

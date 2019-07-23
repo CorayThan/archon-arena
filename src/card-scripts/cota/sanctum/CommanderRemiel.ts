@@ -1,8 +1,8 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {friendlyCreatures, useCreatures} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {House} from "../../../shared/keyforge/house/House"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { friendlyCreatures, enableUse } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
     // Reap: Use a friendly non-Sanctum creature.
@@ -13,7 +13,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state, config) => {
             //TODO make useCreature in Utils
-            useCreatures(config.targets as Creature[])
+            enableUse(config.targets as Creature[])
         }
     }
 }

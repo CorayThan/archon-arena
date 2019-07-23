@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {allNonFlankCreatures, stunCreatures} from "../../ScriptUtils"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { allNonFlankCreatures, stunCreatures } from "../../ScriptUtils"
+import { cardScripts } from "../../CardScripts"
 
 const cardScript: CardScript = {
     // Play: Stun each enemy creature not on a flank.

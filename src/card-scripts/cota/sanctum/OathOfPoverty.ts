@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, destroyCards, friendlyArtifacts, modifyAmber} from "../../ScriptUtils"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, destroyCards, friendlyArtifacts, modifyAmber } from "../../ScriptUtils"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     // Play: Destroy each of your artifacts. Gain 2<A> for each artifact destroyed this way.

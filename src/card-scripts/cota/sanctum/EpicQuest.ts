@@ -1,5 +1,5 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 import {
     activePlayerState,
     cardsPlayedThisTurn,
@@ -8,8 +8,8 @@ import {
     getCardsWithTrait,
     putInArchives
 } from "../../ScriptUtils"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
-import {House} from "../../../shared/keyforge/house/House"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
+import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
     // Play: Archive each friendly Knight creature in play.Omni: If you have played 7 or more Sanctum cards this turn, sacrifice Epic Quest and forge a key at no cost.
