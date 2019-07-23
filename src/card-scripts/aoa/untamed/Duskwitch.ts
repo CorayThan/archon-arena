@@ -1,5 +1,5 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 
 const cardScript: CardScript = {
     // Omega. (After you play this card, end this step.)

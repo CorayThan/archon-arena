@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {toTheLeft, giveSkirmish} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { toTheLeft, giveSkirmish } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Skirmish. Creatures to the left of Panpaca, Jaga in the battleline gain skirmish.

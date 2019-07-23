@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, drawHand, inactivePlayerState} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, drawHand, inactivePlayerState } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: Each player discards their hand, then refills their hand as if it were the end of their turn.

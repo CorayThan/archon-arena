@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {allCreatures, takeSkirmish, takeTaunt} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allCreatures, takeSkirmish, takeTaunt } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Action: Choose a creature. For the remainder of the turn, that creature loses taunt and elusive.

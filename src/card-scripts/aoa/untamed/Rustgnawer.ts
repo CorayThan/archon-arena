@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, allArtifacts, destroyCard, modifyAmber} from "../../ScriptUtils"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, allArtifacts, destroyCard, modifyAmber } from "../../ScriptUtils"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     // Fight: Destroy an artifact. If that artifact had an Æmber bonus, you gain that much A.

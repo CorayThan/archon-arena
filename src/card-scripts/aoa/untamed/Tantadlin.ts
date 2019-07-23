@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {discardCard, inactivePlayerState} from "../../ScriptUtils"
-import {shuffle} from "lodash"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { discardCard, inactivePlayerState } from "../../ScriptUtils"
+import { shuffle } from "lodash"
 
 const cardScript: CardScript = {
     // Tantadlin only deals 2D when fighting.

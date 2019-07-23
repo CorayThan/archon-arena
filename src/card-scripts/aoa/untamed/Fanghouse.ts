@@ -1,5 +1,5 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 
 const cardScript: CardScript = {
     // Assault 3. (Before this creature attacks, deal 3D to the attacked enemy.)
