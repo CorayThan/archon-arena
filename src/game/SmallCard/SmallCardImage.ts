@@ -1,4 +1,5 @@
 import Phaser from "phaser"
+import ImageEnum from "../ImageEnum"
 import {
     CARD_WIDTH,
     CARD_HEIGHT,
@@ -11,6 +12,8 @@ class CardImage extends Phaser.GameObjects.Container {
     cardImage: Phaser.GameObjects.Image
     backgroundImage: Phaser.GameObjects.Image
     interactiveZone: Phaser.GameObjects.Rectangle
+    orangeGlow: Phaser.GameObjects.Image
+    greenGlow: Phaser.GameObjects.Image
 
     constructor(scene: Phaser.Scene, x: number, y: number, public back: string, public front: string = "cardback", public faceup: boolean = true) {
         super(scene, x, y)
@@ -19,6 +22,8 @@ class CardImage extends Phaser.GameObjects.Container {
         this.interactiveZone = new Phaser.GameObjects.Rectangle(scene, 0, 0, SMALL_CARD_WIDTH, SMALL_CARD_HEIGHT)
         this.interactiveZone.setInteractive({ cursor: "pointer" })
         this.scene.input.setDraggable(this.interactiveZone)
+        this.greenGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageEnum.GREEN_CARD_GLOW)
+        this.orangeGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageEnum.ORANGE_CARD_GLOW)
     }
 
     render() {

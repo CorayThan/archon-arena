@@ -1,7 +1,7 @@
 import Phaser from "phaser"
 import { KCard } from "../../shared/keyforge/card/KCard"
 import { CardInGame } from "../../shared/gamestate/CardInGame"
-import { ImageKey } from "../GameScene"
+import ImageEnum from "../ImageEnum"
 
 import CardImage from "./CardImage"
 import SmallCardImage from "../SmallCard/SmallCardImage"
@@ -20,8 +20,8 @@ export interface CardInput {
     width?: number,
     height?: number,
     id: string,
-    front: ImageKey | string,
-    back: ImageKey | string,
+    front: ImageEnum | string,
+    back: ImageEnum | string,
     faceup?: boolean,
     ready?: boolean,
     draggable?: boolean,
@@ -42,8 +42,8 @@ class Card extends Phaser.GameObjects.Container {
     id: string
     _originX: number
     _originY: number
-    front: ImageKey | string
-    back: ImageKey | string
+    front: ImageEnum | string
+    back: ImageEnum | string
     ready: boolean
     faceup: boolean
     tokens: {
@@ -55,6 +55,11 @@ class Card extends Phaser.GameObjects.Container {
     upgrades: CardImage[] | SmallCardImage[]
     cardsUnderneath: Phaser.GameObjects.Image[]
     backingCard: KCard
+
+    orangeGlowTweenIn: Phaser.Tweens.Tween | undefined
+    greenGlowTweenIn: Phaser.Tweens.Tween | undefined
+    orangeGlowTweenOut: Phaser.Tweens.Tween | undefined
+    greenGlowTweenOut: Phaser.Tweens.Tween | undefined
 
     constructor({
         scene,
@@ -165,6 +170,59 @@ class Card extends Phaser.GameObjects.Container {
                 this.setAngle(0)
                 this.setPosition(this._originX + x, this._originY + y)
                 this.ignoreNextPointerUp = true
+
+                const distY = this._originY - this.y
+                if (distY > CARD_HEIGHT) {
+                    if (this.orangeGlowTweenOut) {
+                        this.orangeGlowTweenOut.stop()
+                        delete this.orangeGlowTweenOut
+                    }
+                    if (this.greenGlowTweenIn) {
+                        this.greenGlowTweenIn.stop()
+                        delete this.greenGlowTweenIn
+                    }
+
+                    if (!this.orangeGlowTweenIn) {
+                        this.orangeGlowTweenIn = this.scene.tweens.add({
+                            targets: this.cardImage.orangeGlow,
+                            alpha: 1,
+                            duration: 200,
+                            ease: 'Quad.easeOut',
+                        });
+
+                        this.greenGlowTweenOut = this.scene.tweens.add({
+                            targets: this.cardImage.greenGlow,
+                            alpha: 0,
+                            duration: 200,
+                            ease: 'Quad.easeOut',
+                        });
+                    }
+                } else {
+                    if (this.orangeGlowTweenIn) {
+                        this.orangeGlowTweenIn.stop()
+                        delete this.orangeGlowTweenIn
+                    }
+                    if (this.greenGlowTweenOut) {
+                        this.greenGlowTweenOut.stop()
+                        delete this.greenGlowTweenOut
+                    }
+
+                    if (!this.orangeGlowTweenOut) {
+                        this.orangeGlowTweenOut = this.scene.tweens.add({
+                            targets: this.cardImage.orangeGlow,
+                            alpha: 0,
+                            duration: 200,
+                            ease: 'Quad.easeOut',
+                        });
+
+                        this.greenGlowTweenIn = this.scene.tweens.add({
+                            targets: this.cardImage.greenGlow,
+                            alpha: 1,
+                            duration: 200,
+                            ease: 'Quad.easeOut',
+                        });
+                    }
+                }
             })
 
             this.cardImage.interactiveZone.addListener("dragstart", () => {
