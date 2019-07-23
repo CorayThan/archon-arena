@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {GameState, PlayerState} from "../../../shared/gamestate/GameState"
-import {activePlayerState, inactivePlayerState} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { GameState, PlayerState } from "../../../shared/gamestate/GameState"
+import { activePlayerState, inactivePlayerState } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {

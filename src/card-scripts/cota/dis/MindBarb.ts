@@ -1,8 +1,8 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {GameState, PlayerState} from "../../../shared/gamestate/GameState"
-import {inactivePlayerState} from "../../ScriptUtils"
-import {removeCardFromHand} from "../../../game/StateUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { GameState, PlayerState } from "../../../shared/gamestate/GameState"
+import { inactivePlayerState } from "../../ScriptUtils"
+import { removeCardFromHand } from "../../../game/StateUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
