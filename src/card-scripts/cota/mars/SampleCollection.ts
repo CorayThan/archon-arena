@@ -3,11 +3,9 @@ import { cardScripts } from "../../CardScripts"
 import { enemyCreatures, putInArchives } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.)
-    // Reap: Put an enemy creature into your archives. If that creature leaves your archives, it is put into its owner’s hand instead.
-    power: () => 2,
-    elusive: () => true,
-    reap: {
+    // Play: Put an enemy creature into your archives for each key your opponent has forged.
+    // If any of these creatures leave your archives, they are put into their owner’s hand instead.
+    onPlay: {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
@@ -16,4 +14,4 @@ const cardScript: CardScript = {
     }
 }
 
-cardScripts.scripts.set("uxlyx-the-zookeeper", cardScript)
+cardScripts.scripts.set("sample-collection", cardScript)
