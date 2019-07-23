@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, enemyCreatures, friendlyCreatures, modifyAmber} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, enemyCreatures, friendlyCreatures, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: For each creature your opponent controls in excess of you, gain 1<A>.

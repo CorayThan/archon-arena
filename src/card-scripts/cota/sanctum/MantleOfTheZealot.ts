@@ -1,5 +1,5 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 
 const cardScript: CardScript = {
     // This creature gains, “You may use this creature as if it belonged to the active house.”

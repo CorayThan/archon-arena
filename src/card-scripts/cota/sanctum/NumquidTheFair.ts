@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {destroyCards, enemyCreatures, friendlyCreatures} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { destroyCards, enemyCreatures, friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: Destroy an enemy creature. Repeat this card’s effect if your opponent still controls more creatures than you.

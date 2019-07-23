@@ -1,5 +1,5 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
 
 const cardScript: CardScript = {
     // Play: For the remainder of the turn, each friendly creature cannot be dealt damage.
@@ -9,8 +9,7 @@ const cardScript: CardScript = {
             //Add onPlay code here
             //TODO no damage during turn
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("shield-of-justice", cardScript)

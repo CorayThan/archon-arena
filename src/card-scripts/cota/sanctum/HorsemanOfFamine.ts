@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {allCreatures, destroyCards, getLeastPowerful} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allCreatures, destroyCards, getLeastPowerful } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play/Fight/Reap: Destroy the least powerful creature.
@@ -19,8 +19,7 @@ const cardScript: CardScript = {
         perform: (state) => {
             destroyCards(state, getLeastPowerful(allCreatures(state)))
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("horseman-of-famine", cardScript)

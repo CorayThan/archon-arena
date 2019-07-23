@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {allPlayerStates} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allPlayerStates } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: Each player with 6<A> or more is reduced to 5<A>.
@@ -11,8 +11,7 @@ const cardScript: CardScript = {
                 if (player.amber >= 6) player.amber = 5
             })
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("doorstep-to-heaven", cardScript)

@@ -1,8 +1,8 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {allCreatures, destroyCards} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allCreatures, destroyCards } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
     // Play: Destroy each creature with power 3 or higher.

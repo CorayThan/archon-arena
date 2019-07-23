@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {allArtifacts, destroyCards} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allArtifacts, destroyCards } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Omni: Sacrifice Gorm of Omm. Destroy an artifact.

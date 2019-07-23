@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {dealDamage} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { dealDamage } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: For the remainder of the turn, each creature you play gains, “Play: Deal 2<D> to an enemy creature.”
