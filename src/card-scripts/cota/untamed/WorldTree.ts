@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, putOnTopOfDeck} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, putOnTopOfDeck } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     action: {

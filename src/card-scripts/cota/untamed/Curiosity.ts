@@ -1,7 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {allCreatures, destroyCard} from "../../ScriptUtils"
-
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allCreatures, destroyCard } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
@@ -12,8 +11,7 @@ const cardScript: CardScript = {
                 .filter(creature => creature.traits.includes("Scientist"))
                 .forEach(creature => destroyCard(creature))
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("curiosity", cardScript)

@@ -1,7 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, allCreatures, healCreatures, putInHand} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, allCreatures, healCreatures, putInHand } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     action: {

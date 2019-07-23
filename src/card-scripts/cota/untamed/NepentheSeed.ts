@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, destroyCard, putInHand} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, destroyCard, putInHand } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     omni: {

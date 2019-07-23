@@ -1,7 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, modifyAmber} from "../../ScriptUtils"
-
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 2,

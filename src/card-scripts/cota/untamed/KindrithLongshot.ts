@@ -1,8 +1,8 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {allCreatures, dealDamage} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allCreatures, dealDamage } from "../../ScriptUtils"
 
-import {Creature} from "../../../shared/gamestate/Creature"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     power: () => 3,
@@ -14,8 +14,7 @@ const cardScript: CardScript = {
         perform: (state, config) => {
             dealDamage(config.targets as Creature[], 2)
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("kindrith-longshot", cardScript)
