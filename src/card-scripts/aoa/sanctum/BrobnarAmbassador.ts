@@ -1,10 +1,10 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, friendlyArtifacts, friendlyCreatures} from "../../ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
-import {House} from "../../../shared/keyforge/house/House"
-import {Artifact} from "../../../shared/gamestate/Artifact"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, friendlyArtifacts, friendlyCreatures } from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
+import { House } from "../../../shared/keyforge/house/House"
+import { Artifact } from "../../../shared/gamestate/Artifact"
 
 const cardScript: CardScript = {
     // Elusive. (The first time this creature is attacked each turn, no damage is dealt.)

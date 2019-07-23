@@ -1,9 +1,9 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {activePlayerState, allArtifacts, allCreatures, modifyAmber} from "../../ScriptUtils"
-import {CardInGame} from "../../../shared/gamestate/CardInGame"
-import {uniq} from "lodash"
-import {House} from "../../../shared/keyforge/house/House"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, allArtifacts, allCreatures, modifyAmber } from "../../ScriptUtils"
+import { CardInGame } from "../../../shared/gamestate/CardInGame"
+import { uniq } from "lodash"
+import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
     // Play: Gain 1A (to a maximum of 6) for each house represented among cards in play, except for Sanctum.
