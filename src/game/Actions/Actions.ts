@@ -65,14 +65,14 @@ export const exec = (action: Action, state: GameState) => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
-            const card = removeCardById(owner, action.cardId!)
+            const card = removeCardById(state, action.cardId!)
             player.discard.push(card)
         },
         [AEvent.PutCardOnDrawPile]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
-            const card = removeCardById(owner, action.cardId!)
+            const card = removeCardById(state, action.cardId!)
             owner.library.unshift(card)
         },
         [AEvent.MoveCardFromDiscardToHand]: () => {
@@ -103,14 +103,14 @@ export const exec = (action: Action, state: GameState) => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
-            const card = removeCardById(owner, action.cardId!)
+            const card = removeCardById(state, action.cardId!)
             owner.purged.push(card)
         },
         [AEvent.ArchiveCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
-            const card = removeCardById(owner, action.cardId!)
+            const card = removeCardById(state, action.cardId!)
             owner.archives.push(card)
         },
         [AEvent.TakeArchive]: () => {
@@ -138,7 +138,7 @@ export const exec = (action: Action, state: GameState) => {
         },
         [AEvent.AddAmberToCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
-            const cardType = getCardType(owner, action.cardId!)
+            const cardType = getCardType(state, action.cardId!)
             if (cardType === "creature") {
                 const creature = getCreatureById(owner, action.cardId)
                 if (!creature)
