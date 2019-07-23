@@ -12,9 +12,31 @@ export interface CardScript {
     onPlay?: IndividualScript
 
     /**
+     * Softlanding, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    nextCardPlayed?: IndividualScript
+
+    /**
+     * witches, Tunk, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    cardPlayed?: IndividualScript
+
+    /**
      * Firespitter, etc.
      */
     beforeFight?: IndividualScript
+
+    /**
+     * Interdimensional Graft etc
+     */
+    onNextKeyForge?: IndividualScript
+
+    /**
+     * Forgemaster Og
+     */
+    onKeyForge?: IndividualScript
 
     /**
      * Dodger, Headhunter, etc.
@@ -96,8 +118,16 @@ export interface CardScript {
 
 interface IndividualScript {
     perform: CardScriptExecution
-    validTargets?: (state: GameState) => CardInGame[]
-    choosenTargetsAreValid?: (targets: CardInGame[]) => boolean
+    numberOfTargets?: (state: GameState) => number
+    uniqueTargets?: () => boolean
+    upToTargets?: () => boolean
+    validTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    validSecondaryTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    numberOfSecondaryTargets?: (state: GameState) => number
+    upToSecondaryTargets?: () => boolean
+    //TODO selectFromChoices () => config.selection
+    selectFromChoices?: string[]
+    chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
 }
 
 /**
@@ -106,16 +136,18 @@ interface IndividualScript {
  */
 type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
 type IsActive = (state: GameState) => boolean
-type CurrentQuantity = (state: GameState) => number
+type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
 interface CardActionConfig {
-    targets?: AnyCardInGame[]
-
+    targets: AnyCardInGame[]
+    secondaryTargets: AnyCardInGame[]
+    thisCard: CardInGame
+    selection: string
+    triggerCard: CardInGame
     /**
      * Cards like Dance of Doom, Vigor
      */
     quantity?: number
-    thisCard?: CardInGame
 
     /**
      * Used by cards like Relentless Assault which can be executed 3 times.

@@ -23,6 +23,7 @@ export default {
             skirmish: false,
             assault: 0,
             hazardous: 0,
+            armor: 0,
             upgrades: [],
             cardsUnderneath: [],
             tokens: {
@@ -31,6 +32,8 @@ export default {
                 damage: 0,
                 amber: 0,
                 stun: 0,
+                skirmish: 0,
+                elusive: 0,
                 doom: 0
             },
             power: card.backingCard.power,
