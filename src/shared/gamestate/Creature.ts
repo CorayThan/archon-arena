@@ -12,9 +12,10 @@ export interface Creature extends CardInGame {
     skirmish: boolean
     poison: boolean
     deploy: boolean
-    assault: number,
+    assault: number
     power: number
     hazardous: number
+    armor: number
     traits: string[]
     upgrades: CardInGame[]
     cardsUnderneath: CardInGame[]

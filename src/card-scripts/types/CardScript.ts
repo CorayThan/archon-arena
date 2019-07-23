@@ -1,5 +1,5 @@
-import {AnyCardInGame, CardInGame} from "../../shared/gamestate/CardInGame"
-import {GameState} from "../../shared/gamestate/GameState"
+import { AnyCardInGame, CardInGame } from "../../shared/gamestate/CardInGame"
+import { GameState } from "../../shared/gamestate/GameState"
 
 export interface CardScript {
 
@@ -10,6 +10,18 @@ export interface CardScript {
 
     entersPlay?: IndividualScript
     onPlay?: IndividualScript
+
+    /**
+     * Softlanding, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    nextCardPlayed?: IndividualScript
+
+    /**
+     * witches, Tunk, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    cardPlayed?: IndividualScript
 
     /**
      * Firespitter, etc.
@@ -110,6 +122,11 @@ interface IndividualScript {
     uniqueTargets?: () => boolean
     upToTargets?: () => boolean
     validTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    validSecondaryTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    numberOfSecondaryTargets?: (state: GameState) => number
+    upToSecondaryTargets?: () => boolean
+    //TODO selectFromChoices () => config.selection
+    selectFromChoices?: string[]
     chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
 }
 
@@ -123,8 +140,10 @@ type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
 interface CardActionConfig {
     targets: AnyCardInGame[]
+    secondaryTargets: AnyCardInGame[]
     thisCard: CardInGame
-
+    selection: string
+    triggerCard: CardInGame
     /**
      * Cards like Dance of Doom, Vigor
      */
