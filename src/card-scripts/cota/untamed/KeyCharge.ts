@@ -1,15 +1,12 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {activePlayerState, modifyAmber} from "../../types/ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { activePlayerState, forgeKey } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
         perform: (state) => {
-            modifyAmber(activePlayerState(state), -1)
-            if (activePlayerState(state).amber >= activePlayerState(state).keyCost) {
-                modifyAmber(activePlayerState(state), -(activePlayerState(state).keyCost))
-                activePlayerState(state).keys += 1
-            }
+            activePlayerState(state).amber -= 1
+            forgeKey(activePlayerState(state))
         }
     }
 }

@@ -1,7 +1,8 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {allCreatures, exhaustCard} from "../../types/ScriptUtils"
-import {Creature} from "../../../shared/gamestate/Creature"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { allCreatures, exhaustCard } from "../../ScriptUtils"
+
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     amber: () => 1,

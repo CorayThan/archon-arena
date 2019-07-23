@@ -1,8 +1,7 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {Creature} from "../../../shared/gamestate/Creature"
-import {allCreatures, dealDamage, friendlyCreatures} from "../../types/ScriptUtils"
-
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { allCreatures, dealDamage, friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {

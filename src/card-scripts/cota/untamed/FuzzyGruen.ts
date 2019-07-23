@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../types/CardScripts"
-import {inactivePlayerState, modifyAmber} from "../../types/ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { inactivePlayerState, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 2,
@@ -9,8 +9,7 @@ const cardScript: CardScript = {
         perform: (state) => {
             modifyAmber(inactivePlayerState(state), 1)
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("fuzzy-gruen", cardScript)
