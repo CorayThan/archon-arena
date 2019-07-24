@@ -54,6 +54,14 @@ export interface CardScript {
     leavesPlay?: IndividualScript
 
     /**
+     * Reap Haters
+     */
+    //TODO make the card that does this config.triggerCard
+    onEnemyReap?: IndividualScript
+
+
+
+    /**
      * For Niffle Ape, Groggins
      *
      * Returns card ids of valid attack targets
@@ -95,6 +103,12 @@ export interface CardScript {
     canAlwaysUse?: IsActive
 
     /**
+     * Xanthyx Havester
+     */
+    canBeUsed?: IsActive
+
+
+    /**
      * Cards like Cybergiant Rig
      */
     atEndOfYourTurn?: IndividualScript
@@ -118,7 +132,7 @@ export interface CardScript {
 
 interface IndividualScript {
     perform: CardScriptExecution
-    numberOfTargets?: (state: GameState) => number
+    numberOfTargets?: (state: GameState, config: CardActionConfig) => number
     uniqueTargets?: () => boolean
     upToTargets?: () => boolean
     validTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
@@ -128,6 +142,7 @@ interface IndividualScript {
     //TODO selectFromChoices () => config.selection
     selectFromChoices?: string[]
     chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
+    timesToExecute?: (state: GameState, config: CardActionConfig) => number
 }
 
 /**
@@ -135,7 +150,7 @@ interface IndividualScript {
  * twice, with the new GameState being resolved in between each execution.
  */
 type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
-type IsActive = (state: GameState) => boolean
+type IsActive = (state: GameState, config: CardActionConfig) => boolean
 type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
 interface CardActionConfig {
@@ -152,5 +167,6 @@ interface CardActionConfig {
     /**
      * Used by cards like Relentless Assault which can be executed 3 times.
      */
+    //TODO I'm using this like a increment in a loop, not sure if thats right (Sky)
     timesExecuted: number
 }
