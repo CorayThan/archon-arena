@@ -31,7 +31,7 @@
           "power": 0,
           "traits": []
         },
-        "id": "mind-barb",
+        "id": "6551a538-a684-46b6-a255-64b6c00a123c",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -55,7 +55,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "mack-the-knife",
+        "id": "6eb7cb56-9ee4-4d8a-b163-d955822bd2e8",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -75,9 +75,9 @@
           "power": 0,
           "traits": []
         },
-        "house": "Shadows",
-        "id": "relentless-whispers",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
+        "house": "Shadows",
+        "id": "22725173-9b32-4d44-932b-73d3c44e902c"
       },
       {
         "backingCard": {
@@ -100,7 +100,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "carlo-phantom",
+        "id": "c534a9a5-2b83-4565-ad38-b813660d077c",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -121,7 +121,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "control-the-weak",
+        "id": "dbda42fb-1d7d-441e-ae62-574cb24fbcc9",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -144,7 +144,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "gauntlet-of-command",
+        "id": "4ead3613-4a81-4d7c-83a7-2630d12d0b68",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -165,7 +165,7 @@
           "traits": []
         },
         "house": "Shadows",
-        "id": "lights-out",
+        "id": "fbbc7f01-a473-4f05-87af-b083649ae54c",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       }
     ],
@@ -192,7 +192,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "nexus",
+        "id": "63933de1-e74e-474b-9fa3-14cd58082243",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -216,7 +216,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "noddy-the-thief",
+        "id": "8339d947-cbc3-4b25-928b-1e810fcd5952",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -239,7 +239,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "mighty-javelin",
+        "id": "ed3069f9-7384-4698-ab03-4134fa8908b7",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -260,7 +260,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "three-fates",
+        "id": "dfa194c9-a96f-42be-b624-3d9e6183bbf6",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -283,7 +283,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "banner-of-battle",
+        "id": "d5e5c154-f7a5-4afe-ac4d-d36dbf9c5e4f",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -304,7 +304,7 @@
           "traits": []
         },
         "house": "Shadows",
-        "id": "treasure-map",
+        "id": "c46acca4-57af-4554-b25f-41d7c4a5b934",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -327,7 +327,7 @@
           ]
         },
         "house": "Dis",
-        "id": "charette",
+        "id": "3a1423a4-1b1d-4aaa-a197-8a424ce921bd",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -348,7 +348,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "pandemonium",
+        "id": "558e6a72-bab7-4fe7-81ef-770a39156575",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -371,7 +371,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "screechbomb",
+        "id": "b5de85a2-f0c0-4ad4-ad08-bd859b95d684",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -394,7 +394,7 @@
           ]
         },
         "house": "Dis",
-        "id": "succubus",
+        "id": "ce40fb12-ed06-4d6e-ad85-0671bb8ef2d3",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -418,7 +418,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "silvertooth",
+        "id": "a147bb51-de68-4ce6-8efa-232a8b92a510",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -442,7 +442,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "dodger",
+        "id": "2c07bd0d-a7bf-4558-8938-edddff1a508b",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -465,7 +465,7 @@
           ]
         },
         "house": "Dis",
-        "id": "dominator-bauble",
+        "id": "e556b97c-69c1-4af3-96d3-85138ae47b40",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -488,7 +488,7 @@
           ]
         },
         "house": "Dis",
-        "id": "overlord-greking",
+        "id": "6094b88a-3476-44b4-9b49-010151c7ba2f",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -511,7 +511,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "headhunter",
+        "id": "3feae648-3703-470f-a09c-1d138f0ed02f",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -532,7 +532,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "flame-wreathed",
+        "id": "bccf0246-01ff-4de3-a788-3b8afdac0c44",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -556,7 +556,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "umbra",
+        "id": "2cedcdf8-c6a4-44bf-9f53-db80e61e3d1f",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -579,7 +579,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "firespitter",
+        "id": "89a0661e-3106-4b66-9979-3eaf2b1a7045",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -602,7 +602,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "bumpsy",
+        "id": "993aa472-915f-4836-87ed-5e3b149fbcc6",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -625,7 +625,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "earthshaker",
+        "id": "9c9380e4-b132-4517-86b8-dd7e29e8439c",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -646,7 +646,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "hand-of-dis",
+        "id": "d9881fb5-e876-4a36-b49b-367e27cb773d",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -669,7 +669,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "shadow-self",
+        "id": "40205127-14b6-4d5b-b8d2-96ee2d88ac68",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -690,7 +690,7 @@
           "traits": []
         },
         "house": "Brobnar",
-        "id": "burn-the-stockpile",
+        "id": "67790eab-8c45-41cf-970f-cd2d2ca1b09f",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       },
       {
@@ -711,7 +711,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "fear",
+        "id": "994faef1-07b7-40c9-871a-fd066271e104",
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872"
       }
     ],
@@ -723,6 +723,7 @@
   },
   "playerTwoState": {
     "amber": 4,
+    "keyCost": 6,
     "archives": [],
     "artifacts": [],
     "chains": 0,
@@ -750,7 +751,7 @@
             "Specter"
           ]
         },
-        "id": "shadow-self",
+        "id": "1db3ab63-e5d0-4fe3-9c19-c4c767fb1e27",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1",
         "house": "Shadows"
       },
@@ -774,7 +775,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "firespitter",
+        "id": "5ed10937-4a32-4b46-a31a-a65c812060e0",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -795,7 +796,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "three-fates",
+        "id": "f40b1b47-76cc-48b5-9064-802762774548",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -819,7 +820,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "noddy-the-thief",
+        "id": "42bc2426-e0da-4feb-8315-42721fb624d9",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -843,7 +844,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "umbra",
+        "id": "095d2571-6d72-437b-a288-efd47b5d9bfa",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -866,7 +867,7 @@
           ]
         },
         "house": "Dis",
-        "id": "dominator-bauble",
+        "id": "d8d294bd-1240-45fd-9d40-2706af389484",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       }
     ],
@@ -892,7 +893,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "earthshaker",
+        "id": "4d27506b-236d-4a65-857f-d0561fcdbfce",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -915,7 +916,7 @@
           ]
         },
         "house": "Dis",
-        "id": "charette",
+        "id": "66208f6f-ed36-4fc3-b411-c7f4145fc970",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -939,7 +940,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "dodger",
+        "id": "4c31f3c4-673c-47d4-8d11-66dac39d2a88",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -960,7 +961,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "pandemonium",
+        "id": "918b7c54-226e-4f46-9bc6-dbfe439586c1",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -981,7 +982,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "flame-wreathed",
+        "id": "25b9f969-204e-40fb-97f9-38afd759526e",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1005,7 +1006,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "carlo-phantom",
+        "id": "ff4e4d2d-29ce-48db-a768-59c02d377b85",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1026,7 +1027,7 @@
           "traits": []
         },
         "house": "Shadows",
-        "id": "lights-out",
+        "id": "725e2385-674a-4d0b-a4f7-a28e91c9f4ee",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1049,7 +1050,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "headhunter",
+        "id": "83ac93d8-8dd0-4906-9f9f-88b1902fd8b8",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1072,7 +1073,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "bumpsy",
+        "id": "1da38ed6-f802-44b7-bc3e-f8c9895c4ae0",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1093,7 +1094,7 @@
           "traits": []
         },
         "house": "Brobnar",
-        "id": "burn-the-stockpile",
+        "id": "a7768ecb-3cc9-4515-aa7f-9719e410b533",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1114,7 +1115,7 @@
           "traits": []
         },
         "house": "Shadows",
-        "id": "treasure-map",
+        "id": "9475169a-fdd3-4bf2-ad11-352c77f26c8b",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1135,7 +1136,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "control-the-weak",
+        "id": "d81fa33d-fa01-40d5-9eeb-b92559cefb20",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1158,7 +1159,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "gauntlet-of-command",
+        "id": "f7be661a-e011-4a9b-b046-fb31f3340b00",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1179,7 +1180,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "hand-of-dis",
+        "id": "d192e1eb-466d-429a-b659-366351d5bba2",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1202,7 +1203,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "screechbomb",
+        "id": "51086282-9bb1-4f97-9a47-f92d934ba499",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1223,7 +1224,7 @@
           "traits": []
         },
         "house": "Shadows",
-        "id": "relentless-whispers",
+        "id": "ea05022c-0994-4abc-a285-ff971db93a8e",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1246,7 +1247,7 @@
           ]
         },
         "house": "Dis",
-        "id": "overlord-greking",
+        "id": "c5db33a2-fc8b-4ecf-ac2d-d37d39834e10",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1267,7 +1268,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "mind-barb",
+        "id": "85ec8c1d-450f-41f1-a35a-72e22ae32c99",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1291,7 +1292,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "nexus",
+        "id": "a748b88a-33a0-455f-baf2-a2407d976fc8",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1315,7 +1316,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "mack-the-knife",
+        "id": "1b8301d5-3499-4e6e-a4d4-9ef8118c9e4a",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1339,7 +1340,7 @@
           ]
         },
         "house": "Shadows",
-        "id": "silvertooth",
+        "id": "ed649535-e0f8-4797-9f6e-b1eb41c77d13",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1360,7 +1361,7 @@
           "traits": []
         },
         "house": "Dis",
-        "id": "fear",
+        "id": "e44a4129-a523-4618-a6b2-155b3a505c26",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1383,7 +1384,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "banner-of-battle",
+        "id": "aa7bf99d-f8a9-448d-acf1-0b3758130fbb",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1406,7 +1407,7 @@
           ]
         },
         "house": "Brobnar",
-        "id": "mighty-javelin",
+        "id": "0b4faa8c-aa22-4fa6-89f9-ac75fc417833",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {
@@ -1429,7 +1430,7 @@
           ]
         },
         "house": "Dis",
-        "id": "succubus",
+        "id": "2f1935e5-5073-4e63-960e-80acb13fa15a",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       }
     ],

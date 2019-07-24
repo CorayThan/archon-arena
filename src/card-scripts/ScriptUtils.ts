@@ -3,6 +3,7 @@ import { CardInGame } from "../shared/gamestate/CardInGame"
 import { Creature } from "../shared/gamestate/Creature"
 import { Artifact } from "../shared/gamestate/Artifact"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
+import { getCardOwner } from "../game/StateUtils"
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState

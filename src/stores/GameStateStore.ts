@@ -1,10 +1,11 @@
 import * as firebase from "firebase"
 import { computed, observable } from "mobx"
 import { gameSceneHolder } from "../game/GameScene"
+import Action from "../shared/Action"
 import { GameState } from "../shared/gamestate/GameState"
 import { StatusEffect } from "../shared/GameStatusEffect"
 import { log, prettyJson } from "../Utils"
-import { gameHistoryStore } from "./GameHistoryStore"
+import { gameChatStore } from "./GameChatStore"
 import { matchStore } from "./MatchStore"
 import { playerStore } from "./PlayerStore"
 
@@ -24,7 +25,7 @@ export class GameStateStore {
         const matchId = playerStore.currentMatchId
         const gameState = await firebase.functions().httpsCallable("initializeGame")({matchId})
         log.info(`Created game with gamestate: ${prettyJson(gameState)}`)
-        await gameHistoryStore.createGameHistory()
+        await gameChatStore.createGameChat()
     }
 
     listenForGameStateChanges = () => {
@@ -40,7 +41,7 @@ export class GameStateStore {
                     this.activeGameState = undefined
                 }
             })
-        gameHistoryStore.listenForGameHistoryChanges()
+        gameChatStore.listenForGameChatChanges()
     }
 
     mergeGameState = async (gameState: Partial<GameState>) => {
@@ -56,7 +57,7 @@ export class GameStateStore {
             this.gameStateUnlistener()
             this.gameStateUnlistener = undefined
         }
-        await gameHistoryStore.stopGameHistoryUpdates()
+        await gameChatStore.stopGameChatUpdates()
         if (matchId != null) {
             await matchStore.cancelMatch(matchId)
         }
@@ -65,12 +66,26 @@ export class GameStateStore {
         }
     }
 
+    addAction = async (action: Action) => {
+        const actions = this.activeGameState!.actions == null ? [] : this.activeGameState!.actions.slice()
+        actions.push(action)
+        await this.mergeGameState({ actions })
+    }
+
     @computed
     get activeStatusEffects(): Map<number, StatusEffect[]> {
         if (this.activeGameState == null || this.activeGameState.statusEffects == null) {
             return new Map()
         }
         return this.activeGameState.statusEffects
+    }
+
+    @computed
+    get actions(): Action[] {
+        if (this.activeGameState == null || this.activeGameState.actions == null) {
+            return []
+        }
+        return this.activeGameState.actions
     }
 }
 
