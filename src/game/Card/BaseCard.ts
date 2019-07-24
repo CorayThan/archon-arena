@@ -116,14 +116,14 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         this.upgrades = upgrades.map((card: CardInGame) => {
-            const cardImage = new SmallCardImage(scene, 0, 0, card.id, card.id)
+            const cardImage = new SmallCardImage(scene, 0, 0, card.backingCard.cardTitle, card.backingCard.cardTitle)
             cardImage.setDataEnabled()
             // @ts-ignore
             cardImage.id = card.id
             cardImage.interactiveZone.setInteractive({ cursor: "pointer" })
             this.scene.input.setDraggable(cardImage.interactiveZone)
             cardImage.interactiveZone.addListener("pointerover", (e: MouseEvent) => {
-                onMouseOverUpgrade(e, { data: { get: () => card.id }})
+                onMouseOverUpgrade(e, { data: { get: () => card.backingCard.cardTitle }})
             })
             cardImage.interactiveZone.addListener("pointerout", () => {
                 onMouseOutUpgrade()
