@@ -725,7 +725,7 @@ class GameScene extends Phaser.Scene {
                     onClick(card, i)
                 })
                 image.addListener("pointerover", () => {
-                    this.showEnlargedCard(card.id)
+                    this.showEnlargedCard(card.backingCard.cardTitle)
                 })
                 image.addListener("pointerout", () => {
                     if (this.cardHoverImage) {

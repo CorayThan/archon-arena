@@ -55,10 +55,6 @@ class Game extends React.Component<Props> {
             height: window.innerHeight - 70,
         }
         this.handleResize = debounce(this.handleResize.bind(this), 100)
-    }
-
-    constructor(props: Props) {
-        super(props)
         this.updateGameState = debounce(this.updateGameState.bind(this), 200)
     }
 
