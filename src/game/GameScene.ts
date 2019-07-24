@@ -12,6 +12,8 @@ import power from "../images/power.png"
 import stun from "../images/stun.png"
 import underConstruction from "../images/under-construction.png"
 import unforgedKey from "../images/unforgedkey.png"
+import greenCardGlow from "../images/green-card-glow.png"
+import orangeCardGlow from "../images/orange-card-glow.png"
 
 import Action from "../shared/Action"
 import { CardInGame } from "../shared/gamestate/CardInGame"
@@ -30,6 +32,7 @@ import {
     SMALL_CARD_WIDTH,
     SMALL_CARD_HEIGHT,
 } from "./constants"
+import ImageKey from "./ImageKey"
 
 const {KeyCodes} = Phaser.Input.Keyboard
 
@@ -40,22 +43,6 @@ export const gameSceneHolder: { gameScene?: GameScene } = {
 export enum PlayerPosition {
     TOP = "top",
     BOTTOM = "bottom"
-}
-
-export enum ImageKey {
-    CARDBACK = "cardback",
-    UNFORGED_KEY = "unforged-key",
-    FORGED_KEY = "forged-key",
-    DAMAGE_TOKEN = "damage-token",
-    AMBER_TOKEN = "amber-token",
-    STUN_TOKEN = "stun-token",
-    ARMOR_TOKEN = "armor-token",
-    POWER_TOKEN = "power-token",
-    CHAINS = "chains",
-    DOOM_TOKEN = "doom-token",
-    UNDER_CONSTRUCTION = "under-construction",
-    CARD_POWER = "card-power",
-    ENHANCED_CARD_POWER = "enhanced-card-power",
 }
 
 class GameScene extends Phaser.Scene {
@@ -93,6 +80,8 @@ class GameScene extends Phaser.Scene {
         this.load.image(ImageKey.UNDER_CONSTRUCTION, underConstruction)
         this.load.image(ImageKey.CARD_POWER, cardPower)
         this.load.image(ImageKey.ENHANCED_CARD_POWER, enhancedCardPower)
+        this.load.image(ImageKey.GREEN_CARD_GLOW, greenCardGlow)
+        this.load.image(ImageKey.ORANGE_CARD_GLOW, orangeCardGlow)
 
         const state = this.state
         const players = [state.playerOneState, state.playerTwoState]
@@ -973,7 +962,7 @@ class GameScene extends Phaser.Scene {
             })
             this.render()
         } else {
-            card.render()
+            this.render()
         }
     }
 
