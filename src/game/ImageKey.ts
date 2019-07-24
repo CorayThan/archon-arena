@@ -1,4 +1,4 @@
-enum ImageEnum {
+enum ImageKey {
     CARDBACK = "cardback",
     UNFORGED_KEY = "unforged-key",
     FORGED_KEY = "forged-key",
@@ -16,4 +16,4 @@ enum ImageEnum {
     ORANGE_CARD_GLOW = "orange-card-glow",
 }
 
-export default ImageEnum
+export default ImageKey

@@ -1,7 +1,7 @@
 import Phaser from "phaser"
 import { KCard } from "../../shared/keyforge/card/KCard"
 import { CardInGame } from "../../shared/gamestate/CardInGame"
-import ImageEnum from "../ImageEnum"
+import ImageKey from "../ImageKey"
 
 import CardImage from "./CardImage"
 import SmallCardImage from "../SmallCard/SmallCardImage"
@@ -20,8 +20,8 @@ export interface CardInput {
     width?: number,
     height?: number,
     id: string,
-    front: ImageEnum | string,
-    back: ImageEnum | string,
+    front: ImageKey | string,
+    back: ImageKey | string,
     faceup?: boolean,
     ready?: boolean,
     draggable?: boolean,
@@ -42,8 +42,8 @@ class Card extends Phaser.GameObjects.Container {
     id: string
     _originX: number
     _originY: number
-    front: ImageEnum | string
-    back: ImageEnum | string
+    front: ImageKey | string
+    back: ImageKey | string
     ready: boolean
     faceup: boolean
     tokens: {
@@ -187,15 +187,15 @@ class Card extends Phaser.GameObjects.Container {
                             targets: this.cardImage.orangeGlow,
                             alpha: 1,
                             duration: 200,
-                            ease: 'Quad.easeOut',
-                        });
+                            ease: "Quad.easeOut",
+                        })
 
                         this.greenGlowTweenOut = this.scene.tweens.add({
                             targets: this.cardImage.greenGlow,
                             alpha: 0,
                             duration: 200,
-                            ease: 'Quad.easeOut',
-                        });
+                            ease: "Quad.easeOut",
+                        })
                     }
                 } else {
                     if (this.orangeGlowTweenIn) {
@@ -212,15 +212,15 @@ class Card extends Phaser.GameObjects.Container {
                             targets: this.cardImage.orangeGlow,
                             alpha: 0,
                             duration: 200,
-                            ease: 'Quad.easeOut',
-                        });
+                            ease: "Quad.easeOut",
+                        })
 
                         this.greenGlowTweenIn = this.scene.tweens.add({
                             targets: this.cardImage.greenGlow,
                             alpha: 1,
                             duration: 200,
-                            ease: 'Quad.easeOut',
-                        });
+                            ease: "Quad.easeOut",
+                        })
                     }
                 }
             })
@@ -346,7 +346,7 @@ class Card extends Phaser.GameObjects.Container {
                 this.add(token)
 
                 if (tokenType !== "stun" && tokenType !== "doom") {
-                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], ''+tokenData[tokenType], {
+                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], ""+tokenData[tokenType], {
                         color: "#fff",
                         stroke: "#000",
                         strokeThickness: 4,
