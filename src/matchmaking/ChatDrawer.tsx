@@ -10,7 +10,7 @@ import { gameChatStore } from "../stores/GameChatStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 
-export const chatWidth = 140
+export const chatWidth = 440
 
 @observer
 export class ChatDrawer extends React.Component {
