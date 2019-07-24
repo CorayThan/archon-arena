@@ -26,22 +26,40 @@ export const discardCardsUnderneath = (player: PlayerState, cardId?: string) => 
     }
 }
 
-export const getCardType = (owner: PlayerState, cardId: string) => {
-    if (owner.creatures.find((card: Creature) => card.id === cardId))
-        return CardType.CREATURE
-    if (owner.artifacts.find((card: Artifact) => card.id === cardId))
-        return CardType.ARTIFACT
-    if (owner.hand.find((card: CardInGame) => card.id === cardId))
-        return CardType.HAND
-    if (owner.discard.find((card: CardInGame) => card.id === cardId))
-        return CardType.DISCARD
-    if (owner.purged.find((card: CardInGame) => card.id === cardId))
-        return CardType.PURGED
-    if (owner.library.find((card: CardInGame) => card.id === cardId))
-        return CardType.LIBRARY
-    if (owner.archives.find((card: CardInGame) => card.id === cardId))
-        return CardType.ARCHIVE
-    return CardType.UPGRADE
+export const getCardType = (state: GameState, cardId: string) => {
+    const playerStates = [
+        state.playerOneState,
+        state.playerTwoState,
+    ]
+    for (let i = 0; i < playerStates.length; i++) {
+        const playerState = playerStates[i]
+        if (playerState.creatures.find((card: Creature) => card.id === cardId))
+            return CardType.CREATURE
+        if (playerState.artifacts.find((card: Artifact) => card.id === cardId))
+            return CardType.ARTIFACT
+        if (playerState.hand.find((card: CardInGame) => card.id === cardId))
+            return CardType.HAND
+        if (playerState.discard.find((card: CardInGame) => card.id === cardId))
+            return CardType.DISCARD
+        if (playerState.purged.find((card: CardInGame) => card.id === cardId))
+            return CardType.PURGED
+        if (playerState.library.find((card: CardInGame) => card.id === cardId))
+            return CardType.LIBRARY
+        if (playerState.archives.find((card: CardInGame) => card.id === cardId))
+            return CardType.ARCHIVE
+        for (let j = 0; j < playerState.creatures.length; j++) {
+            const creature: Creature = playerState.creatures[i]
+            const upgrade = creature.upgrades.find((c: CardInGame) => {
+                return c.id === cardId
+            })
+
+            if (upgrade) {
+                return CardType.UPGRADE
+            }
+        }
+    }
+
+    throw new Error(`Card Type for card ${cardId} not found`)
 }
 
 export const getPlayerById = (id: string, state: GameState) => {
@@ -147,15 +165,16 @@ export const getCardInArchiveById = (player: PlayerState, cardId: string) => {
     })
 }
 
-export const removeCardById = (player: PlayerState, cardId: string) => {
-    const cardType = getCardType(player, cardId)
+export const removeCardById = (state: GameState, cardId: string) => {
+    const cardType = getCardType(state, cardId)
+    const owner = getCardOwner(cardId, state)
     const removalFunctions: { [key: string]: Function } = {
         creature: removeCreature,
         artifact: removeArtifact,
         upgrade: removeUpgrade,
         hand: removeCardFromHand,
     }
-    return removalFunctions[cardType](player, cardId)
+    return removalFunctions[cardType](owner, cardId)
 }
 
 export const removeCreature = (player: PlayerState, cardId: string) => {
