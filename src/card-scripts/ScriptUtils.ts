@@ -1,9 +1,9 @@
-import {remove} from "lodash"
-import {CardInGame} from "../shared/gamestate/CardInGame"
-import {Creature} from "../shared/gamestate/Creature"
-import {Artifact} from "../shared/gamestate/Artifact"
-import {GameState, PlayerState} from "../shared/gamestate/GameState"
-import {getCardOwner} from "../game/StateUtils"
+import { remove } from "lodash"
+import { CardInGame } from "../shared/gamestate/CardInGame"
+import { Creature } from "../shared/gamestate/Creature"
+import { Artifact } from "../shared/gamestate/Artifact"
+import { GameState, PlayerState } from "../shared/gamestate/GameState"
+import { getCardOwner } from "../game/StateUtils"
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -56,7 +56,7 @@ export const friendlyPlayerForCard = (state: GameState, card: CardInGame): Playe
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
         || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
-        )
+    )
         return playerOneState
     else
         return state.playerTwoState
@@ -67,7 +67,7 @@ export const enemyPlayerForCard = (state: GameState, card: CardInGame): PlayerSt
     if (
         playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
         || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
-        )
+    )
         return state.playerTwoState
     else
         return playerOneState
@@ -101,7 +101,7 @@ export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame 
         removed = remove(playerState.library, check)
         if (removed.length > 0) {
             return removed[0]
-        }   
+        }
     }
     throw new Error("Couldn't find card with id " + card.id)
 }
@@ -141,14 +141,14 @@ export const putOnTopOfDeck = (state: GameState, card: CardInGame) => {
 }
 
 export const getNeighbors = (creatures: Creature[], creature: Creature): Creature[] => {
-    let foundCreatures:Creature[]
+    let foundCreatures: Creature[]
     const index = creatures.findIndex(creat => creat.id === creature.id)
-    if (index > 0 && index < creatures.length-1)
-        foundCreatures = [creatures[index-1], creatures[index+1]]
+    if (index > 0 && index < creatures.length - 1)
+        foundCreatures = [creatures[index - 1], creatures[index + 1]]
     else if (index > 0)
-        foundCreatures = [creatures[index-1]]
-    else if (index < creatures.length-1)
-        foundCreatures = [creatures[index+1]]
+        foundCreatures = [creatures[index - 1]]
+    else if (index < creatures.length - 1)
+        foundCreatures = [creatures[index + 1]]
     else
         foundCreatures = []
     return foundCreatures
@@ -156,7 +156,7 @@ export const getNeighbors = (creatures: Creature[], creature: Creature): Creatur
 
 export const onFlank = (creatures: Creature[], creature: Creature): boolean => {
     const index = creatures.findIndex(creat => creat.id === creature.id)
-    return index === 0 || index === creatures.length-1
+    return index === 0 || index === creatures.length - 1
 }
 
 export const dealDamage = (creature: Creature, damage: number) => {
@@ -186,7 +186,7 @@ export const putInHand = (card: CardInGame) => {
     //TODO
 }
 
-export const gainChains = (state: PlayerState, amount:number) => {
+export const gainChains = (state: PlayerState, amount: number) => {
     state.chains += amount
 }
 
@@ -233,7 +233,7 @@ export const numberOfCardsPlayedThisTurn = (state: GameState): number => {
     return 0
 }
 
-export const healCreature = (creature: Creature, amount:number): number => {
+export const healCreature = (creature: Creature, amount: number): number => {
     const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage
     creature.tokens.damage = creature.tokens.damage - actualChange
     return actualChange
@@ -246,4 +246,19 @@ export const amountOfShards = (state: GameState): number => {
 
 export const steal = (state: GameState, amount: number): number => {
     return modifyAmber(activePlayerState(state), modifyAmber(inactivePlayerState(state), amount))
+}
+
+export const drawCard = (playerState: GameState) => {
+    const player = activePlayerState(playerState) as PlayerState
+    player.hand.push(player.library.shift()!)
+}
+
+export const archiveTopCardOfDeck = (playerState: GameState) => {
+    const player = activePlayerState(playerState) as PlayerState
+    player.archives.push(player.library.shift()!)
+}
+
+export const playTopCardOfDeck = (playerState: GameState) => {
+    const player = activePlayerState(playerState) as PlayerState
+    // TODO: Play top card of deck
 }
