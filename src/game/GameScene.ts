@@ -19,7 +19,7 @@ import Action from "../shared/Action"
 import { CardInGame } from "../shared/gamestate/CardInGame"
 import { Creature } from "../shared/gamestate/Creature"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
-import { AEvent } from "./AEvent"
+import { GameEvent } from "./GameEvent"
 import { getCardOwner, getCardType } from "./StateUtils"
 import { preloadCardsInPhaser } from "./Utils"
 import CardType from "./CardType"
@@ -153,7 +153,7 @@ class GameScene extends Phaser.Scene {
         amberImage.setInteractive({cursor: "pointer"})
         amberImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
             dispatch({
-                type: AEvent.AlterPlayerAmber,
+                type: GameEvent.AlterPlayerAmber,
                 amount: pointer.button === 2 ? -1 : 1,
                 player: player.player
             })
@@ -176,7 +176,7 @@ class GameScene extends Phaser.Scene {
         chainsImage.setInteractive({cursor: "pointer"})
         chainsImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
             dispatch({
-                type: AEvent.AlterPlayerChains,
+                type: GameEvent.AlterPlayerChains,
                 amount: pointer.button === 2 ? -1 : 1,
                 player: player.player
             })
@@ -201,7 +201,7 @@ class GameScene extends Phaser.Scene {
             keyImage.setInteractive({cursor: "pointer"})
             keyImage.addListener("pointerup", (pointer: Phaser.Input.Pointer) => {
                 dispatch({
-                    type: pointer.button === 2 ? AEvent.UnForgeKey : AEvent.ForgeKey,
+                    type: pointer.button === 2 ? GameEvent.UnForgeKey : GameEvent.ForgeKey,
                     player: player.player
                 })
                 this.render()
@@ -224,7 +224,7 @@ class GameScene extends Phaser.Scene {
                     return
 
                 dispatch({
-                    type: AEvent.PlayArtifact,
+                    type: GameEvent.PlayArtifact,
                     player: player.player,
                     cardId,
                 })
@@ -241,7 +241,7 @@ class GameScene extends Phaser.Scene {
             getMinimumAlpha: () => player.discard.length === 0 ? 0.1 : 1,
             onDrop: (card: Card) => {
                 dispatch({
-                    type: AEvent.DiscardCard,
+                    type: GameEvent.DiscardCard,
                     cardId: card.id,
                     player: player.player
                 })
@@ -257,7 +257,7 @@ class GameScene extends Phaser.Scene {
                     playerPosition,
                     onClick: (card: CardInGame) => {
                         dispatch({
-                            type: AEvent.MoveCardFromDiscardToHand,
+                            type: GameEvent.MoveCardFromDiscardToHand,
                             cardId: card.id,
                             player: player.player
                         })
@@ -267,12 +267,12 @@ class GameScene extends Phaser.Scene {
             } else {
                 if (pointer.event.shiftKey) {
                     dispatch({
-                        type: AEvent.ShuffleDiscardIntoDeck,
+                        type: GameEvent.ShuffleDiscardIntoDeck,
                         player: player.player,
                     })
                 } else {
                     dispatch({
-                        type: AEvent.DrawFromDiscard,
+                        type: GameEvent.DrawFromDiscard,
                         player: player.player,
                     })
                 }
@@ -294,7 +294,7 @@ class GameScene extends Phaser.Scene {
             allowCardTypes: [CardType.HAND, CardType.CREATURE, CardType.ARTIFACT, CardType.UPGRADE],
             onDrop: (card: Card) => {
                 dispatch({
-                    type: AEvent.PutCardOnDrawPile,
+                    type: GameEvent.PutCardOnDrawPile,
                     cardId: card.id,
                     player: player.player
                 })
@@ -310,7 +310,7 @@ class GameScene extends Phaser.Scene {
                     playerPosition,
                     onClick: (card: CardInGame) => {
                         dispatch({
-                            type: AEvent.MoveCardFromDrawPileToHand,
+                            type: GameEvent.MoveCardFromDrawPileToHand,
                             cardId: card.id,
                             player: player.player
                         })
@@ -319,7 +319,7 @@ class GameScene extends Phaser.Scene {
                 })
             } else {
                 dispatch({
-                    type: pointer.event.shiftKey ? AEvent.ShuffleDeck : AEvent.DrawCard,
+                    type: pointer.event.shiftKey ? GameEvent.ShuffleDeck : GameEvent.DrawCard,
                     player: player.player,
                 })
                 this.render()
@@ -340,7 +340,7 @@ class GameScene extends Phaser.Scene {
             allowCardTypes: [CardType.HAND, CardType.CREATURE, CardType.ARTIFACT],
             onDrop: (card: Card) => {
                 dispatch({
-                    type: AEvent.ArchiveCard,
+                    type: GameEvent.ArchiveCard,
                     cardId: card.id,
                     player: player.player
                 })
@@ -356,7 +356,7 @@ class GameScene extends Phaser.Scene {
                     playerPosition,
                     onClick: (card: CardInGame) => {
                         dispatch({
-                            type: AEvent.MoveCardFromArchiveToHand,
+                            type: GameEvent.MoveCardFromArchiveToHand,
                             cardId: card.id,
                             player: player.player
                         })
@@ -365,7 +365,7 @@ class GameScene extends Phaser.Scene {
                 })
             } else {
                 dispatch({
-                    type: AEvent.TakeArchive,
+                    type: GameEvent.TakeArchive,
                     player: player.player,
                 })
                 this.render()
@@ -387,7 +387,7 @@ class GameScene extends Phaser.Scene {
             allowCardTypes: [CardType.HAND, CardType.CREATURE, CardType.ARTIFACT, CardType.UPGRADE],
             onDrop: (card: Card) => {
                 dispatch({
-                    type: AEvent.PurgeCard,
+                    type: GameEvent.PurgeCard,
                     cardId: card.id,
                     player: player.player
                 })
@@ -509,7 +509,7 @@ class GameScene extends Phaser.Scene {
                         return
 
                     dispatch({
-                        type: AEvent.PlayUpgrade,
+                        type: GameEvent.PlayUpgrade,
                         upgradeId: droppedCard.id,
                         creatureId: creatureCard.id,
                         player: player.player
@@ -551,7 +551,7 @@ class GameScene extends Phaser.Scene {
                     return
 
                 dispatch({
-                    type: AEvent.PlayCreature,
+                    type: GameEvent.PlayCreature,
                     cardId: card.id,
                     player: player.player,
                     side: "left",
@@ -575,7 +575,7 @@ class GameScene extends Phaser.Scene {
                         return
 
                     dispatch({
-                        type: AEvent.PlayCreature,
+                        type: GameEvent.PlayCreature,
                         cardId: card.id,
                         player: player.player,
                         side: "right",
@@ -599,13 +599,13 @@ class GameScene extends Phaser.Scene {
                 const cardType = getCardType(this.state, card.id)
                 if (cardType === CardType.ARTIFACT) {
                     this.dispatch({
-                        type: AEvent.MoveArtifactToHand,
+                        type: GameEvent.MoveArtifactToHand,
                         cardId: card.id,
                     })
                 }
                 if (cardType === CardType.CREATURE) {
                     dispatch({
-                        type: AEvent.MoveCreatureToHand,
+                        type: GameEvent.MoveCreatureToHand,
                         cardId: card.id,
                     })
                 }
@@ -760,7 +760,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.R]) {
             dispatch({
-                type: AEvent.MoveCreatureRight,
+                type: GameEvent.MoveCreatureRight,
                 cardId,
             })
             this.render()
@@ -769,7 +769,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.L]) {
             dispatch({
-                type: AEvent.MoveCreatureLeft,
+                type: GameEvent.MoveCreatureLeft,
                 cardId,
             })
             this.render()
@@ -778,7 +778,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
-                type: AEvent.DiscardCard,
+                type: GameEvent.DiscardCard,
                 cardId,
             })
             this.render()
@@ -787,7 +787,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.M]) {
             dispatch({
-                type: AEvent.MoveCreatureToHand,
+                type: GameEvent.MoveCreatureToHand,
                 cardId,
             })
             this.render()
@@ -796,7 +796,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.S]) {
             dispatch({
-                type: AEvent.ToggleStun,
+                type: GameEvent.ToggleStun,
                 cardId,
             })
             this.render()
@@ -805,7 +805,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.C]) {
             dispatch({
-                type: AEvent.CaptureAmber,
+                type: GameEvent.CaptureAmber,
                 cardId,
                 amount: e.button === 2 ? -1 : 1
             })
@@ -815,7 +815,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.T]) {
             dispatch({
-                type: AEvent.ToggleTaunt,
+                type: GameEvent.ToggleTaunt,
                 cardId,
             })
             this.render()
@@ -824,7 +824,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.P]) {
             dispatch({
-                type: AEvent.AlterCreaturePower,
+                type: GameEvent.AlterCreaturePower,
                 cardId,
                 amount: e.button === 2 ? -1 : 1
             })
@@ -834,7 +834,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.D]) {
             dispatch({
-                type: AEvent.AlterCreatureDamage,
+                type: GameEvent.AlterCreatureDamage,
                 cardId,
                 amount: e.button === 2 ? -1 : 1
             })
@@ -844,7 +844,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.X]) {
             dispatch({
-                type: AEvent.ToggleDoomToken,
+                type: GameEvent.ToggleDoomToken,
                 cardId,
             })
             this.render()
@@ -853,7 +853,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.A]) {
             dispatch({
-                type: AEvent.AddAmberToCard,
+                type: GameEvent.AddAmberToCard,
                 cardId,
                 amount: e.button === 2 ? -1 : 1
             })
@@ -862,7 +862,7 @@ class GameScene extends Phaser.Scene {
         }
 
         dispatch({
-            type: AEvent.UseCreature,
+            type: GameEvent.UseCreature,
             cardId,
         })
         this.render()
@@ -888,7 +888,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.B]) {
             this.dispatch({
-                type: AEvent.DiscardCard,
+                type: GameEvent.DiscardCard,
                 cardId,
             })
             this.render()
@@ -897,7 +897,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.M]) {
             this.dispatch({
-                type: AEvent.MoveArtifactToHand,
+                type: GameEvent.MoveArtifactToHand,
                 cardId,
             })
             this.render()
@@ -906,7 +906,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.A]) {
             this.dispatch({
-                type: AEvent.AddAmberToCard,
+                type: GameEvent.AddAmberToCard,
                 cardId,
                 amount: e.button === 2 ? -1 : 1
             })
@@ -915,7 +915,7 @@ class GameScene extends Phaser.Scene {
         }
 
         this.dispatch({
-            type: AEvent.UseArtifact,
+            type: GameEvent.UseArtifact,
             cardId,
         })
         this.render()
@@ -927,7 +927,7 @@ class GameScene extends Phaser.Scene {
 
         if (this.keysDown[KeyCodes.B]) {
             dispatch({
-                type: AEvent.DiscardCard,
+                type: GameEvent.DiscardCard,
                 cardId,
             })
             this.render()
@@ -957,7 +957,7 @@ class GameScene extends Phaser.Scene {
         if (distY > CARD_HEIGHT) {
             const cardId = card.id
             this.dispatch({
-                type: AEvent.PlayAction,
+                type: GameEvent.PlayAction,
                 cardId,
             })
             this.render()

@@ -2,7 +2,7 @@ import { shuffle } from "lodash"
 import Action from "../../shared/Action"
 import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState, PlayerState as Player } from "../../shared/gamestate/GameState"
-import { AEvent } from "../AEvent"
+import { GameEvent } from "../GameEvent"
 import {
     discardCardsUnderneath,
     discardCreatureUpgrades,
@@ -25,39 +25,39 @@ import { cardScripts } from "../../card-scripts/CardScripts"
 export const exec = (action: Action, state: GameState) => {
 
     const actionHandlers: { [key: string]: Function } = {
-        [AEvent.PlayAction]: () => {
+        [GameEvent.PlayAction]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInHandById(owner, action.cardId)
             const cardScript = cardScripts.scripts.get(card!.backingCard.cardTitle.replace(/ /g, "-").toLowerCase())
             if (cardScript) {
                 if (cardScript.amber) {
-                    owner.amber += cardScript.amber(state)
+                    owner.amber += cardScript.amber(state, { thisCard: card! })
                 }
                 if (cardScript.onPlay && cardScript.onPlay.perform) {
-                    cardScript.onPlay.perform(state, { timesExecuted: 0 })
+                    cardScript.onPlay.perform(state, { thisCard: card! })
                 }
             }
             removeCardFromHand(owner, action.cardId)
             owner.discard.push(card!)
         },
-        [AEvent.PlayUpgrade]: () => {
+        [GameEvent.PlayUpgrade]: () => {
             const owner: Player = getCardOwner(action.upgradeId!, state)
             const upgrade = getCardInHandById(owner, action.upgradeId)
             const creature = getCreatureById(owner, action.creatureId)
             creature!.upgrades.push(upgrade!)
             removeCardFromHand(owner, action.upgradeId)
         },
-        [AEvent.ShuffleDeck]: () => {
+        [GameEvent.ShuffleDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.library = shuffle(player.library)
         },
-        [AEvent.ShuffleDiscardIntoDeck]: () => {
+        [GameEvent.ShuffleDiscardIntoDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.discard.forEach((card: CardInGame) => player.library.push(card))
             player.discard = []
             player.library = shuffle(player.library)
         },
-        [AEvent.DiscardCard]: () => {
+        [GameEvent.DiscardCard]: () => {
             // We allow players to place their cards
             // in their own discard or their opponents.
             // Attachments go to the card owner for simplicity's sake.
@@ -68,14 +68,14 @@ export const exec = (action: Action, state: GameState) => {
             const card = removeCardById(state, action.cardId!)
             player.discard.push(card)
         },
-        [AEvent.PutCardOnDrawPile]: () => {
+        [GameEvent.PutCardOnDrawPile]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
             const card = removeCardById(state, action.cardId!)
             owner.library.unshift(card)
         },
-        [AEvent.MoveCardFromDiscardToHand]: () => {
+        [GameEvent.MoveCardFromDiscardToHand]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInDiscardById(owner, action.cardId!)
             if (!card)
@@ -83,7 +83,7 @@ export const exec = (action: Action, state: GameState) => {
             owner.discard = owner.discard.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
-        [AEvent.MoveCardFromDrawPileToHand]: () => {
+        [GameEvent.MoveCardFromDrawPileToHand]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInDrawPileById(owner, action.cardId!)
             if (!card)
@@ -91,7 +91,7 @@ export const exec = (action: Action, state: GameState) => {
             owner.library = owner.library.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
-        [AEvent.MoveCardFromArchiveToHand]: () => {
+        [GameEvent.MoveCardFromArchiveToHand]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInArchiveById(owner, action.cardId!)
             if (!card)
@@ -99,28 +99,28 @@ export const exec = (action: Action, state: GameState) => {
             owner.archives = owner.archives.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
-        [AEvent.PurgeCard]: () => {
+        [GameEvent.PurgeCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
             const card = removeCardById(state, action.cardId!)
             owner.purged.push(card)
         },
-        [AEvent.ArchiveCard]: () => {
+        [GameEvent.ArchiveCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
             const card = removeCardById(state, action.cardId!)
             owner.archives.push(card)
         },
-        [AEvent.TakeArchive]: () => {
+        [GameEvent.TakeArchive]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.archives.forEach((card: CardInGame) => {
                 player.hand.push(card)
             })
             player.archives = []
         },
-        [AEvent.DrawCard]: () => {
+        [GameEvent.DrawCard]: () => {
             const player = getPlayerById(action.player!.id, state)
 
             if (player.library.length === 0)
@@ -128,7 +128,7 @@ export const exec = (action: Action, state: GameState) => {
 
             player.hand.push(player.library.shift()!)
         },
-        [AEvent.DrawFromDiscard]: () => {
+        [GameEvent.DrawFromDiscard]: () => {
             const player = getPlayerById(action.player!.id, state)
 
             if (player.discard.length === 0)
@@ -136,7 +136,7 @@ export const exec = (action: Action, state: GameState) => {
 
             player.hand.push(player.discard.pop()!)
         },
-        [AEvent.AddAmberToCard]: () => {
+        [GameEvent.AddAmberToCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const cardType = getCardType(state, action.cardId!)
             if (cardType === "creature") {
@@ -153,22 +153,22 @@ export const exec = (action: Action, state: GameState) => {
                 artifact.tokens.amber = Math.max(artifact.tokens.amber, 0)
             }
         },
-        [AEvent.AlterPlayerChains]: () => {
+        [GameEvent.AlterPlayerChains]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.chains += action.amount!
             player.chains = Math.max(player.chains, 0)
         },
-        [AEvent.AlterPlayerAmber]: () => {
+        [GameEvent.AlterPlayerAmber]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.amber += action.amount!
             player.amber = Math.max(player.amber, 0)
         },
-        [AEvent.ForgeKey]: () => {
+        [GameEvent.ForgeKey]: () => {
             const player = getPlayerById(action.player!.id, state)
             if (player.keys < 3)
                 player.keys += 1
         },
-        [AEvent.UnForgeKey]: () => {
+        [GameEvent.UnForgeKey]: () => {
             const player = getPlayerById(action.player!.id, state)
             if (player.keys > 0)
                 player.keys -= 1
@@ -179,7 +179,7 @@ export const exec = (action: Action, state: GameState) => {
     Object.assign(actionHandlers, ArtifactActions)
 
     // Add placeholder function for unimplemented events
-    Object.keys(AEvent)
+    Object.keys(GameEvent)
         .forEach(event => {
             if (!actionHandlers[event])
                 actionHandlers[event] = () => {

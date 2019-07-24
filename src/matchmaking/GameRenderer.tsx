@@ -54,6 +54,7 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
 
                         // UNCOMMENT for local development
                         //playerId={"GQYXEhjmxEMlVcVzZY0gmYpnd872"}
+                        // @ts-ignore
                         //state={fixture}
                         //setState={(gameState: Partial<GameState>) => {}}
                         //logAction={() => {}}

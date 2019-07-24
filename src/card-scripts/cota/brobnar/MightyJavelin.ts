@@ -1,17 +1,18 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { allCreatures, dealDamage } from "../../ScriptUtils"
+import { allCreatures, dealDamage, destroyCard } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
-    onPlay: {
+    omni: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state, config) => {
-            dealDamage(config.targets![0] as Creature, 3)
+            destroyCard(state, config.thisCard)
+            dealDamage(config.targets![0] as Creature, 4)
         }
     }
 }
 
-cardScripts.scripts.set("punch", cardScript)
+cardScripts.scripts.set("mighty-javelin", cardScript)
