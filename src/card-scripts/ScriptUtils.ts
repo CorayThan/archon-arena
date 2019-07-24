@@ -311,6 +311,10 @@ export const readyCreatures = (creatures: Creature[]) => {
     creatures.forEach(creature => creature.ready = true)
 }
 
+export const useCreatures = (creatures: Creature[]) => {
+//TODO
+}
+
 export const fightUsingCreatures = (creatures: Creature[]) => {
     //TODO
 }
@@ -348,6 +352,10 @@ export const dealDamageWithSplash = (state: GameState, creature: Creature, damag
     const neighbors = getNeighbors(enemyCreatures(state), creature).concat(getNeighbors(friendlyCreatures(state), creature))
     dealDamage([creature], damage)
     dealDamage(neighbors, splash)
+}
+
+export const creatureTotalPower = (creature: Creature): number => {
+    return creature.power + creature.tokens.power
 }
 
 export const stunCreatures = (creatures: Creature[]) => {
