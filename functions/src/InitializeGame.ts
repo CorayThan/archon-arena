@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin"
 import { random, shuffle } from "lodash"
+import { v4 as uuid } from "uuid"
 
 export class InitializeGame {
 
@@ -28,7 +29,7 @@ export class InitializeGame {
 
     private createPlayerState = (playerId: string, playerName: string, deck: any, firstPlayer: boolean) => {
         const cards = shuffle(deck.cards.map((card, idx) => ({
-            id: card.cardTitle.replace(/ /g, "-").toLowerCase(),
+            id: uuid(),
             backingCard: card,
             ownerId: playerId
         })))

@@ -15,6 +15,7 @@ yarn
 1. Open _src/matchmaking/GameRenderer.tsx_
 2. Follow the instructions in the file
 3. `yarn start`
+4. Navigate to `http://localhost:3000/game`
 
 ## Backend Functions
 

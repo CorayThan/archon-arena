@@ -17,6 +17,16 @@ export interface CardScript {
     beforeFight?: IndividualScript
 
     /**
+     * Interdimensional Graft etc
+     */
+    onNextKeyForge?: IndividualScript
+
+    /**
+     * Forgemaster Og
+     */
+    onKeyForge?: IndividualScript
+
+    /**
      * Dodger, Headhunter, etc.
      */
     fight?: IndividualScript
@@ -96,8 +106,11 @@ export interface CardScript {
 
 interface IndividualScript {
     perform: CardScriptExecution
-    validTargets?: (state: GameState) => CardInGame[]
-    choosenTargetsAreValid?: (targets: CardInGame[]) => boolean
+    numberOfTargets?: (state: GameState) => number
+    uniqueTargets?: () => boolean
+    upToTargets?: () => boolean
+    validTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
 }
 
 /**
@@ -105,20 +118,20 @@ interface IndividualScript {
  * twice, with the new GameState being resolved in between each execution.
  */
 type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
-type IsActive = (state: GameState) => boolean
-type CurrentQuantity = (state: GameState) => number
+type IsActive = (state: GameState, config: CardActionConfig) => boolean
+type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
-interface CardActionConfig {
+export interface CardActionConfig {
     targets?: AnyCardInGame[]
+    thisCard: CardInGame
 
     /**
      * Cards like Dance of Doom, Vigor
      */
     quantity?: number
-    thisCard?: CardInGame
 
     /**
      * Used by cards like Relentless Assault which can be executed 3 times.
      */
-    timesExecuted: number
+    timesExecuted?: number
 }

@@ -1,3 +1,4 @@
+import Action from "../Action"
 import { StatusEffect } from "../GameStatusEffect"
 import { PlayerInfo } from "../Player"
 import { Artifact } from "./Artifact"
@@ -13,6 +14,8 @@ export interface GameState {
     playerOneState: PlayerState
     playerTwoState: PlayerState
 
+    actions: Action[]
+
     /**
      * Map key is turn of the game it is applied to (Treasure map applies to current turn's index, scrambler storm to next,e tc.)
      * array is all the effects in effect for that turn
@@ -25,6 +28,7 @@ export interface PlayerState {
     amber: number,
     chains: number,
     keys: number,
+    keyCost: number,
     library: CardInGame[]
     hand: CardInGame[]
     discard: CardInGame[]
