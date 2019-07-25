@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { captureAmber, enemyCreatures, friendlyCreatures } from "../../ScriptUtils"
 
@@ -17,7 +18,7 @@ const cardScript: CardScript = {
                 && new Set(targets).size === targets.length
         },
         uniqueTargets: () => true,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             config.targets!.forEach(creature => captureAmber(state, creature as Creature, 1))
         }
     }

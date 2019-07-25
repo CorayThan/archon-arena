@@ -1,14 +1,15 @@
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { CardScript } from "../../types/CardScript"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { dealDamage, enemyCreatures, getNeighbors } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 2,
     beforeFight: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const neighbors = getNeighbors(enemyCreatures(state), config.targets![0] as Creature)
-            neighbors.forEach(neighbor => dealDamage(neighbor, 5))
+            dealDamage(neighbors, 5)
         }
     }
 }

@@ -1,11 +1,11 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { allCreatures, destroyCard } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
 
 const cardScript: CardScript = {
     power: () => 6,
     onAnyFight: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             //TODO if destroyed target in a fight
         }
     }

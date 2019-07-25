@@ -1,12 +1,13 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { enemyPlayerForCard, modifyAmber } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { enemyPlayer, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 2,
     destroyed: {
-        perform: (state, config) => {
-            modifyAmber(enemyPlayerForCard(state, config.thisCard), -2)
+        perform: (state: GameState, config: CardActionConfig) => {
+            modifyAmber(enemyPlayer(state, config.thisCard), -2)
         }
     }
 }

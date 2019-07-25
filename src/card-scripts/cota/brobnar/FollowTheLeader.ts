@@ -1,13 +1,12 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { friendlyCreatures } from "../../ScriptUtils"
-import { enableFighting } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { enableFighting, friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
-        perform: (state) => {
-            friendlyCreatures(state)
-                .forEach(creature => enableFighting(creature))
+        perform: (state: GameState) => {
+            enableFighting(friendlyCreatures(state))
         }
     }
 }

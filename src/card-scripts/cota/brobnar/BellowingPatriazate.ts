@@ -1,12 +1,11 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { Creature } from "../../../shared/gamestate/Creature"
-import { friendlyCreatures, readyCreature, fightUsingCreature, getNeighbors } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
 
 const cardScript: CardScript = {
     power: () => 7,
     runAfterAnyAction: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             //check if action is creature entering board
         }
     }

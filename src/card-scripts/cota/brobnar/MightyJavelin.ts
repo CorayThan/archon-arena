@@ -1,16 +1,17 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { allCreatures, dealDamage, destroyCard } from "../../ScriptUtils"
+import { allCreatures, dealDamage, destroyCards } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
     omni: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
-            destroyCard(state, config.thisCard)
-            dealDamage(config.targets![0] as Creature, 4)
+        perform: (state: GameState, config: CardActionConfig) => {
+            destroyCards(state, [config.thisCard])
+            dealDamage(config.targets! as Creature[], 4)
         }
     }
 }

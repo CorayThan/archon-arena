@@ -1,14 +1,15 @@
-import { cardScripts } from "../../CardScripts"
 import { CardScript } from "../../types/CardScript"
-import { allCreatures, destroyCard, activePlayerState, gainChains } from "../../ScriptUtils"
+import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { activePlayerState, allCreatures, destroyCards, gainChains } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             const creaturesInPlay = allCreatures(state)
-            creaturesInPlay
+            const targets = creaturesInPlay
                 .filter(creature => creature.tokens.damage === 0)
-                .forEach(creature => destroyCard(state, creature))
+            destroyCards(state, targets)
             gainChains(activePlayerState(state), 3)
         }
     }

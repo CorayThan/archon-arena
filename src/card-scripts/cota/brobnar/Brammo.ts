@@ -1,16 +1,15 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { enemyCreatures } from "../../ScriptUtils"
-import { onFlank } from "../../ScriptUtils"
-import { dealDamage } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { dealDamage, enemyCreatures, onFlank } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 4,
     onPlay: {
-        perform: (state) => {
-            enemyCreatures(state)
+        perform: (state: GameState) => {
+            const targets = enemyCreatures(state)
                 .filter(creature => onFlank(enemyCreatures(state), creature))
-                .forEach(creature => dealDamage(creature, 2))
+            dealDamage(targets, 2)
         }
     }
 }

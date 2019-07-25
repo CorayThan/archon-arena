@@ -1,12 +1,13 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { destroyCard, enemyPlayerForCard, modifyAmber } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { destroyCards, enemyPlayer, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     omni: {
-        perform: (state, config) => {
-            destroyCard(state, config.thisCard)
-            modifyAmber(enemyPlayerForCard(state, config.thisCard), -2)
+        perform: (state: GameState, config: CardActionConfig) => {
+            destroyCards(state, [config.thisCard])
+            modifyAmber(enemyPlayer(state, config.thisCard), -2)
         }
     }
 }

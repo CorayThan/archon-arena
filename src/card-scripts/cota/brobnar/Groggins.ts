@@ -1,6 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { enemyCreatures, onFlank, getNeighbors } from "../../ScriptUtils"
+import { enemyCreatures, getNeighbors, onFlank } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 8,

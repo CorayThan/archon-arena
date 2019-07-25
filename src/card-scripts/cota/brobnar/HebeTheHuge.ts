@@ -1,14 +1,15 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, dealDamage } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 6,
     onPlay: {
-        perform: (state, config) => {
-            allCreatures(state)
+        perform: (state: GameState, config: CardActionConfig) => {
+            const targets = allCreatures(state)
                 .filter(creature => creature.tokens.damage === 0 && creature.id !== config.thisCard.id)
-                .forEach(creature => dealDamage(creature, 2))
+            dealDamage(targets, 2)
         }
     }
 }

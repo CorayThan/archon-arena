@@ -1,5 +1,6 @@
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { CardScript } from "../../types/CardScript"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allArtifacts, putOnTopOfDeck } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
@@ -13,8 +14,8 @@ const cardScript: CardScript = {
         chosenTargetsAreValid: (targets, state) => {
             return targets.length === allArtifacts(state).length
         },
-        perform: (state, config) => {
-            config.targets!.forEach(artifact => putOnTopOfDeck(state, artifact))
+        perform: (state: GameState, config: CardActionConfig) => {
+            putOnTopOfDeck(state, config.targets!)
         },
     }
 }

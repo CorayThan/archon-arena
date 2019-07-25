@@ -1,13 +1,13 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { inactivePlayerState } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { inactivePlayerState, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 5,
     onPlay: {
-        perform: (state) => {
-            if (inactivePlayerState(state).amber > 0)
-                inactivePlayerState(state).amber--
+        perform: (state: GameState) => {
+            modifyAmber(inactivePlayerState(state), -1)
         }
     }
 }

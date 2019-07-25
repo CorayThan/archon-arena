@@ -1,14 +1,15 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { friendlyCreatures, readyCreature, fightUsingCreature } from "../../ScriptUtils"
+import { fightUsingCreature, friendlyCreatures, readyCreature } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 3,
         uniqueTargets: () => true,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             if (config.targets!.length >= 1) {
                 readyCreature(config.targets![0] as Creature)
                 fightUsingCreature(config.targets![0] as Creature)

@@ -1,9 +1,8 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { Creature } from "../../../shared/gamestate/Creature"
-import { enemyCreatures, stunCreature, destroyCard } from "../../ScriptUtils"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { CardActionConfig } from "../../types/CardScript"
+import { Creature } from "../../../shared/gamestate/Creature"
+import { destroyCards, enemyCreatures, stunCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
@@ -11,11 +10,11 @@ const cardScript: CardScript = {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            const targetedCreature = config.targets![0] as Creature
-            if (targetedCreature.tokens.stun > 0) {
-                destroyCard(state, targetedCreature)
+            const targetedCreature = config.targets! as Creature[]
+            if (targetedCreature[0].tokens.stun > 0) {
+                destroyCards(state, targetedCreature)
             } else {
-                stunCreature(targetedCreature)
+                stunCreatures(targetedCreature)
             }
         }
     }

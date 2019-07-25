@@ -1,6 +1,7 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { allCreatures, stunCreature, getNeighbors, enemyCreatures } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { allCreatures, enemyCreatures, getNeighbors, stunCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -8,11 +9,10 @@ const cardScript: CardScript = {
     onPlay: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const targetedCreature = config.targets![0] as Creature
             const neighbors = getNeighbors(enemyCreatures(state), targetedCreature)
-            stunCreature(targetedCreature)
-            neighbors.forEach(neighbor => stunCreature(neighbor))
+            stunCreatures(neighbors.concat(targetedCreature))
         }
     }
 }

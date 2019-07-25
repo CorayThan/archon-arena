@@ -1,28 +1,29 @@
-import { cardScripts } from "../../CardScripts"
 import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import {
-    getMostPowerful,
+    destroyCards,
     enemyCreatures,
+    fightUsingCreature,
     friendlyCreatures,
-    destroyCard,
-    readyCreature,
-    fightUsingCreature
+    getMostPowerful,
+    readyCreature
 } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     onPlay: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             if (enemyCreatures(state).length > 0) {
-                const mostPowerfulEnemy = getMostPowerful(enemyCreatures(state), 1)[0]
-                enemyCreatures(state)
+                const mostPowerfulEnemy = getMostPowerful(enemyCreatures(state))[0]
+                const enemyTargets = enemyCreatures(state)
                     .filter(creature => creature.id !== mostPowerfulEnemy.id)
-                    .forEach(creature => destroyCard(state, creature))
+                destroyCards(state, enemyTargets)
             }
             if (friendlyCreatures(state).length > 0) {
-                const mostPowerfulFriendly = getMostPowerful(friendlyCreatures(state), 1)[0]
-                friendlyCreatures(state)
+                const mostPowerfulFriendly = getMostPowerful(friendlyCreatures(state))[0]
+                const friendlyTargets = friendlyCreatures(state)
                     .filter(creature => creature.id !== mostPowerfulFriendly.id)
-                    .forEach(creature => destroyCard(state, creature))
+                destroyCards(state, friendlyTargets)
                 readyCreature(mostPowerfulFriendly)
                 fightUsingCreature(mostPowerfulFriendly)
             }
