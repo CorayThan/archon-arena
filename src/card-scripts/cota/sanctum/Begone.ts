@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, allCreatures, destroyCards, modifyAmber } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -9,7 +10,7 @@ const cardScript: CardScript = {
     // Play: Choose one: destroy each Dis creature, or gain 1<A>.
     onPlay: {
         selectFromChoices: ['Destroy all Dis', 'Gain 1 Æmber'],
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             if (config.selection === 'Destroy All Dis') {
                 const targets = allCreatures(state)
                     .filter(x => (x as Creature).backingCard.house === House.Dis)

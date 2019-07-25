@@ -1,6 +1,5 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { activePlayerState, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Each time you play an artifact, gain 1<A>.
@@ -8,7 +7,7 @@ const cardScript: CardScript = {
     //TODO trigger play artifact
 
     // onPlayArtifact: {
-    //     perform: (state) => {
+    //     perform: (state: GameState) => {
     //         modifyAmber(activePlayerState(state), 1)
     //     }
     // }

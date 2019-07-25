@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { fightUsingCreature, friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -9,7 +10,7 @@ const cardScript: CardScript = {
     onPlay: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             [...Array(3)].forEach(() => fightUsingCreature(config.targets[0] as Creature))
         }
     }

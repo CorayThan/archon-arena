@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { destroyCards, enemyCreatures, friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     onPlay: {
         validTargets: enemyCreatures,
         numberOfTargets: (state) => enemyCreatures(state).length - friendlyCreatures(state).length,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets)
         }
     }

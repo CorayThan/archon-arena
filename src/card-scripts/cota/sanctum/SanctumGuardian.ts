@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -11,7 +12,7 @@ const cardScript: CardScript = {
     reap: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const creatures = friendlyCreatures(state)
             const thisCardIndex = creatures.findIndex(creat => (creat.id === (config.thisCard as Creature).id))
             const swapIndex = creatures.findIndex(creat => (creat.id === (config.targets[0] as Creature).id))
@@ -24,7 +25,7 @@ const cardScript: CardScript = {
     fight: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const creatures = friendlyCreatures(state)
             const thisCardIndex = creatures.findIndex(creat => (creat.id === (config.thisCard as Creature).id))
             const swapIndex = creatures.findIndex(creat => (creat.id === (config.targets[0] as Creature).id))

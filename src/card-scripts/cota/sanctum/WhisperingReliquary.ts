@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allArtifacts, putInHand } from "../../ScriptUtils"
 import { CardInGame } from "../../../shared/gamestate/CardInGame"
 
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     action: {
         validTargets: allArtifacts,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             putInHand(state, config.targets as CardInGame[])
         }
     }

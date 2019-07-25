@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { dealDamage, enemyCreatures, getNeighbors } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 5,
     armor: () => 2,
     beforeFight: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             //TODO get targeted creature
             const targets = getNeighbors(enemyCreatures(state), config.targets[0] as Creature)
             dealDamage(targets, 3)
