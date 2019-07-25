@@ -1,10 +1,11 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { enemyPlayer, inactivePlayerState } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { enemyPlayer } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 3,
-    staticEffect: (state, config) => {
+    staticEffect: (state: GameState, config: CardActionConfig) => {
         enemyPlayer(state, config!.thisCard).keyCost += 1
     }
 }

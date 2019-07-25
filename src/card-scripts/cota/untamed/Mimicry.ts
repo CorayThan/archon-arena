@@ -8,7 +8,7 @@ const cardScript: CardScript = {
 //     onPlay: {
 //         validTargets: (state) => inactivePlayerState(state).discard.filter(x => x.backingCard.cardType === "Action"),
 //         numberOfTargets: () => 1,
-//         perform: (state, config) => {
+//         perform: (state: GameState, config: CardActionConfig) => {
 //             config.thisCard = config.targets[o].backingCard
 //         }
 //     }

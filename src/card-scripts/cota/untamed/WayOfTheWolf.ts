@@ -1,9 +1,10 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 
 const cardScript: CardScript = {
     amber: () => 1,
-    staticEffect: (state, config) => {
+    staticEffect: (state: GameState, config: CardActionConfig) => {
         //TODO During each turn in which Untamed is not your active house, you may play one Untamed card.
     }
 }

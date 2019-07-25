@@ -1,12 +1,13 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { destroyCard, friendlyCreatures, enableUse } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { destroyCard, enableUse, friendlyCreatures } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
     amber: () => 1,
     omni: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const targets = friendlyCreatures(state)
                 .filter(card => card.backingCard.house === House.Untamed)
             enableUse(targets)

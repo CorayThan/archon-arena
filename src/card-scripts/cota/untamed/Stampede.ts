@@ -5,7 +5,7 @@ import { cardScripts } from "../../CardScripts"
 const cardScript: CardScript = {
     amber: () => 1,
     // onPlay: {
-    //     perform: (state) => {
+    //     perform: (state: GameState) => {
     //         TODO add cardUsedThisTurn
     //         if (cardUsedThisTurn(state) >= 3) steal(state, 2)
     //     }
