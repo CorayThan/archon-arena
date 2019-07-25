@@ -299,6 +299,10 @@ export const drawCards = (playerState: PlayerState, amount: number) => {
     playerState.library = slice(playerState.library, 0, amount - 1)
 }
 
+export const shuffleDeck = (playerState: PlayerState) => {
+    shuffle(playerState.library)
+}
+
 export const revealCards = (state: GameState, cards: CardInGame[]) => {
     //TODO
 }
