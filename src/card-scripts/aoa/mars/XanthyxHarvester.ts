@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, friendlyCreatures, getNeighbors, modifyAmber } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -12,7 +13,7 @@ const cardScript: CardScript = {
         return neighbors.some(x => x.backingCard.house !== House.Mars)
     },
     reap: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             modifyAmber(activePlayerState(state), 1)
         }
     }

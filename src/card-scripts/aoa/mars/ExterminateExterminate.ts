@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, creatureTotalPower, destroyCards, friendlyCreatures } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 
@@ -17,7 +18,7 @@ const cardScript: CardScript = {
             })
         },
         timesToExecute: (state) => friendlyCreatures(state).filter(x => x.backingCard.house === House.Mars).length,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets)
         }
     }

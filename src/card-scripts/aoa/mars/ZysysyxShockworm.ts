@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { stunCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 3,
     armor: () => 1,
     onEnemyReap: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             stunCreatures([config.triggerCard] as Creature[])
         }
     }

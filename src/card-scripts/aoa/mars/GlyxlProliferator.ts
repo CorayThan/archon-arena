@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, isFlank, putInArchives } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -9,7 +10,7 @@ const cardScript: CardScript = {
     reap: {
         validTargets: (state) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             if (isFlank(state, config.thisCard as Creature)) {
                 putInArchives(state, config.targets, true)
             }

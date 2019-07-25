@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { enemyCreatures, friendlyCreatures, stunCreatures } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 import { Creature } from "../../../shared/gamestate/Creature"
@@ -14,7 +15,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         validSecondaryTargets: (state) => enemyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
         numberOfSecondaryTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             stunCreatures((config.targets as Creature[]).concat(config.secondaryTargets as Creature[]))
         }
     }

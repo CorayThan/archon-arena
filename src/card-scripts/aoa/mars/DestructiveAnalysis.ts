@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, allCreatures, dealDamage, purgeCards } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -13,7 +14,7 @@ const cardScript: CardScript = {
         numberOfTargets: (state) => activePlayerState(state).archives.length,
         validSecondaryTargets: allCreatures,
         numberOfSecondaryTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             purgeCards(state, config.targets)
             dealDamage(config.secondaryTargets as Creature[], 2 + 2 * config.targets.length)
         }
