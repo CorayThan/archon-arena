@@ -4,9 +4,9 @@
 // All code segments beginning with UNCOMMENT need to be uncommented.
 // All code segments beginning with COMMENT need to be commented out.
 
-import {observer} from "mobx-react"
+import { observer } from "mobx-react"
 import * as React from "react"
-import {Redirect, RouteComponentProps} from "react-router"
+import { Redirect, RouteComponentProps } from "react-router"
 import Game from "../game/Game"
 import { Loader } from "../genericcomponents/Loader"
 import { TopBar } from "../genericcomponents/TopBar"
@@ -18,7 +18,7 @@ import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 import { ChatDrawer } from "./ChatDrawer"
 // UNCOMMENT for local development
-//import fixture from "../fixtures/game-state.json"
+import fixture from "../fixtures/game-state.json"
 
 @observer
 export class GameRenderer extends React.Component<RouteComponentProps> {
@@ -29,15 +29,15 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
             redirect = <Redirect to={Routes.lobby}/>
         }
         // UNCOMMENT for local development
-        redirect = null
+        //redirect = null
 
         if (gameStateStore.activeGameState == null) {
             // COMMENT for local development
-            //return <Loader/>
+            return <Loader/>
         }
 
         return (
-            <div style={{display: "flex"}}>
+            <div style={{ display: "flex" }}>
                 {redirect}
                 <div>
                     <TopBar/>
@@ -49,29 +49,21 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
                         //     gameStateStore.mergeGameState(gameState)
                         // }}
                         // logAction={(action: Action) => {
-                        //     gameHistoryStore.addAction(action)
+                        //     gameStateStore.addAction(action)
                         // }}
 
                         // UNCOMMENT for local development
                         playerId={"GQYXEhjmxEMlVcVzZY0gmYpnd872"}
+                        //@ts-ignore
                         state={fixture}
                         setState={(gameState: Partial<GameState>) => {
                         }}
-                        logAction={(action: Action) => {
-                            gameStateStore.addAction(action)
-                            logAction={() => {
-                            }}
-
-                            // UNCOMMENT for local development
-                            //playerId={"GQYXEhjmxEMlVcVzZY0gmYpnd872"}
-                            // @ts-ignore
-                            //state={fixture}
-                            //setState={(gameState: Partial<GameState>) => {}}
-                            //logAction={() => {}}
-                            />
-                        </div>
-                        <ChatDrawer/>
-                        </div>
-                        )
-                        }
+                        logAction={() => {
+                        }}
+                    />
+                </div>
+                <ChatDrawer/>
+            </div>
+        )
+    }
 }
