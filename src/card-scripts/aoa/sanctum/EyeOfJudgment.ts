@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, inactivePlayerState, purgeCards } from "../../ScriptUtils"
 import { CardInGame } from "../../../shared/gamestate/CardInGame"
 
@@ -9,7 +10,7 @@ const cardScript: CardScript = {
     action: {
         validTargets: (state) => activePlayerState(state).discard.concat(inactivePlayerState(state).discard),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             purgeCards(state, config.targets as CardInGame[])
         }
     }

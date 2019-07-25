@@ -1,11 +1,7 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import {
-    captureAmber,
-    friendlyArtifacts,
-    friendlyCreatures,
-    getCardsWithTrait
-} from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { captureAmber, friendlyArtifacts, friendlyCreatures, getCardsWithTrait } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -13,7 +9,7 @@ const cardScript: CardScript = {
     action: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             captureAmber(state, config.targets[0] as Creature, getCardsWithTrait(friendlyArtifacts(state), 'Shard"').length)
         }
     }

@@ -1,6 +1,7 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { enemyCreatures, friendlyCreatures } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -11,7 +12,7 @@ const cardScript: CardScript = {
         validTargets: friendlyCreatures,
         numberOfTargets: (state) => friendlyCreatures(state).reduce((a, b) => a + (b as Creature).tokens.amber, 0),
         uniqueTargets: () => false,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             friendlyCreatures(state).forEach(x => (x as Creature).tokens.amber = 0)
             config.targets.forEach(x => (x as Creature).tokens.amber += 1)
 
@@ -22,7 +23,7 @@ const cardScript: CardScript = {
     //     validTargets: enemyCreatures,
     //     numberOfTargets: (state) => enemyCreatures(state).reduce((a, b) => a + (b as Creature).tokens.amber, 0),
     //     uniqueTargets: () => false,
-    //     perform: (state, config) => {
+    //     perform: (state: GameState, config: CardActionConfig) => {
     //         enemyCreatures(state).forEach(x => (x as Creature).amber = 0)
     //         config.targets.forEach(x => (x as Creature).amber += 1)
     //     }

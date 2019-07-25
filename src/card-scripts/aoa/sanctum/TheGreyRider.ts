@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { fightUsingCreatures, friendlyCreatures, getNeighbors, readyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -11,7 +12,7 @@ const cardScript: CardScript = {
     onPlay: {
         validTargets: (state, config) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
             fightUsingCreatures(config.targets as Creature[])
         }
@@ -19,7 +20,7 @@ const cardScript: CardScript = {
     reap: {
         validTargets: (state, config) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
             fightUsingCreatures(config.targets as Creature[])
         }
@@ -27,7 +28,7 @@ const cardScript: CardScript = {
     fight: {
         validTargets: (state, config) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
             fightUsingCreatures(config.targets as Creature[])
         }
