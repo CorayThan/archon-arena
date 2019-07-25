@@ -1,8 +1,8 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
+import { allCreatures, enemyCreatures, getNeighbors, stunCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { allCreatures, dealDamage } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
@@ -10,9 +10,11 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 3)
+            const targetedCreature = config.targets![0] as Creature
+            const neighbors = getNeighbors(enemyCreatures(state), targetedCreature)
+            stunCreatures(neighbors.concat(targetedCreature))
         }
     }
 }
 
-cardScripts.scripts.set("punch", cardScript)
+cardScripts.scripts.set("tremor", cardScript)

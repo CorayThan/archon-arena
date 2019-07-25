@@ -5,14 +5,13 @@ import { Creature } from "../../../shared/gamestate/Creature"
 import { allCreatures, dealDamage } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    amber: () => 1,
-    onPlay: {
+    action: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 3)
+            dealDamage(config.targets! as Creature[], 2)
         }
     }
 }
 
-cardScripts.scripts.set("punch", cardScript)
+cardScripts.scripts.set("cannon", cardScript)

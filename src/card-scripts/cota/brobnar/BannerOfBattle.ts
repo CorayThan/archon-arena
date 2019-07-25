@@ -1,10 +1,11 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { friendlyCreatures } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { alterPower, friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    staticEffect: (state) => {
-        friendlyCreatures(state).forEach(creature => creature.power += 1)
+    staticEffect: (state: GameState) => {
+        alterPower(friendlyCreatures(state), 1)
     }
 }
 

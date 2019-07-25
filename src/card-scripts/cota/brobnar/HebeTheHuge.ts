@@ -1,18 +1,17 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { Creature } from "../../../shared/gamestate/Creature"
 import { allCreatures, dealDamage } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    amber: () => 1,
+    power: () => 6,
     onPlay: {
-        validTargets: allCreatures,
-        numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 3)
+            const targets = allCreatures(state)
+                .filter(creature => creature.tokens.damage === 0 && creature.id !== config.thisCard.id)
+            dealDamage(targets, 2)
         }
     }
 }
 
-cardScripts.scripts.set("punch", cardScript)
+cardScripts.scripts.set("hebe-the-huge", cardScript)
