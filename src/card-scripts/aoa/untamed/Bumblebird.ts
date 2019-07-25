@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -10,7 +11,7 @@ const cardScript: CardScript = {
     power: () => 1,
     alpha: () => true,
     onPlay: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             friendlyCreatures(state)
                 .filter(creature => (creature as Creature).backingCard.house === House.Untamed)
                 .forEach(creature => (creature as Creature).tokens.power += 2)

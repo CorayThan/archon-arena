@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, takeSkirmish, takeTaunt } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -10,13 +11,13 @@ const cardScript: CardScript = {
         //TODO save the target creatures and original state of taunt/elusive
         validTargets: allCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             takeTaunt(config.targets as Creature[])
             takeSkirmish(config.targets as Creature[])
         }
     },
     // atEndOfYourTurn: {
-    //     perform: (state, config) => {
+    //     perform: (state: GameState, config: CardActionConfig) => {
     //
     //     }
     // }

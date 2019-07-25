@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { discardCard, inactivePlayerState } from "../../ScriptUtils"
 import { shuffle } from "lodash"
 
@@ -9,7 +10,7 @@ const cardScript: CardScript = {
     //TODO fight only do 2D
     power: () => 9,
     fight: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             discardCard(state, (shuffle(inactivePlayerState(state).archives).slice(0, 1)))
         }
     }
