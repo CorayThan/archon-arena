@@ -11,7 +11,7 @@ const cardScript: CardScript = {
     // onPlay: {
     //     validTargets: Object.values(House),
     //     numberOfTargets: () => 1,
-    //     perform: (state, config) => {
+    //     perform: (state: GameState, config: CardActionConfig) => {
     //         const chosenHouse = config.targets[0] as House
     //         allCreatures(state).filter(creature => ((creature as Creature).backingCard.house === chosenHouse))
     //             .forEach(creature => exhaustCard(creature as Creature))

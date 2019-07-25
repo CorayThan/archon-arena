@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, friendlyCreatures, healCreatures, modifyAmber } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     // Reap: Heal 2 damage from a friendly creature.
     power: () => 2,
     onPlay: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             const damagedFriendlyCreatures = friendlyCreatures(state)
                 .filter(creature => (creature as Creature).tokens.damage > 0)
             modifyAmber(activePlayerState(state), damagedFriendlyCreatures.length)
@@ -18,7 +19,7 @@ const cardScript: CardScript = {
         validTargets: (state) => friendlyCreatures(state)
             .filter(creature => (creature as Creature).tokens.damage > 0),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             healCreatures(config.targets as Creature[], 2)
         }
     }
