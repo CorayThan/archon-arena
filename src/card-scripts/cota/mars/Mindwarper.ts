@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { enemyCreatures, inactivePlayerState, modifyAmber } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -11,7 +12,7 @@ const cardScript: CardScript = {
     action: {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             (config.targets[0] as Creature).tokens.amber += 1
             modifyAmber(inactivePlayerState(state), -1)
         }

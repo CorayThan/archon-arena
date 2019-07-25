@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, readyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -15,7 +16,7 @@ const cardScript: CardScript = {
                 return ((x as Creature).backingCard.house === House.Mars || (x as Creature).backingCard.traits.includes("Agent"))
             }),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
         }
     },
@@ -25,7 +26,7 @@ const cardScript: CardScript = {
                 return ((x as Creature).backingCard.house === House.Mars || (x as Creature).backingCard.traits.includes("Agent"))
             }),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
         }
     }

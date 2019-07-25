@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { enemyCreatures, putInArchives } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
@@ -10,7 +11,7 @@ const cardScript: CardScript = {
     reap: {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             putInArchives(state, config.targets, true)
         }
     }

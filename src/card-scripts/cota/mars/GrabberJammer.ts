@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { captureAmber, enemyPlayer } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -8,16 +9,16 @@ const cardScript: CardScript = {
     // Fight/Reap: Capture 1<A>.
     power: () => 4,
     armor: () => 1,
-    staticEffect: (state, config) => {
+    staticEffect: (state: GameState, config: CardActionConfig) => {
         enemyPlayer(state, config.thisCard).keyCost += 2
     },
     reap: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             captureAmber(state, config.thisCard as Creature, 1)
         }
     },
     fight: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             captureAmber(state, config.thisCard as Creature, 1)
         }
     }

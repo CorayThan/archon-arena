@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, dealDamage, friendlyCreatures } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 import { Creature } from "../../../shared/gamestate/Creature"
@@ -13,7 +14,7 @@ const cardScript: CardScript = {
             x.backingCard.house === House.Mars && (x as Creature).ready
         }).length,
         uniqueTargets: () => false,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             dealDamage(config.targets as Creature[], 2)
         }
     }

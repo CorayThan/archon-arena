@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { destroyCards, friendlyCreatures, stunCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -10,14 +11,14 @@ const cardScript: CardScript = {
     power: () => 11,
     taunt: () => true,
     onPlay: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             stunCreatures([config.thisCard] as Creature[])
         }
     },
     reap: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             (config.thisCard as Creature).tokens.power = 0
             destroyCards(state, config.targets)
         }
@@ -25,7 +26,7 @@ const cardScript: CardScript = {
     fight: {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             (config.thisCard as Creature).tokens.power = 0
             destroyCards(state, config.targets)
         }
