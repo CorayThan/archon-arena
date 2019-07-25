@@ -119,9 +119,9 @@ class Game extends React.Component<Props> {
                     scene.state = state
                     scene.render()
                     if (state.activePlayer.id === playerId) {
-                        scene.sys.resume()
+                        //scene.sys.resume()
                     } else {
-                        scene.sys.pause()
+                        //scene.sys.pause()
                     }
                 }
             } else {

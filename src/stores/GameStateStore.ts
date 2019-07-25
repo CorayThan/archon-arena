@@ -67,9 +67,10 @@ export class GameStateStore {
     }
 
     addAction = async (action: Action) => {
-        const actions = this.activeGameState!.actions == null ? [] : this.activeGameState!.actions.slice()
+        // temp fix
+        const actions = this.activeGameState!.actions || []
         actions.push(action)
-        await this.mergeGameState({ actions })
+        this.activeGameState!.actions = actions
     }
 
     @computed

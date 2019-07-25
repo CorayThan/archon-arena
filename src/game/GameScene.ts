@@ -14,6 +14,7 @@ import underConstruction from "../images/under-construction.png"
 import unforgedKey from "../images/unforgedkey.png"
 import greenCardGlow from "../images/green-card-glow.png"
 import orangeCardGlow from "../images/orange-card-glow.png"
+import blueCardGlow from "../images/blue-card-glow.png"
 
 import Action from "../shared/Action"
 import { CardInGame } from "../shared/gamestate/CardInGame"
@@ -82,6 +83,7 @@ class GameScene extends Phaser.Scene {
         this.load.image(ImageKey.ENHANCED_CARD_POWER, enhancedCardPower)
         this.load.image(ImageKey.GREEN_CARD_GLOW, greenCardGlow)
         this.load.image(ImageKey.ORANGE_CARD_GLOW, orangeCardGlow)
+        this.load.image(ImageKey.BLUE_CARD_GLOW, blueCardGlow)
 
         const state = this.state
         const players = [state.playerOneState, state.playerTwoState]
@@ -212,25 +214,6 @@ class GameScene extends Phaser.Scene {
         const creatureOffsetY = playerPosition === PlayerPosition.TOP ? CARD_HEIGHT * 2.05 : -CARD_HEIGHT * 1.05
         const artifactOffsetY = playerPosition === PlayerPosition.TOP ? CARD_HEIGHT * 1.25 : -CARD_HEIGHT * 0.25
         const cardPileTextY = playerPosition === PlayerPosition.TOP ? originY : originY + CARD_HEIGHT * 0.30
-
-        const artifactDropZoneX = originX + CARD_WIDTH * 0.35
-        this.createCardDropZone({
-            x: artifactDropZoneX,
-            y: originY + artifactOffsetY,
-            onDrop: (card: Card) => {
-                console.log(card)
-                const cardId = card.id
-                if (getCardType(this.state, cardId) !== CardType.HAND)
-                    return
-
-                dispatch({
-                    type: GameEvent.PlayArtifact,
-                    player: player.player,
-                    cardId,
-                })
-                this.render()
-            }
-        })
 
         const discardPileX = originX + CARD_WIDTH * 5.5
         const discardPileZone = this.createCardDropZone({
@@ -420,7 +403,7 @@ class GameScene extends Phaser.Scene {
 
             const card = new SmallCard({
                 scene: this,
-                x: originX + SMALL_CARD_WIDTH * 0.3 + SMALL_CARD_WIDTH * 1.05 * (i + 1) + artifactOffsetX,
+                x: originX + SMALL_CARD_WIDTH * 0.5 + SMALL_CARD_WIDTH * 1.05 * i + artifactOffsetX,
                 y: originY + artifactOffsetY,
                 id: artifact.id,
                 front: artifact.backingCard.cardTitle,
@@ -499,7 +482,7 @@ class GameScene extends Phaser.Scene {
             this.root!.add(creatureCard)
 
             const dropZoneX = creatureCard.x
-            this.createCardDropZone({
+            const upgradeDropZone = this.createCardDropZone({
                 x: dropZoneX,
                 y: originY + creatureOffsetY,
                 visible: false,
@@ -518,6 +501,7 @@ class GameScene extends Phaser.Scene {
                     this.render()
                 }
             })
+            upgradeDropZone.name = "upgrade"
         }
 
         const handOffsetY = playerPosition === PlayerPosition.TOP ? -CARD_HEIGHT * 0.3 : CARD_HEIGHT * 0.3
@@ -542,7 +526,7 @@ class GameScene extends Phaser.Scene {
             this.root!.add(card)
         }
 
-        this.createCardDropZone({
+        const creatureDropZone = this.createCardDropZone({
             x: originX + CARD_WIDTH * 0.35,
             y: originY + creatureOffsetY,
             onDrop: (card: Card) => {
@@ -559,36 +543,13 @@ class GameScene extends Phaser.Scene {
                 this.render()
             }
         })
-
-        if (player.creatures.length) {
-            const lastCreature = player.creatures[player.creatures.length - 1]
-            let rightCreatureDropZoneX = lastCreatureX + SMALL_CARD_WIDTH + SMALL_CARD_WIDTH * 0.1 * lastCreature.upgrades.length
-            if (lastCreature.ready) {
-                rightCreatureDropZoneX += SMALL_CARD_WIDTH * 0.1
-            }
-            this.createCardDropZone({
-                x: rightCreatureDropZoneX,
-                y: originY + creatureOffsetY,
-                onDrop: (card: Card) => {
-                    const cardId = card.id
-                    if (getCardType(this.state, cardId) !== CardType.HAND)
-                        return
-
-                    dispatch({
-                        type: GameEvent.PlayCreature,
-                        cardId: card.id,
-                        player: player.player,
-                        side: "right",
-                    })
-                    this.render()
-                }
-            })
-        }
+        creatureDropZone.name = "creature"
 
         const handDropZoneWidth = handWidth + 50
         const handDropZoneX = originX + handDropZoneWidth / 2
         const handDropZoneY = originY + CARD_HEIGHT / 2
         const handDropZone = new Phaser.GameObjects.Zone(this, handDropZoneX, handDropZoneY, handDropZoneWidth, CARD_HEIGHT)
+        handDropZone.name = "hand"
         handDropZone.setRectangleDropZone(handDropZoneWidth, CARD_HEIGHT)
         handDropZone.setDataEnabled()
         // @ts-ignore
@@ -956,7 +917,7 @@ class GameScene extends Phaser.Scene {
 
     onDragEndCardInHand(card: Card) {
         const distY = card._originY - card.y
-        if (distY > CARD_HEIGHT) {
+        if (distY > CARD_HEIGHT / 2) {
             const cardId = card.id
             this.dispatch({
                 type: GameEvent.PlayAction,
@@ -983,10 +944,18 @@ class GameScene extends Phaser.Scene {
         }
     }
 
-    onDragStart() {
+    onDragStart(card: Phaser.GameObjects.Image, pointer: Phaser.Input.Pointer) {
         this.creatureMousingOver = undefined
         this.artifactMousingOver = undefined
         this.cardInHandMousingOver = undefined
+
+        // @ts-ignore
+        const cardId = card.id
+        const cardType = getCardType(this.state, cardId)
+
+        if (cardType === CardType.HAND) {
+            card.setPosition(pointer.x, pointer.y)
+        }
 
         if (this.cardHoverImage) {
             this.cardHoverImage.destroy()
