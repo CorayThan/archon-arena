@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { captureAmber, inactivePlayerState } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 5,
     armor: () => 1,
     onPlay: {
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const enemyAmber = inactivePlayerState(state).amber
             if (enemyAmber > 7) {
                 captureAmber(state, config.thisCard as Creature, enemyAmber - 5)

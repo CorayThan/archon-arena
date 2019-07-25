@@ -1,7 +1,5 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { captureAmber } from "../../ScriptUtils"
-import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // After an enemy creature is destroyed fighting Francus, Francus captures 1<A>.
@@ -9,7 +7,7 @@ const cardScript: CardScript = {
     armor: () => 1,
     //TODO make onDestroyedCreatureDuringFight trigger
     // onDestroyedCreatureDuringFight: {
-    //     perform: (state, config) => {
+    //     perform: (state: GameState, config: CardActionConfig) => {
     //         captureAmber(state, config.thisCard as Creature, 1 )
     //     }
     // }

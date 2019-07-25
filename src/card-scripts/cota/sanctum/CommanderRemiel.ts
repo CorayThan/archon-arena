@@ -1,6 +1,7 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { friendlyCreatures, enableUse } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { enableUse, friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
 
@@ -11,7 +12,7 @@ const cardScript: CardScript = {
         validTargets: (state) => friendlyCreatures(state)
             .filter(creature => (creature as Creature).backingCard.house !== House.Sanctum),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             //TODO make useCreature in Utils
             enableUse(config.targets as Creature[])
         }
