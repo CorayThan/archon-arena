@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { friendlyCreatures, inactivePlayerState, modifyAmber } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 
@@ -9,7 +10,7 @@ const cardScript: CardScript = {
     power: () => 1,
     elusive: () => true,
     action: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             const friendlyMars = friendlyCreatures(state).filter(x => x.backingCard.house === House.Mars)
             modifyAmber(inactivePlayerState(state), -(friendlyMars.length - 1))
         }

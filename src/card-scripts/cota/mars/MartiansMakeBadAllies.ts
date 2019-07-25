@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, modifyAmber, purgeCards, revealCards } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 import { Creature } from "../../../shared/gamestate/Creature"
@@ -7,7 +8,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 const cardScript: CardScript = {
     // Play: Reveal your hand. Purge each revealed non-Mars creature and gain 1<A> for each card purged this way.
     onPlay: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             const hand = activePlayerState(state).hand
             revealCards(state, hand)
             const toPurge = hand

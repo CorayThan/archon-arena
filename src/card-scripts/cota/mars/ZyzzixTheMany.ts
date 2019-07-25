@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, alterPower, putInArchives } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -10,7 +11,7 @@ const cardScript: CardScript = {
         validTargets: (state) => activePlayerState(state).hand.filter(x => x.backingCard.cardType === "Creature"),
         numberOfTargets: () => 1,
         upToTargets: () => true,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             if (0 >= config.targets.length) return
             putInArchives(state, config.targets, true)
             alterPower([config.thisCard] as Creature[], 3)
@@ -20,7 +21,7 @@ const cardScript: CardScript = {
         validTargets: (state) => activePlayerState(state).hand.filter(x => x.backingCard.cardType === "Creature"),
         numberOfTargets: () => 1,
         upToTargets: () => true,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             if (0 >= config.targets.length) return
             putInArchives(state, config.targets, true)
             alterPower([config.thisCard] as Creature[], 3)

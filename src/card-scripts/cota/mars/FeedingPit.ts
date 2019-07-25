@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, discardCard, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
@@ -7,7 +8,7 @@ const cardScript: CardScript = {
     action: {
         validTargets: (state) => activePlayerState(state).hand.filter(x => x.backingCard.cardType === "Creature"),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             if (config.targets.length > 0) {
                 discardCard(state, config.targets)
                 modifyAmber(activePlayerState(state), 1)

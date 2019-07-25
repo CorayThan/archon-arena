@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, allCreatures, readyCreatures, revealCards } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -10,7 +11,7 @@ const cardScript: CardScript = {
     action: {
         validTargets: (state) => allCreatures(state).filter(x => x.backingCard.house === House.Mars),
         numberOfTargets: (state) => activePlayerState(state).hand.filter(x => x.backingCard.house === House.Mars).length,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const revealedCards = activePlayerState(state).hand.filter(x => x.backingCard.house === House.Mars)
             revealCards(state, revealedCards)
             readyCreatures(config.targets as Creature[])

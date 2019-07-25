@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, putInArchives } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -11,7 +12,7 @@ const cardScript: CardScript = {
         validTargets: (state) => allCreatures(state)
             .filter(x => (x as Creature).tokens.damage > 0),
         upToTargets: () => true,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             putInArchives(state, config.targets, true)
         }
     }

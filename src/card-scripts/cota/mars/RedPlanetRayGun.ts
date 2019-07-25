@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, dealDamage } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 import { Creature } from "../../../shared/gamestate/Creature"
@@ -14,7 +15,7 @@ const cardScript: CardScript = {
     reap: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const damage = allCreatures(state).filter(x => x.backingCard.house === House.Mars).length
             dealDamage(config.targets as Creature[], damage)
         }

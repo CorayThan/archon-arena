@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allArtifacts, allCreatures, destroyCards, stunCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     // Play: Each Mars creature and each Robot creature is stunned. Each artifact is destroyed.
     amber: () => 1,
     onPlay: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             destroyCards(state, allArtifacts(state))
             stunCreatures(allCreatures(state)
                 .filter(x => {
