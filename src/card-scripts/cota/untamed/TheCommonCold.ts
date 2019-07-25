@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, dealDamage, destroyCards } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: (state) => allCreatures(state).filter(creature => (creature as Creature).backingCard.house === House.Mars),
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets as Creature[])
             dealDamage(allCreatures(state), 1)
         }

@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, allCreatures, healCreatures, putInHand } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -11,7 +12,7 @@ const cardScript: CardScript = {
         //If you do, shuffle your discard pile into your deck
         validTargets: (state) => allCreatures(state).filter(card => card.backingCard.cardTitle === "Ancient Bear"),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             if (config.targets.length > 0) {
                 healCreatures(config.targets as Creature[], (config.targets[0] as Creature).tokens.damage)
             } else {
