@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, friendlyArtifacts, friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
@@ -18,7 +19,7 @@ const cardScript: CardScript = {
             return cards.concat(creatures).concat(artifacts)
         },
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             (config.targets[0] as CardInGame).house = House.Sanctum
         }
     },
@@ -30,12 +31,12 @@ const cardScript: CardScript = {
             return cards.concat(creatures).concat(artifacts)
         },
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             (config.targets[0] as CardInGame).house = House.Sanctum
         }
     },
     atEndOfYourTurn: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             //TODO figure out how to save the card i switched otherwise i'll just rest all the cards
             const creatures = friendlyCreatures(state).filter(x => (x as Creature).backingCard.house === House.Mars)
             const artifacts = friendlyArtifacts(state).filter(x => (x as Artifact).backingCard.house === House.Mars)

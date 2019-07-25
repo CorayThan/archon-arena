@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, friendlyCreatures, modifyAmber } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -12,7 +13,7 @@ const cardScript: CardScript = {
         validTargets: (state) => friendlyCreatures(state)
             .filter(x => (x as Creature).tokens.amber > 0),
         numberOfTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             (config.targets[0] as Creature).tokens.amber--
             modifyAmber(activePlayerState(state), 1)
         }

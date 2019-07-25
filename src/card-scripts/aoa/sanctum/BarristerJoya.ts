@@ -1,13 +1,13 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { enemyCreatures, enemyPlayer, inactivePlayerState } from "../../ScriptUtils"
-import { Creature } from "../../../shared/gamestate/Creature"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { enemyPlayer } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Enemy creatures cannot reap.
     power: () => 5,
     armor: () => 1,
-    staticEffect: (state, config) => {
+    staticEffect: (state: GameState, config: CardActionConfig) => {
         enemyPlayer(state, config.thisCard).creatures.forEach(x => {
             //TODO make Creature.canReap a thing
             //  (x as Creature).canReap = false

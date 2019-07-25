@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, friendlyCreatures, modifyAmber } from "../../ScriptUtils"
 import { uniq } from "lodash"
 
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 4,
     armor: () => 1,
     onPlay: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             const number = uniq(friendlyCreatures(state)
                 .map(x => x.house)).length
             if (number >= 3) modifyAmber(activePlayerState(state), 3)

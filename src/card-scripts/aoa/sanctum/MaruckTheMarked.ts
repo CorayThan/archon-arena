@@ -1,7 +1,5 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { Creature } from "../../../shared/gamestate/Creature"
-import { captureAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // After Maruck the Marked prevents damage with its armor, capture 1A for each damage just prevented.

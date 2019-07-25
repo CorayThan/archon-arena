@@ -1,7 +1,5 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { captureAmber } from "../../ScriptUtils"
-import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // After your opponent gains A by reaping, Sir Marrows captures it.
