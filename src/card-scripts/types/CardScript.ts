@@ -59,8 +59,6 @@ export interface CardScript {
     //TODO make the card that does this config.triggerCard
     onEnemyReap?: IndividualScript
 
-
-
     /**
      * For Niffle Ape, Groggins
      *
@@ -107,7 +105,6 @@ export interface CardScript {
      */
     canBeUsed?: IsActive
 
-
     /**
      * Cards like Cybergiant Rig
      */
@@ -153,7 +150,7 @@ type CardScriptExecution = (state: GameState, config: CardActionConfig) => void 
 type IsActive = (state: GameState, config: CardActionConfig) => boolean
 type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
-interface CardActionConfig {
+export interface CardActionConfig {
     targets: AnyCardInGame[]
     secondaryTargets: AnyCardInGame[]
     thisCard: CardInGame
