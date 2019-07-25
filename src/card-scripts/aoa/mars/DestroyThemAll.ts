@@ -5,7 +5,7 @@ const cardScript: CardScript = {
     // Play: Destroy an artifact, a creature, and an upgrade.
     //TODO Its too late to deal with this one
     // onPlay: {
-    //     perform: (state, config) => {
+    //     perform: (state: GameState, config: CardActionConfig) => {
     //         //Add onPlay code here
     //     }
     // }

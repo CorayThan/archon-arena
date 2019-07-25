@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, alterArmor } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 2,
     armor: () => 2,
     elusive: () => true,
-    staticEffect: (state, config) => {
+    staticEffect: (state: GameState, config: CardActionConfig) => {
         const targets = allCreatures(state).filter(x => x.backingCard.traits.includes("Martian") && x.id !== config.thisCard.id)
         alterArmor(targets, 1)
     }

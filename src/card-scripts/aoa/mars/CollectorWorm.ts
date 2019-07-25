@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     armor: () => 5,
     //TODO get creature from fight
     // fight: {
-    //     perform: (state, config) => {
+    //     perform: (state: GameState, config: CardActionConfig) => {
     //         putInArchives(state, creatureInFight(state) as Creature[], true)
     //     }
     // }

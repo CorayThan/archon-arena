@@ -1,5 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, gainChains } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
@@ -8,7 +9,7 @@ const cardScript: CardScript = {
     armor: () => 2,
     skirmish: () => true,
     fight: {
-        perform: (state) => {
+        perform: (state: GameState) => {
             gainChains(activePlayerState(state), 1)
         }
     }

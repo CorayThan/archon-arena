@@ -1,5 +1,6 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, purgeCards, putInArchives } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
@@ -12,7 +13,7 @@ const cardScript: CardScript = {
         validSecondaryTargets: (state) => activePlayerState(state).hand,
         upToTargets: () => true,
         numberOfSecondaryTargets: () => 1,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             putInArchives(state, config.secondaryTargets, true)
             if (config.targets.length > 0) {
                 purgeCards(state, config.targets)

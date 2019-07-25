@@ -1,11 +1,7 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import {
-    activePlayerState,
-    enemyCreatures,
-    friendlyCreatures,
-    inactivePlayerState
-} from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { activePlayerState, enemyCreatures, friendlyCreatures, inactivePlayerState } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -20,7 +16,7 @@ const cardScript: CardScript = {
             return (config.selection === 'Myself' ? friendlyCreatures(state) : enemyCreatures(state)).reduce((a, b) => a + b.tokens.damage, 0)
         },
         uniqueTargets: () => false,
-        perform: (state, config) => {
+        perform: (state: GameState, config: CardActionConfig) => {
             const playerState = config.selection === 'Myself' ? activePlayerState(state) : inactivePlayerState(state)
             const creatures = playerState.creatures
             const totalDamage = creatures.reduce((a, b) => a + b.tokens.damage, 0)
