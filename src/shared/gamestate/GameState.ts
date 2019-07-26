@@ -21,6 +21,7 @@ export interface GameState {
 }
 
 export interface PlayerState {
+    deckHouses: string[]
     player: PlayerInfo
     amber: number,
     chains: number,
