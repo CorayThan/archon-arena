@@ -5,7 +5,7 @@ import { activePlayerState, putOnTopOfDeck } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     action: {
-        validTargets: (state) => activePlayerState(state).discard,
+        validTargets: (state: GameState) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             putOnTopOfDeck(state, config.targets)

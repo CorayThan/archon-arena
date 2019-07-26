@@ -6,7 +6,7 @@ import { cardScripts } from "../../CardScripts"
 const cardScript: CardScript = {
 //TODO OMG HOW!?!?!?
 //     onPlay: {
-//         validTargets: (state) => inactivePlayerState(state).discard.filter(x => x.backingCard.cardType === "Action"),
+//         validTargets: (state: GameState) => inactivePlayerState(state).discard.filter(x => x.backingCard.cardType === "Action"),
 //         numberOfTargets: () => 1,
 //         perform: (state: GameState, config: CardActionConfig) => {
 //             config.thisCard = config.targets[o].backingCard

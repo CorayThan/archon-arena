@@ -8,7 +8,7 @@ import { House } from "../../../shared/keyforge/house/House"
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        validTargets: (state) => allCreatures(state).filter(creature => (creature as Creature).backingCard.house === House.Mars),
+        validTargets: (state: GameState) => allCreatures(state).filter(creature => (creature as Creature).backingCard.house === House.Mars),
         perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets as Creature[])
             dealDamage(allCreatures(state), 1)
