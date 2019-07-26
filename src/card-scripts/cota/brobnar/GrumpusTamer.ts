@@ -6,7 +6,7 @@ import { activePlayerState, putInHand, shuffleDeck } from "../../ScriptUtils"
 const cardScript: CardScript = {
     power: () => 4,
     reap: {
-        validTargets: (state) => {
+        validTargets: (state: GameState) => {
             return activePlayerState(state)
                 .library
                 .concat(activePlayerState(state).discard)

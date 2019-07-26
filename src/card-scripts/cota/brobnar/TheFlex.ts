@@ -7,7 +7,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     onPlay: {
-        validTargets: (state) => {
+        validTargets: (state: GameState) => {
             return friendlyCreatures(state).filter(creature => creature.backingCard.house === House.Brobnar
                 && creature.ready)
         },
