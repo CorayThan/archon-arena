@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     omega: () => true,
     onPlay: {
-        validTargets: (state) => activePlayerState(state).discard,
+        validTargets: (state: GameState) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             putInHand(state, config.targets)
