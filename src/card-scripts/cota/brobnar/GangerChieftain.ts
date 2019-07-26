@@ -7,7 +7,7 @@ import { fightUsingCreature, friendlyCreatures, getNeighbors, readyCreature } fr
 const cardScript: CardScript = {
     power: () => 5,
     onPlay: {
-        validTargets: (state, config) => {
+        validTargets: (state: GameState, config: CardActionConfig) => {
             return getNeighbors(friendlyCreatures(state), config.thisCard as Creature)
         },
         numberOfTargets: () => 1,

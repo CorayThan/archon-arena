@@ -7,7 +7,7 @@ import { captureAmber, enemyCreatures, friendlyCreatures } from "../../ScriptUti
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        validTargets: (state) => {
+        validTargets: (state: GameState) => {
             return friendlyCreatures(state).length > enemyCreatures(state).length ? friendlyCreatures(state) : []
         },
         numberOfTargets: (state) => {
