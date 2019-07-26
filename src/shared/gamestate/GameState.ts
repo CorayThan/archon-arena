@@ -24,11 +24,13 @@ export interface GameState {
 }
 
 export interface PlayerState {
+    deckHouses: string[]
     player: PlayerInfo
     amber: number,
     chains: number,
     keys: number,
     keyCost: number,
+    handSize: number,
     library: CardInGame[]
     hand: CardInGame[]
     discard: CardInGame[]

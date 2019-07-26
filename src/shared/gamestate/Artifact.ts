@@ -5,6 +5,7 @@ export interface Artifact extends CardInGame {
     id: string
     ready: boolean
     faceup: boolean
+    traits: string[]
     cardsUnderneath: CardInGame[]
     purgedByThis: CardInGame[]
     tokens: {

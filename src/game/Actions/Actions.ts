@@ -1,4 +1,4 @@
-import { shuffle } from "lodash"
+import {ceil, shuffle} from "lodash"
 import Action from "../../shared/Action"
 import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState, PlayerState as Player } from "../../shared/gamestate/GameState"
@@ -20,7 +20,8 @@ import {
 } from "../StateUtils"
 import ArtifactActions from "./Artifact"
 import CreatureActions from "./Creature"
-import { cardScripts } from "../../card-scripts/CardScripts"
+import {cardScripts} from "../../card-scripts/CardScripts"
+//import {number} from "prop-types"
 
 export const exec = (action: Action, state: GameState) => {
 
@@ -157,6 +158,7 @@ export const exec = (action: Action, state: GameState) => {
             const player = getPlayerById(action.player!.id, state)
             player.chains += action.amount!
             player.chains = Math.max(player.chains, 0)
+            player.handSize = 6 - ceil(player.chains / 6)
         },
         [GameEvent.AlterPlayerAmber]: () => {
             const player = getPlayerById(action.player!.id, state)

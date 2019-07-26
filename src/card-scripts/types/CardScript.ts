@@ -12,6 +12,18 @@ export interface CardScript {
     onPlay?: IndividualScript
 
     /**
+     * Softlanding, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    nextCardPlayed?: IndividualScript
+
+    /**
+     * witches, Tunk, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    cardPlayed?: IndividualScript
+
+    /**
      * Firespitter, etc.
      */
     beforeFight?: IndividualScript
@@ -40,6 +52,30 @@ export interface CardScript {
     action?: IndividualScript
     destroyed?: IndividualScript
     leavesPlay?: IndividualScript
+
+    /**
+     * Reap Haters
+     */
+    //TODO make the card that does this config.triggerCard
+    onAnyReap?: IndividualScript
+
+    /**
+     * Tentacus
+     */
+    //TODO make the card that does this config.triggerCard as CardInGame
+    onAnyAction?: IndividualScript
+
+    /**
+     * when a card gets discarded, Annihilation Ritual
+     */
+    //TODO make the card that does this config.triggerCard
+    onDiscard?: IndividualScript
+
+    /**
+     * when a creature gets destroyed, SoulSnatcher
+     */
+    //TODO make the card that does this config.triggerCard
+    onCreatureDestroyed?: IndividualScript
 
     /**
      * For Niffle Ape, Groggins
@@ -83,6 +119,11 @@ export interface CardScript {
     canAlwaysUse?: IsActive
 
     /**
+     * Xanthyx Havester
+     */
+    canBeUsed?: IsActive
+
+    /**
      * Cards like Cybergiant Rig
      */
     atEndOfYourTurn?: IndividualScript
@@ -106,11 +147,17 @@ export interface CardScript {
 
 interface IndividualScript {
     perform: CardScriptExecution
-    numberOfTargets?: (state: GameState) => number
+    numberOfTargets?: (state: GameState, config: CardActionConfig) => number
     uniqueTargets?: () => boolean
     upToTargets?: () => boolean
     validTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    validSecondaryTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    numberOfSecondaryTargets?: (state: GameState) => number
+    upToSecondaryTargets?: () => boolean
+    //TODO selectFromChoices () => config.selection
+    selectFromChoices?: (state: GameState, config: CardActionConfig) => string[] | number[]
     chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
+    timesToExecute?: (state: GameState, config: CardActionConfig) => number
 }
 
 /**
@@ -122,8 +169,11 @@ type IsActive = (state: GameState, config: CardActionConfig) => boolean
 type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
 export interface CardActionConfig {
-    targets?: AnyCardInGame[]
+    targets: AnyCardInGame[]
+    secondaryTargets: AnyCardInGame[]
     thisCard: CardInGame
+    selection: string | number
+    triggerCard: CardInGame
 
     /**
      * Cards like Dance of Doom, Vigor
@@ -133,5 +183,6 @@ export interface CardActionConfig {
     /**
      * Used by cards like Relentless Assault which can be executed 3 times.
      */
-    timesExecuted?: number
+    //TODO I'm using this like a increment in a loop, not sure if thats right (Sky)
+    timesExecuted: number
 }

@@ -28,6 +28,13 @@ export default {
             ready: false,
             faceup: true,
             taunt: false,
+            elusive: false,
+            deploy: false,
+            poison: false,
+            skirmish: false,
+            assault: 0,
+            hazardous: 0,
+            armor: 0,
             upgrades: [],
             cardsUnderneath: [],
             tokens: {
@@ -36,10 +43,13 @@ export default {
                 damage: 0,
                 amber: 0,
                 stun: 0,
+                skirmish: 0,
+                elusive: 0,
                 doom: 0
             },
             power: card.backingCard.power,
             traits: card.backingCard.traits,
+            house: card.backingCard.house,
             ownerId: owner.player.id,
             backingCard: card.backingCard,
         }
@@ -62,6 +72,7 @@ export default {
         const card: CardInGame = {
             id: creature.id,
             ownerId: owner.player.id,
+            house: creature.backingCard.house,
             backingCard: creature.backingCard,
         }
         owner.hand.push(card)
