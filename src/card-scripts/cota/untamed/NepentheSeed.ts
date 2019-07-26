@@ -5,7 +5,7 @@ import { activePlayerState, destroyCard, putInHand } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     omni: {
-        validTargets: (state) => activePlayerState(state).discard,
+        validTargets: (state: GameState) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             destroyCard(config.thisCard)

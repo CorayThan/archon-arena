@@ -17,7 +17,7 @@ const cardScript: CardScript = {
     },
     fight: {
         //TODO can only fight stunned
-        validTargets: (state) => enemyCreatures(state).filter(creature => creature.tokens.stun > 0),
+        validTargets: (state: GameState) => enemyCreatures(state).filter(creature => creature.tokens.stun > 0),
         perform: () => {
         }
     }

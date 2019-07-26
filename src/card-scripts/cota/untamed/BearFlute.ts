@@ -10,7 +10,7 @@ const cardScript: CardScript = {
         //If there are no Ancient Bears in play, search your deck and discard pile
         //and put each Ancient Bear from them into your hand.
         //If you do, shuffle your discard pile into your deck
-        validTargets: (state) => allCreatures(state).filter(card => card.backingCard.cardTitle === "Ancient Bear"),
+        validTargets: (state: GameState) => allCreatures(state).filter(card => card.backingCard.cardTitle === "Ancient Bear"),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             if (config.targets.length > 0) {

@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         //TODO add elusive to Creature
-        validTargets: (state) => allCreatures(state).filter(creature => (creature as Creature).elusive),
+        validTargets: (state: GameState) => allCreatures(state).filter(creature => (creature as Creature).elusive),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             config.targets.forEach(target => destroyCard(target as Creature))
