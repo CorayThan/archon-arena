@@ -12,7 +12,7 @@ const cardScript: CardScript = {
     power: () => 1,
     elusive: () => true,
     reap: {
-        validTargets: (state) => {
+        validTargets: (state: GameState) => {
             const creatures = friendlyCreatures(state).filter(x => (x as Creature).backingCard.house === House.Mars)
             const artifacts = friendlyArtifacts(state).filter(x => (x as Artifact).backingCard.house === House.Mars)
             const cards = activePlayerState(state).hand.filter(x => (x as CardInGame).backingCard.house === House.Mars)
@@ -24,7 +24,7 @@ const cardScript: CardScript = {
         }
     },
     fight: {
-        validTargets: (state) => {
+        validTargets: (state: GameState) => {
             const creatures = friendlyCreatures(state).filter(x => (x as Creature).backingCard.house === House.Mars)
             const artifacts = friendlyArtifacts(state).filter(x => (x as Artifact).backingCard.house === House.Mars)
             const cards = activePlayerState(state).hand.filter(x => (x as CardInGame).backingCard.house === House.Mars)

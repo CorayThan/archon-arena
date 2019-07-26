@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     power: () => 2,
     elusive: () => true,
     reap: {
-        validTargets: (state) => friendlyCreatures(state)
+        validTargets: (state: GameState) => friendlyCreatures(state)
             .filter(x => (x as Creature).tokens.amber > 0),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {

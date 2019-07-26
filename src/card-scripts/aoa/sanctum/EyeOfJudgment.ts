@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     // Action: Purge a creature from a discard pile.
     amber: () => 1,
     action: {
-        validTargets: (state) => activePlayerState(state).discard.concat(inactivePlayerState(state).discard),
+        validTargets: (state: GameState) => activePlayerState(state).discard.concat(inactivePlayerState(state).discard),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             purgeCards(state, config.targets as CardInGame[])
