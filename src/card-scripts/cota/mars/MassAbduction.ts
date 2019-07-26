@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // If any of these creatures leave your archives, they are put into their owner’s hand instead.
     amber: () => 1,
     onPlay: {
-        validTargets: (state) => allCreatures(state)
+        validTargets: (state: GameState) => allCreatures(state)
             .filter(x => (x as Creature).tokens.damage > 0),
         upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {

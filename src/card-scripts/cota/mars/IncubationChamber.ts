@@ -7,7 +7,7 @@ import { House } from "../../../shared/keyforge/house/House"
 const cardScript: CardScript = {
     // Omni: Reveal a Mars creature from your hand. If you do, archive it.
     omni: {
-        validTargets: (state) => activePlayerState(state).hand.filter(x => x.backingCard.house === House.Mars),
+        validTargets: (state: GameState) => activePlayerState(state).hand.filter(x => x.backingCard.house === House.Mars),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             revealCards(state, config.targets)

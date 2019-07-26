@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // Omni: Sacrifice Combat Pheromones. You may use up to 2 other Mars cards this turn.
     amber: () => 1,
     omni: {
-        validTargets: (state) => (friendlyCreatures(state) as CardInGame[]).concat(friendlyArtifacts(state) as CardInGame[]),
+        validTargets: (state: GameState) => (friendlyCreatures(state) as CardInGame[]).concat(friendlyArtifacts(state) as CardInGame[]),
         numberOfTargets: () => 2,
         upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {

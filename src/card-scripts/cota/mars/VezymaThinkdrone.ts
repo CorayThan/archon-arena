@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     // Reap: You may archive a friendly creature or artifact from play.
     power: () => 3,
     reap: {
-        validTargets: (state) => (friendlyCreatures(state) as CardInGame[]).concat(friendlyArtifacts(state) as CardInGame[]),
+        validTargets: (state: GameState) => (friendlyCreatures(state) as CardInGame[]).concat(friendlyArtifacts(state) as CardInGame[]),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             putInArchives(state, config.targets, true)
