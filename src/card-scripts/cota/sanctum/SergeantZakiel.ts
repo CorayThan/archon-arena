@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 4,
     armor: () => 1,
     onPlay: {
-        validTargets: (state, config) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
+        validTargets: (state: GameState, config: CardActionConfig) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             fightUsingCreature(config.targets[0] as Creature)

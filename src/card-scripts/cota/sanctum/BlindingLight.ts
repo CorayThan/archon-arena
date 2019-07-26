@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // Play: Choose a house. Stun each creature of that house.
     amber: () => 1,
     onPlay: {
-        selectFromChoices: Object.values(House),
+        selectFromChoices: () => Object.values(House),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             const targets = allCreatures(state)
