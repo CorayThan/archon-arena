@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     power: () => 2,
     deploy: () => true,
     onPlay: {
-        validTargets: (state, config) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
+        validTargets: (state: GameState, config: CardActionConfig) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
@@ -18,7 +18,7 @@ const cardScript: CardScript = {
         }
     },
     reap: {
-        validTargets: (state, config) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
+        validTargets: (state: GameState, config: CardActionConfig) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
@@ -26,7 +26,7 @@ const cardScript: CardScript = {
         }
     },
     fight: {
-        validTargets: (state, config) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
+        validTargets: (state: GameState, config: CardActionConfig) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])
