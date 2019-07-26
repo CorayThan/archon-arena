@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // Reap: Use a friendly non-Sanctum creature.
     power: () => 3,
     reap: {
-        validTargets: (state) => friendlyCreatures(state)
+        validTargets: (state: GameState) => friendlyCreatures(state)
             .filter(creature => (creature as Creature).backingCard.house !== House.Sanctum),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {

@@ -7,7 +7,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 const cardScript: CardScript = {
     // Play: Purge a creature with power 5 or higher.
     onPlay: {
-        validTargets: (state) => allCreatures(state).filter(x => ((x as Creature).power + (x as Creature).tokens.power) >= 5),
+        validTargets: (state: GameState) => allCreatures(state).filter(x => ((x as Creature).power + (x as Creature).tokens.power) >= 5),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             purgeCards(state, config.targets)

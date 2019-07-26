@@ -9,7 +9,7 @@ import { CardInGame } from "../../../shared/gamestate/CardInGame"
 const cardScript: CardScript = {
     // Play: Choose one: destroy each Dis creature, or gain 1<A>.
     onPlay: {
-        selectFromChoices: ['Destroy all Dis', 'Gain 1 Æmber'],
+        selectFromChoices: () => ['Destroy all Dis', 'Gain 1 Æmber'],
         perform: (state: GameState, config: CardActionConfig) => {
             if (config.selection === 'Destroy All Dis') {
                 const targets = allCreatures(state)
