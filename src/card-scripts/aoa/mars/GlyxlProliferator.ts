@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     // Reap: If Glyxl Proliferator is on a flank, archive a Mars card from your discard pile.
     power: () => 3,
     reap: {
-        validTargets: (state) => activePlayerState(state).discard,
+        validTargets: (state: GameState) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             if (isFlank(state, config.thisCard as Creature)) {

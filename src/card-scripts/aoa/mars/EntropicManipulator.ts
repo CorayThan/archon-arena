@@ -10,9 +10,9 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         //TODO Selected friendly or enemy targets not sure if this would work
-        selectFromChoices: ['Opponent', 'Myself'],
-        validTargets: (state, config) => config.selection === 'Myself' ? friendlyCreatures(state) : enemyCreatures(state),
-        numberOfTargets: (state, config) => {
+        selectFromChoices: () => ['Opponent', 'Myself'],
+        validTargets: (state: GameState, config: CardActionConfig) => config.selection === 'Myself' ? friendlyCreatures(state) : enemyCreatures(state),
+        numberOfTargets: (state: GameState, config: CardActionConfig) => {
             return (config.selection === 'Myself' ? friendlyCreatures(state) : enemyCreatures(state)).reduce((a, b) => a + b.tokens.damage, 0)
         },
         uniqueTargets: () => false,

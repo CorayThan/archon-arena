@@ -1,7 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { creatureTotalPower, dealDamage, enemyCreatures, friendlyCreatures, getNeighbors } from "../../ScriptUtils"
+import { totalPower, dealDamage, enemyCreatures, friendlyCreatures, getNeighbors } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -15,7 +15,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             const neighbors = getNeighbors(friendlyCreatures(state), config.thisCard as Creature)
-            const power = neighbors.reduce((a, b) => a + creatureTotalPower(b), 0)
+            const power = neighbors.reduce((a, b) => a + totalPower(b), 0)
             dealDamage(config.targets as Creature[], power)
         }
     }

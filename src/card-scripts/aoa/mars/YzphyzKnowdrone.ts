@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     power: () => 3,
     armor: () => 1,
     onPlay: {
-        validTargets: (state) => activePlayerState(state).archives,
+        validTargets: (state: GameState) => activePlayerState(state).archives,
         numberOfTargets: () => 1,
         validSecondaryTargets: (state) => activePlayerState(state).hand,
         upToTargets: () => true,

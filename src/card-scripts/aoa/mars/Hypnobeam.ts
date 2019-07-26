@@ -16,8 +16,7 @@ const cardScript: CardScript = {
             //TODO add choice for which flank to move the creature to
             activePlayerState(state).creatures = friendlyCreatures(state).concat(creature)
         }
-    },
-
+    }
 }
 
 cardScripts.scripts.set("hypnobeam", cardScript)

@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // Play: Ready and use a friendly Mars creature.
     amber: () => 1,
     onPlay: {
-        validTargets: (state) => friendlyCreatures(state).filter(x => x.backingCard.house === House.Mars),
+        validTargets: (state: GameState) => friendlyCreatures(state).filter(x => x.backingCard.house === House.Mars),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             readyCreatures(config.targets as Creature[])

@@ -1,16 +1,18 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { stunCreatures } from "../../ScriptUtils"
+import { activePlayerState, enemyPlayer, stunCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // After an enemy creature reaps, stun it.
     power: () => 3,
     armor: () => 1,
-    onEnemyReap: {
+    onAnyReap: {
         perform: (state: GameState, config: CardActionConfig) => {
-            stunCreatures([config.triggerCard] as Creature[])
+            if (activePlayerState(state).player.id === enemyPlayer(state, config.thisCard).player.id) {
+                stunCreatures([config.triggerCard] as Creature[])
+            }
         }
     }
 }
