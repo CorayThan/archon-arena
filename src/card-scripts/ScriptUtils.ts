@@ -11,6 +11,9 @@ export const activePlayerState = (state: GameState): PlayerState => {
 export const inactivePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id !== state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
 }
+export const otherPlayerState = (state: GameState, playerState: PlayerState): PlayerState => {
+    return playerState.player.id === state.playerOneState.player.id ? state.playerTwoState : state.playerOneState
+}
 
 export const allPlayerStates = (state: GameState) => {
     return [state.playerOneState, state.playerTwoState]
@@ -146,12 +149,20 @@ export const purgeCards = (state: GameState, cards: CardInGame[]) => {
     })
 }
 
-export const discardCard = (state: GameState, cards: CardInGame[]) => {
+export const discardCards = (state: GameState, cards: CardInGame[]) => {
     cards.forEach(card => {
         const toAdd = removeAndReturn(state, card)
         const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
         myState.discard.push(toAdd)
     })
+}
+
+export const discardTopCard = (state: GameState, playerState: PlayerState): CardInGame | boolean => {
+    if (0 >= playerState.library.length) return false
+    const discardedCard = playerState.library[0]
+    removeAndReturn(state, discardedCard)
+    discardCards(state, [discardedCard])
+    return discardedCard
 }
 
 export const destroyCard = (card: CardInGame): boolean => {
@@ -248,11 +259,6 @@ export const enemyCreatureDiedThisTurn = (state: GameState): boolean => {
     return false
 }
 
-export const discardTopCard = (state: GameState, activePlayer: boolean): CardInGame => {
-    //TODO
-    return state.playerOneState.creatures[0]
-}
-
 export const mustFightWhenUsedIfAble = (creature: Creature) => {
     //I'm drawing a complete blank here
     //TODO
@@ -319,6 +325,10 @@ export const useCreatures = (creatures: Creature[]) => {
 //TODO
 }
 
+export const useArtifact = (artifacts: Artifact[]) => {
+//TODO
+}
+
 export const fightUsingCreatures = (creatures: Creature[]) => {
     //TODO
 }
@@ -358,7 +368,7 @@ export const dealDamageWithSplash = (state: GameState, creature: Creature, damag
     dealDamage(neighbors, splash)
 }
 
-export const creatureTotalPower = (creature: Creature): number => {
+export const totalPower = (creature: Creature): number => {
     return creature.power + creature.tokens.power
 }
 
@@ -412,8 +422,8 @@ export const enableUse = (creatures: Creature[]) => {
     //TODO
 }
 
-export const gainChains = (state: PlayerState, amount: number) => {
-    state.chains += amount
+export const gainChains = (playerState: PlayerState, amount: number) => {
+    playerState.chains += amount
 }
 
 export const modifyAmber = (playerState: PlayerState, amount: number): number => {

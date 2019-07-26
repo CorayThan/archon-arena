@@ -57,7 +57,25 @@ export interface CardScript {
      * Reap Haters
      */
     //TODO make the card that does this config.triggerCard
-    onEnemyReap?: IndividualScript
+    onAnyReap?: IndividualScript
+
+    /**
+     * Tentacus
+     */
+    //TODO make the card that does this config.triggerCard as CardInGame
+    onAnyAction?: IndividualScript
+
+    /**
+     * when a card gets discarded, Annihilation Ritual
+     */
+    //TODO make the card that does this config.triggerCard
+    onDiscard?: IndividualScript
+
+    /**
+     * when a creature gets destroyed, SoulSnatcher
+     */
+    //TODO make the card that does this config.triggerCard
+    onCreatureDestroyed?: IndividualScript
 
     /**
      * For Niffle Ape, Groggins
@@ -137,7 +155,7 @@ interface IndividualScript {
     numberOfSecondaryTargets?: (state: GameState) => number
     upToSecondaryTargets?: () => boolean
     //TODO selectFromChoices () => config.selection
-    selectFromChoices?: string[]
+    selectFromChoices?: (state: GameState, config: CardActionConfig) => string[] | number[]
     chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
     timesToExecute?: (state: GameState, config: CardActionConfig) => number
 }
@@ -154,7 +172,7 @@ export interface CardActionConfig {
     targets: AnyCardInGame[]
     secondaryTargets: AnyCardInGame[]
     thisCard: CardInGame
-    selection: string
+    selection: string | number
     triggerCard: CardInGame
     /**
      * Cards like Dance of Doom, Vigor
