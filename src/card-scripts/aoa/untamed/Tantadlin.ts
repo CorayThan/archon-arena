@@ -1,7 +1,7 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { discardCard, inactivePlayerState } from "../../ScriptUtils"
+import { discardCards, inactivePlayerState } from "../../ScriptUtils"
 import { shuffle } from "lodash"
 
 const cardScript: CardScript = {
@@ -11,7 +11,7 @@ const cardScript: CardScript = {
     power: () => 9,
     fight: {
         perform: (state: GameState) => {
-            discardCard(state, (shuffle(inactivePlayerState(state).archives).slice(0, 1)))
+            discardCards(state, (shuffle(inactivePlayerState(state).archives).slice(0, 1)))
         }
     }
 }

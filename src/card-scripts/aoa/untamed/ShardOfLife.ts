@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     // Action: Shuffle a card from your discard pile into your deck for each friendly Shard.
     //
     action: {
-        validTargets: (state) => activePlayerState(state).discard,
+        validTargets: (state: GameState) => activePlayerState(state).discard,
         numberOfTargets: (state) => getCardsWithTrait(friendlyArtifacts(state), 'Shard').length,
         perform: (state: GameState, config: CardActionConfig) => {
             putOnTopOfDeck(state, config.targets)

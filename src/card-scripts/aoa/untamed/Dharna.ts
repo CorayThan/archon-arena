@@ -16,7 +16,7 @@ const cardScript: CardScript = {
         }
     },
     reap: {
-        validTargets: (state) => friendlyCreatures(state)
+        validTargets: (state: GameState) => friendlyCreatures(state)
             .filter(creature => (creature as Creature).tokens.damage > 0),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
