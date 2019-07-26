@@ -16,7 +16,7 @@ const cardScript: CardScript = {
 
             const randomCardNum = Math.floor(Math.random() * opponentState.hand.length)
             const randomCard = opponentState.hand[randomCardNum]
-            removeCardFromHand(opponentState, `${opponentState.player.id}-card-in-hand-${randomCardNum}`)
+            removeCardFromHand(opponentState, opponentState.hand[randomCardNum].id)
             opponentState.discard.push(randomCard)
         }
     }

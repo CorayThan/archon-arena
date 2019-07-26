@@ -174,6 +174,7 @@ export interface CardActionConfig {
     thisCard: CardInGame
     selection: string | number
     triggerCard: CardInGame
+
     /**
      * Cards like Dance of Doom, Vigor
      */
