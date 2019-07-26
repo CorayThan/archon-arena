@@ -9,14 +9,14 @@ const cardScript: CardScript = {
     // Fight/Reap: Use a friendly non-Mars creature.
     power: () => 3,
     reap: {
-        validTargets: (state) => friendlyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
+        validTargets: (state: GameState) => friendlyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             enableUse(config.targets as Creature[])
         }
     },
     fight: {
-        validTargets: (state) => friendlyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
+        validTargets: (state: GameState) => friendlyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             enableUse(config.targets as Creature[])

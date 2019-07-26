@@ -1,7 +1,7 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, discardCard, putInHand } from "../../ScriptUtils"
+import { activePlayerState, discardCards, putInHand } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
@@ -16,7 +16,7 @@ const cardScript: CardScript = {
                 if (card.backingCard.house === House.Mars && card.backingCard.cardType === "Creature") {
                     putInHand(state, [card])
                     stop = true
-                } else discardCard(state, [card])
+                } else discardCards(state, [card])
             }
         }
     }

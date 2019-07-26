@@ -11,7 +11,7 @@ const cardScript: CardScript = {
     power: () => 2,
     elusive: () => true,
     reap: {
-        validTargets: (state) => allCreatures(state)
+        validTargets: (state: GameState) => allCreatures(state)
             .filter(x => {
                 return ((x as Creature).backingCard.house === House.Mars || (x as Creature).backingCard.traits.includes("Agent"))
             }),
@@ -21,7 +21,7 @@ const cardScript: CardScript = {
         }
     },
     fight: {
-        validTargets: (state) => allCreatures(state)
+        validTargets: (state: GameState) => allCreatures(state)
             .filter(x => {
                 return ((x as Creature).backingCard.house === House.Mars || (x as Creature).backingCard.traits.includes("Agent"))
             }),

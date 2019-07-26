@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     // Play: Ready a Mars creature or stun a non-Mars creature.
     amber: () => 1,
     onPlay: {
-        selectFromChoices: ['Ready a Mars creature', 'Stun a non-Mars creature'],
+        selectFromChoices: () => ['Ready a Mars creature', 'Stun a non-Mars creature'],
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
