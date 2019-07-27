@@ -14,7 +14,6 @@ import { Routes } from "../routing/Routes"
 import Action from "../shared/Action"
 import { GameState } from "../shared/gamestate/GameState"
 import { authStore } from "../stores/AuthStore"
-import { gameHistoryStore } from "../stores/GameHistoryStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 import { ChatDrawer } from "./ChatDrawer"
@@ -50,11 +49,12 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
                             gameStateStore.mergeGameState(gameState)
                         }}
                         logAction={(action: Action) => {
-                            gameHistoryStore.addAction(action)
+                            gameStateStore.addAction(action)
                         }}
 
                         // UNCOMMENT for local development
                         //playerId={"GQYXEhjmxEMlVcVzZY0gmYpnd872"}
+                        // @ts-ignore
                         //state={fixture}
                         //setState={(gameState: Partial<GameState>) => {}}
                         //logAction={() => {}}

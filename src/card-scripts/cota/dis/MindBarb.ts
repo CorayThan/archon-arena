@@ -12,6 +12,6 @@ const cardScript: CardScript = {
             const targets = shuffle(inactivePlayerState(state).hand)[0]
             discardCards(state, [targets])
         }
-    },
+    }
 }
 cardScripts.scripts.set("mind-barb", cardScript)

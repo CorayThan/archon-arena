@@ -2,10 +2,11 @@ import { Box, Button, Divider, Drawer, ListItem, ListItemText, Popover, TextFiel
 import { autorun, observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
-import { AEvent } from "../game/AEvent"
+import { GameEvent } from "../game/GameEvent"
 import { EventValue } from "../genericcomponents/EventValue"
 import { theme } from "../index"
-import { gameHistoryStore } from "../stores/GameHistoryStore"
+import { authStore } from "../stores/AuthStore"
+import { gameChatStore } from "../stores/GameChatStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 
@@ -23,14 +24,20 @@ export class ChatDrawer extends React.Component {
     sendMessage = () => {
         const message = this.currentMessage.trim()
         if (message.length > 0) {
-            gameHistoryStore.addMessage({message, playerUsername: playerStore.player.displayName})
+            gameChatStore.addMessage({
+                message,
+                playerUsername: playerStore.player.displayName,
+                playerId: authStore.authUserId!,
+                timestamp: new Date().getTime(),
+                order: 0
+            })
             this.currentMessage = ""
         }
     }
 
     componentDidMount(): void {
         autorun(() => {
-            gameHistoryStore.messages.length
+            gameChatStore.messages.length
             window.setTimeout(() => {
                 const current = this.chatBottomRef.current
                 if (current) {
@@ -41,7 +48,7 @@ export class ChatDrawer extends React.Component {
 
 
         autorun(() => {
-            gameHistoryStore.actions.length
+            gameStateStore.actions.length
             window.setTimeout(() => {
                 const current = this.actionsBottomRef.current
                 if (current) {
@@ -80,7 +87,7 @@ export class ChatDrawer extends React.Component {
                     </ListItemText>
                 </ListItem>
                 <Box height={"34%"} style={{overflowY: "auto"}}>
-                    {gameHistoryStore.actions.map((action, idx) => (
+                    {gameStateStore.actions.map((action, idx) => (
                         <ListItem key={idx}>
                             <ListItemText>
                                 {action.message}
@@ -97,7 +104,7 @@ export class ChatDrawer extends React.Component {
                         </ListItemText>
                     </ListItem>
                     <div style={{overflowY: "auto"}}>
-                        {gameHistoryStore.messages.map((message, idx) => (
+                        {gameChatStore.messages.map((message, idx) => (
                             <ListItem key={idx}>
                                 <ListItemText>
                                     <b>{message.playerUsername}</b>: {message.message}
@@ -137,9 +144,9 @@ export class ChatDrawer extends React.Component {
                                 const gameState = gameStateStore.activeGameState!
                                 const activePlayer = gameState.activePlayer!
                                 const newActivePlayer = activePlayer.id === gameState.playerTwoState.player.id ? gameState.playerOneState.player : gameState.playerTwoState.player
-                                gameHistoryStore.addAction({
+                                gameStateStore.addAction({
                                     message: `Next Turn, active player ${newActivePlayer.name}`,
-                                    type: AEvent.EndTurn,
+                                    type: GameEvent.EndTurn,
                                     player: activePlayer
                                 })
                                 gameStateStore.mergeGameState({activePlayer: newActivePlayer})
