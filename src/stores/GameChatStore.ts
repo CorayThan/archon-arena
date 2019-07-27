@@ -25,7 +25,7 @@ export class GameChatStore {
         }
         message.order = this.messages.length
         messages.push(message)
-        await this.mergeGameChat({[message.playerId!]: messages})
+        await this.mergeGameChat({ [message.playerId!]: messages })
     }
 
     createGameChat = async () => {
@@ -74,7 +74,7 @@ export class GameChatStore {
 
     private mergeGameChat = async (gameChat: Partial<GameChat>) => {
         this.updatingGameChat = true
-        await gameChatCollection().doc(playerStore.currentMatchId).set(gameChat, {merge: true})
+        await gameChatCollection().doc(playerStore.currentMatchId).set(gameChat, { merge: true })
         this.updatingGameChat = false
     }
 }

@@ -1,10 +1,11 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { GameState } from "../../../shared/gamestate/GameState"
 import { friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 6,
-    staticEffect: (state, config) => {
+    staticEffect: (state: GameState, config: CardActionConfig) => {
         const friendlies = friendlyCreatures(state)
         friendlies
             .filter(friendly => friendly.id !== config!.thisCard!.id && friendly.traits.includes("beast"))

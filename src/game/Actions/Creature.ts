@@ -5,6 +5,7 @@ import { GameState } from "../../shared/gamestate/GameState"
 import { GameEvent } from "../GameEvent"
 import { getCardInHandById, getCardOwner, getCreatureById, getPlayerById, removeCardFromHand, removeCreature } from "../StateUtils"
 import { cardScripts } from "../../card-scripts/CardScripts"
+import { CardActionConfig } from "../../card-scripts/types/CardScript"
 
 export default {
     [GameEvent.PlayCreature]: (action: Action, state: GameState) => {
@@ -16,10 +17,10 @@ export default {
         const cardScript = cardScripts.scripts.get(card!.backingCard.cardTitle.replace(/ /g, "-").toLowerCase())
         if (cardScript) {
             if (cardScript.amber) {
-                owner.amber += cardScript.amber(state, { thisCard: card })
+                owner.amber += cardScript.amber(state, { thisCard: card } as CardActionConfig)
             }
             if (cardScript.onPlay && cardScript.onPlay.perform) {
-                cardScript.onPlay.perform(state, { thisCard: card })
+                cardScript.onPlay.perform(state, { thisCard: card } as CardActionConfig)
             }
         }
 

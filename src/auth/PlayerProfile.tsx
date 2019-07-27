@@ -156,7 +156,7 @@ export class PlayerProfile extends React.Component {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {playerStore.player.decks.map(deck => (
+                                        {playerStore.player.decks && playerStore.player.decks.map(deck => (
                                             <TableRow key={deck.id}>
                                                 <TableCell>
                                                     <Link href={"https://decksofkeyforge.com/decks/" + deck.id}>{deck.name}</Link>

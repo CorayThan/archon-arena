@@ -20,8 +20,9 @@ import {
 } from "../StateUtils"
 import ArtifactActions from "./Artifact"
 import CreatureActions from "./Creature"
-import {cardScripts} from "../../card-scripts/CardScripts"
-//import {number} from "prop-types"
+
+import { cardScripts } from "../../card-scripts/CardScripts"
+import { CardActionConfig } from "../../card-scripts/types/CardScript"
 
 export const exec = (action: Action, state: GameState) => {
 
@@ -32,10 +33,10 @@ export const exec = (action: Action, state: GameState) => {
             const cardScript = cardScripts.scripts.get(card!.backingCard.cardTitle.replace(/ /g, "-").toLowerCase())
             if (cardScript) {
                 if (cardScript.amber) {
-                    owner.amber += cardScript.amber(state, { thisCard: card! })
+                    owner.amber += cardScript.amber(state, { thisCard: card! } as CardActionConfig)
                 }
                 if (cardScript.onPlay && cardScript.onPlay.perform) {
-                    cardScript.onPlay.perform(state, { thisCard: card! })
+                    cardScript.onPlay.perform(state, { thisCard: card! } as CardActionConfig)
                 }
             }
             removeCardFromHand(owner, action.cardId)

@@ -1,9 +1,9 @@
 import Action from "../Action"
-import { StatusEffect } from "../GameStatusEffect"
-import { PlayerInfo } from "../Player"
-import { Artifact } from "./Artifact"
-import { CardInGame } from "./CardInGame"
-import { Creature } from "./Creature"
+import {StatusEffect} from "../GameStatusEffect"
+import {PlayerInfo} from "../Player"
+import {Artifact} from "./Artifact"
+import {CardInGame} from "./CardInGame"
+import {Creature} from "./Creature"
 
 // TODO store started at date
 export interface GameState {

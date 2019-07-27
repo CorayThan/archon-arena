@@ -69,7 +69,7 @@ export class GameStateStore {
     addAction = async (action: Action) => {
         const actions = this.activeGameState!.actions == null ? [] : this.activeGameState!.actions.slice()
         actions.push(action)
-        await this.mergeGameState({actions})
+        await this.mergeGameState({ actions })
     }
 
     @computed
