@@ -2,17 +2,16 @@ import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { allCreatures, dealDamage } from "../../ScriptUtils"
+import { allCreatures, dealDamageWithSplash } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    amber: () => 1,
     onPlay: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 3)
+            dealDamageWithSplash(state, config.targets![0] as Creature, 4, 2)
         }
     }
 }
 
-cardScripts.scripts.set("punch", cardScript)
+cardScripts.scripts.set("lava-ball", cardScript)
