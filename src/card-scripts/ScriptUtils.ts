@@ -73,8 +73,7 @@ export const enemyPlayer = (state: GameState, card: CardInGame): PlayerState => 
         || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
     )
         return state.playerTwoState
-    else
-        return playerOneState
+    else return playerOneState
 }
 
 export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {

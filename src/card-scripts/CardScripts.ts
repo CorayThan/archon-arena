@@ -1,7 +1,6 @@
 import { CardScript } from "./types/CardScript"
 
 export class CardScripts {
-
     scripts: Map<string, CardScript> = new Map()
 }
 
