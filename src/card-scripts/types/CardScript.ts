@@ -12,9 +12,31 @@ export interface CardScript {
     onPlay?: IndividualScript
 
     /**
+     * Softlanding, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    nextCardPlayed?: IndividualScript
+
+    /**
+     * witches, Tunk, etc.
+     */
+    //TODO card that triggers => config.triggerCard
+    cardPlayed?: IndividualScript
+
+    /**
      * Firespitter, etc.
      */
     beforeFight?: IndividualScript
+
+    /**
+     * Interdimensional Graft etc
+     */
+    onNextKeyForge?: IndividualScript
+
+    /**
+     * Forgemaster Og
+     */
+    onKeyForge?: IndividualScript
 
     /**
      * Dodger, Headhunter, etc.
@@ -30,6 +52,30 @@ export interface CardScript {
     action?: IndividualScript
     destroyed?: IndividualScript
     leavesPlay?: IndividualScript
+
+    /**
+     * Reap Haters
+     */
+    //TODO make the card that does this config.triggerCard
+    onAnyReap?: IndividualScript
+
+    /**
+     * Tentacus
+     */
+    //TODO make the card that does this config.triggerCard as CardInGame
+    onAnyAction?: IndividualScript
+
+    /**
+     * when a card gets discarded, Annihilation Ritual
+     */
+    //TODO make the card that does this config.triggerCard
+    onDiscard?: IndividualScript
+
+    /**
+     * when a creature gets destroyed, SoulSnatcher
+     */
+    //TODO make the card that does this config.triggerCard
+    onCreatureDestroyed?: IndividualScript
 
     /**
      * For Niffle Ape, Groggins
@@ -73,6 +119,11 @@ export interface CardScript {
     canAlwaysUse?: IsActive
 
     /**
+     * Xanthyx Havester
+     */
+    canBeUsed?: IsActive
+
+    /**
      * Cards like Cybergiant Rig
      */
     atEndOfYourTurn?: IndividualScript
@@ -96,8 +147,17 @@ export interface CardScript {
 
 interface IndividualScript {
     perform: CardScriptExecution
-    validTargets?: (state: GameState) => CardInGame[]
-    choosenTargetsAreValid?: (targets: CardInGame[]) => boolean
+    numberOfTargets?: (state: GameState, config: CardActionConfig) => number
+    uniqueTargets?: () => boolean
+    upToTargets?: () => boolean
+    validTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    validSecondaryTargets?: (state: GameState, config: CardActionConfig) => CardInGame[]
+    numberOfSecondaryTargets?: (state: GameState) => number
+    upToSecondaryTargets?: () => boolean
+    //TODO selectFromChoices () => config.selection
+    selectFromChoices?: (state: GameState, config: CardActionConfig) => string[] | number[]
+    chosenTargetsAreValid?: (targets: CardInGame[], state: GameState) => boolean
+    timesToExecute?: (state: GameState, config: CardActionConfig) => number
 }
 
 /**
@@ -105,20 +165,24 @@ interface IndividualScript {
  * twice, with the new GameState being resolved in between each execution.
  */
 type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
-type IsActive = (state: GameState) => boolean
-type CurrentQuantity = (state: GameState) => number
+type IsActive = (state: GameState, config: CardActionConfig) => boolean
+type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
-interface CardActionConfig {
-    targets?: AnyCardInGame[]
+export interface CardActionConfig {
+    targets: AnyCardInGame[]
+    secondaryTargets: AnyCardInGame[]
+    thisCard: CardInGame
+    selection: string | number
+    triggerCard: CardInGame
 
     /**
      * Cards like Dance of Doom, Vigor
      */
     quantity?: number
-    thisCard?: CardInGame
 
     /**
      * Used by cards like Relentless Assault which can be executed 3 times.
      */
+    //TODO I'm using this like a increment in a loop, not sure if thats right (Sky)
     timesExecuted: number
 }
