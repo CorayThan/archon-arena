@@ -313,6 +313,10 @@ export const revealCards = (state: GameState, cards: CardInGame[]) => {
     //TODO
 }
 
+export const playCards = (state: GameState, cards: CardInGame[]) => {
+    //TODO
+}
+
 export const readyCreature = (creature: Creature) => {
     creature.ready = true
 }
@@ -406,8 +410,12 @@ export const giveTaunt = (creatures: Creature[]) => {
 export const takeTaunt = (creatures: Creature[]) => {
     creatures.forEach(creature => creature.taunt = false)
 }
+
 export const giveElusive = (creatures: Creature[]) => {
     creatures.forEach(creature => creature.elusive = true)
+}
+export const giveDoom = (creatures: Creature[]) => {
+    creatures.forEach(creature => creature.tokens.doom += 1)
 }
 
 export const takeElusive = (creatures: Creature[]) => {
