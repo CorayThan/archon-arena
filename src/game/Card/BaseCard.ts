@@ -63,11 +63,11 @@ class Card extends Phaser.GameObjects.Container {
 
     constructor({
         scene,
-        cardImage,
+                    cardImage,
         x,
         y,
-        width=SMALL_CARD_WIDTH,
-        height=SMALL_CARD_HEIGHT,
+                    width = SMALL_CARD_WIDTH,
+                    height = SMALL_CARD_HEIGHT,
         id,
         front,
         back,
@@ -76,7 +76,7 @@ class Card extends Phaser.GameObjects.Container {
         draggable = false,
         cardsUnderneath = [],
         upgrades = [],
-        backingCard,
+                    backingCard,
         onClick,
         onMouseOver,
         onMouseOut,
@@ -84,7 +84,7 @@ class Card extends Phaser.GameObjects.Container {
         onDragStart = () => {},
         onMouseOverUpgrade = () => {},
         onMouseOutUpgrade = () => {},
-    }: CardInput) {
+                }: CardInput) {
         super(scene)
         this.scene = scene
         this.ignoreNextPointerUp = false
@@ -123,7 +123,7 @@ class Card extends Phaser.GameObjects.Container {
             cardImage.interactiveZone.setInteractive({ cursor: "pointer" })
             this.scene.input.setDraggable(cardImage.interactiveZone)
             cardImage.interactiveZone.addListener("pointerover", (e: MouseEvent) => {
-                onMouseOverUpgrade(e, { data: { get: () => card.backingCard.cardTitle }})
+                onMouseOverUpgrade(e, { data: { get: () => card.backingCard.cardTitle } })
             })
             cardImage.interactiveZone.addListener("pointerout", () => {
                 onMouseOutUpgrade()
@@ -346,7 +346,7 @@ class Card extends Phaser.GameObjects.Container {
                 this.add(token)
 
                 if (tokenType !== "stun" && tokenType !== "doom") {
-                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], ""+tokenData[tokenType], {
+                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], "" + tokenData[tokenType], {
                         color: "#fff",
                         stroke: "#000",
                         strokeThickness: 4,

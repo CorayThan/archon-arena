@@ -1,25 +1,17 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { GameState, PlayerState } from "../../../shared/gamestate/GameState"
-import { inactivePlayerState } from "../../ScriptUtils"
-import { removeCardFromHand } from "../../../game/StateUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { discardCards, inactivePlayerState } from "../../ScriptUtils"
+import { shuffle } from "lodash"
 
 const cardScript: CardScript = {
+    // Play: Your opponent discards a random card from their hand.
     amber: () => 1,
     onPlay: {
-        perform: (state) => {
-            const opponentState = inactivePlayerState(state) as PlayerState
-            
-            if (!opponentState.hand.length) {
-                return
-            }
-
-            const randomCardNum = Math.floor(Math.random() * opponentState.hand.length)
-            const randomCard = opponentState.hand[randomCardNum]
-            removeCardFromHand(opponentState, opponentState.hand[randomCardNum].id)
-            opponentState.discard.push(randomCard)
+        perform: (state: GameState) => {
+            const targets = shuffle(inactivePlayerState(state).hand)[0]
+            discardCards(state, [targets])
         }
-    }
+    },
 }
-
 cardScripts.scripts.set("mind-barb", cardScript)

@@ -1,6 +1,6 @@
-import {CardScript} from "../../types/CardScript"
-import {cardScripts} from "../../CardScripts"
-import {enemyCreatures, friendlyCreatures} from "../../ScriptUtils"
+import { CardScript } from "../../types/CardScript"
+import { cardScripts } from "../../CardScripts"
+import { enemyCreatures, friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: (state) => {

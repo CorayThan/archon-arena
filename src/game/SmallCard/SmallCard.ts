@@ -31,7 +31,7 @@ class SmallCard extends BaseCard {
             }
             power = Math.max(0, power)
 
-            const powerText = new Phaser.GameObjects.Text(this.scene, powerX, powerY, ''+power, {
+            const powerText = new Phaser.GameObjects.Text(this.scene, powerX, powerY, '' + power, {
                 color: "#fff",
                 stroke: "#000",
                 strokeThickness: 4,
@@ -42,7 +42,7 @@ class SmallCard extends BaseCard {
 
             const armorX = SMALL_CARD_WIDTH / 2 - 10
             const armorY = SMALL_CARD_HEIGHT / 2 - 5
-            const armor = new Phaser.GameObjects.Image(this.scene, armorX, armorY,  "armor-token")
+            const armor = new Phaser.GameObjects.Image(this.scene, armorX, armorY, "armor-token")
             armor.setOrigin(0.5)
             armor.setDisplaySize(30, 30)
             this.add(armor)
@@ -113,7 +113,7 @@ class SmallCard extends BaseCard {
                 this.add(token)
 
                 if (tokenType !== "stun" && tokenType !== "doom") {
-                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], ''+this.tokens[tokenType], {
+                    const text = new Phaser.GameObjects.Text(this.scene, position[0], position[1], '' + this.tokens[tokenType], {
                         color: "#fff",
                         stroke: "#000",
                         strokeThickness: 4,

@@ -42,7 +42,7 @@ class Game extends React.Component<Props> {
 
     state: {
         width: number,
-        height :number,
+        height: number,
     }
     game: Phaser.Game | undefined
     // Store a state object stripped of proxies defined by mobx
@@ -83,7 +83,7 @@ class Game extends React.Component<Props> {
             height
         } = this.state
         return (
-            <div id="phaser" style={{ width, height}} />
+            <div id="phaser" style={{ width, height }}/>
         )
     }
 

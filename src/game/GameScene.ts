@@ -593,8 +593,10 @@ class GameScene extends Phaser.Scene {
         handDropZone.setDataEnabled()
         // @ts-ignore
         handDropZone.data.set({
-            onEnter: () => {},
-            onLeave: () => {},
+            onEnter: () => {
+            },
+            onLeave: () => {
+            },
             onDrop: (card: Card) => {
                 const cardType = getCardType(this.state, card.id)
                 if (cardType === CardType.ARTIFACT) {
