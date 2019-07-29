@@ -21,9 +21,10 @@ const cardScript: CardScript = {
         perform: (state: GameState, config0: CardActionConfig) => {
             putInArchives(state, config0.targets, true)
             return {
-                selectFromChoices: () => ["Purge From Opponent Archive", "Purge From My Archive"],
+                selectFromChoices: () => ["Purge From Opponent Archive", "Purge From My Archive", "No Purge"],
                 perform: (state: GameState, config1: CardActionConfig) => {
                     //TODO hide opponents archive cards when choosing
+                    if (config1.selection === "No Purge") return
                     const archive = config1.selection === "Purge From My Archive" ? activePlayerState(state).archives : inactivePlayerState(state).archives
                     return {
                         validTargets: () => archive,

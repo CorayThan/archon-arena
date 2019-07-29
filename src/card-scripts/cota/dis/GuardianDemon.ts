@@ -8,13 +8,18 @@ const effect = {
     validTargets: allCreatures,
     numberOfTargets: () => 1,
     perform: (state: GameState, config0: CardActionConfig) => {
-        const damageHealed = Math.max((config0.targets[0] as Creature).tokens.damage, 2)
-        healCreatures(config0.targets as Creature[], 2)
+        const targetDamage = (config0.targets[0] as Creature).tokens.damage
         return {
-            validTargets: allCreatures,
-            numberOfTargets: () => 1,
+            selectFromChoices: () => targetDamage >= 2 ? [0, 1, 2] : Array.from(Array(targetDamage + 1).keys()),
             perform: (state: GameState, config1: CardActionConfig) => {
-                dealDamage(config1.targets as Creature[], damageHealed)
+                healCreatures(config0.targets as Creature[], +config1.selection)
+                return {
+                    validTargets: allCreatures,
+                    numberOfTargets: () => 1,
+                    perform: (state: GameState, config2: CardActionConfig) => {
+                        dealDamage(config2.targets as Creature[], +config1.selection)
+                    }
+                }
             }
         }
     }

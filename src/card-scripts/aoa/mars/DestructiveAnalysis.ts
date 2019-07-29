@@ -17,8 +17,8 @@ const cardScript: CardScript = {
                 validTargets: (state: GameState) => activePlayerState(state).archives,
                 upToTargets: () => true,
                 perform: (state: GameState, config1: CardActionConfig) => {
-                    purgeCards(state, config1.targets)
-                    dealDamage(config0.targets as Creature[], 2 + 2 * config1.targets.length)
+                    const purgedCards = purgeCards(state, config1.targets)
+                    dealDamage(config0.targets as Creature[], 2 + 2 * purgedCards.length)
                 }
             }
         }

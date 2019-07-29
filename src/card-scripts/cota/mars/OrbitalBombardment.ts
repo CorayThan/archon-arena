@@ -11,6 +11,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: (state: GameState) => activePlayerState(state).hand.filter(x => x.backingCard.house === House.Mars),
+        numberOfTargets: (state: GameState) => activePlayerState(state).hand.filter(x => x.backingCard.house === House.Mars).length,
         upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {
             revealCards(state, config.targets)

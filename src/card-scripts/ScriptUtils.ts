@@ -141,12 +141,18 @@ export const putInArchives = (state: GameState, cards: CardInGame[], friendly: b
     })
 }
 
-export const purgeCards = (state: GameState, cards: CardInGame[]) => {
-    cards.forEach(card => {
+export const purgeCards = (state: GameState, cards: CardInGame[]): CardInGame[] => {
+    const purgedCards = cards.map(card => {
+        const toHand = enemyPlayer(state, card).archives.some(x => x.id === card.id)
         const toAdd = removeAndReturn(state, card)
-        const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
-        myState.purged.push(toAdd)
+        const ownerState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
+        if (toHand) ownerState.hand.push(toAdd)
+        else {
+            ownerState.purged.push(toAdd)
+            return card
+        }
     })
+    return purgedCards.filter(Boolean) as CardInGame[]
 }
 
 export const discardCards = (state: GameState, cards: CardInGame[]) => {
