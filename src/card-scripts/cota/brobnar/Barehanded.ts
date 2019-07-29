@@ -10,12 +10,8 @@ const cardScript: CardScript = {
         numberOfTargets: (state) => {
             return allArtifacts(state).length
         },
-        uniqueTargets: () => true,
-        chosenTargetsAreValid: (targets, state) => {
-            return targets.length === allArtifacts(state).length
-        },
         perform: (state: GameState, config: CardActionConfig) => {
-            putOnTopOfDeck(state, config.targets!)
+            putOnTopOfDeck(state, config.targets)
         },
     }
 }

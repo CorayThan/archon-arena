@@ -1,13 +1,16 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
+import {dealDamage} from "../../ScriptUtils";
+import {Creature} from "../../../shared/gamestate/Creature";
 
 const cardScript: CardScript = {
-    runAfterAnyActionThisTurn: {
+    power: () => 7,
+    onCreatureEntersPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
-            //TODO if action === fight
+            dealDamage(config.targets as Creature[], 1)
         }
     }
 }
 
-cardScripts.scripts.set("into-the-fray", cardScript)
+cardScripts.scripts.set("bellowing-patriazate", cardScript)

@@ -1,14 +1,13 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
+import {dealDamage} from "../../ScriptUtils";
+import {Creature} from "../../../shared/gamestate/Creature";
 
 const cardScript: CardScript = {
-    runAfterAnyAction: {
+    onCreatureEntersPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
-            //if action = creature enters board
-            //deal 1 to creature
-            //need to be able to sequence properly with Play abilities...
-            //TODO
+            dealDamage(config.targets as Creature[], 1)
         }
     }
 }

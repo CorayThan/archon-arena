@@ -9,8 +9,7 @@ const cardScript: CardScript = {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            const target = config.targets![0] as Creature
-            placeAmber(target, 2)
+            placeAmber(config.targets[0] as Creature, 2)
         }
     }
 }

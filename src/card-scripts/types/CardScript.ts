@@ -36,7 +36,7 @@ export interface CardScript {
     /**
      * Forgemaster Og
      */
-    onKeyForge?: IndividualScript
+    onForgingKey?: IndividualScript
 
     /**
      * Dodger, Headhunter, etc.
@@ -46,7 +46,8 @@ export interface CardScript {
     /**
      * Greking, Brain Eater, Krump, etc. Check in action log if destroyed.
      */
-    onAnyFight?: IndividualScript
+    onDestroyedEnemyInFight?: IndividualScript
+
     omni?: IndividualScript
     reap?: IndividualScript
     action?: IndividualScript
@@ -76,6 +77,11 @@ export interface CardScript {
      */
     //TODO make the card that does this config.triggerCard
     onCreatureDestroyed?: IndividualScript
+
+    /**
+     * When a creature enters the board
+     */
+    onCreatureEntersPlay?: IndividualScript
 
     /**
      * For Niffle Ape, Groggins
@@ -145,7 +151,7 @@ export interface CardScript {
     runAtStartOfNextTurn?: IndividualScript
 }
 
-interface IndividualScript {
+export interface IndividualScript {
     perform: CardScriptExecution
     numberOfTargets?: (state: GameState, config: CardActionConfig) => number
     uniqueTargets?: () => boolean

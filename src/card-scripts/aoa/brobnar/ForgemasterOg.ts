@@ -1,16 +1,14 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { inactivePlayerState } from "../../ScriptUtils"
+import { activePlayerState } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    power: () => 5,
-    fight: {
+    onForgingKey: {
         perform: (state: GameState) => {
-            if (inactivePlayerState(state).amber > 0)
-                inactivePlayerState(state).amber--
+            activePlayerState(state).amber = 0
         }
     }
 }
 
-cardScripts.scripts.set("groke", cardScript)
+cardScripts.scripts.set("forgemaster-og", cardScript)

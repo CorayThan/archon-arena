@@ -3,6 +3,7 @@ import { CardInGame } from "../shared/gamestate/CardInGame"
 import { Creature } from "../shared/gamestate/Creature"
 import { Artifact } from "../shared/gamestate/Artifact"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
+import {IndividualScript} from "./types/CardScript";
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -458,4 +459,12 @@ export const forgeKey = (playerState: PlayerState) => {
         playerState.keys += 1
         playerState.amber = playerState.amber - playerState.keyCost
     }
+}
+
+export const addFightAbility = (creature: Creature, fightAbility: IndividualScript) => {
+    //TODO
+}
+
+export const addReapAbility = (creature: Creature, reapAbility: IndividualScript) => {
+    //TODO
 }

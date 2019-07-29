@@ -11,8 +11,9 @@ const cardScript: CardScript = {
             return getNeighbors(friendlyCreatures(state), config.thisCard as Creature)
         },
         numberOfTargets: () => 1,
+        upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {
-            const targetedCreature = config.targets![0] as Creature
+            const targetedCreature = config.targets[0] as Creature
             readyCreature(targetedCreature)
             fightUsingCreature(targetedCreature)
         }

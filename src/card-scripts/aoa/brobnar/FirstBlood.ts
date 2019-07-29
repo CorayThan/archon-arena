@@ -15,8 +15,9 @@ const cardScript: CardScript = {
                 .filter(creature => creature.backingCard.house === House.Brobnar)
                 .length
         },
+        uniqueTargets: () => false,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 2)
+            dealDamage(config.targets as Creature[], 2)
         }
     }
 }

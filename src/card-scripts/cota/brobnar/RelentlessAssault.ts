@@ -10,17 +10,17 @@ const cardScript: CardScript = {
         numberOfTargets: () => 3,
         uniqueTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {
-            if (config.targets!.length >= 1) {
-                readyCreature(config.targets![0] as Creature)
-                fightUsingCreature(config.targets![0] as Creature)
+            if (config.targets.length >= 1) {
+                readyCreature(config.targets[0] as Creature)
+                fightUsingCreature(config.targets[0] as Creature)
             }
-            if (config.targets!.length >= 2) {
-                readyCreature(config.targets![1] as Creature)
-                fightUsingCreature(config.targets![1] as Creature)
+            if (config.targets.length >= 2) {
+                readyCreature(config.targets[1] as Creature)
+                fightUsingCreature(config.targets[1] as Creature)
             }
-            if (config.targets!.length >= 3) {
-                readyCreature(config.targets![2] as Creature)
-                fightUsingCreature(config.targets![2] as Creature)
+            if (config.targets.length >= 3) {
+                readyCreature(config.targets[2] as Creature)
+                fightUsingCreature(config.targets[2] as Creature)
             }
         }
     }

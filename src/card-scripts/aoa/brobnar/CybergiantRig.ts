@@ -6,7 +6,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 const cardScript: CardScript = {
     onPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
-            const target = config.targets![0] as Creature
+            const target = config.targets[0] as Creature
             target.tokens.power += target.tokens.damage
             target.tokens.damage = 0
         }
