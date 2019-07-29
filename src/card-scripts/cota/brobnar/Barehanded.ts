@@ -7,7 +7,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: allArtifacts,
-        numberOfTargets: (state) => {
+        numberOfTargets: (state: GameState) => {
             return allArtifacts(state).length
         },
         uniqueTargets: () => true,

@@ -347,6 +347,7 @@ export const healCreature = (creature: Creature, amount: number): number => {
     return actualChange
 }
 
+//TODO return healed numbers for Guardian Demon
 export const healCreatures = (creatures: Creature[], amount: number) => {
     creatures.forEach(creature => {
         const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage

@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: friendlyCreatures,
-        numberOfTargets: (state) => friendlyCreatures(state).reduce((a, b) => a + (b as Creature).tokens.amber, 0),
+        numberOfTargets: (state: GameState) => friendlyCreatures(state).reduce((a, b) => a + (b as Creature).tokens.amber, 0),
         uniqueTargets: () => false,
         perform: (state: GameState, config: CardActionConfig) => {
             friendlyCreatures(state).forEach(x => (x as Creature).tokens.amber = 0)
@@ -21,7 +21,7 @@ const cardScript: CardScript = {
     //TODO Not sure this works, but it would be wicked sweet if it did
     // onPlay: {
     //     validTargets: enemyCreatures,
-    //     numberOfTargets: (state) => enemyCreatures(state).reduce((a, b) => a + (b as Creature).tokens.amber, 0),
+    //     numberOfTargets: (state: GameState) => enemyCreatures(state).reduce((a, b) => a + (b as Creature).tokens.amber, 0),
     //     uniqueTargets: () => false,
     //     perform: (state: GameState, config: CardActionConfig) => {
     //         enemyCreatures(state).forEach(x => (x as Creature).amber = 0)

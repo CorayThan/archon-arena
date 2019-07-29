@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // Play: For each friendly Mars creature, choose an enemy creature to capture 1<A> from their own side.
     onPlay: {
         validTargets: enemyCreatures,
-        numberOfTargets: (state) => friendlyCreatures(state)
+        numberOfTargets: (state: GameState) => friendlyCreatures(state)
             .filter(x => (x as Creature).backingCard.house === House.Mars).length,
         perform: (state: GameState, config: CardActionConfig) => {
             (config.targets as Creature[]).forEach(x => {

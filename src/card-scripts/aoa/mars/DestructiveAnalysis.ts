@@ -9,14 +9,18 @@ const cardScript: CardScript = {
     // You may purge any number of cards from your archives to deal an additional 2D to the same creature for each card purged this way.
     amber: () => 1,
     onPlay: {
-        validTargets: (state: GameState) => activePlayerState(state).archives,
+        validTargets: allCreatures,
         upToTargets: () => true,
-        numberOfTargets: (state) => activePlayerState(state).archives.length,
-        validSecondaryTargets: allCreatures,
-        numberOfSecondaryTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            purgeCards(state, config.targets)
-            dealDamage(config.secondaryTargets as Creature[], 2 + 2 * config.targets.length)
+        numberOfTargets: () => 1,
+        perform: (state: GameState, config0: CardActionConfig) => {
+            return {
+                validTargets: (state: GameState) => activePlayerState(state).archives,
+                upToTargets: () => true,
+                perform: (state: GameState, config1: CardActionConfig) => {
+                    purgeCards(state, config1.targets)
+                    dealDamage(config0.targets as Creature[], 2 + 2 * config1.targets.length)
+                }
+            }
         }
     }
 }

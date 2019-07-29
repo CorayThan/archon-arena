@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     // Action: Stun an enemy creature for each friendly Shard.
     action: {
         validTargets: allCreatures,
-        numberOfTargets: (state) => getCardsWithTrait(friendlyArtifacts(state), 'Shard').length,
+        numberOfTargets: (state: GameState) => getCardsWithTrait(friendlyArtifacts(state), 'Shard').length,
         perform: (state: GameState, config: CardActionConfig) => {
             stunCreatures(config.targets as Creature[])
         }

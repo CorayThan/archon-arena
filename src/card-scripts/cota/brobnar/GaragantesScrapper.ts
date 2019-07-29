@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 3,
     onPlay: {
         validTargets: enemyCreatures,
-        numberOfTargets: (state) => {
+        numberOfTargets: (state: GameState) => {
             return activePlayerState(state).amber < 3 ? 0 : 1
         },
         perform: (state: GameState, config: CardActionConfig) => {

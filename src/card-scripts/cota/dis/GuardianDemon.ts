@@ -4,44 +4,27 @@ import { GameState } from "../../../shared/gamestate/GameState"
 import { allCreatures, dealDamage, healCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
+const effect = {
+    validTargets: allCreatures,
+    numberOfTargets: () => 1,
+    perform: (state: GameState, config0: CardActionConfig) => {
+        const damageHealed = Math.max((config0.targets[0] as Creature).tokens.damage, 2)
+        healCreatures(config0.targets as Creature[], 2)
+        return {
+            validTargets: allCreatures,
+            numberOfTargets: () => 1,
+            perform: (state: GameState, config1: CardActionConfig) => {
+                dealDamage(config1.targets as Creature[], damageHealed)
+            }
+        }
+    }
+}
+
 const cardScript: CardScript = {
     // Play/Fight/Reap: Heal up to 2 damage from a creature. Deal that amount of damage to another creature.
     power: () => 4,
-    onPlay: {
-        validTargets: allCreatures,
-        numberOfTargets: () => 1,
-        validSecondaryTargets: allCreatures,
-        numberOfSecondaryTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            if ((config.targets[0] as Creature).tokens.damage >= 2) {
-                dealDamage(config.secondaryTargets as Creature[], Math.min((config.targets[0] as Creature).tokens.damage, 2))
-            }
-            healCreatures(config.targets as Creature[], 2)
-        }
-    },
-    reap: {
-        validTargets: allCreatures,
-        numberOfTargets: () => 1,
-        validSecondaryTargets: allCreatures,
-        numberOfSecondaryTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            if ((config.targets[0] as Creature).tokens.damage >= 2) {
-                dealDamage(config.secondaryTargets as Creature[], Math.min((config.targets[0] as Creature).tokens.damage, 2))
-            }
-            healCreatures(config.targets as Creature[], 2)
-        }
-    },
-    fight: {
-        validTargets: allCreatures,
-        numberOfTargets: () => 1,
-        validSecondaryTargets: allCreatures,
-        numberOfSecondaryTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            if ((config.targets[0] as Creature).tokens.damage >= 2) {
-                dealDamage(config.secondaryTargets as Creature[], Math.min((config.targets[0] as Creature).tokens.damage, 2))
-            }
-            healCreatures(config.targets as Creature[], 2)
-        }
-    }
+    onPlay: effect,
+    reap: effect,
+    fight: effect
 }
 cardScripts.scripts.set("guardian-demon", cardScript)

@@ -17,7 +17,7 @@ const cardScript: CardScript = {
                 return (x.backingCard.house !== House.Mars && totalPower(x) < totalPower(highestPowerCreature))
             })
         },
-        timesToExecute: (state) => friendlyCreatures(state).filter(x => x.backingCard.house === House.Mars).length,
+        timesToExecute: (state: GameState) => friendlyCreatures(state).filter(x => x.backingCard.house === House.Mars).length,
         perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets)
         }

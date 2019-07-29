@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     alpha: () => true,
     onPlay: {
         validTargets: allCreatures,
-        numberOfTargets: (state) => {
+        numberOfTargets: (state: GameState) => {
             return friendlyCreatures(state)
                 .filter(creature => creature.backingCard.house === House.Brobnar)
                 .length

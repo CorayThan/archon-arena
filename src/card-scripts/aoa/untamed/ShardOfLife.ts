@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     //
     action: {
         validTargets: (state: GameState) => activePlayerState(state).discard,
-        numberOfTargets: (state) => getCardsWithTrait(friendlyArtifacts(state), 'Shard').length,
+        numberOfTargets: (state: GameState) => getCardsWithTrait(friendlyArtifacts(state), 'Shard').length,
         perform: (state: GameState, config: CardActionConfig) => {
             putOnTopOfDeck(state, config.targets)
             shuffle(activePlayerState(state).library)

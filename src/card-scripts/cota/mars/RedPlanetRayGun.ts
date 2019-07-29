@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // This creature gains, “Reap: Choose a creature. Deal 1<D> to that creature for each Mars creature in play.”
     // TODO add script to card scripts
     amber: () => 1,
-    staticEffect: (state) => {
+    staticEffect: () => {
         //add reap to config.targets[0]
     },
     reap: {
