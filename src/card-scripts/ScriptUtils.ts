@@ -4,6 +4,7 @@ import { Creature } from "../shared/gamestate/Creature"
 import { Artifact } from "../shared/gamestate/Artifact"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import {IndividualScript} from "./types/CardScript";
+import {House} from "../shared/keyforge/house/House";
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -280,13 +281,12 @@ export const cardsPlayedThisTurn = (state: GameState): CardInGame[] => {
     return [] as CardInGame[]
 }
 
-export const amountOfShards = (state: GameState): number => {
-    return friendlyArtifacts(state)
-        .filter(artifact => (artifact as Artifact).backingCard.traits.includes("Shard")).length
+export const getCardsWithTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
+    return cards.filter(card => hasTrait(card, traid))
 }
 
-export const getCardsWithTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
-    return cards.filter(card => card.backingCard.traits.includes(trait))
+export const hasTrait = (card: CardInGame, trait: string): boolean => {
+    return card.backingCard.traits.includes(trait)
 }
 
 export const drawHand = (playerState: PlayerState) => {
@@ -345,6 +345,12 @@ export const fightUsingCreature = (creature: Creature) => {
 export const healCreature = (creature: Creature, amount: number): number => {
     const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage
     creature.tokens.damage = creature.tokens.damage - actualChange
+    return actualChange
+}
+
+export const fullyHealCreature = (creature: Creature): number => {
+    const actualChange = creature.tokens.damage
+    creature.tokens.damage = 0
     return actualChange
 }
 
@@ -467,4 +473,12 @@ export const addFightAbility = (creature: Creature, fightAbility: IndividualScri
 
 export const addReapAbility = (creature: Creature, reapAbility: IndividualScript) => {
     //TODO
+}
+
+export const putPowerCounters = (creatures: Creature[], amount) => {
+    creatures.forEach(creature => creature.tokens.power += amount)
+}
+
+export const belongsToHouse = (card: CardInGame, house: House) => {
+    return card.backingCard.house === house
 }
