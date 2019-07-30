@@ -7,7 +7,7 @@ import Action from "../shared/Action"
 import { GameState } from "../shared/gamestate/GameState"
 import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
-import { exec } from "./Actions/Actions"
+import { exec } from "./InputHandlers/Generic"
 import GameScene from "./GameScene"
 import "../card-scripts/imports"
 
@@ -60,17 +60,19 @@ class Game extends React.Component<Props> {
 
     dispatch = (action: Action) => {
         const state = this.gameState
-        if (!state)
-            throw new Error("Action dispatched before game state available")
 
-        const logObj = buildLogForAction(action, state)
+        const logObj = buildLogForAction(action, state!)
         log.info("Log is " + prettyJson(logObj))
         if (logObj != null) {
             this.props.logAction(logObj)
         }
 
-        exec(action, state)
-        this.updateGameState(state)
+        exec(action, state!)
+            .then(() => {
+                this.updateGameState(state!)
+                const scene = this.game!.scene.getScene("GameScene") as GameScene
+                scene.render()
+            })
     }
 
     updateGameState(state: GameState) {
@@ -110,6 +112,7 @@ class Game extends React.Component<Props> {
     update() {
         if (this.props.state) {
             this.gameState = mobx.toJS(this.props.state)
+            this.gameState.effects = this.gameState.effects || new Map()
             const state = this.gameState
             const {playerId} = this.props
 

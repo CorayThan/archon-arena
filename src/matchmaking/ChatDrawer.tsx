@@ -3,7 +3,7 @@ import { autorun, observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { theme } from "../config/Styles"
-import { GameEvent } from "../game/GameEvent"
+import { InputEvent } from "../game/InputEvent"
 import { EventValue } from "../genericcomponents/EventValue"
 import { authStore } from "../stores/AuthStore"
 import { gameChatStore } from "../stores/GameChatStore"
@@ -146,7 +146,7 @@ export class ChatDrawer extends React.Component {
                                 const newActivePlayer = activePlayer.id === gameState.playerTwoState.player.id ? gameState.playerOneState.player : gameState.playerTwoState.player
                                 gameStateStore.addAction({
                                     message: `Next Turn, active player ${newActivePlayer.name}`,
-                                    type: GameEvent.EndTurn,
+                                    type: InputEvent.EndTurn,
                                     player: activePlayer
                                 })
                                 gameStateStore.mergeGameState({activePlayer: newActivePlayer})

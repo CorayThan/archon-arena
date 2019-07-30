@@ -12,12 +12,12 @@ const effect = {
         return {
             selectFromChoices: () => targetDamage >= 2 ? [0, 1, 2] : Array.from(Array(targetDamage + 1).keys()),
             perform: (state: GameState, config1: CardActionConfig) => {
-                healCreatures(config0.targets as Creature[], +config1.selection)
+                healCreatures(config0.targets as Creature[], +config1.selection!)
                 return {
                     validTargets: allCreatures,
                     numberOfTargets: () => 1,
                     perform: (state: GameState, config2: CardActionConfig) => {
-                        dealDamage(config2.targets as Creature[], +config1.selection)
+                        dealDamage(config2.targets as Creature[], +config1.selection!)
                     }
                 }
             }

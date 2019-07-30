@@ -1,4 +1,4 @@
-export enum GameEvent {
+export enum InputEvent {
     PlayCreature = "PlayCreature",
     UseCreature = "UseCreature",
     DiscardCreature = "DiscardCreature",

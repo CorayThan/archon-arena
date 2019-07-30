@@ -2,11 +2,13 @@ import Action from "../../shared/Action"
 import { Artifact } from "../../shared/gamestate/Artifact"
 import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState } from "../../shared/gamestate/GameState"
-import { GameEvent } from "../GameEvent"
+import { InputEvent } from "../InputEvent"
 import { getArtifactById, getCardInHandById, getCardOwner, getPlayerById, removeArtifact, removeCardFromHand } from "../StateUtils"
+import { cardScripts } from "../../card-scripts/CardScripts"
+import ArtifactActionEvent from "../GameEvents/ArtifactActionEvent"
 
 export default {
-    [GameEvent.PlayArtifact]: (action: Action, state: GameState) => {
+    [InputEvent.PlayArtifact]: (action: Action, state: GameState) => {
         const owner = getCardOwner(action.cardId!, state)
         const card = getCardInHandById(owner, action.cardId!)
         if (!card)
@@ -31,14 +33,7 @@ export default {
         player.artifacts.push(artifact)
         removeCardFromHand(owner, action.cardId)
     },
-    [GameEvent.UseArtifact]: (action: Action, state: GameState) => {
-        const owner = getCardOwner(action.cardId!, state)
-        const artifact = getArtifactById(owner, action.cardId)
-        if (!artifact)
-            throw new Error(`Card ${action.cardId} not found in hand`)
-        artifact.ready = !artifact.ready
-    },
-    [GameEvent.MoveArtifactToHand]: (action: Action, state: GameState) => {
+    [InputEvent.MoveArtifactToHand]: (action: Action, state: GameState) => {
         const owner = getCardOwner(action.cardId!, state)
         const artifact = getArtifactById(owner, action.cardId)
         if (!artifact)
@@ -52,5 +47,21 @@ export default {
         }
         owner.hand.push(card)
         removeArtifact(owner, action.cardId!)
+    },
+    [InputEvent.UseArtifact]: async (action: Action, state: GameState) => {
+        const owner = getCardOwner(action.cardId!, state)
+        const artifact = getArtifactById(owner, action.cardId)
+        if (!artifact!.ready) {
+            artifact!.ready = true
+            return
+        }
+
+        const cardScript = cardScripts.scripts.get(artifact!.backingCard.cardTitle.replace(/ /g, "-").toLowerCase())
+        if (cardScript) {
+            if (cardScript.action) {
+                const event = new ArtifactActionEvent(state, artifact!)
+                await event.perform()
+            }
+        }
     },
 }

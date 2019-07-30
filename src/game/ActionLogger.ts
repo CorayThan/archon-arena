@@ -1,87 +1,87 @@
 import Action from "../shared/Action"
 import { GameState } from "../shared/gamestate/GameState"
-import { GameEvent } from "./GameEvent"
+import { InputEvent } from "./InputEvent"
 import { getArtifactById, getCreatureById, getCardInHandById, getCardById, getCardOwner, getCardInDiscardById, getCardInDrawPileById, getCardInArchiveById, getPlayerById } from "./StateUtils"
 
 export const buildLogForAction = (action: Action, state: GameState): Action | undefined => {
 
     const events: { [key: string]: Function } = {
-        [GameEvent.PlayUpgrade]: () => {
+        [InputEvent.PlayUpgrade]: () => {
             const owner = getCardOwner(action.upgradeId!, state)
             const upgrade = getCardInHandById(owner, action.upgradeId)
             const creature = getCreatureById(owner, action.creatureId)
             action.message = `${owner.player.name} attaches ${upgrade!.backingCard.cardTitle} to ${creature!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.PlayAction]: () => {
+        [InputEvent.PlayAction]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardInHandById(owner, action.cardId)
             action.message = `${owner.player.name} plays ${card!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.ShuffleDeck]: () => {
+        [InputEvent.ShuffleDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
             action.message = `${player.player.name} shuffles their deck`
             return action
         },
-        [GameEvent.ShuffleDiscardIntoDeck]: () => {
+        [InputEvent.ShuffleDiscardIntoDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
             action.message = `${player.player.name} shuffles their discard pile into their deck`
             return action
         },
-        [GameEvent.DiscardCard]: () => {
+        [InputEvent.DiscardCard]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardById(owner, action.cardId!)
             action.message = `${owner.player.name} discards ${card!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.PutCardOnDrawPile]: () => {
+        [InputEvent.PutCardOnDrawPile]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardInHandById(owner, action.cardId!)
             action.message = `${owner.player.name} puts ${card!.backingCard.cardTitle} on top of their library`
             return action
         },
-        [GameEvent.MoveCardFromDiscardToHand]: () => {
+        [InputEvent.MoveCardFromDiscardToHand]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardInDiscardById(owner, action.cardId!)
             action.message = `${owner.player.name} takes ${card!.backingCard.cardTitle} from their discard pile`
             return action
         },
-        [GameEvent.MoveCardFromDrawPileToHand]: () => {
+        [InputEvent.MoveCardFromDrawPileToHand]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardInDrawPileById(owner, action.cardId!)
             action.message = `${owner.player.name} takes ${card!.backingCard.cardTitle} from their library`
             return action
         },
-        [GameEvent.MoveCardFromArchiveToHand]: () => {
+        [InputEvent.MoveCardFromArchiveToHand]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardInArchiveById(owner, action.cardId!)
             action.message = `${owner.player.name} takes ${card!.backingCard.cardTitle} on top of their archive`
             return action
         },
-        [GameEvent.PurgeCard]: () => {
+        [InputEvent.PurgeCard]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardInHandById(owner, action.cardId!)
             action.message = `${owner.player.name} purges ${card!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.ArchiveCard]: () => {
+        [InputEvent.ArchiveCard]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardById(owner, action.cardId!)
             action.message = `${owner.player.name} archives ${card!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.TakeArchive]: () => {
+        [InputEvent.TakeArchive]: () => {
             const player = getPlayerById(action.player!.id, state)
             action.message = `${player.player.name} takes their archives`
             return action
         },
-        [GameEvent.DrawCard]: () => {
+        [InputEvent.DrawCard]: () => {
             const player = getPlayerById(action.player!.id, state)
             action.message = `${player.player.name} draws a card`
             return action
         },
-        [GameEvent.DrawFromDiscard]: () => {
+        [InputEvent.DrawFromDiscard]: () => {
             const player = getPlayerById(action.player!.id, state)
 
             if (player.discard.length === 0)
@@ -91,7 +91,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
             action.message = `${player.player.name} takes ${card!.backingCard.cardTitle} from their discard pile`
             return action
         },
-        [GameEvent.AddAmberToCard]: () => {
+        [InputEvent.AddAmberToCard]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const card = getCardById(owner, action.cardId!)
             if (action.amount! > 0)
@@ -99,7 +99,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
             else
                 action.message = `${owner.player.name} removes ${Math.abs(action.amount!)} æmber`
         },
-        [GameEvent.AlterPlayerChains]: () => {
+        [InputEvent.AlterPlayerChains]: () => {
             const player = getPlayerById(action.player!.id, state)
             if (action.amount! > 0)
                 action.message = `${player.player.name} gains ${action.amount} chain`
@@ -107,7 +107,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${player.player.name} sheds ${Math.abs(action.amount!)} chain`
             return action
         },
-        [GameEvent.AlterPlayerAmber]: () => {
+        [InputEvent.AlterPlayerAmber]: () => {
             const player = getPlayerById(action.player!.id, state)
             if (action.amount! > 0)
                 action.message = `${player.player.name} gains ${action.amount} æmber`
@@ -115,17 +115,17 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${player.player.name} removes ${Math.abs(action.amount!)} æmber`
             return action
         },
-        [GameEvent.ForgeKey]: () => {
+        [InputEvent.ForgeKey]: () => {
             const player = getPlayerById(action.player!.id, state)
             action.message = `${player.player.name} forges a key`
             return action
         },
-        [GameEvent.UnForgeKey]: () => {
+        [InputEvent.UnForgeKey]: () => {
             const player = getPlayerById(action.player!.id, state)
             action.message = `${player.player.name} unforges a key`
             return action
         },
-        [GameEvent.PlayCreature]: () => {
+        [InputEvent.PlayCreature]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCardInHandById(owner, action.cardId!)
             if (owner.creatures.length === 0)
@@ -134,25 +134,25 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} plays ${creature!.backingCard.cardTitle} on ${action.side} the flank`
             return action
         },
-        [GameEvent.MoveCreatureToHand]: () => {
+        [InputEvent.MoveCreatureToHand]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             action.message = `A player moves ${creature!.backingCard.cardTitle} to ${owner.player.name}'s hand`
             return action
         },
-        [GameEvent.MoveCreatureRight]: () => {
+        [InputEvent.MoveCreatureRight]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             action.message = `${owner.player.name} moves ${creature!.backingCard.cardTitle} right`
             return action
         },
-        [GameEvent.MoveCreatureLeft]: () => {
+        [InputEvent.MoveCreatureLeft]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             action.message = `${owner.player.name} moves ${creature!.backingCard.cardTitle} left`
             return action
         },
-        [GameEvent.AlterCreatureDamage]: () => {
+        [InputEvent.AlterCreatureDamage]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             if (action.amount! > 0)
@@ -161,7 +161,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} removes ${Math.abs(action.amount!)} damage to ${creature!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.CaptureAmber]: () => {
+        [InputEvent.CaptureAmber]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             if (action.amount! > 0)
@@ -170,7 +170,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} makes ${creature!.backingCard.cardTitle} return ${Math.abs(action.amount!)} captured æmber`
             return action
         },
-        [GameEvent.AlterCreaturePower]: () => {
+        [InputEvent.AlterCreaturePower]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             if (action.amount! > 0)
@@ -179,7 +179,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} removes ${Math.abs(action.amount!)} power to ${creature!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.ToggleStun]: () => {
+        [InputEvent.ToggleStun]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             if (creature!.tokens.stun > 0)
@@ -188,7 +188,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} unstuns ${creature!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.ToggleDoomToken]: () => {
+        [InputEvent.ToggleDoomToken]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             if (creature!.tokens.doom > 0)
@@ -197,7 +197,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} removes a doom token from ${creature!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.ToggleTaunt]: () => {
+        [InputEvent.ToggleTaunt]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             if (creature!.taunt)
@@ -206,7 +206,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} removes taunt from ${creature!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.UseCreature]: () => {
+        [InputEvent.UseCreature]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const creature = getCreatureById(owner, action.cardId)
             if (creature!.ready)
@@ -216,13 +216,13 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
             return action
             return action
         },
-        [GameEvent.PlayArtifact]: () => {
+        [InputEvent.PlayArtifact]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const artifact = getCardInHandById(owner, action.cardId!)
             action.message = `${owner.player.name} plays ${artifact!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.UseArtifact]: () => {
+        [InputEvent.UseArtifact]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const artifact = getArtifactById(owner, action.cardId)
             if (artifact!.ready)
@@ -231,7 +231,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
                 action.message = `${owner.player.name} readies ${artifact!.backingCard.cardTitle}`
             return action
         },
-        [GameEvent.MoveArtifactToHand]: () => {
+        [InputEvent.MoveArtifactToHand]: () => {
             const owner = getCardOwner(action.cardId!, state)
             const artifact = getArtifactById(owner, action.cardId)
             action.message = `A player moves ${artifact!.backingCard.cardTitle} to ${owner.player.name}'s hand`
@@ -240,7 +240,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
     }
 
     // Add placeholder function for unimplemented events
-    Object.keys(GameEvent)
+    Object.keys(InputEvent)
         .forEach(event => {
             if (!events[event])
                 events[event] = () => {}
