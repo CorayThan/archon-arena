@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: allCreatures,
-        numberOfTargets: (state) => friendlyCreatures(state).filter(x => {
+        numberOfTargets: (state: GameState) => friendlyCreatures(state).filter(x => {
             x.backingCard.house === House.Mars && (x as Creature).ready
         }).length,
         uniqueTargets: () => false,

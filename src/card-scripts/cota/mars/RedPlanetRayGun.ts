@@ -7,11 +7,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // This creature gains, “Reap: Choose a creature. Deal 1<D> to that creature for each Mars creature in play.”
-    // TODO add script to card scripts
     amber: () => 1,
-    staticEffect: (state) => {
-        //add reap to config.targets[0]
-    },
     reap: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,

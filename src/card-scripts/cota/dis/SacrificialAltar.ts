@@ -12,13 +12,17 @@ const cardScript: CardScript = {
             .filter(x => x.backingCard.traits.includes("Human")),
         numberOfTargets: () => 1,
         upToTargets: () => true,
-        validSecondaryTargets: (state: GameState) => activePlayerState(state).discard,
-        numberOfSecondaryTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            if (config.targets.length > 1) {
-                purgeCards(state, config.targets)
-                //TODO select which flank
-                activePlayerState(state).creatures.concat(config.secondaryTargets as Creature[])
+        perform: (state: GameState, config0: CardActionConfig) => {
+            if (config0.targets.length > 1) {
+                return {
+                    validTargets: (state: GameState) => activePlayerState(state).discard,
+                    numberOfTargets: () => 1,
+                    perform: (state: GameState, config1: CardActionConfig) => {
+                        purgeCards(state, config0.targets)
+                        //TODO select which flank
+                        activePlayerState(state).creatures.concat(config1.targets as Creature[])
+                    }
+                }
             }
         }
     }

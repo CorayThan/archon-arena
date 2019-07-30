@@ -4,6 +4,7 @@ import { GameState, PlayerState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, inactivePlayerState } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
+    // Play: Each player loses half their <A> (rounding down the loss). Gain 1 chain.
     onPlay: {
         perform: (state: GameState) => {
             const ownState = activePlayerState(state) as PlayerState

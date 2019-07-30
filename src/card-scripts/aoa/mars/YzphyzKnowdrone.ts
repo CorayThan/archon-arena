@@ -1,23 +1,48 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, purgeCards, putInArchives } from "../../ScriptUtils"
+import {
+    activePlayerState,
+    allCreatures,
+    inactivePlayerState,
+    purgeCards,
+    putInArchives,
+    stunCreatures
+} from "../../ScriptUtils"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Play: Archive a card. You may purge an archived card to stun a creature.
     power: () => 3,
     armor: () => 1,
     onPlay: {
-        validTargets: (state: GameState) => activePlayerState(state).archives,
+        validTargets: (state: GameState) => activePlayerState(state).hand,
         numberOfTargets: () => 1,
-        validSecondaryTargets: (state) => activePlayerState(state).hand,
-        upToTargets: () => true,
-        numberOfSecondaryTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            putInArchives(state, config.secondaryTargets, true)
-            if (config.targets.length > 0) {
-                purgeCards(state, config.targets)
-                //TODO Select and stun a creature
+        perform: (state: GameState, config0: CardActionConfig) => {
+            putInArchives(state, config0.targets, true)
+            return {
+                selectFromChoices: () => ["Purge From Opponent Archive", "Purge From My Archive", "No Purge"],
+                perform: (state: GameState, config1: CardActionConfig) => {
+                    //TODO hide opponents archive cards when choosing
+                    if (config1.selection === "No Purge") return
+                    const archive = config1.selection === "Purge From My Archive" ? activePlayerState(state).archives : inactivePlayerState(state).archives
+                    return {
+                        validTargets: () => archive,
+                        numberOfTargets: () => 1,
+                        perform: (state: GameState, config2: CardActionConfig) => {
+                            if (config2.targets.length > 0) {
+                                return {
+                                    validTargets: allCreatures,
+                                    numberOfTargets: () => 1,
+                                    perform: (state: GameState, config3: CardActionConfig) => {
+                                        purgeCards(state, config2.targets)
+                                        stunCreatures(config3.targets as Creature[])
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

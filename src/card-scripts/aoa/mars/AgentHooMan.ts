@@ -13,10 +13,14 @@ const cardScript: CardScript = {
     reap: {
         validTargets: (state: GameState) => friendlyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
         numberOfTargets: () => 1,
-        validSecondaryTargets: (state) => enemyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
-        numberOfSecondaryTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            stunCreatures((config.targets as Creature[]).concat(config.secondaryTargets as Creature[]))
+        perform: (state: GameState, config0: CardActionConfig) => {
+            return {
+                validTargets: (state: GameState) => enemyCreatures(state).filter(x => x.backingCard.house !== House.Mars),
+                numberOfTargets: () => 1,
+                perform: (state: GameState, config1: CardActionConfig) => {
+                    stunCreatures((config0.targets as Creature[]).concat(config1.targets as Creature[]))
+                }
+            }
         }
     }
 }

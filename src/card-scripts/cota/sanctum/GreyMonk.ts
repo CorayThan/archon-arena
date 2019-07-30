@@ -7,7 +7,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 const cardScript: CardScript = {
     // Each friendly creature gets +1 armor. Reap: Heal 2 damage from a creature.
     power: () => 3,
-    staticEffect: (state) => {
+    staticEffect: (state: GameState) => {
         alterArmor(friendlyCreatures(state), 1)
     },
     reap: {

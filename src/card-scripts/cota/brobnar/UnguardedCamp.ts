@@ -10,7 +10,7 @@ const cardScript: CardScript = {
         validTargets: (state: GameState) => {
             return friendlyCreatures(state).length > enemyCreatures(state).length ? friendlyCreatures(state) : []
         },
-        numberOfTargets: (state) => {
+        numberOfTargets: (state: GameState) => {
             return Math.max(friendlyCreatures(state).length - enemyCreatures(state).length, 0)
         },
         chosenTargetsAreValid: (targets, state) => {
