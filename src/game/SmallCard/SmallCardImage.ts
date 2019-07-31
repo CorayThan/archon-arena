@@ -12,6 +12,7 @@ class CardImage extends Phaser.GameObjects.Container {
     cardImage: Phaser.GameObjects.Image
     backgroundImage: Phaser.GameObjects.Image
     interactiveZone: Phaser.GameObjects.Rectangle
+    blueGlow: Phaser.GameObjects.Image
     orangeGlow: Phaser.GameObjects.Image
     greenGlow: Phaser.GameObjects.Image
 
@@ -24,6 +25,7 @@ class CardImage extends Phaser.GameObjects.Container {
         this.scene.input.setDraggable(this.interactiveZone)
         this.greenGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.GREEN_CARD_GLOW)
         this.orangeGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.ORANGE_CARD_GLOW)
+        this.blueGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.BLUE_CARD_GLOW)
     }
 
     render() {

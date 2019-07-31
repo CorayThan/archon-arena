@@ -55,11 +55,7 @@ class Card extends Phaser.GameObjects.Container {
     upgrades: CardImage[] | SmallCardImage[]
     cardsUnderneath: Phaser.GameObjects.Image[]
     backingCard: KCard
-
-    orangeGlowTweenIn: Phaser.Tweens.Tween | undefined
-    greenGlowTweenIn: Phaser.Tweens.Tween | undefined
-    orangeGlowTweenOut: Phaser.Tweens.Tween | undefined
-    greenGlowTweenOut: Phaser.Tweens.Tween | undefined
+    tweens: Phaser.Tweens.Tween[]
 
     constructor({
         scene,
@@ -107,6 +103,7 @@ class Card extends Phaser.GameObjects.Container {
             doom: 0,
         }
         this.backingCard = backingCard
+        this.tweens = []
 
         this.cardImage = cardImage!
         this.add(this.cardImage)
@@ -131,8 +128,8 @@ class Card extends Phaser.GameObjects.Container {
             cardImage.interactiveZone.addListener("drag", (pointer: Phaser.Input.Pointer, x: number, y: number) => {
                 cardImage.setPosition(x, y - 20)
             })
-            cardImage.interactiveZone.addListener("dragstart", () => {
-                onDragStart()
+            cardImage.interactiveZone.addListener("dragstart", (pointer: Phaser.Input.Pointer) => {
+                onDragStart(card, pointer)
             })
             cardImage.interactiveZone.addListener("dragend", () => {
                 this.render()
@@ -166,69 +163,33 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         if (draggable) {
-            this.cardImage.interactiveZone.addListener("drag", (pointer: Phaser.Input.Pointer, x: number, y: number) => {
+            let overDropZone = false
+
+            this.cardImage.interactiveZone.addListener("drag", (pointer: Phaser.Input.Pointer) => {
                 this.setAngle(0)
-                this.setPosition(this._originX + x, this._originY + y)
+                this.setPosition(pointer.x, pointer.y)
                 this.ignoreNextPointerUp = true
 
                 const distY = this._originY - this.y
-                if (distY > CARD_HEIGHT) {
-                    if (this.orangeGlowTweenOut) {
-                        this.orangeGlowTweenOut.stop()
-                        delete this.orangeGlowTweenOut
-                    }
-                    if (this.greenGlowTweenIn) {
-                        this.greenGlowTweenIn.stop()
-                        delete this.greenGlowTweenIn
-                    }
-
-                    if (!this.orangeGlowTweenIn) {
-                        this.orangeGlowTweenIn = this.scene.tweens.add({
-                            targets: this.cardImage.orangeGlow,
-                            alpha: 1,
-                            duration: 200,
-                            ease: "Quad.easeOut",
-                        })
-
-                        this.greenGlowTweenOut = this.scene.tweens.add({
-                            targets: this.cardImage.greenGlow,
-                            alpha: 0,
-                            duration: 200,
-                            ease: "Quad.easeOut",
-                        })
-                    }
-                } else {
-                    if (this.orangeGlowTweenIn) {
-                        this.orangeGlowTweenIn.stop()
-                        delete this.orangeGlowTweenIn
-                    }
-                    if (this.greenGlowTweenOut) {
-                        this.greenGlowTweenOut.stop()
-                        delete this.greenGlowTweenOut
-                    }
-
-                    if (!this.orangeGlowTweenOut) {
-                        this.orangeGlowTweenOut = this.scene.tweens.add({
-                            targets: this.cardImage.orangeGlow,
-                            alpha: 0,
-                            duration: 200,
-                            ease: "Quad.easeOut",
-                        })
-
-                        this.greenGlowTweenIn = this.scene.tweens.add({
-                            targets: this.cardImage.greenGlow,
-                            alpha: 1,
-                            duration: 200,
-                            ease: "Quad.easeOut",
-                        })
+                if (!overDropZone) {
+                    if (distY > CARD_HEIGHT / 2) {
+                        this.removeTweens()
+                        this.tweenAlpha(this.cardImage.blueGlow, 0)
+                        this.tweenAlpha(this.cardImage.greenGlow, 0)
+                        this.tweenAlpha(this.cardImage.orangeGlow, 1)
+                    } else {
+                        this.removeTweens()
+                        this.tweenAlpha(this.cardImage.blueGlow, 0)
+                        this.tweenAlpha(this.cardImage.greenGlow, 0)
+                        this.tweenAlpha(this.cardImage.orangeGlow, 0)
                     }
                 }
             })
 
-            this.cardImage.interactiveZone.addListener("dragstart", () => {
+            this.cardImage.interactiveZone.addListener("dragstart", (pointer: Phaser.Input.Pointer) => {
                 // @ts-ignore
                 this.scene.root.bringToTop(this)
-                onDragStart()
+                onDragStart(this, pointer)
             })
 
             this.cardImage.interactiveZone.addListener("dragend", () => {
@@ -240,10 +201,24 @@ class Card extends Phaser.GameObjects.Container {
             })
 
             this.cardImage.interactiveZone.addListener("dragenter", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
+                if (zone.name === "upgrade") {
+                    this.removeTweens()
+                    this.tweenAlpha(this.cardImage.blueGlow, 1)
+                    this.tweenAlpha(this.cardImage.greenGlow, 0)
+                    this.tweenAlpha(this.cardImage.orangeGlow, 0)
+                    overDropZone = true
+                } else if (zone.name !== "hand") {
+                    this.removeTweens()
+                    this.tweenAlpha(this.cardImage.blueGlow, 0)
+                    this.tweenAlpha(this.cardImage.greenGlow, 1)
+                    this.tweenAlpha(this.cardImage.orangeGlow, 0)
+                    overDropZone = true
+                }
                 zone.data.get("onEnter")(this)
             })
 
             this.cardImage.interactiveZone.addListener("dragleave", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
+                overDropZone = false
                 zone.data.get("onLeave")(this)
             })
 
@@ -362,6 +337,30 @@ class Card extends Phaser.GameObjects.Container {
     addToken(data: { type: string, amount: number }) {
         this.tokens[data.type] += data.amount
         this.render()
+    }
+
+    removeTweens() {
+        this.tweens.forEach((tween: Phaser.Tweens.Tween) => {
+            tween.remove()
+        })
+        this.tweens = []
+    }
+
+    tweenAlpha(target: Phaser.GameObjects.Image, value: number) {
+
+        const duplicateTween = this.tweens.find((tween: Phaser.Tweens.Tween) => tween.targets[0] === target)
+        if (duplicateTween) {
+            return
+        }
+
+        const tween = this.scene.tweens.add({
+            targets: target,
+            alpha: value,
+            duration: 200,
+            ease: "Quad.easeOut",
+        })
+
+        this.tweens.push(tween)
     }
 
     destroy() {

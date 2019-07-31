@@ -14,6 +14,7 @@ enum ImageKey {
     ENHANCED_CARD_POWER = "enhanced-card-power",
     GREEN_CARD_GLOW = "green-card-glow",
     ORANGE_CARD_GLOW = "orange-card-glow",
+    BLUE_CARD_GLOW = "blue-card-glow",
 }
 
 export default ImageKey

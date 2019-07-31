@@ -9,6 +9,7 @@ class CardImage extends Phaser.GameObjects.Container {
 
     cardImage: Phaser.GameObjects.Image
     interactiveZone: Phaser.GameObjects.Rectangle
+    blueGlow: Phaser.GameObjects.Image
     orangeGlow: Phaser.GameObjects.Image
     greenGlow: Phaser.GameObjects.Image
 
@@ -24,6 +25,9 @@ class CardImage extends Phaser.GameObjects.Container {
 
         this.greenGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.GREEN_CARD_GLOW)
         this.greenGlow.setDisplaySize(CARD_WIDTH * 1.2, CARD_HEIGHT + CARD_WIDTH * 0.2)
+
+        this.blueGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.BLUE_CARD_GLOW)
+        this.blueGlow.setDisplaySize(CARD_WIDTH * 1.2, CARD_HEIGHT + CARD_WIDTH * 0.2)
     }
 
     render() {
@@ -36,6 +40,9 @@ class CardImage extends Phaser.GameObjects.Container {
 
         this.greenGlow.setAlpha(0)
         this.add(this.greenGlow)
+
+        this.blueGlow.setAlpha(0)
+        this.add(this.blueGlow)
 
         this.cardImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
         this.add(this.cardImage)
