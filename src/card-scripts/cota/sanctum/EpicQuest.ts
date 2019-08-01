@@ -13,7 +13,7 @@ import { CardInGame } from "../../../shared/gamestate/CardInGame"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
-    // Play: Archive each friendly Knight creature in play.Omni: If you have played 7 or more Sanctum cards this turn, sacrifice Epic Quest and forge a key at no cost.
+    // Play: Archive each friendly Knight creature in play. Omni: If you have played 7 or more Sanctum cards this turn, sacrifice Epic Quest and forge a key at no cost.
     onPlay: {
         perform: (state: GameState) => {
             putInArchives(state, getCardsWithTrait(friendlyCreatures(state), "Knight"), true)

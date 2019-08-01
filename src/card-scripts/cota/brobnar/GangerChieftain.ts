@@ -2,13 +2,13 @@ import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { fightUsingCreature, friendlyCreatures, getNeighbors, readyCreature } from "../../ScriptUtils"
+import { fightUsingCreature, getNeighbors, readyCreature } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     power: () => 5,
     onPlay: {
         validTargets: (state: GameState, config: CardActionConfig) => {
-            return getNeighbors(friendlyCreatures(state), config.thisCard as Creature)
+            return getNeighbors(state, config.thisCard as Creature)
         },
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {

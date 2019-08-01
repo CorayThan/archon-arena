@@ -1,7 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { allCreatures, totalPower, destroyCards, friendlyCreatures } from "../../ScriptUtils"
+import { allCreatures, destroyCards, friendlyCreatures, totalPower } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {

@@ -6,7 +6,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
-    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.)
+    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.) 
     // Fight/Reap: Ready a non-Agent Mars creature.
     power: () => 2,
     elusive: () => true,

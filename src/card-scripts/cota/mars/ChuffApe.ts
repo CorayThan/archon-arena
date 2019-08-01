@@ -5,8 +5,8 @@ import { destroyCards, friendlyCreatures, stunCreatures } from "../../ScriptUtil
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
-    // Taunt. (This creature’s neighbors cannot be attacked unless they have taunt.)
-    // Chuff Ape enters play stunned.
+    // Taunt. (This creature’s neighbors cannot be attacked unless they have taunt.) 
+    // Chuff Ape enters play stunned. 
     // Fight/Reap: You may sacrifice another friendly creature. If you do, fully heal Chuff Ape.
     power: () => 11,
     taunt: () => true,

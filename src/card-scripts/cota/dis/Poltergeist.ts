@@ -11,7 +11,7 @@ const cardScript: CardScript = {
         validTargets: allArtifacts,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            useArtifact(config.targets as Artifact[])
+            useArtifact(state, config.targets as Artifact[])
             destroyCards(state, config.targets)
         }
     }

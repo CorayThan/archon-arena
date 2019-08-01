@@ -9,7 +9,7 @@ const cardScript: CardScript = {
         const enemyFlankCreatures = enemies.filter(creature => onFlank(enemies, creature))
         return enemyFlankCreatures.filter(creature => creature.taunt
             || enemies.length === 1
-            || !getNeighbors(enemies, creature)[0].taunt)
+            || !getNeighbors(state, creature)[0].taunt)
     }
 }
 

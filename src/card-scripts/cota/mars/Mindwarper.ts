@@ -5,7 +5,7 @@ import { enemyCreatures, inactivePlayerState, modifyAmber } from "../../ScriptUt
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
-    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.)
+    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.) 
     // Action: Choose an enemy creature. It captures 1<A> from its own side.
     power: () => 2,
     elusive: () => true,

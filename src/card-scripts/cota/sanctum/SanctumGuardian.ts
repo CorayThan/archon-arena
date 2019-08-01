@@ -5,7 +5,7 @@ import { activePlayerState, friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
-    // Taunt. (This creature’s neighbors cannot be attacked unless they have taunt.)Fight/Reap: Swap Sanctum Guardian with another friendly creature in your battleline.
+    // Taunt. (This creature’s neighbors cannot be attacked unless they have taunt.) Fight/Reap: Swap Sanctum Guardian with another friendly creature in your battleline.
     power: () => 6,
     armor: () => 1,
     taunt: () => true,

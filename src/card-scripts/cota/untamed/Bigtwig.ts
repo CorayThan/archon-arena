@@ -1,7 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { allCreatures, enemyCreatures, exhaustCard, stunCreatures } from "../../ScriptUtils"
+import { allCreatures, enemyCreatures, exhaustCards, stunCreatures } from "../../ScriptUtils"
 
 import { Creature } from "../../../shared/gamestate/Creature"
 
@@ -12,7 +12,7 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             stunCreatures(config.targets as Creature[])
-            config.targets.forEach(target => exhaustCard(target as Creature))
+            exhaustCards(config.targets as Creature[])
         }
     },
     fight: {

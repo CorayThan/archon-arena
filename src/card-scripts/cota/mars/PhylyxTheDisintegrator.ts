@@ -5,7 +5,7 @@ import { friendlyCreatures, inactivePlayerState, modifyAmber } from "../../Scrip
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
-    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.)
+    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.) 
     // Action: Your opponent loses 1<A> for each other friendly Mars creature.
     power: () => 1,
     elusive: () => true,

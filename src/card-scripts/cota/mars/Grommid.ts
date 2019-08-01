@@ -6,10 +6,10 @@ import { Creature } from "../../../shared/gamestate/Creature"
 // import { friendlyPlayer } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    // You cannot play creatures.  
+    // You cannot play creatures.   
     // After an enemy creature is destroyed fighting Grommid, your opponent loses 1<A>.
     power: () => 10,
-    staticEffect: (state: GameState, config: CardActionConfig) => {
+    staticEffect: () => {
         //TODO cannotplaycreatures
         //friendlyPlayer(state, config.thisCard).cannotPlayCreatures
     },
