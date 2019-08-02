@@ -1,4 +1,4 @@
-import { CardActionConfig, CardScript } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, inactivePlayerState, modifyAmber } from "../../ScriptUtils"

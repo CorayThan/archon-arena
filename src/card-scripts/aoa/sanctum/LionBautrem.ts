@@ -1,7 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { alterPower, friendlyCreatures, getNeighbors } from "../../ScriptUtils"
+import { alterPower, getNeighbors } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     armor: () => 1,
     deploy: () => true,
     staticEffect: (state: GameState, config: CardActionConfig) => {
-        alterPower(getNeighbors(friendlyCreatures(state), config.thisCard as Creature), 2)
+        alterPower(getNeighbors(state, config.thisCard as Creature), 2)
     }
 
 }

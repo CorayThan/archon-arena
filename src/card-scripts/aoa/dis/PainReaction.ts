@@ -11,7 +11,7 @@ const cardScript: CardScript = {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            const neighbors = getNeighbors(enemyCreatures(state), config.targets[0] as Creature)
+            const neighbors = getNeighbors(state, config.targets[0] as Creature)
             if ((config.targets[0] as Creature).tokens.damage + 2 >= totalPower(config.targets[0] as Creature)) {
                 dealDamage(neighbors, 2)
             }

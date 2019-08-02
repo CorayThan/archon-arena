@@ -6,7 +6,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 import { CardInGame } from "../../../shared/gamestate/CardInGame"
 
 const cardScript: CardScript = {
-    // Play: Stun a creature. Action: Return Lady Maxena to its owner’s hand.
+    // Play: Stun a creature.  Action: Return Lady Maxena to its owner’s hand.
     power: () => 5,
     armor: () => 2,
     onPlay: {

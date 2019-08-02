@@ -1,7 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { friendlyCreatures, getNeighbors } from "../../ScriptUtils"
+import { getNeighbors } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 3,
     atEndOfYourTurn: {
         perform: (state: GameState, config: CardActionConfig) => {
-            getNeighbors(friendlyCreatures(state), config.thisCard as Creature)
+            getNeighbors(state, config.thisCard as Creature)
                 .forEach(creature => (creature as Creature).tokens.poker += 1)
         }
     }

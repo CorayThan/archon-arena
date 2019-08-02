@@ -1,7 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { fightUsingCreature, friendlyCreatures, getNeighbors } from "../../ScriptUtils"
+import { fightUsingCreature, getNeighbors } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 4,
     armor: () => 1,
     onPlay: {
-        validTargets: (state: GameState, config: CardActionConfig) => getNeighbors(friendlyCreatures(state), config.thisCard as Creature),
+        validTargets: (state: GameState, config: CardActionConfig) => getNeighbors(state, config.thisCard as Creature),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             fightUsingCreature(config.targets[0] as Creature)

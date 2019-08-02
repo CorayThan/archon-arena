@@ -5,7 +5,7 @@ import { captureAmber, inactivePlayerState } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
-    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.)
+    // Elusive. (The first time this creature is attacked each turn, no damage is dealt.)
     // Play: If your opponent has 7<A> or more, capture all of it.
     power: () => 2,
     elusive: () => true,

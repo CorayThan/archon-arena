@@ -14,7 +14,7 @@ const cardScript: CardScript = {
             fightUsingCreatures(config.targets as Creature[])
             // TODO Get attacked Creature
             // const attackedCreature = '???????'
-            // dealDamage(getNeighbors(enemyCreatures(state), attackedCreature as Creature), 2)
+            // dealDamage(getNeighbors(state, attackedCreature as Creature), 2)
         }
     }
 }

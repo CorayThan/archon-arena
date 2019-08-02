@@ -6,7 +6,7 @@ import { Creature } from "../../../shared/gamestate/Creature"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
-    // Yxili Marauder gets +1 power for each <A> on it.
+    // Yxili Marauder gets +1 power for each <A> on it. 
     // Play: Capture 1<A> for each friendly ready Mars creature.
     power: () => 2,
     staticEffect: (state: GameState, config: CardActionConfig) => {

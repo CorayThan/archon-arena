@@ -1,11 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import {
-    enemyCreatures,
-    enemyPlayer,
-    friendlyCreatures, friendlyPlayer,
-} from "../../ScriptUtils"
+import { enemyCreatures, enemyPlayer, friendlyCreatures, friendlyPlayer, } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
