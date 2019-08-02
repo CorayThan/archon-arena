@@ -44,6 +44,11 @@ export interface CardScript {
     fight?: IndividualScript
 
     /**
+     * Braineater, etc.
+     */
+    onDestroyedEnemyInFight?: IndividualScript
+
+    /**
      * Greking, Brain Eater, Krump, etc. Check in action log if destroyed.
      */
     onAnyFight?: IndividualScript

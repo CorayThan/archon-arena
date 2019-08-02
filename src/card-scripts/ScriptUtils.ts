@@ -3,6 +3,8 @@ import { CardInGame } from "../shared/gamestate/CardInGame"
 import { Creature } from "../shared/gamestate/Creature"
 import { Artifact } from "../shared/gamestate/Artifact"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
+import { House } from "../shared/keyforge/house/House"
+import { CardActionConfig } from "./types/CardScript"
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -17,6 +19,27 @@ export const otherPlayerState = (state: GameState, playerState: PlayerState): Pl
 
 export const allPlayerStates = (state: GameState) => {
     return [state.playerOneState, state.playerTwoState]
+}
+
+export const friendlyPlayer = (state: GameState, card: CardInGame): PlayerState => {
+    const playerOneState = state.playerOneState
+    if (
+        playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
+        || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
+    )
+        return playerOneState
+    else
+        return state.playerTwoState
+}
+
+export const enemyPlayer = (state: GameState, card: CardInGame): PlayerState => {
+    const playerOneState = state.playerOneState
+    if (
+        playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
+        || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
+    )
+        return state.playerTwoState
+    else return playerOneState
 }
 
 export const friendlyCreatures = (state: GameState): Creature[] => {
@@ -48,32 +71,18 @@ export const enemyUpgrades = (state: GameState): CardInGame[] => {
     return []
 }
 
+export const friendlyCards = (state: GameState): CardInGame[] => {
+    return friendlyCreatures(state).map(x => x as CardInGame)
+        .concat(friendlyArtifacts(state).map(x => x as CardInGame))
+}
+
 export const enemyCards = (state: GameState): CardInGame[] => {
-    return enemyCreatures(state).map(creature => creature as CardInGame)
-        .concat(enemyArtifacts(state).map(artifact => artifact as CardInGame))
-        .concat(enemyUpgrades(state))
+    return enemyCreatures(state).map(x => x as CardInGame)
+        .concat(enemyArtifacts(state).map(x => x as CardInGame))
 }
 
-export const friendlyPlayer = (state: GameState, card: CardInGame): PlayerState => {
-
-    const playerOneState = state.playerOneState
-    if (
-        playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
-        || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
-    )
-        return playerOneState
-    else
-        return state.playerTwoState
-}
-
-export const enemyPlayer = (state: GameState, card: CardInGame): PlayerState => {
-    const playerOneState = state.playerOneState
-    if (
-        playerOneState.artifacts.map(artifact => artifact.id).indexOf(card.id) !== -1
-        || playerOneState.creatures.map(creature => creature.id).indexOf(card.id) !== -1
-    )
-        return state.playerTwoState
-    else return playerOneState
+export const checkHouse = (card: CardInGame, house: House): boolean => {
+    return card.backingCard.house === house
 }
 
 export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
@@ -163,14 +172,45 @@ export const discardCards = (state: GameState, cards: CardInGame[]) => {
     })
 }
 
-export const discardTopCard = (state: GameState, playerState: PlayerState): CardInGame | boolean => {
-    if (0 >= playerState.library.length) return false
+export const discardTopCard = (state: GameState, playerState: PlayerState): CardInGame => {
+    if (0 >= playerState.library.length) return {} as CardInGame
     const discardedCard = playerState.library[0]
     removeAndReturn(state, discardedCard)
     discardCards(state, [discardedCard])
     return discardedCard
 }
+export const archiveTopCard = (state: GameState, playerState: PlayerState, friendly: boolean) => {
+    if (0 >= playerState.library.length) return {} as CardInGame
+    const discardedCard = playerState.library[0]
+    removeAndReturn(state, discardedCard)
+    putInArchives(state, [discardedCard], friendly)
+}
 
+//TODO First pass on this Idea
+export const moveCreature = (state: GameState, newController: PlayerState, creature: Creature) => {
+    let index = activePlayerState(state).creatures.findIndex(x => x.id === creature.id)
+    let playerState = activePlayerState(state)
+    if (0 > index) {
+        index = inactivePlayerState(state).creatures.findIndex(x => x.id === creature.id)
+        playerState = inactivePlayerState(state)
+    }
+    if (0 > index) return
+
+    playerState.creatures = playerState.creatures.splice(index, 1)
+
+    return {
+        selectFromChoices: () => ['Right', 'Left'],
+        perform: (state: GameState, config: CardActionConfig) => {
+            if (config.selection === 'Right') {
+                newController.creatures.push(creature)
+            } else {
+                newController.creatures.unshift(creature)
+            }
+        }
+    }
+}
+
+//TODO remove this
 export const destroyCard = (card: CardInGame): boolean => {
     //TODO, the return statement says whether the card was actually destroyed
     return true
@@ -185,10 +225,18 @@ export const destroyCards = (state: GameState, cards: CardInGame[]) => {
     })
 }
 
-//TODO make theis function take (state: GameState, creature: Creature)
-export const getNeighbors = (creatures: Creature[], creature: Creature): Creature[] => {
+//TODO make this function take (state: GameState, creature: Creature)
+export const getNeighbors = (state: GameState, creature: Creature): Creature[] => {
     let foundCreatures: Creature[]
-    const index = creatures.findIndex(creat => creat.id === creature.id)
+    let index: number
+    let creatures = friendlyCreatures(state)
+    index = creatures.findIndex(creat => creat.id === creature.id)
+
+    if (index === -1) {
+        creatures = enemyCreatures(state)
+        index = creatures.findIndex(creat => creat.id === creature.id)
+    }
+
     if (index > 0 && index < creatures.length - 1)
         foundCreatures = [creatures[index - 1], creatures[index + 1]]
     else if (index > 0)
@@ -200,13 +248,15 @@ export const getNeighbors = (creatures: Creature[], creature: Creature): Creatur
     return foundCreatures
 }
 
+//TODO remove this
 export const onFlank = (creatures: Creature[], creature: Creature): boolean => {
     const index = creatures.findIndex(x => x.id === creature.id)
     return index === 0 || index === creatures.length - 1
 }
 
+//TODO write in a check for weird flank creatures like tunneler and scout
 export const isFlank = (state: GameState, creature: Creature): boolean => {
-    return allFlankCreatures(state).some(x => (x as Creature).id === creature.id)
+    return allFlankCreatures(state).some((x: Creature) => x.id === creature.id)
 }
 
 export const friendlyFlankCreatures = (state: GameState): Creature[] => {
@@ -335,7 +385,7 @@ export const useCreatures = (creatures: Creature[]) => {
 //TODO
 }
 
-export const useArtifact = (artifacts: Artifact[]) => {
+export const useArtifact = (state: GameState, artifacts: Artifact[]) => {
 //TODO
 }
 
@@ -361,8 +411,8 @@ export const healCreatures = (creatures: Creature[], amount: number) => {
     })
 }
 
-export const exhaustCard = (card: Creature | Artifact) => {
-    card.ready = false
+export const exhaustCards = (cards: Creature[] | Artifact[]) => {
+    cards.forEach((card: Creature | Artifact) => card.ready = false)
 }
 
 export const dealDamage = (creatures: Creature[], damage: number) => {
@@ -374,7 +424,7 @@ export const dealDamage = (creatures: Creature[], damage: number) => {
 }
 
 export const dealDamageWithSplash = (state: GameState, creature: Creature, damage: number, splash: number) => {
-    const neighbors = getNeighbors(enemyCreatures(state), creature).concat(getNeighbors(friendlyCreatures(state), creature))
+    const neighbors = getNeighbors(state, creature).concat(getNeighbors(state, creature))
     dealDamage([creature], damage)
     dealDamage(neighbors, splash)
 }
