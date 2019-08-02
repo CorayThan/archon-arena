@@ -10,12 +10,24 @@ const cardScript: CardScript = {
     onPlay: {
         validTargets: allFlankCreatures,
         numberOfTargets: () => 1,
-        perform: (state: GameState, config: CardActionConfig) => {
-            const neighbor1 = getNeighbors(state, config.targets[0] as Creature)
-            const neighbor2 = getNeighbors(state, neighbor1[0] as Creature).filter(x => x.id !== config.targets[0].id)
-            dealDamage(config.targets as Creature[], 3)
-            dealDamage(neighbor1 as Creature[], 2)
-            dealDamage(neighbor2 as Creature[], 1)
+        perform: (state: GameState, config0: CardActionConfig) => {
+            return {
+                validTargets: (state: GameState) => getNeighbors(state, config0.targets[0] as Creature),
+                numberOfTargets: () => 1,
+                perform: (state: GameState, config1: CardActionConfig) => {
+                    return {
+                        validTargets: (state: GameState) => getNeighbors(state, config1.targets[0] as Creature)
+                            .filter(x => x.id !== (config0.targets[0] as Creature).id),
+                        numberOfTargets: () => 1,
+                        perform: (state: GameState, config2: CardActionConfig) => {
+                            dealDamage(config0.targets as Creature[], 3)
+                            dealDamage(config1.targets as Creature[], 2)
+                            dealDamage(config2.targets as Creature[], 1)
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

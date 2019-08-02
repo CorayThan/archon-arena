@@ -4,6 +4,7 @@ import { Creature } from "../shared/gamestate/Creature"
 import { Artifact } from "../shared/gamestate/Artifact"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import { House } from "../shared/keyforge/house/House"
+import { CardActionConfig } from "./types/CardScript"
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -179,6 +180,30 @@ export const archiveTopCard = (state: GameState, playerState: PlayerState, frien
     putInArchives(state, [discardedCard], friendly)
 }
 
+//TODO First pass on this Idea
+export const moveCreature = (state: GameState, newController: PlayerState, creature: Creature) => {
+    let index = activePlayerState(state).creatures.findIndex(x => x.id === creature.id)
+    let playerState = activePlayerState(state)
+    if (0 > index) {
+        index = inactivePlayerState(state).creatures.findIndex(x => x.id === creature.id)
+        playerState = inactivePlayerState(state)
+    }
+    if (0 > index) return
+
+    playerState.creatures = playerState.creatures.splice(index, 1)
+
+    return {
+        selectFromChoices: () => ['Right', 'Left'],
+        perform: (state: GameState, config: CardActionConfig) => {
+            if (config.selection === 'Right') {
+                newController.creatures.push(creature)
+            } else {
+                newController.creatures.unshift(creature)
+            }
+        }
+    }
+}
+
 //TODO remove this
 export const destroyCard = (card: CardInGame): boolean => {
     //TODO, the return statement says whether the card was actually destroyed
@@ -217,11 +242,13 @@ export const getNeighbors = (state: GameState, creature: Creature): Creature[] =
     return foundCreatures
 }
 
+//TODO remove this
 export const onFlank = (creatures: Creature[], creature: Creature): boolean => {
     const index = creatures.findIndex(x => x.id === creature.id)
     return index === 0 || index === creatures.length - 1
 }
 
+//TODO write in a check for weird flank creatures like tunneler and scout
 export const isFlank = (state: GameState, creature: Creature): boolean => {
     return allFlankCreatures(state).some((x: Creature) => x.id === creature.id)
 }

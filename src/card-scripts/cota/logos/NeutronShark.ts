@@ -21,7 +21,7 @@ const effect = {
             perform: (state: GameState, config1: CardActionConfig) => {
                 destroyCards(state, config0.targets.concat(config1.targets))
                 const discard = discardTopCard(state, activePlayerState(state))
-                if (checkHouse(discard, House.Logos)) {
+                if (!checkHouse(discard, House.Logos)) {
                     return effect
                 }
             }

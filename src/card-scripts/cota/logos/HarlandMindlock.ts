@@ -5,10 +5,14 @@ import {
     activePlayerState,
     enemyCreatures,
     enemyFlankCreatures,
-    friendlyCreatures,
-    inactivePlayerState
+    enemyPlayer,
+    friendlyPlayer,
+    moveCreature
 } from "../../ScriptUtils"
+
 import { Creature } from "../../../shared/gamestate/Creature"
+
+let controlCreature: Creature
 
 const cardScript: CardScript = {
     // Play: Take control of an enemy flank creature until Harland Mindlock leaves play.
@@ -16,12 +20,19 @@ const cardScript: CardScript = {
     onPlay: {
         validTargets: enemyFlankCreatures,
         numberOfTargets: () => 1,
+        perform: (state: GameState, config0: CardActionConfig) => {
+            const index = enemyCreatures(state).findIndex(x => x.id === (config0.targets[0] as Creature).id)
+            controlCreature = enemyCreatures(state)[index]
+            moveCreature(state, activePlayerState(state), controlCreature)
+
+        }
+    },
+    onCreatureDestroyed: {
         perform: (state: GameState, config: CardActionConfig) => {
-            const index = enemyCreatures(state).findIndex(x => x.id === (config.targets[0] as Creature).id)
-            const creature = enemyCreatures(state).slice(index, index + 1)
-            inactivePlayerState(state).creatures = enemyCreatures(state).splice(index, 1)
-            //TODO add choice for which flank to move the creature to
-            activePlayerState(state).creatures = friendlyCreatures(state).concat(creature)
+            const playerState = friendlyPlayer(state, config.thisCard)
+            const index = playerState.creatures.findIndex(x => x.id === (controlCreature as Creature).id)
+            controlCreature = playerState.creatures[index]
+            moveCreature(state, enemyPlayer(state, config.thisCard), controlCreature)
         }
     }
 }
