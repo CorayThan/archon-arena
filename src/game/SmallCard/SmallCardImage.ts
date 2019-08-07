@@ -25,13 +25,17 @@ class CardImage extends Phaser.GameObjects.Container {
         this.scene.input.setDraggable(this.interactiveZone)
         this.greenGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.GREEN_CARD_GLOW)
         this.orangeGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.ORANGE_CARD_GLOW)
-        this.blueGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.BLUE_CARD_GLOW)
+        this.blueGlow = new Phaser.GameObjects.Image(this.scene, 0, 2, ImageKey.BLUE_CARD_GLOW_SMALL)
+        this.blueGlow.setDisplaySize(SMALL_CARD_WIDTH * 1.35, SMALL_CARD_HEIGHT * 1.55)
     }
 
     render() {
         if (this.faceup) {
             this.cardImage.setTexture(this.front)
         }
+
+        this.blueGlow.setAlpha(0)
+        this.add(this.blueGlow)
 
         this.cardImage.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
         this.cardImage.setPosition(0, SMALL_CARD_HEIGHT / 2 - CARD_HEIGHT * 0.05)

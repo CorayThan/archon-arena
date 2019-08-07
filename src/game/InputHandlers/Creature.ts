@@ -16,7 +16,7 @@ export default {
             throw new Error(`Card ${action.cardId} not found in hand`)
 
         const event = new PlayCreatureEvent(state, card)
-        await event.perform()
+        await event.perform({ flank: action.flank })
     },
     [InputEvent.MoveCreatureToHand]: (action: Action, state: GameState) => {
         const owner = getCardOwner(action.cardId!, state)

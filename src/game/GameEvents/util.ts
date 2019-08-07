@@ -13,6 +13,8 @@ import {
     getCardOwner,
     getCardById,
 } from "../StateUtils"
+import { gameSceneHolder } from "../GameScene"
+import Prompt from "../Prompt"
 
 const cardToScriptID = (card: CardInGame) => {
     return card.backingCard.cardTitle.replace(/ /g, "-").toLowerCase()
@@ -22,7 +24,7 @@ export const prepareEffect = (state: GameState, script: CardScript, triggerCard:
 
     return async () => {
 
-        if (!script[event])
+        if (!script || !script[event])
             return
 
         const config: {
@@ -44,14 +46,19 @@ export const prepareEffect = (state: GameState, script: CardScript, triggerCard:
         if (script[event]!.validTargets) {
             const validTargets = script[event]!.validTargets!(state, config)
             const targetCount = script[event]!.numberOfTargets!(state, config)
-            config.targets = await promptForTargets(validTargets, targetCount)
-            // needed until promptForTargets is implemented
-            config.targets = config.targets.slice(0, targetCount)
+
+            if (validTargets.length === 0 || targetCount === 0) {
+                config.targets = []
+            } else if (validTargets.length <= targetCount) {
+                config.targets = validTargets
+            } else {
+                config.targets = await promptForTargets(validTargets, targetCount) as CardInGame[]
+            }
         }
 
         if (script[event]!.selectFromChoices) {
             const choices = script[event]!.selectFromChoices!(state, config)
-            config.choices = await promptForChoice(state, "TODO hook up prompt", choices)
+            config.choices = await promptForChoice(state, "TODO hook up prompt", choices) as string[]
         }
 
         await script[event]!.perform!(state, config)
@@ -98,16 +105,22 @@ export const getEffectsForEvent = (state: GameState, card: CardInGame, event: Tr
     return effects
 }
 
-export const promptForOrderOfEffects = (effects: any) => {
+export const promptForOrderOfEffects = async (effects: any) => {
     return effects
 }
 
-export const promptForTargets = (targets: any, numTargets: number) => {
-    return targets.slice(0, numTargets)
+export const promptForTargets = async (validTargets: CardInGame[], numTargets: number) => {
+    const promptWindow = new Prompt(validTargets, numTargets)
+    const choices = await gameSceneHolder.gameScene!.showPrompt(promptWindow) as CardInGame[]
+    return choices
 }
 
-export const promptForChoice = (state: GameState, promptMessage: string, choices: any[]) => {
-    return choices[0]
+export const promptForChoice = async (state: GameState, promptMessage: string, choices: any[]) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve([choices[0]])
+        }, 0);
+    })
 }
 
 export const createCreatureFromCard = (card: CardInGame) => {

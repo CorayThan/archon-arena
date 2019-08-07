@@ -15,6 +15,7 @@ enum ImageKey {
     GREEN_CARD_GLOW = "green-card-glow",
     ORANGE_CARD_GLOW = "orange-card-glow",
     BLUE_CARD_GLOW = "blue-card-glow",
+    BLUE_CARD_GLOW_SMALL = "blue-card-glow-small",
 }
 
 export default ImageKey

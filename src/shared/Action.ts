@@ -3,7 +3,7 @@ import { PlayerInfo } from "./Player"
 
 export default interface Action {
     message?: string
-    side?: "right" | "left"
+    flank?: "right" | "left"
     type: InputEvent
     cardId?: string
     player?: PlayerInfo
