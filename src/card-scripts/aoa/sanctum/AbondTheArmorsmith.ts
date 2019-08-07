@@ -4,6 +4,8 @@ import { GameState } from "../../../shared/gamestate/GameState"
 import { alterArmor, friendlyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
+let action = false
+
 const cardScript: CardScript = {
     // Other friendly creatures get +1 armor.
     // Action: For the remainder of the turn, other friendly creatures get +1 armor.
@@ -16,6 +18,16 @@ const cardScript: CardScript = {
         perform: (state: GameState, config: CardActionConfig) => {
             const targets = friendlyCreatures(state).filter(x => (x as Creature).id !== (config.thisCard as Creature).id)
             alterArmor(targets, 1)
+            action = true
+        }
+    },
+    atEndOfYourTurn: {
+        perform: (state: GameState, config: CardActionConfig) => {
+            if (action) {
+                const targets = friendlyCreatures(state).filter(x => (x as Creature).id !== (config.thisCard as Creature).id)
+                alterArmor(targets, -1)
+                action = false
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ const cardScript: CardScript = {
     reap: {
         validTargets: (state: GameState) => (friendlyCreatures(state) as CardInGame[]).concat(friendlyArtifacts(state) as CardInGame[]),
         numberOfTargets: () => 1,
+        upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {
             putInArchives(state, config.targets, true)
         }

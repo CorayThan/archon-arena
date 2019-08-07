@@ -10,7 +10,6 @@ const cardScript: CardScript = {
     armor: () => 2,
     beforeFight: {
         perform: (state: GameState, config: CardActionConfig) => {
-            //TODO get targeted creature
             const targets = getNeighbors(state, config.targets[0] as Creature)
             dealDamage(targets, 3)
         }

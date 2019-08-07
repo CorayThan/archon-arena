@@ -7,8 +7,8 @@ import { shuffle } from "lodash"
 const cardScript: CardScript = {
     // Tantadlin only deals 2D when fighting.
     // Fight: Discard a random card from your opponent’s archives.
-    //TODO fight only do 2D
     power: () => 9,
+    fightingDamageDealt: () => 2,
     fight: {
         perform: (state: GameState) => {
             discardCards(state, (shuffle(inactivePlayerState(state).archives).slice(0, 1)))

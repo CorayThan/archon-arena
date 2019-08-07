@@ -1,19 +1,20 @@
-import { CardActionConfig, CardScript } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
 import { activePlayerState, dealDamage, enemyCreatures, modifyAmber } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
+    // Play: Deal 1<D> to each enemy creature for each <A> on it. Return all <A> from those creatures to your pool.
     amber: () => 1,
     onPlay: {
-        validTargets: (state: GameState) => enemyCreatures(state).filter(creature => ((creature as Creature).tokens.amber > 1)),
-        perform: (state: GameState, config: CardActionConfig) => {
-            config.targets.forEach(creature => {
-                const targetCreature = creature as Creature
-                modifyAmber(activePlayerState(state), targetCreature.tokens.amber)
-                targetCreature.tokens.amber = 0
-                dealDamage([targetCreature] as Creature[], 1)
+        perform: (state: GameState) => {
+            const targets = enemyCreatures(state).filter(creature => ((creature as Creature).tokens.amber > 1))
+            targets.forEach(creature => {
+                const amberCount = creature.tokens.amber
+                dealDamage([creature], amberCount)
+                modifyAmber(activePlayerState(state), amberCount)
+                creature.tokens.amber = 0
             })
         }
     }

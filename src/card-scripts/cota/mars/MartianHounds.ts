@@ -12,7 +12,7 @@ const cardScript: CardScript = {
         perform: (state: GameState, config: CardActionConfig) => {
             const targets = allCreatures(state)
                 .filter(x => (x as Creature).tokens.damage > 0).length
-            alterPower(config.targets as Creature[], targets)
+            alterPower(config.targets as Creature[], targets * 2)
         }
     }
 }

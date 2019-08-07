@@ -11,7 +11,6 @@ const cardScript: CardScript = {
         perform: (state, config) => stunCreatures([config.thisCard] as Creature[])
     },
     beforeFight: {
-        //TODO needs to target just the attacked creature
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {

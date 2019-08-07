@@ -1,12 +1,11 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, enemyArtifacts, friendlyArtifacts, inactivePlayerState } from "../../ScriptUtils"
+import { activePlayerState, enemyArtifacts, friendlyArtifacts, inactivePlayerState, steal } from "../../ScriptUtils"
 import { Artifact } from "../../../shared/gamestate/Artifact"
 
 const cardScript: CardScript = {
     // Reap: Give control of a friendly artifact to your opponent. If you do, they must give you 2A.
-    // TODO give this artifact an addition Action Ability to give 2 <A>
     power: () => 2,
     reap: {
         validTargets: friendlyArtifacts,
@@ -16,6 +15,7 @@ const cardScript: CardScript = {
             const index = friendlyArtifacts(state).findIndex(x => (x as Artifact).id === (config.targets[0] as Artifact).id)
             inactivePlayerState(state).artifacts = enemyArtifacts(state).concat(config.targets as Artifact[])
             activePlayerState(state).artifacts.splice(index, 1)
+            steal(state, 2)
         }
     }
 }

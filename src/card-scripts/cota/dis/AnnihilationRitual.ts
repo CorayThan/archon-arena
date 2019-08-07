@@ -5,10 +5,13 @@ import { purgeCards } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // When a creature would enter a discard pile from play, it is purged instead.
+    //TODO make this only trigger when a creature is leaving play
     amber: () => 1,
     onDiscard: {
         perform: (state: GameState, config: CardActionConfig) => {
-            purgeCards(state, [config.triggerCard])
+            if (config.triggerCard.backingCard.cardType === "Creature") {
+                purgeCards(state, [config.triggerCard])
+            }
         }
     }
 }

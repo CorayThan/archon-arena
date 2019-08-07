@@ -83,6 +83,11 @@ export interface CardScript {
     onCreatureDestroyed?: IndividualScript
 
     /**
+     * when a creature leaves play for any reason, Magda, HarlandMindlock
+     */
+    onLeavesPlay?: IndividualScript
+
+    /**
      * For Niffle Ape, Groggins
      *
      * Returns card ids of valid attack targets

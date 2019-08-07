@@ -1,5 +1,5 @@
 import { CardScript } from "../../types/CardScript"
-import { allNonFlankCreatures, stunCreatures } from "../../ScriptUtils"
+import { enemyNonFlankCreatures, stunCreatures } from "../../ScriptUtils"
 import { GameState } from "../../../shared/gamestate/GameState"
 import { cardScripts } from "../../CardScripts"
 
@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state: GameState) => {
-            stunCreatures(allNonFlankCreatures(state))
+            stunCreatures(enemyNonFlankCreatures(state))
         }
     }
 }

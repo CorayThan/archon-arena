@@ -1,8 +1,9 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, allCreatures, inactivePlayerState, removeAndReturn } from "../../ScriptUtils"
+import { activePlayerState, allCreatures, inactivePlayerState, moveCreature, removeAndReturn } from "../../ScriptUtils"
 import { Artifact } from "../../../shared/gamestate/Artifact"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Action: Purge a creature in play. If you do, your opponent gains control of Spangler Box.
@@ -21,11 +22,14 @@ const cardScript: CardScript = {
             inactivePlayerState(state).artifacts.concat(spangler)
         }
     },
-    // TODO play back to field
-    // leavesPlay: {
-    //     perform: (state: GameState, config: CardActionConfig) => {
-    //         putInHand(state, (config.thisCard as Artifact).cardsUnderneath)
-    //     }
-    // }
+    onLeavesPlay: {
+        perform: (state: GameState, config: CardActionConfig) => {
+            const targets = (config.thisCard as Artifact).cardsUnderneath
+            targets.forEach(x => {
+                const playerState = activePlayerState(state).player.id === x.ownerId ? activePlayerState(state) : inactivePlayerState(state)
+                moveCreature(state, playerState, x as Creature)
+            })
+        }
+    }
 }
 cardScripts.scripts.set("spangler-box", cardScript)

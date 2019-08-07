@@ -27,7 +27,7 @@ const cardScript: CardScript = {
 
         }
     },
-    onCreatureDestroyed: {
+    onLeavesPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
             const playerState = friendlyPlayer(state, config.thisCard)
             const index = playerState.creatures.findIndex(x => x.id === (controlCreature as Creature).id)

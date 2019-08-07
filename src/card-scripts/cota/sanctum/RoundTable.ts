@@ -1,7 +1,7 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { allCreatures, alterArmor, getCardsWithTrait, giveTaunt } from "../../ScriptUtils"
+import { allCreatures, alterPower, getCardsWithTrait, giveTaunt } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     staticEffect: (state: GameState) => {
         const knights = getCardsWithTrait(allCreatures(state), 'Knight')
-        alterArmor(knights as Creature[], 1)
+        alterPower(knights as Creature[], 1)
         giveTaunt(knights as Creature[])
     }
 }

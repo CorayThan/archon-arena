@@ -8,9 +8,12 @@ const cardScript: CardScript = {
     power: () => 3,
     onPlay: {
         validTargets: enemyCreatures,
-        numberOfTargets: (state: GameState) => enemyCreatures(state).length - friendlyCreatures(state).length,
+        numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets)
+            if (enemyCreatures(state).length > friendlyCreatures(state).length) {
+                return cardScript.onPlay
+            }
         }
     }
 }

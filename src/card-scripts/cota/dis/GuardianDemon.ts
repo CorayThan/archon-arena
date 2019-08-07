@@ -10,7 +10,7 @@ const effect = {
     perform: (state: GameState, config0: CardActionConfig) => {
         const targetDamage = (config0.targets[0] as Creature).tokens.damage
         return {
-            selectFromChoices: () => targetDamage >= 2 ? [0, 1, 2] : Array.from(Array(targetDamage + 1).keys()),
+            selectFromChoices: () => targetDamage >= 2 ? [0, 1, 2] : Array.from(Array(targetDamage + 1)),
             perform: (state: GameState, config1: CardActionConfig) => {
                 healCreatures(config0.targets as Creature[], +config1.selection)
                 return {

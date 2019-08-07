@@ -1,7 +1,7 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { allCreatures, putInArchives } from "../../ScriptUtils"
+import { enemyCreatures, putInArchives } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // If any of these creatures leave your archives, they are put into their owner’s hand instead.
     amber: () => 1,
     onPlay: {
-        validTargets: (state: GameState) => allCreatures(state)
+        validTargets: (state: GameState) => enemyCreatures(state)
             .filter(x => (x as Creature).tokens.damage > 0),
         upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {

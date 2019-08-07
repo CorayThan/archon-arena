@@ -9,7 +9,7 @@ const cardScript: CardScript = {
         validTargets: allArtifacts,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            destroyCards(state, config.targets)
+            destroyCards(state, config.targets.concat(config.thisCard))
         }
     }
 }

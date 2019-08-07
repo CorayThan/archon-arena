@@ -1,7 +1,7 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { captureAmber, friendlyCreatures, getCardsWithTrait } from "../../ScriptUtils"
+import { captureAmber, friendlyCreatures, getCardsWithTrait, inactivePlayerState } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -10,7 +10,13 @@ const cardScript: CardScript = {
     onPlay: {
         perform: (state: GameState) => {
             const knights = getCardsWithTrait(friendlyCreatures(state), "Knight")
-            knights.forEach(knight => captureAmber(state, knight as Creature, 1))
+            return {
+                validTargets: () => knights,
+                numberOfTargets: (state: GameState) => inactivePlayerState(state).amber,
+                perform: (state: GameState, config: CardActionConfig) => {
+                    config.targets.forEach(x => captureAmber(state, x as Creature, 1))
+                }
+            }
         }
     }
 }

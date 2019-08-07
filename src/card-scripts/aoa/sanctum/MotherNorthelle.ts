@@ -10,14 +10,14 @@ const cardScript: CardScript = {
     power: () => 2,
     elusive: () => true,
     reap: {
-        validTargets: (state: GameState) => friendlyCreatures(state)
-            .filter(x => (x as Creature).tokens.amber > 0),
+        validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            (config.targets[0] as Creature).tokens.amber--
-            modifyAmber(activePlayerState(state), 1)
+            if ((config.targets[0] as Creature).tokens.amber > 0) {
+                (config.targets[0] as Creature).tokens.amber--
+                modifyAmber(activePlayerState(state), 1)
+            }
         }
     }
 }
-
 cardScripts.scripts.set("mother-northelle", cardScript)
