@@ -29,7 +29,7 @@ export default {
             backingCard: card.backingCard,
         }
 
-        const player = getPlayerById(action.player!.id, state)
+        const player = getPlayerById(owner.player.id, state)
         player.artifacts.push(artifact)
         removeCardFromHand(owner, action.cardId)
     },

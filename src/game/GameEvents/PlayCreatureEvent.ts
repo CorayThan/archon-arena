@@ -19,14 +19,14 @@ import {
 
 class PlayCreatureEvent extends BaseGameEvent {
 
-    async resolve() {
+    async resolve(context: { flank: string }) {
         const owner = getCardOwner(this.card.id, this.state)
         const card = getCardById(owner, this.card.id)
         const creature = createCreatureFromCard(card!)
 
         const player = getPlayerById(owner.player.id, this.state)
-        const side = await promptForChoice(this.state, "Choose a side", ["left", "right"])
-        if (side === "left") {
+        const flank = context.flank ? context.flank : await promptForChoice(this.state, "Choose a flank", ["left", "right"])
+        if (flank === "left") {
             player.creatures.unshift(creature)
         } else {
             player.creatures.push(creature)

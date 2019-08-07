@@ -23,7 +23,7 @@ const height = window.innerHeight - 70
 
 const config: Phaser.Types.Core.GameConfig = {
     parent: "phaser",
-    backgroundColor: "#eee",
+    backgroundColor: "#000",//"#454F51", //"#D1CCBE",
     type: Phaser.CANVAS,
     width,
     height,
@@ -112,6 +112,7 @@ class Game extends React.Component<Props> {
     update() {
         if (this.props.state) {
             this.gameState = mobx.toJS(this.props.state)
+            console.log(this.gameState)
             this.gameState.effects = this.gameState.effects || new Map()
             const state = this.gameState
             const {playerId} = this.props

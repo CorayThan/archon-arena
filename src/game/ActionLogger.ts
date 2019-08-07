@@ -131,7 +131,7 @@ export const buildLogForAction = (action: Action, state: GameState): Action | un
             if (owner.creatures.length === 0)
                 action.message = `${owner.player.name} plays ${creature!.backingCard.cardTitle}`
             else
-                action.message = `${owner.player.name} plays ${creature!.backingCard.cardTitle} on ${action.side} the flank`
+                action.message = `${owner.player.name} plays ${creature!.backingCard.cardTitle} on ${action.flank} the flank`
             return action
         },
         [InputEvent.MoveCreatureToHand]: () => {
