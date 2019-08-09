@@ -1,7 +1,7 @@
 import { AppBar, Button, Toolbar, Typography } from "@material-ui/core"
 import { observer } from "mobx-react"
 import * as React from "react"
-import { theme } from "../index"
+import { theme } from "../config/Styles"
 import { Routes } from "../routing/Routes"
 import { authStore } from "../stores/AuthStore"
 import { playerStore } from "../stores/PlayerStore"
