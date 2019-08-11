@@ -1,4 +1,6 @@
 import { Box, Button, Divider, Drawer, ListItem, ListItemText, Popover, TextField, Typography } from "@material-ui/core"
+import IconButton from "@material-ui/core/IconButton"
+import { ChevronLeft, ChevronRight, Done, ExitToApp, Info } from "@material-ui/icons"
 import { autorun, observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
@@ -8,9 +10,8 @@ import { EventValue } from "../genericcomponents/EventValue"
 import { authStore } from "../stores/AuthStore"
 import { gameChatStore } from "../stores/GameChatStore"
 import { gameStateStore } from "../stores/GameStateStore"
+import { localStorageStore } from "../stores/LocalStorageStore"
 import { playerStore } from "../stores/PlayerStore"
-
-export const chatWidth = 440
 
 @observer
 export class ChatDrawer extends React.Component {
@@ -59,116 +60,170 @@ export class ChatDrawer extends React.Component {
     }
 
     render() {
+
+        let contents
+        if (localStorageStore.chatDrawerExpanded) {
+            contents = (
+                <>
+                    <Box height={"10%"}>
+                        <ListItem>
+                            <ListItemText primaryTypographyProps={{variant: "h6"}}>
+                                Active Effects
+                            </ListItemText>
+                            <div style={{flexGrow: 1}}/>
+                            <IconButton onClick={() => localStorageStore.setChatDrawerExpanded(false)}>
+                                <ChevronRight/>
+                            </IconButton>
+                        </ListItem>
+                        {gameStateStore.activeStatusEffects.size > 0 ? (
+                            <ListItem>
+                                <ListItemText primaryTypographyProps={{variant: "subtitle1", color: "error"}}>
+                                    {/*{gameStateStore.activeStatusEffects.join(" – ")}*/}
+                                </ListItemText>
+                            </ListItem>
+                        ) : null}
+                    </Box>
+                    <Divider/>
+                    <ListItem>
+                        <ListItemText primaryTypographyProps={{variant: "h4"}}>
+                            Action Log
+                        </ListItemText>
+                    </ListItem>
+                    <Box height={"34%"} style={{overflowY: "auto"}}>
+                        {gameStateStore.actions.map((action, idx) => (
+                            <ListItem key={idx}>
+                                <ListItemText>
+                                    {action.message}
+                                </ListItemText>
+                            </ListItem>
+                        ))}
+                        <div ref={this.actionsBottomRef}/>
+                    </Box>
+                    <Box height={"40%"} style={{display: "flex", flexDirection: "column"}}>
+                        <Divider/>
+                        <ListItem>
+                            <ListItemText primaryTypographyProps={{variant: "h4"}}>
+                                Chat
+                            </ListItemText>
+                        </ListItem>
+                        <div style={{overflowY: "auto"}}>
+                            {gameChatStore.messages.map((message, idx) => (
+                                <ListItem key={idx}>
+                                    <ListItemText>
+                                        <b>{message.playerUsername}</b>: {message.message}
+                                    </ListItemText>
+                                </ListItem>
+                            ))}
+                            <div ref={this.chatBottomRef}/>
+                        </div>
+                        <div style={{flexGrow: 1}}/>
+                        <TextField
+                            value={this.currentMessage}
+                            fullWidth={true}
+                            autoFocus={false}
+                            multiline={true}
+                            rows={3}
+                            rowsMax={5}
+                            variant={"filled"}
+                            placeholder={"message..."}
+                            onChange={(event: EventValue) => this.currentMessage = event.target.value}
+                            onKeyPress={(event) => {
+                                if (event.key === "Enter") {
+                                    this.sendMessage()
+                                }
+                            }}
+                        />
+                    </Box>
+                    <Box height={"4%"} style={{display: "flex", flexDirection: "column"}}>
+                        <div style={{flexGrow: 1}}/>
+                        <div
+                            style={{display: "flex"}}
+                        >
+                            <ActionButtonsFull/>
+                        </div>
+                    </Box>
+                </>
+            )
+        } else {
+            contents = (
+                <>
+                    <div style={{display: "flex"}}>
+                        <div style={{flexGrow: 1}}/>
+                        <IconButton onClick={() => localStorageStore.setChatDrawerExpanded(true)} style={{margin: theme.spacing(1)}}>
+                            <ChevronLeft/>
+                        </IconButton>
+                    </div>
+                    <div style={{flexGrow: 1}}/>
+                    <ActionButtonsIcons/>
+                </>
+            )
+        }
+
         return (
             <Drawer
                 variant={"permanent"}
                 anchor={"right"}
-                style={{width: chatWidth}}
-                PaperProps={{style: {width: chatWidth}}}
+                style={{width: localStorageStore.chatWidth}}
+                PaperProps={{style: {width: localStorageStore.chatWidth}}}
             >
-                <Box height={"10%"}>
-                    <ListItem>
-                        <ListItemText primaryTypographyProps={{variant: "h6"}}>
-                            Active Effects
-                        </ListItemText>
-                    </ListItem>
-                    {gameStateStore.activeStatusEffects.size > 0 ? (
-                        <ListItem>
-                            <ListItemText primaryTypographyProps={{variant: "subtitle1", color: "error"}}>
-                                {/*{gameStateStore.activeStatusEffects.join(" – ")}*/}
-                            </ListItemText>
-                        </ListItem>
-                    ) : null}
-                </Box>
-                <Divider/>
-                <ListItem>
-                    <ListItemText primaryTypographyProps={{variant: "h4"}}>
-                        Action Log
-                    </ListItemText>
-                </ListItem>
-                <Box height={"34%"} style={{overflowY: "auto"}}>
-                    {gameStateStore.actions.map((action, idx) => (
-                        <ListItem key={idx}>
-                            <ListItemText>
-                                {action.message}
-                            </ListItemText>
-                        </ListItem>
-                    ))}
-                    <div ref={this.actionsBottomRef}/>
-                </Box>
-                <Box height={"40%"} style={{display: "flex", flexDirection: "column"}}>
-                    <Divider/>
-                    <ListItem>
-                        <ListItemText primaryTypographyProps={{variant: "h4"}}>
-                            Chat
-                        </ListItemText>
-                    </ListItem>
-                    <div style={{overflowY: "auto"}}>
-                        {gameChatStore.messages.map((message, idx) => (
-                            <ListItem key={idx}>
-                                <ListItemText>
-                                    <b>{message.playerUsername}</b>: {message.message}
-                                </ListItemText>
-                            </ListItem>
-                        ))}
-                        <div ref={this.chatBottomRef}/>
-                    </div>
-                    <div style={{flexGrow: 1}}/>
-                    <TextField
-                        value={this.currentMessage}
-                        fullWidth={true}
-                        autoFocus={false}
-                        multiline={true}
-                        rows={3}
-                        rowsMax={5}
-                        variant={"filled"}
-                        placeholder={"message..."}
-                        onChange={(event: EventValue) => this.currentMessage = event.target.value}
-                        onKeyPress={(event) => {
-                            if (event.key === "Enter") {
-                                this.sendMessage()
-                            }
-                        }}
-                    />
-                </Box>
-                <Box height={"4%"} style={{display: "flex", flexDirection: "column"}}>
-                    <div style={{flexGrow: 1}}/>
-                    <div
-                        style={{display: "flex"}}
-                    >
-                        <Button
-                            variant={"contained"}
-                            color={"secondary"}
-                            style={{margin: theme.spacing(2)}}
-                            onClick={() => {
-                                const gameState = gameStateStore.activeGameState!
-                                const activePlayer = gameState.activePlayer!
-                                const newActivePlayer = activePlayer.id === gameState.playerTwoState.player.id ? gameState.playerOneState.player : gameState.playerTwoState.player
-                                gameStateStore.addAction({
-                                    message: `Next Turn, active player ${newActivePlayer.name}`,
-                                    type: GameEvent.EndTurn,
-                                    player: activePlayer
-                                })
-                                gameStateStore.mergeGameState({activePlayer: newActivePlayer})
-                            }}
-                        >
-                            End Turn
-                        </Button>
-                        <div style={{flexGrow: 1}}/>
-                        <ShortCutInfo/>
-                        <Button
-                            onClick={gameStateStore.quitGame}
-                            color={"primary"}
-                            style={{margin: theme.spacing(2)}}
-                        >
-                            Quit
-                        </Button>
-                    </div>
-                </Box>
+                {contents}
             </Drawer>
         )
     }
 }
+
+const onDone = () => {
+    const gameState = gameStateStore.activeGameState!
+    const activePlayer = gameState.activePlayer!
+    const newActivePlayer = activePlayer.id === gameState.playerTwoState.player.id ? gameState.playerOneState.player : gameState.playerTwoState.player
+    gameStateStore.addAction({
+        message: `Next Turn, active player ${newActivePlayer.name}`,
+        type: GameEvent.EndTurn,
+        player: activePlayer
+    })
+    gameStateStore.mergeGameState({activePlayer: newActivePlayer})
+}
+
+const ActionButtonsIcons = observer(() => (
+    <>
+        <IconButton
+            color={"secondary"}
+            style={{margin: theme.spacing(1)}}
+            onClick={onDone}
+        >
+            <Done/>
+        </IconButton>
+        <ShortCutInfo/>
+        <IconButton
+            onClick={gameStateStore.quitGame}
+            color={"primary"}
+            style={{margin: theme.spacing(1)}}
+        >
+            <ExitToApp/>
+        </IconButton>
+    </>
+))
+
+const ActionButtonsFull = observer(() => (
+    <>
+        <Button
+            variant={"contained"}
+            color={"secondary"}
+            style={{margin: theme.spacing(2)}}
+            onClick={onDone}
+        >
+            End Turn
+        </Button>
+        <ShortCutInfo/>
+        <Button
+            onClick={gameStateStore.quitGame}
+            color={"primary"}
+            style={{margin: theme.spacing(2)}}
+        >
+            Quit
+        </Button>
+    </>
+))
 
 @observer
 class ShortCutInfo extends React.Component {
@@ -177,14 +232,24 @@ class ShortCutInfo extends React.Component {
     anchorEl?: Element
 
     render() {
+        const expanded = localStorageStore.chatDrawerExpanded
         return (
-            <div>
-                <Button
-                    onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.anchorEl = event.currentTarget}
-                    style={{margin: theme.spacing(2)}}
-                >
-                    Shortcuts
-                </Button>
+            <div
+                style={{margin: theme.spacing(expanded ? 2 : 1)}}
+            >
+                {expanded ? (
+                    <Button
+                        onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.anchorEl = event.currentTarget}
+                    >
+                        Shortcuts
+                    </Button>
+                ) : (
+                    <IconButton
+                        onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => this.anchorEl = event.currentTarget}
+                    >
+                        <Info/>
+                    </IconButton>
+                )}
                 <Popover
                     open={!!this.anchorEl}
                     anchorEl={this.anchorEl}
@@ -260,7 +325,7 @@ const ShortCutsSection = (props: { title: string, shortCuts: { key: string, to: 
                 <Typography>
                     <span
                         style={{
-                            background: "rgb(242, 242, 242)",
+                            background: localStorageStore.lightTheme ? "rgb(242, 242, 242)" : "rgb(100, 100, 100)",
                             fontSize: 14,
                             textTransform: "uppercase"
                         }}

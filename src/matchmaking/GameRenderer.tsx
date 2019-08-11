@@ -7,18 +7,16 @@
 import { observer } from "mobx-react"
 import * as React from "react"
 import { Redirect, RouteComponentProps } from "react-router"
+// UNCOMMENT for local development
+import fixture from "../fixtures/game-state.json"
 import Game from "../game/Game"
 import { Loader } from "../genericcomponents/Loader"
 import { TopBar } from "../genericcomponents/TopBar"
 import { Routes } from "../routing/Routes"
-import Action from "../shared/Action"
 import { GameState } from "../shared/gamestate/GameState"
-import { authStore } from "../stores/AuthStore"
 import { gameStateStore } from "../stores/GameStateStore"
 import { playerStore } from "../stores/PlayerStore"
 import { ChatDrawer } from "./ChatDrawer"
-// UNCOMMENT for local development
-import fixture from "../fixtures/game-state.json"
 
 @observer
 export class GameRenderer extends React.Component<RouteComponentProps> {
@@ -37,7 +35,7 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
         }
 
         return (
-            <div style={{ display: "flex" }}>
+            <div style={{display: "flex"}}>
                 {redirect}
                 <div>
                     <TopBar/>
