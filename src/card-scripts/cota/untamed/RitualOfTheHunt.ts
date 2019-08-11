@@ -11,7 +11,7 @@ const cardScript: CardScript = {
             const targets = friendlyCreatures(state)
                 .filter(card => card.backingCard.house === House.Untamed)
             enableUse(targets)
-            destroyCard(config.thisCard)
+            destroyCard(state, config.thisCard)
         }
     }
 }

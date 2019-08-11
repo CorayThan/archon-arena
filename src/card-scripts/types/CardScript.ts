@@ -1,6 +1,16 @@
 import { AnyCardInGame, CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState } from "../../shared/gamestate/GameState"
 
+export enum Trigger {
+    ON_REAP = "onReap",
+    ON_ANY_REAP = "onAnyReap",
+    REAP = "reap",
+    ON_PLAY = "onPlay",
+    CARD_PLAYED = "cardPlayed",
+    ON_CREATURE_DESTROYED = "onCreatureDestroyed",
+    ACTION = "action",
+}
+
 export interface CardScript {
 
     /**
@@ -8,8 +18,10 @@ export interface CardScript {
      */
     amber?: CurrentQuantity
 
+    effect?: CardScript
     entersPlay?: IndividualScript
     onPlay?: IndividualScript
+    onDestroy?: IndividualScript
 
     /**
      * Softlanding, etc.
@@ -54,6 +66,7 @@ export interface CardScript {
     onAnyFight?: IndividualScript
     omni?: IndividualScript
     reap?: IndividualScript
+    onReap?: IndividualScript
     action?: IndividualScript
     destroyed?: IndividualScript
     leavesPlay?: IndividualScript
@@ -166,14 +179,14 @@ export interface IndividualScript {
  * Return a new IndividualScript from CardScriptExecution if it can be executed multiple times. For example, Relentless Assault returns its IndividualScript
  * twice, with the new GameState being resolved in between each execution.
  */
-type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript
+type CardScriptExecution = (state: GameState, config: CardActionConfig) => void | IndividualScript | Promise<any>
 type IsActive = (state: GameState, config: CardActionConfig) => boolean
 type CurrentQuantity = (state: GameState, config: CardActionConfig) => number
 
 export interface CardActionConfig {
     targets: AnyCardInGame[]
     thisCard: CardInGame
-    selection: string | number
+    selection?: string | number
     triggerCard: CardInGame
 
     /**

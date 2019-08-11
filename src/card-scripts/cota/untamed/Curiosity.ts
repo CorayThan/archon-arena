@@ -10,7 +10,7 @@ const cardScript: CardScript = {
             const creaturesInPlay = allCreatures(state)
             creaturesInPlay
                 .filter(creature => creature.traits.includes("Scientist"))
-                .forEach(creature => destroyCard(creature))
+                .forEach(creature => destroyCard(state, creature))
         }
     }
 }

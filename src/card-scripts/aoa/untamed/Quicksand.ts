@@ -14,13 +14,13 @@ const cardScript: CardScript = {
                 ((creature as Creature).backingCard.house === House.Untamed) && (creature as Creature).ready
             }).length > 0) {
                 getMostPowerful(friendlyCreatures(state))
-                    .forEach(creature => destroyCard(creature))
+                    .forEach(creature => destroyCard(state, creature))
             }
             if (enemyCreatures(state).filter(creature => {
                 ((creature as Creature).backingCard.house === House.Untamed) && (creature as Creature).ready
             }).length > 0) {
                 getMostPowerful(enemyCreatures(state))
-                    .forEach(creature => destroyCard(creature))
+                    .forEach(creature => destroyCard(state, creature))
             }
         }
     }

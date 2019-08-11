@@ -29,11 +29,11 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
             redirect = <Redirect to={Routes.lobby}/>
         }
         // UNCOMMENT for local development
-        //redirect = null
+        redirect = null
 
         if (gameStateStore.activeGameState == null) {
             // COMMENT for local development
-            return <Loader/>
+            //return <Loader/>
         }
 
         return (
@@ -43,23 +43,21 @@ export class GameRenderer extends React.Component<RouteComponentProps> {
                     <TopBar/>
                     <Game
                         // COMMENT for local development
-                        // playerId={authStore.authUser === undefined ? "" : authStore.authUser.uid}
-                        // state={gameStateStore.activeGameState}
-                        // setState={(gameState: Partial<GameState>) => {
-                        //     gameStateStore.mergeGameState(gameState)
-                        // }}
-                        // logAction={(action: Action) => {
-                        //     gameStateStore.addAction(action)
-                        // }}
+                        //playerId={authStore.authUser === undefined ? "" : authStore.authUser.uid}
+                        //state={gameStateStore.activeGameState}
+                        //setState={(gameState: Partial<GameState>) => {
+                            //gameStateStore.mergeGameState(gameState)
+                        //}}
+                        //logAction={(action: Action) => {
+                            //gameStateStore.addAction(action)
+                        //}}
 
                         // UNCOMMENT for local development
                         playerId={"GQYXEhjmxEMlVcVzZY0gmYpnd872"}
-                        //@ts-ignore
+                        // @ts-ignore
                         state={fixture}
-                        setState={(gameState: Partial<GameState>) => {
-                        }}
-                        logAction={() => {
-                        }}
+                        setState={(gameState: Partial<GameState>) => {}}
+                        logAction={() => {}}
                     />
                 </div>
                 <ChatDrawer/>

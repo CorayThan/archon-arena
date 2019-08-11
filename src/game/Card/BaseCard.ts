@@ -59,11 +59,11 @@ class Card extends Phaser.GameObjects.Container {
 
     constructor({
         scene,
-                    cardImage,
+        cardImage,
         x,
         y,
-                    width = SMALL_CARD_WIDTH,
-                    height = SMALL_CARD_HEIGHT,
+        width = SMALL_CARD_WIDTH,
+        height = SMALL_CARD_HEIGHT,
         id,
         front,
         back,
@@ -72,7 +72,7 @@ class Card extends Phaser.GameObjects.Container {
         draggable = false,
         cardsUnderneath = [],
         upgrades = [],
-                    backingCard,
+        backingCard,
         onClick,
         onMouseOver,
         onMouseOut,
@@ -80,7 +80,7 @@ class Card extends Phaser.GameObjects.Container {
         onDragStart = () => {},
         onMouseOverUpgrade = () => {},
         onMouseOutUpgrade = () => {},
-                }: CardInput) {
+    }: CardInput) {
         super(scene)
         this.scene = scene
         this.ignoreNextPointerUp = false
@@ -175,8 +175,8 @@ class Card extends Phaser.GameObjects.Container {
                     if (distY > CARD_HEIGHT / 2) {
                         this.removeTweens()
                         this.tweenAlpha(this.cardImage.blueGlow, 0)
-                        this.tweenAlpha(this.cardImage.greenGlow, 0)
-                        this.tweenAlpha(this.cardImage.orangeGlow, 1)
+                        this.tweenAlpha(this.cardImage.greenGlow, 1)
+                        this.tweenAlpha(this.cardImage.orangeGlow, 0)
                     } else {
                         this.removeTweens()
                         this.tweenAlpha(this.cardImage.blueGlow, 0)
@@ -203,15 +203,15 @@ class Card extends Phaser.GameObjects.Container {
             this.cardImage.interactiveZone.addListener("dragenter", (pointer: Phaser.Input.Pointer, zone: Phaser.GameObjects.Zone) => {
                 if (zone.name === "upgrade") {
                     this.removeTweens()
-                    this.tweenAlpha(this.cardImage.blueGlow, 1)
+                    this.tweenAlpha(this.cardImage.blueGlow, 0)
                     this.tweenAlpha(this.cardImage.greenGlow, 0)
-                    this.tweenAlpha(this.cardImage.orangeGlow, 0)
+                    this.tweenAlpha(this.cardImage.orangeGlow, 1)
                     overDropZone = true
                 } else if (zone.name !== "hand") {
                     this.removeTweens()
                     this.tweenAlpha(this.cardImage.blueGlow, 0)
-                    this.tweenAlpha(this.cardImage.greenGlow, 1)
-                    this.tweenAlpha(this.cardImage.orangeGlow, 0)
+                    this.tweenAlpha(this.cardImage.greenGlow, 0)
+                    this.tweenAlpha(this.cardImage.orangeGlow, 1)
                     overDropZone = true
                 }
                 zone.data.get("onEnter")(this)
@@ -336,7 +336,6 @@ class Card extends Phaser.GameObjects.Container {
 
     addToken(data: { type: string, amount: number }) {
         this.tokens[data.type] += data.amount
-        this.render()
     }
 
     removeTweens() {

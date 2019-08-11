@@ -1,15 +1,23 @@
-import { CardScript } from "../../types/CardScript"
+import { CardScript, CardActionConfig } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { activePlayerState, modifyAmber } from "../../ScriptUtils"
 import { GameState } from "../../../shared/gamestate/GameState"
+import { activePlayerState, addEffect } from "../../ScriptUtils"
 
+const cardId = "crystal-hive"
 const cardScript: CardScript = {
     // Action: For the remainder of the turn, gain 1<A> each time a creature reaps.
-    onAnyReap: {
-        perform: (state: GameState) => {
-            modifyAmber(activePlayerState(state), 1)
+    action: {
+        perform: async (state: GameState, config: CardActionConfig) => {
+            addEffect(state, state.turn, cardId)
+        }
+    },
+    effect: {
+        onReap: {
+            perform: (state: GameState, config: CardActionConfig) => {
+                activePlayerState(state).amber += 1
+            }
         }
     }
 }
 
-cardScripts.scripts.set("crystal-hive", cardScript)
+cardScripts.scripts.set(cardId, cardScript)
