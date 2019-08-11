@@ -1,10 +1,10 @@
-import { GameEvent } from "../game/GameEvent"
+import { InputEvent } from "../game/InputEvent"
 import { PlayerInfo } from "./Player"
 
 export default interface Action {
     message?: string
-    side?: "right" | "left"
-    type: GameEvent
+    flank?: "right" | "left"
+    type: InputEvent
     cardId?: string
     player?: PlayerInfo
     amount?: number
