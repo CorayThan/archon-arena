@@ -178,7 +178,7 @@ const onDone = () => {
     const newActivePlayer = activePlayer.id === gameState.playerTwoState.player.id ? gameState.playerOneState.player : gameState.playerTwoState.player
     gameStateStore.addAction({
         message: `Next Turn, active player ${newActivePlayer.name}`,
-        type: GameEvent.EndTurn,
+        type: InputEvent.EndTurn,
         player: activePlayer
     })
     gameStateStore.mergeGameState({activePlayer: newActivePlayer})
