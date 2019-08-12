@@ -129,6 +129,7 @@ export class ChatDrawer extends React.Component {
                             onChange={(event: EventValue) => this.currentMessage = event.target.value}
                             onKeyPress={(event) => {
                                 if (event.key === "Enter") {
+                                    event.preventDefault()
                                     this.sendMessage()
                                 }
                             }}
