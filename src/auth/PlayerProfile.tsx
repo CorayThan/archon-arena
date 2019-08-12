@@ -97,7 +97,7 @@ export class PlayerProfile extends React.Component {
                         <Grid item={true} xs={12} sm={3}>
                             <Paper>
                                 <Typography
-                                    variant={"h3"}
+                                    variant={"h4"}
                                     style={{padding: theme.spacing(2)}}
                                 >
                                     My Profile
@@ -136,7 +136,7 @@ export class PlayerProfile extends React.Component {
                         <Grid item={true} xs={12} sm={9}>
                             <Paper>
                                 <Typography
-                                    variant={"h3"}
+                                    variant={"h4"}
                                     style={{padding: theme.spacing(2)}}
                                 >
                                     My Decks

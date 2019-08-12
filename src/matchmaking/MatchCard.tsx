@@ -33,10 +33,10 @@ export class MatchCard extends React.Component<{ match: Match }> {
                         ) : (
                             <div style={{display: "flex", justifyContent: "center", alignItems: "center", width: 320}}>
                                 {match.secondPlayerId == null && match.firstPlayerId !== authStore.authUserId ? (
-                                    <Button variant={"outlined"} color={"primary"} onClick={() => matchStore.joinMatch(match.matchId)}>Join</Button>
+                                    <Button variant={"outlined"} color={"inherit"} onClick={() => matchStore.joinMatch(match.matchId)}>Join</Button>
                                 ) : null}
                                 {match.secondPlayerId == null && match.firstPlayerId === authStore.authUserId ? (
-                                    <Button variant={"outlined"} color={"primary"} onClick={() => matchStore.cancelMatch(match.matchId)}>Cancel</Button>
+                                    <Button variant={"outlined"} color={"inherit"} onClick={() => matchStore.cancelMatch(match.matchId)}>Cancel</Button>
                                 ) : null}
                             </div>
                         )}
