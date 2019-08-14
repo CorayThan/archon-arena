@@ -5,6 +5,28 @@ import { Artifact } from "../shared/gamestate/Artifact"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import { House } from "../shared/keyforge/house/House"
 import { CardActionConfig } from "./types/CardScript"
+import DestroyEvent from "../game/GameEvents/DestroyEvent"
+
+export const addEffect = (state: GameState, turn: number, cardId: string) => {
+    const map = state.effects || new Map()
+    const effects = map.get(state.turn) || []
+    effects.push(cardId)
+    map.set(state.turn, effects)
+}
+
+export const isCardOnBoard = (state: GameState, card: CardInGame) => {
+    const playerStates = [state.playerOneState, state.playerTwoState]
+    for (let i = 0; i < playerStates.length; i++) {
+        const playerState = playerStates[i]
+
+        if (playerState.creatures.find((c: CardInGame) => c.id === card.id))
+            return true
+        if (playerState.artifacts.find((c: CardInGame) => c.id === card.id))
+            return true
+    }
+
+    return false
+}
 
 export const activePlayerState = (state: GameState): PlayerState => {
     return state.activePlayer.id === state.playerOneState.player.id ? state.playerOneState : state.playerTwoState
@@ -88,7 +110,8 @@ export const checkHouse = (card: CardInGame, house: House): boolean => {
 export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame => {
     const check = (cardToCheck: CardInGame) => cardToCheck.id === card.id
     const playerStates = [state.playerOneState, state.playerTwoState]
-    playerStates.forEach((playerState) => {
+    for (let i = 0; i < playerStates.length; i++) {
+        const playerState = playerStates[i]
         let removed: CardInGame[] = remove(playerState.creatures, check)
         if (removed.length > 0) {
             return removed[0]
@@ -113,7 +136,7 @@ export const removeAndReturn = (state: GameState, card: CardInGame): CardInGame 
         if (removed.length > 0) {
             return removed[0]
         }
-    })
+    }
     throw new Error("Couldn't find card with id " + card.id)
 }
 
@@ -211,9 +234,10 @@ export const moveCreature = (state: GameState, newController: PlayerState, creat
 }
 
 //TODO remove this
-export const destroyCard = (card: CardInGame): boolean => {
-    //TODO, the return statement says whether the card was actually destroyed
-    return true
+export const destroyCard = async (state: GameState, card: CardInGame) => {
+    const event = new DestroyEvent(state, card)
+    await event.perform()
+    return event.successful
 }
 
 export const destroyCards = (state: GameState, cards: CardInGame[]): CardInGame[] => {
@@ -442,8 +466,12 @@ export const totalPower = (creature: Creature): number => {
     return creature.power + creature.tokens.power
 }
 
+export const stunCreature = (creature: Creature) => {
+    creature.tokens.stun = 1
+}
+
 export const stunCreatures = (creatures: Creature[]) => {
-    creatures.forEach(creature => creature.tokens.stun = 1)
+    creatures.forEach(creature => stunCreature(creature))
 }
 
 export const unStunCreatures = (creatures: Creature[]) => {

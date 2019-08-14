@@ -61,7 +61,7 @@ export class PlayerStore {
 
     @computed
     get userLoaded(): boolean {
-        return !!(authStore.authUserLoaded && authStore.authUser && !this.updatingPlayer)
+        return !!(authStore.authUserLoaded && authStore.authUser)
     }
 
     @computed

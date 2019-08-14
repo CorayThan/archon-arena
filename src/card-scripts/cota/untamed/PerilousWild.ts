@@ -11,7 +11,7 @@ const cardScript: CardScript = {
         validTargets: (state: GameState) => allCreatures(state).filter(creature => (creature as Creature).elusive),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            config.targets.forEach(target => destroyCard(target as Creature))
+            config.targets.forEach(target => destroyCard(state, target as Creature))
         },
     }
 }
