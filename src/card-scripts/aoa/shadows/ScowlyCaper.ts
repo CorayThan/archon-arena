@@ -9,6 +9,7 @@ const cardScript: CardScript = {
     // At the end of your turn, destroy one of Scowly Caper’s neighbors.
     power: () => 2,
     skirmish: () => true,
+    canAlwaysUse: () => true,
     onPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
             moveCreature(state, inactivePlayerState(state), config.thisCard as Creature)

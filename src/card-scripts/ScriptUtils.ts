@@ -216,13 +216,16 @@ export const destroyCard = (card: CardInGame): boolean => {
     return true
 }
 
-export const destroyCards = (state: GameState, cards: CardInGame[]) => {
-    cards.forEach(card => {
+export const destroyCards = (state: GameState, cards: CardInGame[]): CardInGame[] => {
+    return cards.map(card => {
         const toAdd = removeAndReturn(state, card)
         const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
         //TODO Check to see if card has destroyed effects then put in discard if is can
-        myState.discard.push(toAdd)
-    })
+        if (true) {
+            myState.discard.push(toAdd)
+            return card
+        }
+    }).filter(Boolean)
 }
 
 //TODO make this function take (state: GameState, creature: Creature)

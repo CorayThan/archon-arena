@@ -1,7 +1,7 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { inactivePlayerState, modifyAmber, steal } from "../../ScriptUtils"
+import { enemyPlayer, friendlyPlayer, inactivePlayerState, modifyAmber } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Skirmish. Play: Your opponent gains 1A. Destroyed: Steal 3A.
@@ -13,8 +13,11 @@ const cardScript: CardScript = {
         }
     },
     destroyed: {
-        perform: (state: GameState) => {
-            steal(state, 3)
+        perform: (state: GameState, config: CardActionConfig) => {
+            let number = 3
+            if (number > enemyPlayer(state, config.thisCard).amber) number = enemyPlayer(state, config.thisCard).amber
+            modifyAmber(enemyPlayer(state, config.thisCard), -number)
+            modifyAmber(friendlyPlayer(state, config.thisCard), number)
         }
     }
 }

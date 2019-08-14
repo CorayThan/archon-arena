@@ -9,9 +9,9 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: allCreatures,
-        numberOfTargets: () => 1,
+        numberOfTargets: (state: GameState) => activePlayerState(state).amber,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets as Creature[], activePlayerState(state).amber)
+            dealDamage(config.targets as Creature[], 1)
         }
     }
 }

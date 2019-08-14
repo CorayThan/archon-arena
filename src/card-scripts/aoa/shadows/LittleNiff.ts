@@ -7,6 +7,6 @@ const cardScript: CardScript = {
     elusive: () => true,
     omega: () => true,
     deploy: () => true,
-    //TODO give neighbors a fight ability to steal
+    //TODO
 }
 cardScripts.scripts.set("little-niff", cardScript)
