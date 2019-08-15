@@ -535,7 +535,7 @@ export const forgeKey = (playerState: PlayerState, modifier = 0) => {
         perform: (state: GameState, config: CardActionConfig) => {
             if (config.selection === 'Yes') {
                 playerState.keys += 1
-                playerState.amber = -keyCost
+                playerState.amber -= keyCost
             }
         }
     }
