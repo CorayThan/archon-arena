@@ -240,10 +240,16 @@ export const destroyCard = async (state: GameState, card: CardInGame) => {
     return event.successful
 }
 
-export const destroyCards = (state: GameState, cards: CardInGame[]) => {
-    cards.forEach(card => {
-        destroyCard(state, card)
-    })
+export const destroyCards = (state: GameState, cards: CardInGame[]): CardInGame[] => {
+    return cards.map(card => {
+        const toAdd = removeAndReturn(state, card)
+        const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
+        //TODO Check to see if card has destroyed effects then put in discard if is can
+        if (true) {
+            myState.discard.push(toAdd)
+            return card
+        }
+    }).filter(Boolean)
 }
 
 //TODO make this function take (state: GameState, creature: Creature)
@@ -365,6 +371,10 @@ export const getCardsWithTrait = (cards: CardInGame[] | Creature[] | Artifact[],
     return cards.filter(card => card.backingCard.traits.includes(trait))
 }
 
+export const getCardsWithoutTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
+    return cards.filter(card => !card.backingCard.traits.includes(trait))
+}
+
 export const drawHand = (playerState: PlayerState) => {
     const amount = playerState.handSize - playerState.hand.length
     if (0 >= amount) return
@@ -436,12 +446,14 @@ export const exhaustCards = (cards: Creature[] | Artifact[]) => {
     cards.forEach((card: Creature | Artifact) => card.ready = false)
 }
 
-export const dealDamage = (creatures: Creature[], damage: number) => {
+export const dealDamage = (creatures: Creature[], damage: number): CardInGame[] => {
     creatures.forEach(creature => {
         creature.tokens.armor = Math.max(0, creature.tokens.armor - damage)
         damage = Math.max(0, damage - creature.tokens.armor)
         creature.tokens.damage += damage
     })
+    //TODO return destroyed array
+    return []
 }
 
 export const dealDamageWithSplash = (state: GameState, creature: Creature, damage: number, splash: number) => {
