@@ -16,4 +16,4 @@ const cardScript: CardScript = {
         }
     }
 }
-cardScripts.scripts.set("aember-imp", cardScript)
+cardScripts.scripts.set("æmber-imp", cardScript)

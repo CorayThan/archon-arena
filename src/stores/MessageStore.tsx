@@ -2,7 +2,7 @@ import Snackbar from "@material-ui/core/Snackbar/Snackbar"
 import { observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
-import { theme } from "../index"
+import { theme } from "../config/Styles"
 
 export type MessageType = "Error" | "Info"
 

@@ -1,11 +1,11 @@
 import { House } from "./keyforge/house/House"
 
-export interface StatusEffect {
+export interface Effect {
     house?: House
-    effect: StatusEffectType
+    type: EffectType
 }
 
-export enum StatusEffectType {
+export enum EffectType {
     NO_PLAY_CREATURES = "Can't play creatures",
     NO_PLAY_ACTIONS = "Can't play actions",
     NO_USE_CARDS = "Can't use cards",

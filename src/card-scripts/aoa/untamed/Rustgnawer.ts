@@ -13,7 +13,7 @@ const cardScript: CardScript = {
         perform: (state: GameState, config: CardActionConfig) => {
             config.targets.forEach(card => {
                 modifyAmber(activePlayerState(state), (card as CardInGame).backingCard.amber)
-                destroyCard(card)
+                destroyCard(state, card)
             })
         }
     }

@@ -1,15 +1,16 @@
+import { debounce } from "lodash"
 import * as mobx from "mobx"
+import { autorun } from "mobx"
 import Phaser from "phaser"
 import React from "react"
-import { debounce } from "lodash"
-import { chatWidth } from "../matchmaking/ChatDrawer"
+import "../card-scripts/imports"
 import Action from "../shared/Action"
 import { GameState } from "../shared/gamestate/GameState"
+import { localStorageStore } from "../stores/LocalStorageStore"
 import { log, prettyJson } from "../Utils"
 import { buildLogForAction } from "./ActionLogger"
-import { exec } from "./Actions/Actions"
+import { exec } from "./InputHandlers/Generic"
 import GameScene from "./GameScene"
-import "../card-scripts/imports"
 
 interface Props {
     playerId: string | undefined
@@ -18,12 +19,12 @@ interface Props {
     logAction: Function
 }
 
-const width = window.innerWidth - chatWidth
+const width = window.innerWidth - localStorageStore.chatWidth
 const height = window.innerHeight - 70
 
 const config: Phaser.Types.Core.GameConfig = {
     parent: "phaser",
-    backgroundColor: "#eee",
+    backgroundColor: "#000",//"#454F51", //"#D1CCBE",
     type: Phaser.CANVAS,
     width,
     height,
@@ -51,26 +52,33 @@ class Game extends React.Component<Props> {
     constructor(props: Props) {
         super(props)
         this.state = {
-            width: window.innerWidth - chatWidth,
+            width: window.innerWidth - localStorageStore.chatWidth,
             height: window.innerHeight - 70,
         }
         this.handleResize = debounce(this.handleResize.bind(this), 100)
         this.updateGameState = debounce(this.updateGameState.bind(this), 200)
+
+        autorun(() => {
+            log.debug(`Chat width changed to: ${localStorageStore.chatWidth}`)
+            this.handleResize()
+        })
     }
 
     dispatch = (action: Action) => {
         const state = this.gameState
-        if (!state)
-            throw new Error("Action dispatched before game state available")
 
-        const logObj = buildLogForAction(action, state)
+        const logObj = buildLogForAction(action, state!)
         log.info("Log is " + prettyJson(logObj))
         if (logObj != null) {
             this.props.logAction(logObj)
         }
 
-        exec(action, state)
-        this.updateGameState(state)
+        exec(action, state!)
+            .then(() => {
+                this.updateGameState(state!)
+                const scene = this.game!.scene.getScene("GameScene") as GameScene
+                scene.render()
+            })
     }
 
     updateGameState(state: GameState) {
@@ -102,7 +110,7 @@ class Game extends React.Component<Props> {
 
     handleResize() {
         this.setState({
-            width: window.innerWidth - chatWidth,
+            width: window.innerWidth - localStorageStore.chatWidth,
             height: window.innerHeight - 70,
         })
     }
@@ -110,6 +118,8 @@ class Game extends React.Component<Props> {
     update() {
         if (this.props.state) {
             this.gameState = mobx.toJS(this.props.state)
+            console.log(this.gameState)
+            this.gameState.effects = this.gameState.effects || new Map()
             const state = this.gameState
             const {playerId} = this.props
 

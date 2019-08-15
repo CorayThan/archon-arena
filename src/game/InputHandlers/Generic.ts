@@ -2,7 +2,9 @@ import {ceil, shuffle} from "lodash"
 import Action from "../../shared/Action"
 import { CardInGame } from "../../shared/gamestate/CardInGame"
 import { GameState, PlayerState as Player } from "../../shared/gamestate/GameState"
-import { GameEvent } from "../GameEvent"
+import { InputEvent } from "../InputEvent"
+import ArtifactHandlers from "./Artifact"
+import CreatureHandlers from "./Creature"
 import {
     discardCardsUnderneath,
     discardCreatureUpgrades,
@@ -18,48 +20,36 @@ import {
     removeCardById,
     removeCardFromHand,
 } from "../StateUtils"
-import ArtifactActions from "./Artifact"
-import CreatureActions from "./Creature"
+import PlayActionEvent from  "../GameEvents/PlayActionEvent"
 
-import { cardScripts } from "../../card-scripts/CardScripts"
-import { CardActionConfig } from "../../card-scripts/types/CardScript"
-
-export const exec = (action: Action, state: GameState) => {
+export const exec = async (action: Action, state: GameState) => {
 
     const actionHandlers: { [key: string]: Function } = {
-        [GameEvent.PlayAction]: () => {
-            const owner: Player = getCardOwner(action.cardId!, state)
+        [InputEvent.PlayAction]: async () => {
+            const owner = getCardOwner(action.cardId!, state)
             const card = getCardInHandById(owner, action.cardId)
-            const cardScript = cardScripts.scripts.get(card!.backingCard.cardTitle.replace(/ /g, "-").toLowerCase())
-            if (cardScript) {
-                if (cardScript.amber) {
-                    owner.amber += cardScript.amber(state, { thisCard: card! } as CardActionConfig)
-                }
-                if (cardScript.onPlay && cardScript.onPlay.perform) {
-                    cardScript.onPlay.perform(state, { thisCard: card! } as CardActionConfig)
-                }
-            }
-            removeCardFromHand(owner, action.cardId)
-            owner.discard.push(card!)
+
+            const event = new PlayActionEvent(state, card!)
+            await event.perform()
         },
-        [GameEvent.PlayUpgrade]: () => {
+        [InputEvent.PlayUpgrade]: () => {
             const owner: Player = getCardOwner(action.upgradeId!, state)
             const upgrade = getCardInHandById(owner, action.upgradeId)
             const creature = getCreatureById(owner, action.creatureId)
             creature!.upgrades.push(upgrade!)
             removeCardFromHand(owner, action.upgradeId)
         },
-        [GameEvent.ShuffleDeck]: () => {
+        [InputEvent.ShuffleDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.library = shuffle(player.library)
         },
-        [GameEvent.ShuffleDiscardIntoDeck]: () => {
+        [InputEvent.ShuffleDiscardIntoDeck]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.discard.forEach((card: CardInGame) => player.library.push(card))
             player.discard = []
             player.library = shuffle(player.library)
         },
-        [GameEvent.DiscardCard]: () => {
+        [InputEvent.DiscardCard]: () => {
             // We allow players to place their cards
             // in their own discard or their opponents.
             // Attachments go to the card owner for simplicity's sake.
@@ -70,14 +60,14 @@ export const exec = (action: Action, state: GameState) => {
             const card = removeCardById(state, action.cardId!)
             player.discard.push(card)
         },
-        [GameEvent.PutCardOnDrawPile]: () => {
+        [InputEvent.PutCardOnDrawPile]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
             const card = removeCardById(state, action.cardId!)
             owner.library.unshift(card)
         },
-        [GameEvent.MoveCardFromDiscardToHand]: () => {
+        [InputEvent.MoveCardFromDiscardToHand]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInDiscardById(owner, action.cardId!)
             if (!card)
@@ -85,7 +75,7 @@ export const exec = (action: Action, state: GameState) => {
             owner.discard = owner.discard.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
-        [GameEvent.MoveCardFromDrawPileToHand]: () => {
+        [InputEvent.MoveCardFromDrawPileToHand]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInDrawPileById(owner, action.cardId!)
             if (!card)
@@ -93,7 +83,7 @@ export const exec = (action: Action, state: GameState) => {
             owner.library = owner.library.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
-        [GameEvent.MoveCardFromArchiveToHand]: () => {
+        [InputEvent.MoveCardFromArchiveToHand]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const card = getCardInArchiveById(owner, action.cardId!)
             if (!card)
@@ -101,28 +91,28 @@ export const exec = (action: Action, state: GameState) => {
             owner.archives = owner.archives.filter((c: CardInGame) => c !== card)
             owner.hand.push(card)
         },
-        [GameEvent.PurgeCard]: () => {
+        [InputEvent.PurgeCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
             const card = removeCardById(state, action.cardId!)
             owner.purged.push(card)
         },
-        [GameEvent.ArchiveCard]: () => {
+        [InputEvent.ArchiveCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             discardCreatureUpgrades(owner, action.cardId)
             discardCardsUnderneath(owner, action.cardId)
             const card = removeCardById(state, action.cardId!)
             owner.archives.push(card)
         },
-        [GameEvent.TakeArchive]: () => {
+        [InputEvent.TakeArchive]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.archives.forEach((card: CardInGame) => {
                 player.hand.push(card)
             })
             player.archives = []
         },
-        [GameEvent.DrawCard]: () => {
+        [InputEvent.DrawCard]: () => {
             const player = getPlayerById(action.player!.id, state)
 
             if (player.library.length === 0)
@@ -130,7 +120,7 @@ export const exec = (action: Action, state: GameState) => {
 
             player.hand.push(player.library.shift()!)
         },
-        [GameEvent.DrawFromDiscard]: () => {
+        [InputEvent.DrawFromDiscard]: () => {
             const player = getPlayerById(action.player!.id, state)
 
             if (player.discard.length === 0)
@@ -138,7 +128,7 @@ export const exec = (action: Action, state: GameState) => {
 
             player.hand.push(player.discard.pop()!)
         },
-        [GameEvent.AddAmberToCard]: () => {
+        [InputEvent.AddAmberToCard]: () => {
             const owner: Player = getCardOwner(action.cardId!, state)
             const cardType = getCardType(state, action.cardId!)
             if (cardType === "creature") {
@@ -155,34 +145,34 @@ export const exec = (action: Action, state: GameState) => {
                 artifact.tokens.amber = Math.max(artifact.tokens.amber, 0)
             }
         },
-        [GameEvent.AlterPlayerChains]: () => {
+        [InputEvent.AlterPlayerChains]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.chains += action.amount!
             player.chains = Math.max(player.chains, 0)
             player.handSize = 6 - ceil(player.chains / 6)
         },
-        [GameEvent.AlterPlayerAmber]: () => {
+        [InputEvent.AlterPlayerAmber]: () => {
             const player = getPlayerById(action.player!.id, state)
             player.amber += action.amount!
             player.amber = Math.max(player.amber, 0)
         },
-        [GameEvent.ForgeKey]: () => {
+        [InputEvent.ForgeKey]: () => {
             const player = getPlayerById(action.player!.id, state)
             if (player.keys < 3)
                 player.keys += 1
         },
-        [GameEvent.UnForgeKey]: () => {
+        [InputEvent.UnForgeKey]: () => {
             const player = getPlayerById(action.player!.id, state)
             if (player.keys > 0)
                 player.keys -= 1
         },
     }
 
-    Object.assign(actionHandlers, CreatureActions)
-    Object.assign(actionHandlers, ArtifactActions)
+    Object.assign(actionHandlers, CreatureHandlers)
+    Object.assign(actionHandlers, ArtifactHandlers)
 
     // Add placeholder function for unimplemented events
-    Object.keys(GameEvent)
+    Object.keys(InputEvent)
         .forEach(event => {
             if (!actionHandlers[event])
                 actionHandlers[event] = () => {
@@ -190,5 +180,5 @@ export const exec = (action: Action, state: GameState) => {
         })
 
     const fn = actionHandlers[action.type]
-    fn(action, state)
+    await fn(action, state)
 }
