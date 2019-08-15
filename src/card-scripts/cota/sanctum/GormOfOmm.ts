@@ -6,7 +6,7 @@ import { allArtifacts, destroyCards } from "../../ScriptUtils"
 const cardScript: CardScript = {
     // Omni: Sacrifice Gorm of Omm. Destroy an artifact.
     omni: {
-        validTargets: allArtifacts,
+        validTargets: (state: GameState, config: CardActionConfig) => allArtifacts(state).filter(x => x.id !== config.thisCard.id),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets.concat(config.thisCard))

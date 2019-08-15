@@ -27,7 +27,4 @@ const cardScript: CardScript = {
     }
 }
 
-
-
-
 cardScripts.scripts.set("orbital-bombardment", cardScript)

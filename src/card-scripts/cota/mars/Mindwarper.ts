@@ -13,7 +13,7 @@ const cardScript: CardScript = {
         validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            if ((config.targets[0] as Creature).tokens.amber > 0) {
+            if (inactivePlayerState(state).amber > 0) {
                 (config.targets[0] as Creature).tokens.amber += 1
                 modifyAmber(inactivePlayerState(state), -1)
             }

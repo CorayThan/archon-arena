@@ -10,7 +10,9 @@ const cardScript: CardScript = {
         selectFromChoices: () => ['Hand', 'Discard', 'Battleline'],
         perform: (state: GameState, config0: CardActionConfig) => {
             const cards = config0.selection === 'Battleline' ? friendlyCreatures(state) :
-                (config0.selection === 'Hand' ? activePlayerState(state).hand : activePlayerState(state).discard)
+                (config0.selection === 'Hand' ?
+                    activePlayerState(state).hand.filter(x => x.backingCard.cardType === "Creature")
+                    : activePlayerState(state).discard.filter(x => x.backingCard.cardType === "Creature"))
             return {
                 validTargets: () => cards,
                 numberOfTargets: () => cards.length,

@@ -6,15 +6,15 @@ import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
     // Play: Destroy each Dis creature. Each player gains 1<A> for each creature they controlled that was destroyed this way.
-    //TODO Cloak fuckery
     amber: () => 1,
     onPlay: {
         perform: (state: GameState) => {
             [activePlayerState(state), inactivePlayerState(state)].forEach(playerState => {
                 const targets = playerState.creatures
                     .filter(x => checkHouse(x, House.Dis))
-                modifyAmber(playerState, targets.length)
-                destroyCards(state, targets)
+                const destroyed = destroyCards(state, targets)
+                modifyAmber(playerState, destroyed.length)
+
             })
         }
     }

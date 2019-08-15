@@ -224,13 +224,16 @@ export const destroyCard = (card: CardInGame): boolean => {
     return true
 }
 
-export const destroyCards = (state: GameState, cards: CardInGame[]) => {
-    cards.forEach(card => {
+export const destroyCards = (state: GameState, cards: CardInGame[]): CardInGame[] => {
+    return cards.map(card => {
         const toAdd = removeAndReturn(state, card)
         const myState = card.ownerId === state.playerOneState.player.id ? activePlayerState(state) : inactivePlayerState(state)
         //TODO Check to see if card has destroyed effects then put in discard if is can
-        myState.discard.push(toAdd)
-    })
+        if (true) {
+            myState.discard.push(toAdd)
+            return card
+        }
+    }).filter(Boolean)
 }
 
 //TODO make this function take (state: GameState, creature: Creature)
@@ -463,7 +466,7 @@ export const alterArmor = (creatures: Creature[], amount: number) => {
 }
 
 export const alterPower = (creatures: Creature[], amount: number) => {
-    creatures.forEach(creature => creature.tokens.power += amount)
+    creatures.forEach(creature => creature.tokens.power = Math.max(creature.tokens.power + amount, 0))
 }
 
 export const giveSkirmish = (creatures: Creature[]) => {
@@ -525,13 +528,14 @@ export const captureAmber = (state: GameState, creature: Creature, amount: numbe
 }
 
 export const forgeKey = (playerState: PlayerState, modifier = 0) => {
-    if ((playerState.keyCost + modifier) > playerState.amber) return
+    const keyCost = Math.max(playerState.keyCost + modifier, 0)
+    if (keyCost > playerState.amber) return
     return {
         selectFromChoices: () => ['Yes', 'No'],
         perform: (state: GameState, config: CardActionConfig) => {
             if (config.selection === 'Yes') {
                 playerState.keys += 1
-                playerState.amber = playerState.amber - playerState.keyCost
+                playerState.amber = -keyCost
             }
         }
     }
