@@ -462,6 +462,8 @@ export const dealDamage = (creatures: Creature[], damage: number): boolean[] => 
         //TODO figure out if creature was destroyed
         return false
     })
+    //TODO return destroyed array
+    return []
 }
 
 export const dealDamageWithSplash = (state: GameState, creature: Creature, damage: number, splash: number) => {
