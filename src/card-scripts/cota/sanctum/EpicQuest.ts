@@ -27,7 +27,7 @@ const cardScript: CardScript = {
                 .filter(x => checkHouse(x, House.Sanctum)).length > 7) {
                 activePlayerState(state).keys += 1
             }
-            destroyCard(config.thisCard)
+            destroyCard(state, config.thisCard)
         }
     }
 }

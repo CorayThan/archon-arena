@@ -1,13 +1,19 @@
 import { Button, Divider, Grid, Link, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from "@material-ui/core"
+import FormControl from "@material-ui/core/FormControl"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import FormLabel from "@material-ui/core/FormLabel"
+import Radio from "@material-ui/core/Radio"
+import RadioGroup from "@material-ui/core/RadioGroup"
 import { observable } from "mobx"
 import { observer } from "mobx-react"
 import * as React from "react"
+import { theme } from "../config/Styles"
 import { EventValue } from "../genericcomponents/EventValue"
 import { Loader } from "../genericcomponents/Loader"
 import { TopBar } from "../genericcomponents/TopBar"
-import { theme } from "../index"
 import { Deck } from "../shared/keyforge/deck/Deck"
 import { deckStore } from "../stores/DeckStore"
+import { localStorageStore } from "../stores/LocalStorageStore"
 import { messageStore } from "../stores/MessageStore"
 import { playerStore } from "../stores/PlayerStore"
 
@@ -31,6 +37,9 @@ export class PlayerProfile extends React.Component {
 
     @observable
     displayName = ""
+
+    @observable
+    theme: "light" | "dark" = localStorageStore.lightTheme ? "light" : "dark"
 
     componentDidMount(): void {
         this.displayName = playerStore.player.displayName
@@ -70,6 +79,12 @@ export class PlayerProfile extends React.Component {
         }
     }
 
+    updateLightOrDark = (event: React.ChangeEvent<unknown>) => {
+        const value = (event.target as HTMLInputElement).value
+        localStorageStore.setLightTheme(value === "light")
+        this.theme = value as "light" | "dark"
+    }
+
     render() {
         return (
             <div>
@@ -82,7 +97,7 @@ export class PlayerProfile extends React.Component {
                         <Grid item={true} xs={12} sm={3}>
                             <Paper>
                                 <Typography
-                                    variant={"h3"}
+                                    variant={"h4"}
                                     style={{padding: theme.spacing(2)}}
                                 >
                                     My Profile
@@ -96,12 +111,23 @@ export class PlayerProfile extends React.Component {
                                         variant={"outlined"}
                                         onChange={(event: EventValue) => this.displayName = event.target.value}
                                     />
+                                    <FormControl style={{margin: theme.spacing(2)}}>
+                                        <FormLabel>Theme</FormLabel>
+                                        <RadioGroup
+                                            value={this.theme}
+                                            onChange={this.updateLightOrDark}
+                                        >
+                                            <FormControlLabel value="light" control={<Radio/>} label="Light"/>
+                                            <FormControlLabel value="dark" control={<Radio/>} label="Dark"/>
+                                        </RadioGroup>
+                                    </FormControl>
                                 </div>
                                 <Button
                                     onClick={this.savePlayer}
                                     variant={"contained"}
                                     color={"primary"}
                                     style={{margin: theme.spacing(2)}}
+                                    disabled={playerStore.updatingPlayer}
                                 >
                                     Save Profile
                                 </Button>
@@ -110,7 +136,7 @@ export class PlayerProfile extends React.Component {
                         <Grid item={true} xs={12} sm={9}>
                             <Paper>
                                 <Typography
-                                    variant={"h3"}
+                                    variant={"h4"}
                                     style={{padding: theme.spacing(2)}}
                                 >
                                     My Decks

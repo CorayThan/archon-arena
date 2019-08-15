@@ -5,6 +5,11 @@
     "name": "stronglink"
   },
   "playerOneState": {
+    "deckHouses": [
+      "Brobnar",
+      "Dis",
+      "Shadows"
+    ],
     "amber": 3,
     "archives": [],
     "artifacts": [],
@@ -40,7 +45,7 @@
           "armor": 0,
           "cardNumber": "302",
           "cardText": "Elusive.\u000bYou may use Mack the Knife as if it belonged to the active house.\u000bAction: Deal 1<D> to a creature. If this damage destroys that creature, gain 1<A>.",
-          "cardTitle": "Mack the Knife",
+          "cardTitle": "Uxlyx the Zookeeper",
           "cardType": "Creature",
           "expansion": 341,
           "flavorText": null,
@@ -64,8 +69,8 @@
           "armor": 0,
           "cardNumber": "281",
           "cardText": "Play: Deal 2<D> to a creature. If this damage destroys that creature, steal 1<A>.",
-          "cardTitle": "Relentless Whispers",
-          "cardType": "Action",
+          "cardTitle": "Soul Snatcher",
+          "cardType": "Artifact",
           "expansion": 341,
           "flavorText": null,
           "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_281_MPVFFW3882CJ_en.png",
@@ -85,7 +90,7 @@
           "armor": 0,
           "cardNumber": "298",
           "cardText": "Elusive. Skirmish.\u000bEach time you play an artifact, steal 1<A>.",
-          "cardTitle": "Carlo Phantom",
+          "cardTitle": "Bloodshard Imp",
           "cardType": "Creature",
           "expansion": 341,
           "flavorText": "“Give me half a chance an’ I’ll steal the whole of it.”",
@@ -93,7 +98,7 @@
           "house": "Shadows",
           "id": "71274e08-79b6-469b-9426-8af07d582704",
           "maverick": false,
-          "power": 1,
+          "power": 2,
           "traits": [
             "Elf",
             "Thief"
@@ -130,7 +135,7 @@
           "armor": 0,
           "cardNumber": "022",
           "cardText": "Action: Ready and fight with a friendly creature.",
-          "cardTitle": "Gauntlet of Command",
+          "cardTitle": "Crystal Hive",
           "cardType": "Artifact",
           "expansion": 341,
           "flavorText": "“I said ‘take me to your leader’ and got a fist to the face.”  –Captain Val Jericho",
@@ -722,23 +727,181 @@
     "purged": []
   },
   "playerTwoState": {
+    "deckHouses": [
+      "Brobnar",
+      "Dis",
+      "Shadows"
+    ],
     "amber": 4,
     "keyCost": 6,
     "archives": [],
-    "artifacts": [],
+    "artifacts": [
+      {
+        "id": "82725173-9b32-4d44-932b-73d3c44e902c",
+        "ready": true,
+        "faceup": true,
+        "cardsUnderneath": [],
+        "purgedByThis": [],
+        "house": "Shadows",
+        "tokens": {
+          "amber": 0
+        },
+        "traits": [],
+        "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872",
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "281",
+          "cardText": "Play: Deal 2<D> to a creature. If this damage destroys that creature, steal 1<A>.",
+          "cardTitle": "Soul Snatcher",
+          "cardType": "Artifact",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_281_MPVFFW3882CJ_en.png",
+          "house": "Shadows",
+          "id": "15f1a6f4-873f-4fa9-a080-7f01e72bbff1",
+          "maverick": false,
+          "power": 0,
+          "traits": []
+        }
+      }
+    ],
     "chains": 0,
-    "keyCost": 6,
     "handSize": 6,
-    "creatures": [],
+    "creatures": [
+      {
+        "id": "7eb7cb56-9ee4-4d8a-b163-d955822bd2e8",
+        "ready": false,
+        "faceup": true,
+        "taunt": false,
+        "elusive": false,
+        "deploy": false,
+        "poison": false,
+        "skirmish": false,
+        "assault": 0,
+        "hazardous": 0,
+        "armor": 0,
+        "upgrades": [],
+        "cardsUnderneath": [],
+        "tokens": {
+          "armor": 0,
+          "power": 0,
+          "damage": 0,
+          "amber": 0,
+          "stun": 0,
+          "skirmish": 0,
+          "elusive": 0,
+          "doom": 0
+        },
+        "power": 3,
+        "traits": [
+          "Elf",
+          "Thief"
+        ],
+        "house": "Shadows",
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "302",
+          "cardText": "Elusive.\u000bYou may use Mack the Knife as if it belonged to the active house.\u000bAction: Deal 1<D> to a creature. If this damage destroys that creature, gain 1<A>.",
+          "cardTitle": "Uxlyx the Zookeeper",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_302_RP49F4QFW3FM_en.png",
+          "house": "Shadows",
+          "id": "23099339-dbe2-4b35-b26b-9dfb4c0fb35a",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
+      {
+        "id": "9eb7cb56-9ee4-4d8a-b163-d955822bd2e8",
+        "ready": false,
+        "faceup": true,
+        "taunt": false,
+        "elusive": false,
+        "deploy": false,
+        "poison": false,
+        "skirmish": false,
+        "assault": 0,
+        "hazardous": 0,
+        "armor": 0,
+        "upgrades": [],
+        "cardsUnderneath": [],
+        "tokens": {
+          "armor": 0,
+          "power": 0,
+          "damage": 0,
+          "amber": 0,
+          "stun": 0,
+          "skirmish": 0,
+          "elusive": 0,
+          "doom": 0
+        },
+        "power": 3,
+        "traits": [
+          "Elf",
+          "Thief"
+        ],
+        "house": "Shadows",
+        "backingCard": {
+          "amber": 0,
+          "armor": 0,
+          "cardNumber": "302",
+          "cardText": "Elusive.\u000bYou may use Mack the Knife as if it belonged to the active house.\u000bAction: Deal 1<D> to a creature. If this damage destroys that creature, gain 1<A>.",
+          "cardTitle": "Uxlyx the Zookeeper",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_302_RP49F4QFW3FM_en.png",
+          "house": "Shadows",
+          "id": "23099339-dbe2-4b35-b26b-9dfb4c0fb35a",
+          "maverick": false,
+          "power": 3,
+          "traits": [
+            "Elf",
+            "Thief"
+          ]
+        },
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      }
+    ],
     "discard": [],
     "hand": [
+      {
+        "backingCard": {
+          "amber": 1,
+          "armor": 0,
+          "cardNumber": "067",
+          "cardText": "Play: Your opponent discards a random card from their hand.",
+          "cardTitle": "Teliga",
+          "cardType": "Creature",
+          "expansion": 341,
+          "flavorText": null,
+          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_067_GJXV3PCXVPMW_en.png",
+          "house": "Dis",
+          "id": "ea2a390e-e121-4cbd-96c5-2430cc600e81",
+          "maverick": false,
+          "power": 3,
+          "traits": []
+        },
+        "house": "Dis",
+        "id": "85ec8c1d-450f-41f1-a35a-72e22ae32c99",
+        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
+      },
       {
         "backingCard": {
           "amber": 0,
           "armor": 0,
           "cardNumber": "310",
           "cardText": "Shadow Self deals no damage when fighting.  \u000bDamage dealt to non-Specter neighbors is dealt to Shadow Self instead.",
-          "cardTitle": "Shadow Self",
+          "cardTitle": "Æmber Imp",
           "cardType": "Creature",
           "expansion": 341,
           "flavorText": null,
@@ -746,7 +909,7 @@
           "house": "Shadows",
           "id": "11663693-8a10-4783-9f89-47f43c49bfa3",
           "maverick": false,
-          "power": 9,
+          "power": 3,
           "traits": [
             "Specter"
           ]
@@ -761,7 +924,7 @@
           "armor": 1,
           "cardNumber": "032",
           "cardText": "Before Fight: Deal 1<D> to each enemy creature.",
-          "cardTitle": "Firespitter",
+          "cardTitle": "Æmber Imp",
           "cardType": "Creature",
           "expansion": 341,
           "flavorText": "Guess how he got that name.",
@@ -769,7 +932,7 @@
           "house": "Brobnar",
           "id": "29eafbc7-7fc5-4239-b2a7-8bc90df1fc0f",
           "maverick": false,
-          "power": 5,
+          "power": 3,
           "traits": [
             "Giant"
           ]
@@ -1248,27 +1411,6 @@
         },
         "house": "Dis",
         "id": "c5db33a2-fc8b-4ecf-ac2d-d37d39834e10",
-        "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
-      },
-      {
-        "backingCard": {
-          "amber": 1,
-          "armor": 0,
-          "cardNumber": "067",
-          "cardText": "Play: Your opponent discards a random card from their hand.",
-          "cardTitle": "Mind Barb",
-          "cardType": "Action",
-          "expansion": 341,
-          "flavorText": null,
-          "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_067_GJXV3PCXVPMW_en.png",
-          "house": "Dis",
-          "id": "ea2a390e-e121-4cbd-96c5-2430cc600e81",
-          "maverick": false,
-          "power": 0,
-          "traits": []
-        },
-        "house": "Dis",
-        "id": "85ec8c1d-450f-41f1-a35a-72e22ae32c99",
         "ownerId": "JbJVLoByLugroFf311uGKDrn89y1"
       },
       {

@@ -8,7 +8,7 @@ const cardScript: CardScript = {
         validTargets: (state: GameState) => activePlayerState(state).discard,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            destroyCard(config.thisCard)
+            destroyCard(state, config.thisCard)
             putInHand(state, config.targets)
         }
     }

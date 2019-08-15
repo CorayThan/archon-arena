@@ -1,30 +1,15 @@
-import { createMuiTheme } from "@material-ui/core"
 import * as firebase from "firebase/app"
 import "firebase/firestore"
 import React from "react"
 import ReactDOM from "react-dom"
 import * as WebFont from "webfontloader"
 import App from "./App"
+import { FontsConfig } from "./config/FontsConfig"
 import * as serviceWorker from "./serviceWorker"
 import { authStore } from "./stores/AuthStore"
 import { isDev, log } from "./Utils"
 
-export const theme = createMuiTheme({
-    palette: {
-        primary: {
-            light: "#f05545",
-            main: "#b71c1c",
-            dark: "#7f0000",
-            contrastText: "#fff",
-        },
-        secondary: {
-            light: "#fff350",
-            main: "#ffc107",
-            dark: "#c79100",
-            contrastText: "#000",
-        },
-    },
-})
+FontsConfig.loadFonts()
 
 log.debug("init firebase")
 

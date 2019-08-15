@@ -3,7 +3,7 @@ import { computed, observable } from "mobx"
 import { gameSceneHolder } from "../game/GameScene"
 import Action from "../shared/Action"
 import { GameState } from "../shared/gamestate/GameState"
-import { StatusEffect } from "../shared/GameStatusEffect"
+import { Effect } from "../shared/GameEffect"
 import { log, prettyJson } from "../Utils"
 import { gameChatStore } from "./GameChatStore"
 import { matchStore } from "./MatchStore"
@@ -74,11 +74,11 @@ export class GameStateStore {
     }
 
     @computed
-    get activeStatusEffects(): Map<number, StatusEffect[]> {
-        if (this.activeGameState == null || this.activeGameState.statusEffects == null) {
+    get activeStatusEffects(): Map<number, Effect[]> {
+        if (this.activeGameState == null || this.activeGameState.effects == null) {
             return new Map()
         }
-        return this.activeGameState.statusEffects
+        return this.activeGameState.effects
     }
 
     @computed
