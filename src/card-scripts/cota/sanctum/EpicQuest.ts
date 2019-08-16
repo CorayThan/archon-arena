@@ -4,12 +4,12 @@ import { GameState } from "../../../shared/gamestate/GameState"
 import {
     activePlayerState,
     cardsPlayedThisTurn,
+    checkHouse,
     destroyCard,
     friendlyCreatures,
     getCardsWithTrait,
     putInArchives
 } from "../../ScriptUtils"
-import { CardInGame } from "../../../shared/gamestate/CardInGame"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
@@ -22,8 +22,9 @@ const cardScript: CardScript = {
     omni: {
         perform: (state: GameState, config: CardActionConfig) => {
             //TODO track cards played this turn
+            //TODO check if forge a key will trigger graft
             if (cardsPlayedThisTurn(state)
-                .filter(card => (card as CardInGame).backingCard.house === House.Sanctum).length > 7) {
+                .filter(x => checkHouse(x, House.Sanctum)).length > 7) {
                 activePlayerState(state).keys += 1
             }
             destroyCard(state, config.thisCard)

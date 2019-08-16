@@ -1,14 +1,15 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { getNeighbors } from "../../ScriptUtils"
+import { alterPower, getNeighbors } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Knoxx gets +3 power for each neighbor it has.
     power: () => 3,
     staticEffect: (state: GameState, config: CardActionConfig) => {
-        (config.thisCard as Creature).tokens.power += 3 * getNeighbors(state, config.thisCard as Creature).length
+        const knoxx = config.thisCard as Creature
+        alterPower([knoxx], 3 * getNeighbors(state, knoxx).length)
     }
 }
 

@@ -1,8 +1,7 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { allCreatures, destroyCards } from "../../ScriptUtils"
-import { Creature } from "../../../shared/gamestate/Creature"
+import { allCreatures, destroyCards, totalPower } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: Destroy each creature with even power.
@@ -10,7 +9,7 @@ const cardScript: CardScript = {
     onPlay: {
         perform: (state: GameState) => {
             const targets = allCreatures(state)
-                .filter(x => ((x as Creature).power + (x as Creature).tokens.power) % 2 == 0)
+                .filter(x => totalPower(x) % 2 == 0)
             destroyCards(state, targets)
         }
     }

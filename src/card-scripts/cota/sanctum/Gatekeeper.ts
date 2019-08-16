@@ -11,7 +11,7 @@ const cardScript: CardScript = {
     onPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
             const enemyAmber = inactivePlayerState(state).amber
-            if (enemyAmber > 7) {
+            if (enemyAmber >= 7) {
                 captureAmber(state, config.thisCard as Creature, enemyAmber - 5)
             }
         }

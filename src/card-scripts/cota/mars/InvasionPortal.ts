@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     action: {
         perform: (state: GameState) => {
             let stop = false
-            while (!stop || 0 >= activePlayerState(state).library.length) {
+            while (!stop || 0 < activePlayerState(state).library.length) {
                 const card = activePlayerState(state).library[0]
                 activePlayerState(state).library = activePlayerState(state).library.slice(1)
                 if (card.backingCard.house === House.Mars && card.backingCard.cardType === "Creature") {

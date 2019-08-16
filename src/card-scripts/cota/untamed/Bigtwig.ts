@@ -6,19 +6,15 @@ import { allCreatures, enemyCreatures, exhaustCards, stunCreatures } from "../..
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
+    // Bigtwig can only fight stunned creatures. Reap: Stun and exhaust a creature.
     power: () => 7,
+    validAttackTargets: (state: GameState) => enemyCreatures(state).filter(creature => creature.tokens.stun > 0),
     reap: {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
             stunCreatures(config.targets as Creature[])
             exhaustCards(config.targets as Creature[])
-        }
-    },
-    fight: {
-        //TODO can only fight stunned
-        validTargets: (state: GameState) => enemyCreatures(state).filter(creature => creature.tokens.stun > 0),
-        perform: () => {
         }
     }
 }

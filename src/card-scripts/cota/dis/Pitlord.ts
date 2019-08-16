@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     power: () => 9,
     taunt: () => true,
     staticEffect: () => {
-        //TODO friendlyPlayer(state, config.thisCard).houseChoice === House.Dis
+        //TODO friendlyPlayer(state, config.thisCard).houseChoice === House.Dis IF decks.houses.include(House.Dis)
     }
 }
 cardScripts.scripts.set("pitlord", cardScript)

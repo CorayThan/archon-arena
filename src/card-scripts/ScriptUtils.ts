@@ -88,7 +88,15 @@ export const allArtifacts = (state: GameState): Artifact[] => {
     return friendlyArtifacts(state).concat(enemyArtifacts(state))
 }
 
+export const friendlyUpgrades = (state: GameState): CardInGame[] => {
+    //TODO
+    return []
+}
 export const enemyUpgrades = (state: GameState): CardInGame[] => {
+    //TODO
+    return []
+}
+export const allUpgrades = (state: GameState): CardInGame[] => {
     //TODO
     return []
 }
@@ -371,7 +379,7 @@ export const getCardsWithTrait = (cards: CardInGame[] | Creature[] | Artifact[],
     return cards.filter(card => card.backingCard.traits.includes(trait))
 }
 
-export const getCardsWithoutTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
+export const getCardsWithOutTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
     return cards.filter(card => !card.backingCard.traits.includes(trait))
 }
 
@@ -446,11 +454,13 @@ export const exhaustCards = (cards: Creature[] | Artifact[]) => {
     cards.forEach((card: Creature | Artifact) => card.ready = false)
 }
 
-export const dealDamage = (creatures: Creature[], damage: number): CardInGame[] => {
-    creatures.forEach(creature => {
+export const dealDamage = (creatures: Creature[], damage: number): boolean[] => {
+    return creatures.map(creature => {
         creature.tokens.armor = Math.max(0, creature.tokens.armor - damage)
         damage = Math.max(0, damage - creature.tokens.armor)
         creature.tokens.damage += damage
+        //TODO figure out if creature was destroyed
+        return false
     })
     //TODO return destroyed array
     return []
@@ -486,7 +496,7 @@ export const alterArmor = (creatures: Creature[], amount: number) => {
 }
 
 export const alterPower = (creatures: Creature[], amount: number) => {
-    creatures.forEach(creature => creature.tokens.power += amount)
+    creatures.forEach(creature => creature.tokens.power = Math.max(creature.tokens.power + amount, 0))
 }
 
 export const giveSkirmish = (creatures: Creature[]) => {
@@ -547,9 +557,17 @@ export const captureAmber = (state: GameState, creature: Creature, amount: numbe
     creature.tokens.amber += modifyAmber(enemyPlayer(state, creature), amount)
 }
 
-export const forgeKey = (playerState: PlayerState) => {
-    if (playerState.amber >= playerState.keyCost) {
-        playerState.keys += 1
-        playerState.amber = playerState.amber - playerState.keyCost
+export const forgeKey = (playerState: PlayerState, modifier = 0) => {
+    const keyCost = Math.max(playerState.keyCost + modifier, 0)
+    if (keyCost > playerState.amber) return
+    return {
+        selectFromChoices: () => ['Yes', 'No'],
+        perform: (state: GameState, config: CardActionConfig) => {
+            if (config.selection === 'Yes') {
+                playerState.keys += 1
+                playerState.amber -= keyCost
+            }
+        }
     }
+
 }

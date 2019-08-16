@@ -1,14 +1,10 @@
-import { CardActionConfig, CardScript } from "../../types/CardScript"
+import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { GameState } from "../../../shared/gamestate/GameState"
-import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
+    // This creature gains assault 2. (Before this creature attacks, deal 2<D> to the attacked enemy.)
     amber: () => 1,
-    staticEffect: (state: GameState, config: CardActionConfig) => {
-        (config.targets[0] as Creature).assault += 2
-    }
-
+    assault: () => 2
 }
 
 cardScripts.scripts.set("way-of-the-bear", cardScript)

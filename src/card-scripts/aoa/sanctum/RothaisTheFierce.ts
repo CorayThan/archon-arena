@@ -6,7 +6,7 @@ const cardScript: CardScript = {
     // Hazardous 4. (Before this creature is attacked, deal 4D to the attacking enemy.)
     power: () => 4,
     armor: () => 2,
-    hazardous: () => 0,
+    hazardous: () => 4,
     taunt: () => true
 }
 

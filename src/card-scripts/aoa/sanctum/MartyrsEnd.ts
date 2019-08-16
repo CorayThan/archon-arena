@@ -8,6 +8,8 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         validTargets: friendlyCreatures,
+        numberOfTargets: (state: GameState) => friendlyCreatures(state).length,
+        upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {
             destroyCards(state, config.targets)
             modifyAmber(activePlayerState(state), config.targets.length)

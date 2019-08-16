@@ -7,8 +7,9 @@ const cardScript: CardScript = {
     // Play: Lose all your <A>. Then, your opponent loses triple the amount of <A> you lost this way.
     onPlay: {
         perform: (state: GameState) => {
-            const amberLost = modifyAmber(activePlayerState(state), activePlayerState(state).amber)
-            modifyAmber(inactivePlayerState(state), amberLost * 3)
+            const amberLost = activePlayerState(state).amber
+            modifyAmber(activePlayerState(state), -amberLost)
+            modifyAmber(inactivePlayerState(state), -amberLost * 3)
         }
     }
 }

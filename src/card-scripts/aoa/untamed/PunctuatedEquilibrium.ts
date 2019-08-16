@@ -1,19 +1,17 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, drawHand, inactivePlayerState } from "../../ScriptUtils"
+import { allPlayerStates, discardCards, drawHand } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     // Play: Each player discards their hand, then refills their hand as if it were the end of their turn.
     onPlay: {
         perform: (state: GameState) => {
-            activePlayerState(state).discard.concat(activePlayerState(state).hand)
-            activePlayerState(state).hand = []
-            drawHand(activePlayerState(state))
+            allPlayerStates(state).forEach(playerState => {
+                discardCards(state, playerState.hand)
+                drawHand(playerState)
+            })
 
-            inactivePlayerState(state).discard.concat(inactivePlayerState(state).hand)
-            inactivePlayerState(state).hand = []
-            drawHand(inactivePlayerState(state))
         }
     }
 }

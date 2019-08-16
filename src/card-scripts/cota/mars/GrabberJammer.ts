@@ -10,7 +10,7 @@ const cardScript: CardScript = {
     power: () => 4,
     armor: () => 1,
     staticEffect: (state: GameState, config: CardActionConfig) => {
-        enemyPlayer(state, config.thisCard).keyCost += 2
+        enemyPlayer(state, config.thisCard).keyCost += 1
     },
     reap: {
         perform: (state: GameState, config: CardActionConfig) => {

@@ -13,8 +13,10 @@ const cardScript: CardScript = {
             .filter(x => (x as Creature).backingCard.house === House.Mars).length,
         perform: (state: GameState, config: CardActionConfig) => {
             (config.targets as Creature[]).forEach(x => {
-                modifyAmber(inactivePlayerState(state), -1)
-                x.tokens.amber += 1
+                if (inactivePlayerState(state).amber > 0) {
+                    modifyAmber(inactivePlayerState(state), -1)
+                    x.tokens.amber += 1
+                }
             })
         }
     }

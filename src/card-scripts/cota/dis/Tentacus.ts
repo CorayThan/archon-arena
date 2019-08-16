@@ -5,6 +5,7 @@ import { activePlayerState, enemyPlayer, friendlyPlayer, modifyAmber } from "../
 
 const cardScript: CardScript = {
     // Your opponent must pay you 1<A> in order to use an artifact.
+    //TODO stop player from using artifact when at 0 amber
     power: () => 5,
     onAnyAction: {
         perform: (state: GameState, config: CardActionConfig) => {

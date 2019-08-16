@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state: GameState) => {
-            modifyAmber(activePlayerState(state), friendlyArtifacts(state).length)
+            modifyAmber(activePlayerState(state), friendlyArtifacts(state).length * 2)
             destroyCards(state, friendlyArtifacts(state) as CardInGame[])
         }
     }

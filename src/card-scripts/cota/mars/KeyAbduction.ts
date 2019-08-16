@@ -1,7 +1,7 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, forgeKey, friendlyCreatures, putInHand } from "../../ScriptUtils"
+import { activePlayerState, allCreatures, checkHouse, forgeKey, putInHand } from "../../ScriptUtils"
 import { House } from "../../../shared/keyforge/house/House"
 
 const cardScript: CardScript = {
@@ -9,11 +9,10 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state: GameState) => {
-            const targets = friendlyCreatures(state)
-                .filter(x => x.backingCard.house === House.Mars)
+            const targets = allCreatures(state)
+                .filter(x => checkHouse(x, House.Mars))
             putInHand(state, targets)
-            activePlayerState(state).keyCost = activePlayerState(state).keyCost + 9 - activePlayerState(state).hand.length
-            forgeKey(activePlayerState(state))
+            forgeKey(activePlayerState(state), 9 - activePlayerState(state).hand.length)
         }
     }
 }

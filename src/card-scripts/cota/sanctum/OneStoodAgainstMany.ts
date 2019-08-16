@@ -11,6 +11,7 @@ const cardScript: CardScript = {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
+            //TODO make sure fight targets are different
             [...Array(3)].forEach(() => fightUsingCreature(config.targets[0] as Creature))
         }
     }

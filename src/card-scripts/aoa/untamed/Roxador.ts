@@ -1,5 +1,8 @@
-import { CardScript } from "../../types/CardScript"
+import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
+import { stunCreatures } from "../../ScriptUtils"
+import { GameState } from "../../../shared/gamestate/GameState"
+import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
     // Skirmish. (When you use this creature to fight, it is dealt no damage in return.)
@@ -7,9 +10,10 @@ const cardScript: CardScript = {
     // Fight: Stun the attacked creature.
     power: () => 4,
     skirmish: () => true,
+    fightingDamageDealt: () => 2,
     fight: {
-        perform: () => {
-            //TODO alter damage done, and stun attacked creature
+        perform: (state: GameState, config: CardActionConfig) => {
+            stunCreatures(config.targets as Creature[])
         }
     }
 }

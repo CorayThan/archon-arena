@@ -1,6 +1,6 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
-import { allFlankCreatures, allNonFlankCreatures, dealDamage } from "../../ScriptUtils"
+import { dealDamage, enemyFlankCreatures, enemyNonFlankCreatures } from "../../ScriptUtils"
 import { GameState } from "../../../shared/gamestate/GameState"
 
 const cardScript: CardScript = {
@@ -8,8 +8,8 @@ const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
         perform: (state: GameState) => {
-            dealDamage(allFlankCreatures(state), 2)
-            dealDamage(allNonFlankCreatures(state), 1)
+            dealDamage(enemyFlankCreatures(state), 2)
+            dealDamage(enemyNonFlankCreatures(state), 1)
         }
     }
 }

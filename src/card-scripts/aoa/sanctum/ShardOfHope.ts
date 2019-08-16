@@ -8,9 +8,9 @@ const cardScript: CardScript = {
     // Action: A friendly creature captures 1A for each friendly Shard.
     action: {
         validTargets: friendlyCreatures,
-        numberOfTargets: () => 1,
+        numberOfTargets: (state: GameState) => getCardsWithTrait(friendlyArtifacts(state), 'Shard"').length,
         perform: (state: GameState, config: CardActionConfig) => {
-            captureAmber(state, config.targets[0] as Creature, getCardsWithTrait(friendlyArtifacts(state), 'Shard"').length)
+            (config.targets as Creature[]).forEach(x => captureAmber(state, x as Creature, 1))
         }
     }
 }
