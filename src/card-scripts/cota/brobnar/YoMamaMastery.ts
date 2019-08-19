@@ -1,13 +1,19 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
+import { Creature } from "../../../shared/gamestate/Creature"
+import {
+    fullyHealCreature,
+} from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    runAfterAnyActionThisTurn: {
+    amber: () => 1,
+    taunt: () => true,
+    onPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
-            //TODO if action === fight
+            fullyHealCreature(config.targets[0] as Creature)
         }
     }
 }
 
-cardScripts.scripts.set("into-the-fray", cardScript)
+cardScripts.scripts.set("yo-mama-mastery", cardScript)

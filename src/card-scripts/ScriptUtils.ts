@@ -5,6 +5,7 @@ import { Artifact } from "../shared/gamestate/Artifact"
 import { GameState, PlayerState } from "../shared/gamestate/GameState"
 import { House } from "../shared/keyforge/house/House"
 import { CardActionConfig } from "./types/CardScript"
+import {IndividualScript} from "./types/CardScript";
 import DestroyEvent from "../game/GameEvents/DestroyEvent"
 
 export const addEffect = (state: GameState, turn: number, cardId: string) => {
@@ -376,13 +377,12 @@ export const cardsPlayedThisTurn = (state: GameState): CardInGame[] => {
     return [] as CardInGame[]
 }
 
-export const amountOfShards = (state: GameState): number => {
-    return friendlyArtifacts(state)
-        .filter(artifact => (artifact as Artifact).backingCard.traits.includes("Shard")).length
+export const getCardsWithTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
+    return cards.filter(card => hasTrait(card, trait))
 }
 
-export const getCardsWithTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
-    return cards.filter(card => card.backingCard.traits.includes(trait))
+export const hasTrait = (card: CardInGame, trait: string): boolean => {
+    return card.backingCard.traits.includes(trait)
 }
 
 export const getCardsWithoutTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
@@ -448,7 +448,12 @@ export const healCreature = (creature: Creature, amount: number): number => {
     return actualChange
 }
 
-//TODO return healed numbers for Guardian Demon
+export const fullyHealCreature = (creature: Creature): number => {
+    const actualChange = creature.tokens.damage
+    creature.tokens.damage = 0
+    return actualChange
+}
+
 export const healCreatures = (creatures: Creature[], amount: number) => {
     creatures.forEach(creature => {
         const actualChange = creature.tokens.damage - amount >= 0 ? amount : creature.tokens.damage
@@ -577,4 +582,20 @@ export const forgeKey = (playerState: PlayerState, modifier = 0) => {
         }
     }
 
+}
+
+export const addFightAbility = (creature: Creature, fightAbility: IndividualScript) => {
+    //TODO
+}
+
+export const addReapAbility = (creature: Creature, reapAbility: IndividualScript) => {
+    //TODO
+}
+
+export const putPowerCounters = (creatures: Creature[], amount: number) => {
+    creatures.forEach(creature => creature.tokens.power += amount)
+}
+
+export const belongsToHouse = (card: CardInGame, house: House) => {
+    return card.backingCard.house === house
 }

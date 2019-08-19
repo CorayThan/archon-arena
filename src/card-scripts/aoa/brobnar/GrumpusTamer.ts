@@ -13,8 +13,9 @@ const cardScript: CardScript = {
                 .filter(card => card.backingCard.cardTitle === "War Grumpus")
         },
         numberOfTargets: () => 1,
+        upToTargets: () => true,
         perform: (state: GameState, config: CardActionConfig) => {
-            putInHand(state, config.targets!)
+            putInHand(state, config.targets)
             shuffleDeck(activePlayerState(state))
         }
     }

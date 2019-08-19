@@ -2,17 +2,16 @@ import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { allCreatures, dealDamage } from "../../ScriptUtils"
+import { dealDamage, getNeighbors } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    power: () => 4,
-    onPlay: {
-        validTargets: allCreatures,
-        numberOfTargets: () => 1,
+    power: () => 2,
+    beforeFight: {
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 2)
+            const neighbors = getNeighbors(state, config.targets[0] as Creature)
+            dealDamage(neighbors, 5)
         }
     }
 }
 
-cardScripts.scripts.set("flamewake-shaman", cardScript)
+cardScripts.scripts.set("bingle-bangbang", cardScript)

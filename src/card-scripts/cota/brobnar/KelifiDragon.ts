@@ -9,7 +9,7 @@ const effect = {
     numberOfTargets: () => 1,
     perform: (state: GameState, config: CardActionConfig) => {
         modifyAmber(activePlayerState(state), 1)
-        dealDamage(config.targets! as Creature[], 5)
+        dealDamage(config.targets as Creature[], 5)
     }
 }
 

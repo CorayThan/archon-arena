@@ -1,14 +1,15 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState } from "../../ScriptUtils"
+import {inactivePlayerState, modifyAmber} from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    onKeyForge: {
+    power: () => 5,
+    fight: {
         perform: (state: GameState) => {
-            activePlayerState(state).amber = 0
+            modifyAmber(inactivePlayerState(state), -1)
         }
     }
 }
 
-cardScripts.scripts.set("forgemaster-og", cardScript)
+cardScripts.scripts.set("groke", cardScript)

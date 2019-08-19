@@ -1,21 +1,23 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, dealDamage, enemyCreatures } from "../../ScriptUtils"
+import {
+    friendlyArtifacts,
+    friendlyCreatures,
+    getCardsWithTrait,
+    putPowerCounters
+} from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
-    alpha: () => true,
-    power: () => 3,
-    onPlay: {
-        validTargets: enemyCreatures,
+    action: {
+        validTargets: friendlyCreatures,
         numberOfTargets: (state: GameState) => {
-            return activePlayerState(state).amber < 3 ? 0 : 1
+            return getCardsWithTrait(friendlyArtifacts(state), "Shard").length
         },
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 3)
+            putPowerCounters(config.targets as Creature[], 1)
         }
     }
 }
-
-cardScripts.scripts.set("garagantes-scrapper", cardScript)
+cardScripts.scripts.set("shard-of-pain", cardScript)
