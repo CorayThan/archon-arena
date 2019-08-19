@@ -9,7 +9,7 @@ const cardScript: CardScript = {
         validTargets: allCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamageWithSplash(state, config.targets![0] as Creature, 1, 1)
+            dealDamageWithSplash(state, config.targets[0] as Creature, 1, 1)
         }
     }
 }

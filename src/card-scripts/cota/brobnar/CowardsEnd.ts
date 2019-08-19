@@ -6,8 +6,7 @@ import { activePlayerState, allCreatures, destroyCards, gainChains } from "../..
 const cardScript: CardScript = {
     onPlay: {
         perform: (state: GameState) => {
-            const creaturesInPlay = allCreatures(state)
-            const targets = creaturesInPlay
+            const targets = allCreatures(state)
                 .filter(creature => creature.tokens.damage === 0)
             destroyCards(state, targets)
             gainChains(activePlayerState(state), 3)

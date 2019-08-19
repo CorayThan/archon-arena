@@ -2,17 +2,22 @@ import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { allCreatures, dealDamage } from "../../ScriptUtils"
+import { destroyCards, enemyCreatures, stunCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     amber: () => 1,
     onPlay: {
-        validTargets: allCreatures,
+        validTargets: enemyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets as Creature[], 3)
+            const targetedCreature = config.targets as Creature[]
+            if (targetedCreature[0].tokens.stun > 0) {
+                destroyCards(state, targetedCreature)
+            } else {
+                stunCreatures(targetedCreature)
+            }
         }
     }
 }
 
-cardScripts.scripts.set("punch", cardScript)
+cardScripts.scripts.set("1-2-punch", cardScript)

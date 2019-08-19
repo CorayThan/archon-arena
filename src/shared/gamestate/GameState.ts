@@ -1,5 +1,5 @@
 import Action from "../Action"
-import { StatusEffect } from "../GameStatusEffect"
+import { Effect } from "../GameEffect"
 import { PlayerInfo } from "../Player"
 import { Artifact } from "./Artifact"
 import { CardInGame } from "./CardInGame"

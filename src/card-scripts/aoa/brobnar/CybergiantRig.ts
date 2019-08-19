@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     // Play: Fully heal this creature and give it a +1 power counter for each damage healed.
     onPlay: {
         perform: (state: GameState, config: CardActionConfig) => {
-            const target = config.targets![0] as Creature
+            const target = config.targets[0] as Creature
             alterPower(config.targets as Creature[], target.tokens.damage)
             target.tokens.damage = 0
         }

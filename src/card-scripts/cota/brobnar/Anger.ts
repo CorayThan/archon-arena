@@ -10,7 +10,7 @@ const cardScript: CardScript = {
         validTargets: friendlyCreatures,
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            const targetedCreature = config.targets![0] as Creature
+            const targetedCreature = config.targets[0] as Creature
             readyCreature(targetedCreature)
             fightUsingCreature(targetedCreature)
         }

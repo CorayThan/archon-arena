@@ -48,7 +48,7 @@ export interface CardScript {
     /**
      * Forgemaster Og
      */
-    onKeyForge?: IndividualScript
+    onForgingKey?: IndividualScript
 
     /**
      * Dodger, Headhunter, etc.
@@ -56,14 +56,10 @@ export interface CardScript {
     fight?: IndividualScript
 
     /**
-     * Braineater, etc.
+     * Braineater, Greking, Brain Eater, Krump, etc. Check in action log if destroyed.
      */
     onDestroyedEnemyInFight?: IndividualScript
 
-    /**
-     * Greking, Brain Eater, Krump, etc. Check in action log if destroyed.
-     */
-    onAnyFight?: IndividualScript
     omni?: IndividualScript
     reap?: IndividualScript
     onReap?: IndividualScript
@@ -99,6 +95,11 @@ export interface CardScript {
      * when a creature leaves play for any reason, Magda, HarlandMindlock
      */
     onLeavesPlay?: IndividualScript
+
+    /**
+     * When a creature enters the board
+     */
+    onCreatureEntersPlay?: IndividualScript
 
     /**
      * For Niffle Ape, Groggins

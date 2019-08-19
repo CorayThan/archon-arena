@@ -1,24 +1,21 @@
 import { CardActionConfig, CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
+import { activePlayerState, dealDamage, enemyCreatures } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
-import { House } from "../../../shared/keyforge/house/House"
-import { allCreatures, dealDamage, friendlyCreatures } from "../../ScriptUtils"
 
 const cardScript: CardScript = {
-    amber: () => 1,
     alpha: () => true,
+    power: () => 3,
     onPlay: {
-        validTargets: allCreatures,
+        validTargets: enemyCreatures,
         numberOfTargets: (state: GameState) => {
-            return friendlyCreatures(state)
-                .filter(creature => creature.backingCard.house === House.Brobnar)
-                .length
+            return activePlayerState(state).amber < 3 ? 0 : 1
         },
         perform: (state: GameState, config: CardActionConfig) => {
-            dealDamage(config.targets! as Creature[], 2)
+            dealDamage(config.targets as Creature[], 3)
         }
     }
 }
 
-cardScripts.scripts.set("first-blood", cardScript)
+cardScripts.scripts.set("garagantes-scrapper", cardScript)
