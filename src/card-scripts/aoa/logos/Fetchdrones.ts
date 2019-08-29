@@ -19,13 +19,13 @@ const cardScript: CardScript = {
         perform: (state: GameState) => {
             const cards = [discardTopCard(state, activePlayerState(state))]
             cards.concat(discardTopCard(state, activePlayerState(state)))
-            const logosCards = cards.map(x => checkHouse(x, House.Logos))
+            const logosCards = cards.map(card => checkHouse(card, House.Logos))
             if (logosCards.length > 0) {
                 return {
                     validTargets: friendlyCreatures,
                     numberOfTargets: (state: GameState) => Math.min(logosCards.length, inactivePlayerState(state).amber / 2),
                     perform: (state: GameState, config: CardActionConfig) => {
-                        (config.targets as Creature[]).forEach(x => captureAmber(state, x, 2))
+                        (config.targets as Creature[]).forEach(creature => captureAmber(state, creature, 2))
                     }
                 }
             }

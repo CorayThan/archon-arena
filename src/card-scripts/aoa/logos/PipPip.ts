@@ -9,7 +9,7 @@ const cardScript: CardScript = {
     power: () => 2,
     onAnyReap: {
         perform: (state: GameState, config: CardActionConfig) => {
-            if (enemyPlayer(state, config.thisCard).creatures.some(x => x.id === config.triggerCard.id)) {
+            if (enemyPlayer(state, config.thisCard).creatures.some(creature => creature.id === config.triggerCard.id)) {
                 stunCreatures([config.triggerCard] as Creature[])
             }
         }

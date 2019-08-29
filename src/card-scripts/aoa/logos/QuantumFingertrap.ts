@@ -12,14 +12,14 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state: GameState, config0: CardActionConfig) => {
             const firstTarget = config0.targets[0] as Creature
-            const battleline = friendlyCreatures(state).some(x => x.id === firstTarget.id) ? friendlyCreatures(state) : enemyCreatures(state)
+            const battleline = friendlyCreatures(state).some(creature => creature.id === firstTarget.id) ? friendlyCreatures(state) : enemyCreatures(state)
             return {
-                validTargets: () => battleline.filter(x => x.id !== firstTarget.id),
+                validTargets: () => battleline.filter(creature => creature.id !== firstTarget.id),
                 numberOfTargets: () => 1,
                 perform: (state: GameState, config1: CardActionConfig) => {
                     const secondTarget = config1.targets[0] as Creature
-                    const firstTargetIndex = battleline.findIndex(x => x.id === firstTarget.id)
-                    const secondTargetIndex = battleline.findIndex(x => x.id === secondTarget.id)
+                    const firstTargetIndex = battleline.findIndex(creature => creature.id === firstTarget.id)
+                    const secondTargetIndex = battleline.findIndex(creature => creature.id === secondTarget.id)
                     const swap = battleline[secondTargetIndex]
                     battleline[secondTargetIndex] = battleline[firstTargetIndex]
                     battleline[firstTargetIndex] = swap

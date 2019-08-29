@@ -11,7 +11,7 @@ const cardScript: CardScript = {
     elusive: () => true,
     cardPlayed: {
         perform: (state: GameState, config: CardActionConfig) => {
-            if (getNeighbors(state, config.thisCard as Creature).some(x => x.id === config.triggerCard.id)) {
+            if (getNeighbors(state, config.thisCard as Creature).some(creature => creature.id === config.triggerCard.id)) {
                 drawCards(friendlyPlayer(state, config.thisCard), 1)
             }
         }

@@ -10,7 +10,7 @@ const cardScript: CardScript = {
         validTargets: (state: GameState) => activePlayerState(state).library.slice(0, 3),
         numberOfTargets: () => 1,
         perform: (state: GameState, config: CardActionConfig) => {
-            const discards = activePlayerState(state).library.slice(0, 3).filter(x => x.id !== config.targets[0].id)
+            const discards = activePlayerState(state).library.slice(0, 3).filter(card => card.id !== config.targets[0].id)
             putInHand(state, config.targets)
             discardCards(state, discards)
         }

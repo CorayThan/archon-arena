@@ -8,7 +8,7 @@ const cardScript: CardScript = {
     alpha: () => true,
     onPlay: {
         perform: (state: GameState) => {
-            allPlayerStates(state).forEach(x => modifyAmber(x, x.amber))
+            allPlayerStates(state).forEach(playerState => modifyAmber(playerState, playerState.amber))
         }
     }
 }
