@@ -1,7 +1,7 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { allCreatures, dealDamage, getCardsWithoutTrait, getCardsWithTrait } from "../../ScriptUtils"
+import { allCreatures, dealDamage, getCardsWithOutTrait, getCardsWithTrait } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const cardScript: CardScript = {
@@ -12,7 +12,7 @@ const cardScript: CardScript = {
     onPlay: {
         perform: (state: GameState) => {
             const rats = getCardsWithTrait(allCreatures(state), "Rat")
-            const targets = getCardsWithoutTrait(allCreatures(state), "Rat")
+            const targets = getCardsWithOutTrait(allCreatures(state), "Rat")
             dealDamage(targets as Creature[], rats.length)
         }
     }

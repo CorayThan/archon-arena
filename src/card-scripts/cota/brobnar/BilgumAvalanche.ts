@@ -5,7 +5,7 @@ import { activePlayerState, dealDamage, enemyCreatures } from "../../ScriptUtils
 
 const cardScript: CardScript = {
     power: () => 5,
-    onKeyForge: {
+    onForgingKey: {
         perform: (state: GameState, config: CardActionConfig) => {
             if (activePlayerState(state).player.id === config.thisCard.ownerId) {
                 dealDamage(enemyCreatures(state), 2)

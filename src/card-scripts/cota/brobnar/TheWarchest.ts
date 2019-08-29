@@ -1,12 +1,12 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { activePlayerState, getNumberOfCreaturesDestroyedInAFight } from "../../ScriptUtils"
+import {activePlayerState, getNumberOfCreaturesDestroyedInAFight, modifyAmber} from "../../ScriptUtils"
 
 const cardScript: CardScript = {
     action: {
         perform: (state: GameState) => {
-            activePlayerState(state).amber += getNumberOfCreaturesDestroyedInAFight(state)
+            modifyAmber(activePlayerState(state), getNumberOfCreaturesDestroyedInAFight(state))
         }
     }
 }

@@ -5,13 +5,12 @@ import { friendlyCreatures, putInHand } from "../../ScriptUtils"
 
 const effect = {
     validTargets: (state: GameState, config: CardActionConfig) => {
-        const friendlies = friendlyCreatures(state)
-        return friendlies.filter(creature => creature.traits.includes("Giant") && creature.id !== config.thisCard.id)
-
+        return friendlyCreatures(state).filter(
+            creature => creature.traits.includes("Giant") && creature.id !== config.thisCard.id)
     },
     numberOfTargets: () => 1,
     perform: (state: GameState, config: CardActionConfig) => {
-        putInHand(state, config.targets!)
+        putInHand(state, config.targets)
     }
 }
 
