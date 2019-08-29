@@ -181,6 +181,12 @@ export const putInArchives = (state: GameState, cards: CardInGame[], friendly: b
         myState.archives.push(toAdd)
     })
 }
+export const putUnderCard = (state: GameState, cards: CardInGame[], targetCard: Creature | Artifact) => {
+    cards.forEach(card => {
+        const toAdd = removeAndReturn(state, card)
+        targetCard.cardsUnderneath.push(toAdd)
+    })
+}
 
 export const purgeCards = (state: GameState, cards: CardInGame[]): CardInGame[] => {
     const purgedCards = cards.map(card => {
@@ -379,7 +385,7 @@ export const hasTrait = (card: CardInGame, trait: string): boolean => {
     return card.backingCard.traits.includes(trait)
 }
 
-export const getCardsWithOutTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
+export const getCardsWithoutTrait = (cards: CardInGame[] | Creature[] | Artifact[], trait: string): Creature[] | Artifact[] | CardInGame[] => {
     return cards.filter(card => !card.backingCard.traits.includes(trait))
 }
 
@@ -535,7 +541,7 @@ export const enableFighting = (creatures: Creature[]) => {
     //TODO
 }
 
-export const enableUse = (creatures: Creature[]) => {
+export const enableUse = (targets: Creature[] | Artifact[]) => {
     //TODO
 }
 
@@ -558,6 +564,7 @@ export const steal = (state: GameState, amount: number): number => {
     return modifyAmber(activePlayerState(state), modifyAmber(inactivePlayerState(state), amount))
 }
 
+//TODO Add check to see if there is enough amber here
 export const captureAmber = (state: GameState, creature: Creature, amount: number) => {
     creature.tokens.amber += modifyAmber(enemyPlayer(state, creature), amount)
 }

@@ -1,12 +1,12 @@
 import { CardScript } from "../../types/CardScript"
 import { cardScripts } from "../../CardScripts"
 import { GameState } from "../../../shared/gamestate/GameState"
-import { allCreatures, dealDamage, getCardsWithOutTrait } from "../../ScriptUtils"
+import { allCreatures, dealDamage, getCardsWithoutTrait } from "../../ScriptUtils"
 import { Creature } from "../../../shared/gamestate/Creature"
 
 const effect = {
     perform: (state: GameState) => {
-        dealDamage(getCardsWithOutTrait(allCreatures(state), "Horseman") as Creature[], 1)
+        dealDamage(getCardsWithoutTrait(allCreatures(state), "Horseman") as Creature[], 1)
     }
 }
 

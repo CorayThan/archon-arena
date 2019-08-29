@@ -12,10 +12,11 @@ const cardScript: CardScript = {
         numberOfTargets: () => 1,
         perform: (state: GameState, config0: CardActionConfig) => {
             return {
-                selectFromChoices: () => Array.from(Array(Math.min(3, (config0.targets[0] as Creature).tokens.damage))),
+                selectFromChoices: () => [0, 1, 2, 3].slice(0, Math.min(4, (config0.targets[0] as Creature).tokens.damage) + 1),
                 perform: (state: GameState, config1: CardActionConfig) => {
-                    healCreatures(config0.targets as Creature[], +config1.selection!)
-                    if (config1.selection! >= 3) {
+                    if (!config1.selection) return
+                    healCreatures(config0.targets as Creature[], +config1.selection)
+                    if (config1.selection >= 3) {
                         modifyAmber(activePlayerState(state), 1)
                     }
                 }

@@ -74,6 +74,11 @@ export interface CardScript {
     onAnyReap?: IndividualScript
 
     /**
+     * House Choice, Redacted, memoryChip
+     */
+    onHouseChoice?: IndividualScript
+
+    /**
      * Tentacus
      */
     //TODO make the card that does this config.triggerCard as CardInGame
