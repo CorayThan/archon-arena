@@ -1,11 +1,6 @@
 import Phaser from "phaser"
 import ImageKey from "../ImageKey"
-import {
-    CARD_WIDTH,
-    CARD_HEIGHT,
-    SMALL_CARD_WIDTH,
-    SMALL_CARD_HEIGHT
-} from "../constants"
+import { CARD_HEIGHT, CARD_WIDTH, SMALL_CARD_HEIGHT, SMALL_CARD_WIDTH } from "../constants"
 
 class CardImage extends Phaser.GameObjects.Container {
 
@@ -15,11 +10,13 @@ class CardImage extends Phaser.GameObjects.Container {
     blueGlow: Phaser.GameObjects.Image
     orangeGlow: Phaser.GameObjects.Image
     greenGlow: Phaser.GameObjects.Image
+    maverick: Phaser.GameObjects.Image
+    maverickHouse: Phaser.GameObjects.Image
 
-    constructor(scene: Phaser.Scene, x: number, y: number, public back: string, public front: string = "cardback", public faceup: boolean = true) {
+    constructor(scene: Phaser.Scene, x: number, y: number, public id: string, public house: string, public isMaverick: boolean, public back: string = "cardback", public faceup: boolean = true) {
         super(scene, x, y)
-        this.cardImage = new Phaser.GameObjects.Image(scene, 0, 0, back)
-        this.backgroundImage = new Phaser.GameObjects.Image(this.scene, 0, 0, front)
+        this.cardImage = new Phaser.GameObjects.Image(scene, 0, 0, id)
+        this.backgroundImage = new Phaser.GameObjects.Image(this.scene, 0, 0, id)
         this.interactiveZone = new Phaser.GameObjects.Rectangle(scene, 0, 0, SMALL_CARD_WIDTH, SMALL_CARD_HEIGHT)
         this.interactiveZone.setInteractive({ cursor: "pointer" })
         this.scene.input.setDraggable(this.interactiveZone)
@@ -27,11 +24,18 @@ class CardImage extends Phaser.GameObjects.Container {
         this.orangeGlow = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.ORANGE_CARD_GLOW)
         this.blueGlow = new Phaser.GameObjects.Image(this.scene, 0, 2, ImageKey.BLUE_CARD_GLOW_SMALL)
         this.blueGlow.setDisplaySize(SMALL_CARD_WIDTH * 1.35, SMALL_CARD_HEIGHT * 1.55)
+
+        this.maverick = new Phaser.GameObjects.Image(this.scene, 0, -(SMALL_CARD_HEIGHT - CARD_HEIGHT) / 2, ImageKey.MAVERICK)
+        this.maverick.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
+
+        scene.load.image(house, require(`../../images/maverick/${house}.png`))
+        this.maverickHouse = new Phaser.GameObjects.Image(this.scene, 0, -(SMALL_CARD_HEIGHT - CARD_HEIGHT) / 2, house)
+        this.maverickHouse.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
     }
 
     render() {
-        if (this.faceup) {
-            this.cardImage.setTexture(this.front)
+        if (!this.faceup) {
+            this.cardImage.setTexture(this.back)
         }
 
         this.blueGlow.setAlpha(0)
@@ -47,6 +51,11 @@ class CardImage extends Phaser.GameObjects.Container {
         this.backgroundImage.setCrop(0, (CARD_HEIGHT * 0.95) / this.cardImage.scaleY, CARD_WIDTH / this.cardImage.scaleX, (CARD_HEIGHT * 0.1) / this.cardImage.scaleY)
         this.backgroundImage.setY(-CARD_HEIGHT / 4 + CARD_HEIGHT * 0.05)
         this.add(this.backgroundImage)
+
+        if (this.isMaverick) {
+            this.add(this.maverickHouse)
+            this.add(this.maverick)
+        }
 
         this.interactiveZone.setPosition(0, 0)
         this.interactiveZone.setSize(SMALL_CARD_WIDTH, SMALL_CARD_HEIGHT + CARD_HEIGHT * 0.05)

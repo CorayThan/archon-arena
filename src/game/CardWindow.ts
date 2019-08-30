@@ -2,12 +2,7 @@ import Phaser from "phaser"
 import GameScene from "./GameScene"
 import Button from "./Components/Button"
 import { CardInGame } from "../shared/gamestate/CardInGame"
-import {
-    CARD_HEIGHT,
-    CARD_WIDTH,
-    SMALL_CARD_WIDTH,
-    SMALL_CARD_HEIGHT,
-} from "./constants"
+import { CARD_HEIGHT, CARD_WIDTH, } from "./constants"
 
 const defaultNumFeaturedCards = 7
 
@@ -40,7 +35,7 @@ class CardWindow {
         this.background.setInteractive()
 
         this.cardImages = cards.map((card, i) => {
-            const image = new Phaser.GameObjects.Image(scene, 0, 0, card.backingCard.cardTitle)
+            const image = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
             image.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
             image.setInteractive({ cursor: "pointer" })
             image.addListener("pointermove", (pointer: Phaser.Input.Pointer) => {

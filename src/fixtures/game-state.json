@@ -2,7 +2,7 @@
   "id": "1",
   "activePlayer": {
     "id": "GQYXEhjmxEMlVcVzZY0gmYpnd872",
-    "name": "stronglink"
+    "name": "SkyJedi"
   },
   "playerOneState": {
     "deckHouses": [
@@ -30,9 +30,9 @@
           "expansion": 341,
           "flavorText": null,
           "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_067_GJXV3PCXVPMW_en.png",
-          "house": "Dis",
+          "house": "Untamed",
           "id": "ea2a390e-e121-4cbd-96c5-2430cc600e81",
-          "maverick": false,
+          "maverick": true,
           "power": 0,
           "traits": []
         },
@@ -52,7 +52,7 @@
           "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_302_RP49F4QFW3FM_en.png",
           "house": "Shadows",
           "id": "23099339-dbe2-4b35-b26b-9dfb4c0fb35a",
-          "maverick": false,
+          "maverick": true,
           "power": 3,
           "traits": [
             "Elf",
@@ -76,12 +76,12 @@
           "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_281_MPVFFW3882CJ_en.png",
           "house": "Shadows",
           "id": "15f1a6f4-873f-4fa9-a080-7f01e72bbff1",
-          "maverick": false,
+          "maverick": true,
           "power": 0,
           "traits": []
         },
         "ownerId": "GQYXEhjmxEMlVcVzZY0gmYpnd872",
-        "house": "Shadows",
+        "house": "Logos",
         "id": "22725173-9b32-4d44-932b-73d3c44e902c"
       },
       {
@@ -95,9 +95,9 @@
           "expansion": 341,
           "flavorText": "“Give me half a chance an’ I’ll steal the whole of it.”",
           "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_298_5PGPFVJF9292_en.png",
-          "house": "Shadows",
+          "house": "Mars",
           "id": "71274e08-79b6-469b-9426-8af07d582704",
-          "maverick": false,
+          "maverick": true,
           "power": 2,
           "traits": [
             "Elf",
@@ -142,7 +142,7 @@
           "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_022_5F6F47CPQM7J_en.png",
           "house": "Brobnar",
           "id": "86db8510-2854-440b-8ee5-559855bb7d2c",
-          "maverick": false,
+          "maverick": true,
           "power": 0,
           "traits": [
             "Item"
@@ -163,9 +163,9 @@
           "expansion": 341,
           "flavorText": null,
           "frontImage": "https://cdn.keyforgegame.com/media/card_front/en/341_274_P4W2FF886X6V_en.png",
-          "house": "Shadows",
+          "house": "Sanctum",
           "id": "c5f7e033-f62e-442e-97a1-b23b47cde1e8",
-          "maverick": false,
+          "maverick": true,
           "power": 0,
           "traits": []
         },
