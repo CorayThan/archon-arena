@@ -27,7 +27,7 @@ import { InputEvent } from "./InputEvent"
 import { getCardById, getCardOwner, getCardType } from "./StateUtils"
 import { preloadCardsInPhaser } from "./Utils"
 import CardType from "./CardType"
-import Card from "./Card"
+import Card, { MaverickCardImage } from "./Card"
 import CardWindow from "./CardWindow"
 import SmallCard from "./SmallCard"
 import { CARD_HEIGHT, CARD_WIDTH, SMALL_CARD_WIDTH, } from "./constants"
@@ -48,7 +48,7 @@ export enum PlayerPosition {
 class GameScene extends Phaser.Scene {
     state: GameState
     root: Phaser.GameObjects.Container | undefined
-    cardHoverImage: Phaser.GameObjects.Image | undefined
+    cardHoverImage: Phaser.GameObjects.Container | undefined
     creatureMousingOver: Phaser.GameObjects.GameObject | undefined
     artifactMousingOver: Phaser.GameObjects.GameObject | undefined
     cardInHandMousingOver: Phaser.GameObjects.GameObject | undefined
@@ -818,7 +818,7 @@ class GameScene extends Phaser.Scene {
 
         clearTimeout(this.hoverOverCardTimeout)
         this.hoverOverCardTimeout = window.setTimeout(() => {
-            this.showEnlargedCard(texture)
+            this.showEnlargedCard(texture, card)
         }, 700)
 
         if (this.prompt) {
@@ -970,7 +970,7 @@ class GameScene extends Phaser.Scene {
         this.artifactMousingOver = target
         clearTimeout(this.hoverOverCardTimeout)
         this.hoverOverCardTimeout = window.setTimeout(() => {
-            this.showEnlargedCard(texture)
+            this.showEnlargedCard(texture, target)
         }, 700)
     }
 
@@ -1040,7 +1040,7 @@ class GameScene extends Phaser.Scene {
     onMouseOverCardInHand(e: MouseEvent, target: Card) {
         const texture = target.id
         this.cardInHandMousingOver = target
-        this.showEnlargedCard(texture)
+        this.showEnlargedCard(texture, target)
     }
 
     onMouseOutCardInHand() {
@@ -1093,7 +1093,7 @@ class GameScene extends Phaser.Scene {
         this.creatureMousingOver = target
         clearTimeout(this.hoverOverCardTimeout)
         this.hoverOverCardTimeout = window.setTimeout(() => {
-            this.showEnlargedCard(texture)
+            this.showEnlargedCard(texture, target)
         }, 700)
     }
 
@@ -1124,7 +1124,7 @@ class GameScene extends Phaser.Scene {
         }
     }
 
-    showEnlargedCard(texture: string) {
+    showEnlargedCard(texture: string, card?: Card) {
         if (texture === ImageKey.CARDBACK)
             return
         const width = 250
@@ -1133,22 +1133,21 @@ class GameScene extends Phaser.Scene {
         let y = height / 2 + 10
 
         if (this.creatureMousingOver) {
-            const creature = this.creatureMousingOver as Phaser.GameObjects.Image
+            const creature = this.creatureMousingOver as Phaser.GameObjects.Container
             x = creature.x + SMALL_CARD_WIDTH / 2 + width / 2 + 10
             y = creature.y
         }
 
         if (this.artifactMousingOver) {
-            const artifact = this.artifactMousingOver as Phaser.GameObjects.Image
+            const artifact = this.artifactMousingOver as Phaser.GameObjects.Container
             x = artifact.x + SMALL_CARD_WIDTH / 2 + width / 2 + 10
             y = artifact.y
         }
-
-        const image = new Phaser.GameObjects.Image(this, x, y, texture + "-hover")
-        image.setDisplaySize(width, height)
-
-        this.root!.add(image)
-        this.cardHoverImage = image
+        const cardImage = new MaverickCardImage(this, card!.id, width, height, card!.backingCard.house, card!.backingCard.maverick)
+        cardImage.render()
+        this.root!.add(cardImage)
+        this.cardHoverImage = cardImage
+        this.cardHoverImage.setPosition(x, y)
     }
 
     setupKeyboardListeners() {
