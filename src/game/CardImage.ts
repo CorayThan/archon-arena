@@ -1,12 +1,14 @@
 import Phaser from "phaser"
-import ImageKey from "../ImageKey"
+import ImageKey from "./ImageKey"
 
-export class MaverickCardImage extends Phaser.GameObjects.Container {
+export class CardImage extends Phaser.GameObjects.Container {
     cardImage: Phaser.GameObjects.Image
     maverick: Phaser.GameObjects.Image
     maverickHouse: Phaser.GameObjects.Image
     width: number
     height: number
+    _originX: number
+    _originY: number
 
     constructor(scene: Phaser.Scene, public id: string, width: number, height: number, public house: string, public isMaverick: boolean) {
         super(scene,)
@@ -15,11 +17,13 @@ export class MaverickCardImage extends Phaser.GameObjects.Container {
         this.maverick = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.MAVERICK)
         this.maverick.setDisplaySize(width, height)
 
-        scene.load.image(house, require(`../../images/maverick/${house}.png`))
+        scene.load.image(house, require(`../images/maverick/${house}.png`))
         this.maverickHouse = new Phaser.GameObjects.Image(this.scene, 0, 0, house)
         this.maverickHouse.setDisplaySize(width, height)
         this.width = width
         this.height = height
+        this._originX = 0
+        this._originY = 0
     }
 
     render() {

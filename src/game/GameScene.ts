@@ -27,12 +27,13 @@ import { InputEvent } from "./InputEvent"
 import { getCardById, getCardOwner, getCardType } from "./StateUtils"
 import { preloadCardsInPhaser } from "./Utils"
 import CardType from "./CardType"
-import Card, { MaverickCardImage } from "./Card"
+import Card from "./Card"
 import CardWindow from "./CardWindow"
 import SmallCard from "./SmallCard"
 import { CARD_HEIGHT, CARD_WIDTH, SMALL_CARD_WIDTH, } from "./constants"
 import ImageKey from "./ImageKey"
 import Prompt from "./Prompt"
+import { CardImage } from "./CardImage"
 
 const { KeyCodes } = Phaser.Input.Keyboard
 
@@ -48,7 +49,7 @@ export enum PlayerPosition {
 class GameScene extends Phaser.Scene {
     state: GameState
     root: Phaser.GameObjects.Container | undefined
-    cardHoverImage: Phaser.GameObjects.Container | undefined
+    cardHoverImage: CardImage | undefined
     creatureMousingOver: Phaser.GameObjects.GameObject | undefined
     artifactMousingOver: Phaser.GameObjects.GameObject | undefined
     cardInHandMousingOver: Phaser.GameObjects.GameObject | undefined
@@ -1143,7 +1144,7 @@ class GameScene extends Phaser.Scene {
             x = artifact.x + SMALL_CARD_WIDTH / 2 + width / 2 + 10
             y = artifact.y
         }
-        const cardImage = new MaverickCardImage(this, card!.id, width, height, card!.backingCard.house, card!.backingCard.maverick)
+        const cardImage = new CardImage(this, card!.id, width, height, card!.backingCard.house, card!.backingCard.maverick)
         cardImage.render()
         this.root!.add(cardImage)
         this.cardHoverImage = cardImage

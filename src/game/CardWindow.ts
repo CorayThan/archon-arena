@@ -3,6 +3,7 @@ import GameScene from "./GameScene"
 import Button from "./Components/Button"
 import { CardInGame } from "../shared/gamestate/CardInGame"
 import { CARD_HEIGHT, CARD_WIDTH, } from "./constants"
+import { CardImage } from "./CardImage"
 
 const defaultNumFeaturedCards = 7
 
@@ -11,18 +12,14 @@ class CardWindow {
     scene: GameScene
     onClickCard: Function
     background: Phaser.GameObjects.Rectangle
-    cardImages: Phaser.GameObjects.Image[]
+    cardImages: CardImage[]
     hoverTimeout: number | undefined
     closeBtn: Button
     scrollLeftBtn: Button
     scrollRightBtn: Button
     cardAtIndex: number
 
-    constructor({
-        scene,
-        cards,
-        onClick,
-    }: {
+    constructor({ scene, cards, onClick }: {
         scene: GameScene,
         cards: CardInGame[],
         onClick: Function,
@@ -35,7 +32,8 @@ class CardWindow {
         this.background.setInteractive()
 
         this.cardImages = cards.map((card, i) => {
-            const image = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
+            //const image = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
+            const image = new CardImage(scene, card!.id, CARD_WIDTH, CARD_HEIGHT, card!.backingCard.house, card!.backingCard.maverick)
             image.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
             image.setInteractive({ cursor: "pointer" })
             image.addListener("pointermove", (pointer: Phaser.Input.Pointer) => {
@@ -48,6 +46,7 @@ class CardWindow {
                 const card = cards[i]
                 this.onClickCard(card, i)
             })
+            image.render()
             return image
         })
 
@@ -92,9 +91,9 @@ class CardWindow {
         }
     }
 
-    onMouseOverCard(image: Phaser.GameObjects.Image, pointer: Phaser.Input.Pointer) {
+    onMouseOverCard(image: CardImage, pointer: Phaser.Input.Pointer) {
         if (pointer.y < image.displayHeight * 0.5 + image.y - 30) {
-            image.setPosition(image.x, image.originY - 20)
+            image.setPosition(image.x, image._originY - 20)
         }
         clearTimeout(this.hoverTimeout)
         this.hoverTimeout = window.setTimeout(() => {
@@ -102,12 +101,12 @@ class CardWindow {
         }, 500)
     }
 
-    onMouseOutCard(image: Phaser.GameObjects.Image) {
+    onMouseOutCard(image: CardImage) {
         clearTimeout(this.hoverTimeout)
         this.cardImages.forEach(image => {
             this.scene.root!.bringToTop(image)
         })
-        image.setPosition(image.x, image.originY)
+        image.setPosition(image.x, image._originY)
     }
 
     render() {
@@ -154,8 +153,7 @@ class CardWindow {
                     this.scene.root!.sendToBack(image)
                 }
             }
-
-            image.originY = y
+            image._originY = y
             image.setPosition(x, y)
         })
 
