@@ -17,6 +17,7 @@ enum ImageKey {
     BLUE_CARD_GLOW = "blue-card-glow",
     BLUE_CARD_GLOW_SMALL = "blue-card-glow-small",
     MAVERICK = "maverick",
+    LEGACY = "legacy",
     BROBNAR = "Brobnar",
     DIS = "Dis",
     LOGOS = "Logos",

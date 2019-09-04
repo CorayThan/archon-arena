@@ -1,24 +1,28 @@
 import Phaser from "phaser"
 import ImageKey from "./ImageKey"
+import { KCard } from "../shared/keyforge/card/KCard"
 
 export class CardImage extends Phaser.GameObjects.Container {
     cardImage: Phaser.GameObjects.Image
     maverick: Phaser.GameObjects.Image
+    legacy: Phaser.GameObjects.Image
     maverickHouse: Phaser.GameObjects.Image
     width: number
     height: number
     _originX: number
     _originY: number
 
-    constructor(scene: Phaser.Scene, public id: string, width: number, height: number, public house: string, public isMaverick: boolean) {
-        super(scene,)
-        this.cardImage = new Phaser.GameObjects.Image(scene, 0, 0, id)
+    constructor(scene: Phaser.Scene, width: number, height: number, public card: KCard) {
+        super(scene)
+        this.cardImage = new Phaser.GameObjects.Image(scene, 0, 0, card.keyforgeId)
 
         this.maverick = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.MAVERICK)
         this.maverick.setDisplaySize(width, height)
+        this.legacy = new Phaser.GameObjects.Image(this.scene, 0, 0, ImageKey.LEGACY)
+        this.legacy.setDisplaySize(width, height)
 
-        scene.load.image(house, require(`../images/maverick/${house}.png`))
-        this.maverickHouse = new Phaser.GameObjects.Image(this.scene, 0, 0, house)
+        scene.load.image(card.house, require(`../images/card/${card.house}.png`))
+        this.maverickHouse = new Phaser.GameObjects.Image(this.scene, 0, 0, card.house)
         this.maverickHouse.setDisplaySize(width, height)
         this.width = width
         this.height = height
@@ -29,17 +33,19 @@ export class CardImage extends Phaser.GameObjects.Container {
     render() {
         this.cardImage.setDisplaySize(this.width, this.height)
         this.add(this.cardImage)
-        if (this.isMaverick) {
+        if (this.card.maverick) {
             this.add(this.maverickHouse)
             this.add(this.maverick)
+        }
+        if (this.card.legacy) {
+            this.add(this.legacy)
         }
     }
 
     destroy() {
         this.cardImage.destroy()
-        if (this.isMaverick) {
-            this.maverickHouse.destroy()
-            this.maverick.destroy()
-        }
+        this.maverickHouse.destroy()
+        this.maverick.destroy()
+        this.legacy.destroy()
     }
 }

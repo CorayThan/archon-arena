@@ -108,7 +108,7 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         this.upgrades = upgrades.map((card: CardInGame) => {
-            const cardImage = new SmallCardImage(scene, 0, 0, card.id, card.backingCard.house, card.backingCard.maverick)
+            const cardImage = new SmallCardImage(scene, 0, 0, card.backingCard)
             cardImage.setDataEnabled()
             // @ts-ignore
             cardImage.id = card.id

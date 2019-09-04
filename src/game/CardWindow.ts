@@ -13,7 +13,6 @@ class CardWindow {
     onClickCard: Function
     background: Phaser.GameObjects.Rectangle
     cardImages: CardImage[]
-    hoverTimeout: number | undefined
     closeBtn: Button
     scrollLeftBtn: Button
     scrollRightBtn: Button
@@ -32,8 +31,7 @@ class CardWindow {
         this.background.setInteractive()
 
         this.cardImages = cards.map((card, i) => {
-            //const image = new Phaser.GameObjects.Image(scene, 0, 0, card.id)
-            const image = new CardImage(scene, card!.id, CARD_WIDTH, CARD_HEIGHT, card!.backingCard.house, card!.backingCard.maverick)
+            const image = new CardImage(scene, CARD_WIDTH, CARD_HEIGHT, card!.backingCard)
             image.setDisplaySize(CARD_WIDTH, CARD_HEIGHT)
             image.setInteractive({ cursor: "pointer" })
             image.addListener("pointermove", (pointer: Phaser.Input.Pointer) => {
@@ -95,14 +93,10 @@ class CardWindow {
         if (pointer.y < image.displayHeight * 0.5 + image.y - 30) {
             image.setPosition(image.x, image._originY - 20)
         }
-        clearTimeout(this.hoverTimeout)
-        this.hoverTimeout = window.setTimeout(() => {
-            this.scene.root!.bringToTop(image)
-        }, 500)
+        this.scene.root!.bringToTop(image)
     }
 
     onMouseOutCard(image: CardImage) {
-        clearTimeout(this.hoverTimeout)
         this.cardImages.forEach(image => {
             this.scene.root!.bringToTop(image)
         })

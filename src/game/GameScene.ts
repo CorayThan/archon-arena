@@ -15,7 +15,8 @@ import greenCardGlow from "../images/green-card-glow.png"
 import orangeCardGlow from "../images/orange-card-glow.png"
 import blueCardGlow from "../images/blue-card-glow.png"
 import blueCardGlowSmall from "../images/blue-card-glow-small.png"
-import maverick from "../images/maverick/maverick.png"
+import maverick from "../images/card/maverick.png"
+import legacy from "../images/card/legacy.png"
 
 import CardPile from "./CardPile"
 import CardDropZone from "./CardDropZone"
@@ -88,6 +89,7 @@ class GameScene extends Phaser.Scene {
         this.load.image(ImageKey.BLUE_CARD_GLOW, blueCardGlow)
         this.load.image(ImageKey.BLUE_CARD_GLOW_SMALL, blueCardGlowSmall)
         this.load.image(ImageKey.MAVERICK, maverick)
+        this.load.image(ImageKey.LEGACY, legacy)
 
         const state = this.state
         const players = [state.playerOneState, state.playerTwoState]
@@ -732,6 +734,7 @@ class GameScene extends Phaser.Scene {
                 onClick: (pointer: Phaser.Input.Pointer) => {
                     if (pointer.button !== 2)
                         return
+                    if (this.cardWindow) this.cardWindow.destroy()
                     this.cardWindow = new CardWindow({
                         scene: this,
                         cards: player.archives,
@@ -742,8 +745,9 @@ class GameScene extends Phaser.Scene {
                                 player: player.player
                             })
                             this.render()
-                        },
+                        }
                     })
+                    this.cardWindow.render()
                 }
             }
         })
@@ -769,8 +773,18 @@ class GameScene extends Phaser.Scene {
                     })
                     this.render()
                 },
-                onClick: () => {
-                    // Open purge modal
+                onClick: (pointer: Phaser.Input.Pointer) => {
+                    if (pointer.button !== 2)
+                        return
+                    if (this.cardWindow) this.cardWindow.destroy()
+                    this.cardWindow = new CardWindow({
+                        scene: this,
+                        cards: player.purged,
+                        onClick: () => {
+                            this.render()
+                        }
+                    })
+                    this.cardWindow.render()
                 }
             }
         })
@@ -1144,7 +1158,7 @@ class GameScene extends Phaser.Scene {
             x = artifact.x + SMALL_CARD_WIDTH / 2 + width / 2 + 10
             y = artifact.y
         }
-        const cardImage = new CardImage(this, card!.id, width, height, card!.backingCard.house, card!.backingCard.maverick)
+        const cardImage = new CardImage(this, width, height, card!.backingCard)
         cardImage.render()
         this.root!.add(cardImage)
         this.cardHoverImage = cardImage
