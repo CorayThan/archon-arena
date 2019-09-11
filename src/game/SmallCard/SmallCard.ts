@@ -1,14 +1,11 @@
 import BaseCard, { CardInput } from "../Card/BaseCard"
 import SmallCardImage from "./SmallCardImage"
-import {
-    SMALL_CARD_WIDTH,
-    SMALL_CARD_HEIGHT
-} from "../constants"
+import { SMALL_CARD_HEIGHT, SMALL_CARD_WIDTH } from "../constants"
 
 class SmallCard extends BaseCard {
 
     constructor(data: CardInput) {
-        data.cardImage = new SmallCardImage(data.scene, 0, 0, data.back, data.front, data.faceup!)
+        data.cardImage = new SmallCardImage(data.scene, 0, 0, data.backingCard, data.back, data.faceup!)
         data.width = SMALL_CARD_WIDTH
         data.height = SMALL_CARD_HEIGHT
         super(data)

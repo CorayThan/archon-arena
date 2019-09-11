@@ -5,12 +5,7 @@ import ImageKey from "../ImageKey"
 
 import CardImage from "./CardImage"
 import SmallCardImage from "../SmallCard/SmallCardImage"
-import {
-    CARD_WIDTH,
-    CARD_HEIGHT,
-    SMALL_CARD_WIDTH,
-    SMALL_CARD_HEIGHT
-} from "../constants"
+import { CARD_HEIGHT, CARD_WIDTH, SMALL_CARD_HEIGHT, SMALL_CARD_WIDTH } from "../constants"
 
 export interface CardInput {
     scene: Phaser.Scene,
@@ -113,7 +108,7 @@ class Card extends Phaser.GameObjects.Container {
         })
 
         this.upgrades = upgrades.map((card: CardInGame) => {
-            const cardImage = new SmallCardImage(scene, 0, 0, card.backingCard.cardTitle, card.backingCard.cardTitle)
+            const cardImage = new SmallCardImage(scene, 0, 0, card.backingCard)
             cardImage.setDataEnabled()
             // @ts-ignore
             cardImage.id = card.id

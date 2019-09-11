@@ -16,6 +16,17 @@ enum ImageKey {
     ORANGE_CARD_GLOW = "orange-card-glow",
     BLUE_CARD_GLOW = "blue-card-glow",
     BLUE_CARD_GLOW_SMALL = "blue-card-glow-small",
+    MAVERICK = "maverick",
+    LEGACY = "legacy",
+    BROBNAR = "Brobnar",
+    DIS = "Dis",
+    LOGOS = "Logos",
+    MARS = "Mars",
+    SAURIAN = "Saurian",
+    SANCTUM = "Sanctum",
+    STAR_ALLIANCE = "Star Alliance",
+    SHADOWS = "Shadows",
+    UNTAMED = "Untamed",
 }
 
 export default ImageKey

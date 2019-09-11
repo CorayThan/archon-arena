@@ -17,4 +17,5 @@ export interface KCard {
     cardNumber: string
     expansion: number
     maverick: boolean
+    legacy: boolean
 }
